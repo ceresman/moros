@@ -1,0 +1,721 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{JMO 2015 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2015 JMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Given a sequence of real numbers,
+a move consists of choosing two terms
+and replacing each with their arithmetic mean.
+Show that there exists a sequence of $2015$ distinct real numbers
+such that after one initial move
+is applied to the sequence --- no matter what move --- there
+is always a way to continue with a finite sequence of moves
+so as to obtain in the end a constant sequence.
+
+\item %% Problem 2
+Solve in integers the equation
+\[ x^2+xy+y^2 = \left(\frac{x+y}{3}+1\right)^3. \]
+
+\item %% Problem 3
+Quadrilateral $APBQ$ is inscribed in circle $\omega$ with
+$\angle P = \angle Q = 90^{\circ}$ and $AP = AQ < BP$.
+Let $X$ be a variable point on segment $\ol{PQ}$.
+Line $AX$ meets $\omega$ again at $S$ (other than $A$).
+Point $T$ lies on arc $AQB$ of $\omega$ such that $\ol{XT}$
+is perpendicular to $\ol{AX}$.
+Let $M$ denote the midpoint of chord $\ol{ST}$.
+
+As $X$ varies on segment $\ol{PQ}$, show that $M$ moves along a circle.
+
+\item %% Problem 4
+Find all functions $f \colon \QQ \to \QQ$ such that
+\[ f(x)+f(t)=f(y)+f(z) \]
+for all rational numbers $x<y<z<t$ that form an arithmetic progression.
+
+\item %% Problem 5
+Let $ABCD$ be a cyclic quadrilateral.
+Prove that there exists a point $X$ on segment $\ol{BD}$
+such that $\angle BAC=\angle XAD$ and $\angle BCA=\angle XCD$
+if and only if there exists a point $Y$ on segment $\ol{AC}$
+such that $\angle CBD=\angle YBA$ and $\angle CDB=\angle YDA$.
+
+\item %% Problem 6
+Steve is piling $m\geq 1$ indistinguishable stones
+on the squares of an $n\times n$ grid.
+Each square can have an arbitrarily high pile of stones.
+After he finished piling his stones in some manner,
+he can then perform \emph{stone moves}, defined as follows.
+Consider any four grid squares, which are corners of a rectangle,
+i.e.\ in positions $(i, k)$, $(i, l)$, $(j, k)$, $(j, l)$
+for some $1\leq i, j, k, l\leq n$, such that $i<j$ and $k<l$.
+A stone move consists of either removing one stone from each of
+$(i, k)$ and $(j, l)$ and moving them to $(i, l)$ and $(j, k)$ respectively,
+or removing one stone from each of $(i, l)$ and $(j, k)$
+and moving them to $(i, k)$ and $(j, l)$ respectively.
+
+Two ways of piling the stones are equivalent if they can be obtained
+from one another by a sequence of stone moves.
+How many different non-equivalent ways can Steve pile the stones on the grid?
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{JMO 2015/1, proposed by Razvan Gelca}
+\textsl{Available online at \url{https://aops.com/community/p4769963}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Given a sequence of real numbers,
+a move consists of choosing two terms
+and replacing each with their arithmetic mean.
+Show that there exists a sequence of $2015$ distinct real numbers
+such that after one initial move
+is applied to the sequence --- no matter what move --- there
+is always a way to continue with a finite sequence of moves
+so as to obtain in the end a constant sequence.
+\end{mdframed}
+One valid example of a sequence is $0$, $1$, \dots, $2014$.
+We will show how to achieve the all-$1007$ sequence
+based on the first move.
+
+Say two numbers are \emph{opposites} if their average is $1007$.
+We consider $1007$ as its own opposite.
+
+We consider two cases:
+\begin{itemize}
+  \ii First, suppose the first initial move did
+  \emph{not} involve the number $1007$.
+  Suppose the two numbers changed were $a$ and $b$,
+  replaced by $c = \half(a+b)$ twice.
+  \begin{itemize}
+    \ii If $a$ and $b$ are opposites, we
+    simply operate on all the other pairs of opposites.
+    \ii Otherwise let $a'$ and $b'$ be the opposites of $a$ and $b$,
+    so all four of $a$, $b$, $a'$, $b'$ are distinct.
+    Then operate on $a'$ and $b'$ to get $c' = 2014-c$.
+    We work with only these four numbers ande replace them as
+    follows:
+    \[
+      \begin{array}{cccc}
+        \half(a+b) & \half(a+b) & a' & b' \\
+        \half(a+b) & \half(a+b) & \half(a'+b') & \half(a'+b') \\
+        1007 & \half(a+b) & 1007 & \half(a'+b') \\
+        1007 & 1007 & 1007 & 1007
+      \end{array}
+    \]
+    Finally, we operate on the remaining $1005$ pairs of opposites.
+  \end{itemize}
+
+  \ii Now suppose the first initial move involved the number $1007$
+  and some $a$.
+  Let $k$ be any number other than $a$ or its opposite,
+  and let $a'$, $k'$ be the opposites of $a$ and $k$.
+  We work with only these five numbers:
+  and replace them in the following way:
+  \[
+    \begin{array}{ccccc}
+      \half(a+1007) & \half(a+1007) & a' & k & k' \\
+      \half(a+1007) & \half(a+1007) & a' & 1007 & 1007 \\
+      \half(a+1007) & \half(a+1007) & \half(a'+1007) &
+        \half(a'+1007) & 1007 \\
+      1007 & \half(a+1007) & 1007 &
+        \half(a'+1007) & 1007 \\
+      1007 & 1007 & 1007 & 1007 & 1007 \\
+    \end{array}
+  \]
+  Finally, we operate on the remaining $1005$ pairs of opposites.
+\end{itemize}
+
+
+\begin{remark*}
+  In fact, the same proof basically works for any sequence
+  with average $m$ such that $m$ is in the sequence,
+  and every term has an opposite.
+
+  However for ``most'' sequences one expects
+  the result to not be possible.
+  As a simple example,
+  the goal is impossible for $(0, 1, \dots, 2013, 2015)$
+  since the average of the terms is $1007 + \frac{1}{2015}$,
+  but in the process the only denominators
+  ever generated are powers of $2$.
+  This narrows the search somewhat.
+\end{remark*}
+\pagebreak
+
+\subsection{JMO 2015/2, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p4769940}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Solve in integers the equation
+\[ x^2+xy+y^2 = \left(\frac{x+y}{3}+1\right)^3. \]
+\end{mdframed}
+We do the trick of setting $a=x+y$ and $b=x-y$.
+This rewrites the equation as
+\[ \frac14\left( (a+b)^2+(a+b)(a-b)+(a-b)^2 \right)
+  = \left( \frac a3 + 1 \right)^3 \]
+where $a,b \in \ZZ$ have the same parity.
+This becomes
+\[ 3a^2+b^2 = 4\left( \frac a3 + 1 \right)^3 \]
+which is enough to imply $3 \mid a$, so let $a = 3c$.
+Miraculously, this becomes \[ b^2 = (c-2)^2 (4c+1). \]
+
+So a solution must have $4c+1=m^2$, with $m$ odd.
+This gives
+\[ x = \frac 18 \left( 3 (m^2-1) \pm (m^3-9m)  \right)
+  \quad\text{and}\quad
+  y = \frac 18 \left( 3 (m^2-1) \mp (m^3-9m) \right).  \]
+For mod $8$ reasons,
+this always generates a valid integer solution,
+so this is the complete curve of solutions.
+Actually, putting $m=2n+1$ gives the much nicer curve
+\[
+ \boxed{x = n^3+3n^2-1
+ \quad\text{and}\quad
+ y = -n^3+3n+1}
+\] and permutations.
+
+For $n=0,1,2,3$ this gives the first few solutions
+are $(-1,1)$, $(3,3)$, $(19,-1)$, $(53, -17)$, (and permutations).
+% http://aops.com/community/c5h1083093p4769984
+\pagebreak
+
+\subsection{JMO 2015/3, proposed by Zuming Feng, Jacek Fabrykowski}
+\textsl{Available online at \url{https://aops.com/community/p4769957}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Quadrilateral $APBQ$ is inscribed in circle $\omega$ with
+$\angle P = \angle Q = 90^{\circ}$ and $AP = AQ < BP$.
+Let $X$ be a variable point on segment $\ol{PQ}$.
+Line $AX$ meets $\omega$ again at $S$ (other than $A$).
+Point $T$ lies on arc $AQB$ of $\omega$ such that $\ol{XT}$
+is perpendicular to $\ol{AX}$.
+Let $M$ denote the midpoint of chord $\ol{ST}$.
+
+As $X$ varies on segment $\ol{PQ}$, show that $M$ moves along a circle.
+\end{mdframed}
+We present three solutions,
+one by complex numbers, two more synthetic.
+(A fourth solution using median formulas is also possible.)
+Most solutions will prove that the center of the fixed circle
+is the midpoint of $\ol{AO}$
+(with $O$ the center of $\omega$);
+this can be recovered empirically by letting
+\begin{itemize}
+  \ii $X$ approach $P$ (giving the midpoint of $\ol{BP}$)
+  \ii $X$ approach $Q$ (giving the point $Q$), and
+  \ii $X$ at the midpoint of $\ol{PQ}$ (giving the midpoint of $\ol{BQ}$)
+\end{itemize}
+which determines the circle;
+this circle then passes through $P$ by symmetry
+and we can find the center by taking the intersection
+of two perpendicular bisectors (which two?).
+
+\paragraph{Complex solution (Evan Chen).}
+Toss on the complex unit circle with $a = -1$, $b=1$, $z = -\tfrac12$.
+Let $s$ and $t$ be on the unit circle. We claim $Z$ is the center.
+
+It follows from standard formulas that
+\[ x = \frac 12 \left( s + t - 1 + s/t \right) \]
+thus \[ 4\operatorname{Re} x + 2
+  = s + t + \frac 1s + \frac 1t + \frac st + \frac ts \]
+which depends only on $P$ and $Q$, and not on $X$.
+Thus \[ 4\left\lvert z-\frac{s+t}{2} \right\rvert^2
+  = \left\lvert s+t+1 \right\rvert^2 = 3 + (4\operatorname{Re}x+2) \]
+does not depend on $X$, done.
+
+\paragraph{Homothety solution (Alex Whatley).}
+Let $G$, $N$, $O$ denote the centroid, nine-point center,
+and circumcenter of triangle $AST$, respectively.
+Let $Y$ denote the midpoint of $\ol{AS}$.
+Then the three points $X$, $Y$, $M$
+lie on the nine-point circle of triangle $AST$,
+which is centered at $N$ and has radius $\frac 12 AO$.
+
+\begin{center}
+\begin{asy}
+size(9cm);
+
+pair A = dir(90);
+pair B = dir(-90);
+pair S = dir(-50);
+pair T = dir(170);
+pair O = midpoint(A--B);
+pair X = foot(T, A, S);
+pair E = dir(0);
+
+pair P = IP(unitcircle, X--(X-2*E));
+pair Q = IP(unitcircle, X--(X+2*E));
+
+filldraw(unitcircle, opacity(0.2)+mediumcyan, mediumblue);
+
+pair M = midpoint(S--T);
+pair G = centroid(A, S, T);
+pair N = 3/2*G;
+
+filldraw(A--P--B--Q--cycle, opacity(0.1)+lightblue, mediumblue);
+draw(A--B, mediumblue+dotted);
+draw(P--Q, mediumblue+dotted);
+
+filldraw(A--S--T--cycle, opacity(0.4)+mediumgreen, heavygreen);
+filldraw(CP(N, M), opacity(0.6)+lightred, red);
+
+draw(T--X, heavygreen);
+draw(A--M, heavygreen);
+pair Y = midpoint(A--S);
+
+draw(O--N, red);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$S$", S, dir(S));
+dot("$T$", T, dir(T));
+dot("$O$", O, dir(-45));
+dot("$X$", X, dir(45));
+dot("$P$", P, dir(P));
+dot("$Q$", Q, dir(Q));
+dot("$M$", M, dir(M));
+dot("$G$", G, dir(30));
+dot("$N$", N, dir(N));
+dot("$Y$", Y, dir(Y));
+
+/* Source generated by TSQ
+
+!size(9cm);
+
+A = dir 90
+B = dir -90
+S = dir -50
+T = dir 170
+O = midpoint A--B R-45
+X = foot T A S R45
+E := dir 0
+
+P = IP unitcircle X--(X-2*E)
+Q = IP unitcircle X--(X+2*E)
+
+unitcircle 0.2 mediumcyan / mediumblue
+
+M = midpoint S--T
+G = centroid A S T R30
+N = 3/2*G
+
+A--P--B--Q--cycle 0.1 lightblue / mediumblue
+A--B mediumblue dotted
+P--Q mediumblue dotted
+
+A--S--T--cycle 0.4 mediumgreen / heavygreen
+CP N M 0.6 lightred / red
+
+T--X heavygreen
+A--M heavygreen
+Y = midpoint A--S
+
+O--N red
+
+*/
+\end{asy}
+\end{center}
+
+Let $R$ denote the radius of $\omega$.
+Note that the nine-point circle of $\triangle AST$
+has radius equal to $\half R$, and hence is independent of $S$ and $T$.
+Then the power of $A$ with respect to the nine-point circle equals
+\[ AN^2 - \left( \half R \right)^2 = AX \cdot AY
+  = \frac 12 AX \cdot AS = \frac 12 AQ^2 \]
+and hence
+\[ AN^2 = \left( \half R \right)^2 + \frac 12 AQ^2 \]
+which does not depend on the choice of $X$.
+So $N$ moves along a circle centered at $A$.
+
+Since the points $O$, $G$, $N$ are collinear on the Euler line of $\triangle AST$
+with \[ GO = \frac 23 NO \] it follows by homothety
+that $G$ moves along a circle as well,
+whose center is situated one-third of the way from $A$ to $O$.
+Finally, since $A$, $G$, $M$ are collinear with \[ AM = \frac 32 AG \]
+it follows that $M$ moves along a circle
+centered at the midpoint of $\ol{AO}$.
+
+\paragraph{Power of a point solution (Zuming Feng, official solution).}
+We complete the picture by letting $\triangle KYX$ be the orthic
+triangle of $\triangle AST$;
+in that case line $XY$ meets the $\omega$ again at $P$ and $Q$.
+
+\begin{center}
+\begin{asy}
+size(9cm);
+
+pair A = dir(125);
+pair B = -A;
+pair S = dir(210);
+pair T = dir(330);
+pair O = midpoint(A--B);
+pair X = foot(T, A, S);
+pair E = dir(0);
+
+filldraw(unitcircle, opacity(0.2)+mediumcyan, mediumblue);
+pair M = midpoint(S--T);
+
+filldraw(A--S--T--cycle, opacity(0.4)+mediumgreen, heavygreen);
+
+draw(T--X, heavygreen);
+draw(A--M, heavygreen);
+
+pair Y = foot(S, A, T);
+pair K = foot(A, S, T);
+filldraw(circumcircle(X, Y, M), opacity(0.1)+yellow, red);
+draw(S--Y, heavygreen);
+draw(A--K, heavygreen);
+
+pair P = IP(unitcircle, X--(3*Y-2*X));
+pair Q = IP(unitcircle, Y--(3*X-2*Y));
+
+pair V = extension(P, Q, S, T);
+draw(P--Q, blue);
+draw(A--B, blue);
+draw(Q--V, blue);
+draw(V--S, heavygreen);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$S$", S, dir(S));
+dot("$T$", T, dir(T));
+dot("$O$", O, dir(45));
+dot("$X$", X, dir(135));
+dot("$M$", M, dir(M));
+dot("$Y$", Y, dir(70));
+dot("$K$", K, dir(K));
+dot("$P$", P, dir(P));
+dot("$Q$", Q, dir(150));
+dot("$V$", V, dir(V));
+
+/* TSQ Source:
+
+!size(9cm);
+
+A = dir 125
+B = -A
+S = dir 210
+T = dir 330
+O = midpoint A--B R45
+X = foot T A S R135
+E := dir 0
+
+unitcircle 0.2 mediumcyan / mediumblue
+M = midpoint S--T
+
+A--S--T--cycle 0.4 mediumgreen / heavygreen
+
+T--X heavygreen
+A--M heavygreen
+
+Y = foot S A T R70
+K = foot A S T
+circumcircle X Y M 0.1 yellow / red
+S--Y heavygreen
+A--K heavygreen
+
+P = IP unitcircle X--(3*Y-2*X)
+Q = IP unitcircle Y--(3*X-2*Y) R150
+
+V = extension P Q S T
+P--Q blue
+A--B blue
+Q--V blue
+V--S heavygreen
+
+*/
+\end{asy}
+\end{center}
+
+The main claim is:
+\begin{claim*}
+  Quadrilateral $PQKM$ is cyclic.
+\end{claim*}
+\begin{proof}
+  To see this, we use power of a point: let $V = \ol{QXYP} \cap \ol{SKMT}$.
+  One approach is that since $(VK;ST) = -1$
+  we have $VQ \cdot VP = VS \cdot VT = VK \cdot VM$.
+  A longer approach is more elementary:
+  \[ VQ \cdot VP = VS \cdot VT = VX \cdot VY = VK \cdot VM \]
+  using the nine-point circle, and the circle with diameter $\ol{ST}$.
+\end{proof}
+But the circumcenter of $PQKM$,
+is the midpoint of $\ol{AO}$,
+since it lies on the perpendicular bisectors of $\ol{KM}$ and $\ol{PQ}$.
+So it is fixed, the end.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{JMO 2015/4, proposed by Iurie Boreico}
+\textsl{Available online at \url{https://aops.com/community/p4774049}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all functions $f \colon \QQ \to \QQ$ such that
+\[ f(x)+f(t)=f(y)+f(z) \]
+for all rational numbers $x<y<z<t$ that form an arithmetic progression.
+\end{mdframed}
+Answer: any linear function $f$.
+These work.
+
+Here is one approach: for any $a$ and $d > 0$
+\begin{align*}
+  f(a) + f(a+3d) &= f(a+d) + f(a+2d) \\
+  f(a-d) + f(a+2d) &= f(a) + f(a+d) \\
+  \intertext{which imply}
+  f(a-d) + f(a+3d) &= 2f(a+d).
+\end{align*}
+Thus we conclude that for arbitrary $x$ and $y$ we have
+\[ f(x) + f(y) = 2f\left( \frac{x+y}{2} \right) \]
+thus $f$ satisfies Jensen functional equation over $\QQ$, so linear.
+
+The solution can be made to avoid appealing to Jensen's functional equation;
+here is a presentation of such a solution based on the official ones.
+Let $d > 0$ be a positive integer, and let $n$ be an integer.
+Consider the two equations
+\begin{align*}
+  f\left( \frac{2n-1}{2d} \right) + f\left( \frac{2n+2}{2d} \right)
+  &= f\left( \frac{2n}{2d} \right) + f\left( \frac{2n+1}{2d} \right) \\
+  f\left( \frac{2n-2}{2d} \right) + f\left( \frac{2n+1}{2d} \right)
+  &= f\left( \frac{2n-1}{2d} \right) + f\left( \frac{2n}{2d} \right)
+\end{align*}
+Summing them and simplifying implies that
+\[ f\left( \frac{n-1}{d} \right) + f\left( \frac{n+1}{d} \right)
+  = 2 f \left( \frac nd \right) \]
+or equivalently
+\[ f\left( \frac nd \right) - f\left( \frac{n-1}{d} \right)
+  = f\left( \frac{n+1}{d} \right) - f\left( \frac nd \right). \]
+This implies that on the set of rational numbers
+with denominator dividing $d$, the function $f$ is linear.
+
+In particular, we should have
+$f\left( \frac nd \right) = f(0) + \frac nd f(1)$
+since $\frac nd$, $0$, $1$ have denominators dividing $d$.
+This is the same as saying $f(q) = f(0) + q (f(1)-f(0))$
+for any $q \in \QQ$, which is what we wanted to prove.
+\pagebreak
+
+\subsection{JMO 2015/5, proposed by Sungyoon Kim}
+\textsl{Available online at \url{https://aops.com/community/p4774099}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCD$ be a cyclic quadrilateral.
+Prove that there exists a point $X$ on segment $\ol{BD}$
+such that $\angle BAC=\angle XAD$ and $\angle BCA=\angle XCD$
+if and only if there exists a point $Y$ on segment $\ol{AC}$
+such that $\angle CBD=\angle YBA$ and $\angle CDB=\angle YDA$.
+\end{mdframed}
+Both conditions are equivalent to $ABCD$ being harmonic.
+
+Here is a complex solution.
+Extend $U$ and $V$ and shown.
+Thus $u = bd/a$ and $v = bd/c$.
+
+\begin{center}
+\begin{asy}
+  size(4.5cm);
+  pair A = Drawing("A", dir(110), dir(110));
+  pair B = Drawing("B", dir(160), dir(160));
+  pair D = Drawing("D", dir( 20), dir( 20));
+  pair C = Drawing("C", dir(240), dir(240));
+  draw(unitcircle);
+  draw(A--B--C--D--cycle);
+  draw(B--D);
+  pair U = -conj(A);
+  pair V = -conj(C);
+  Drawing("U", U, U);
+  Drawing("V", V, V);
+  draw(C--U);
+  draw(A--V);
+  Drawing("X", extension(C,U,A,V), dir(0));
+  draw(A--U, dashed);
+  draw(C--V, dashed);
+  draw(A--C);
+\end{asy}
+\end{center}
+
+Note $\ol{AV} \cap \ol{CU}$ lies on the
+perpendicular bisector of $\ol{BD}$ unconditionally.
+Then $X$ exists as described if and only if
+the midpoint of $\ol{BD}$ lies on $\ol{AV}$.
+In complex numbers this is $a + v = m + av \ol m$, or
+\[
+  a + \frac{bd}{c} = \frac{b+d}{2} + \frac{abd}{c} \cdot \frac{b+d}{2bd}
+  \iff 2(ac+bd) = (b+d)(a+c)
+\]
+which is symmetric.
+\pagebreak
+
+\subsection{JMO 2015/6, proposed by Maria Monks Gillespie}
+\textsl{Available online at \url{https://aops.com/community/p4774079}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Steve is piling $m\geq 1$ indistinguishable stones
+on the squares of an $n\times n$ grid.
+Each square can have an arbitrarily high pile of stones.
+After he finished piling his stones in some manner,
+he can then perform \emph{stone moves}, defined as follows.
+Consider any four grid squares, which are corners of a rectangle,
+i.e.\ in positions $(i, k)$, $(i, l)$, $(j, k)$, $(j, l)$
+for some $1\leq i, j, k, l\leq n$, such that $i<j$ and $k<l$.
+A stone move consists of either removing one stone from each of
+$(i, k)$ and $(j, l)$ and moving them to $(i, l)$ and $(j, k)$ respectively,
+or removing one stone from each of $(i, l)$ and $(j, k)$
+and moving them to $(i, k)$ and $(j, l)$ respectively.
+
+Two ways of piling the stones are equivalent if they can be obtained
+from one another by a sequence of stone moves.
+How many different non-equivalent ways can Steve pile the stones on the grid?
+\end{mdframed}
+The answer is $\binom{m+n-1}{n-1}^2$.
+The main observation is that the ordered sequence of column counts
+(i.e.\ the number of stones in the first, second, etc.\ column)
+is invariant under stone moves, as does the analogous sequence of row counts.
+
+\paragraph{Definitions.}
+Call these numbers $(c_1, c_2, \dots, c_n)$
+and $(r_1, r_2, \dots, r_n)$ respectively,
+with $\sum c_i = \sum r_i = m$.
+We say that the sequence $(c_1, \dots, c_n, r_1, \dots, r_n)$
+is the \emph{signature} of the configuration.
+These are the $2m$ blue and red numbers shown in the example below
+(in this example we have $m=8$ and $n=3$).
+\begin{center}
+\begin{asy}
+  unitsize(1.5cm);
+  for (int i=0; i<=3; ++i) {
+    draw( (0,i)--(3,i), grey );
+    draw( (i,0)--(i,3), grey );
+  }
+  label("$c_1=\boxed{5}$", (0.5,3), dir(90), blue);
+  label("$c_2=\boxed{2}$", (1.5,3), dir(90), blue);
+  label("$c_3=\boxed{1}$", (2.5,3), dir(90), blue);
+
+  label("$r_1=\boxed{3}$", (0,2.5), dir(180), red);
+  label("$r_2=\boxed{3}$", (0,1.5), dir(180), red);
+  label("$r_3=\boxed{2}$", (0,0.5), dir(180), red);
+
+  real r = 0.1;
+  filldraw(circle((0.3,2.7), r), grey, black);
+  filldraw(circle((0.6,2.4), r), grey, black);
+  filldraw(circle((1.4,2.3), r), grey, black);
+  filldraw(circle((0.6,1.7), r), grey, black);
+  filldraw(circle((0.4,1.4), r), grey, black);
+  filldraw(circle((0.7,0.5), r), grey, black);
+  filldraw(circle((2.4,1.6), r), grey, black);
+  filldraw(circle((1.6,0.4), r), grey, black);
+  label("Signature: $(5,2,1;3,3,2)$", (1.5,0), dir(-90));
+\end{asy}
+\end{center}
+By stars-and-bars, the number of possible values $(c_1, \dots, c_n)$
+is $\binom{m+n-1}{n-1}$.
+The same is true for $(r_1, \dots, r_m)$.
+So if we're just counting \emph{signatures},
+the total number of possible signatures is $\binom{m+n-1}{n-1}^2$.
+
+\paragraph{Outline and setup.}
+We are far from done.
+To show that the number of non-equivalent ways is also this number,
+we need to show that signatures correspond to pilings.
+In other words, we need to prove:
+\begin{enumerate}
+  \ii Check that signatures are invariant around moves
+  (trivial; we did this already);
+  \ii Check conversely that two configurations
+  are equivalent if they have the same signatures
+  (the hard part of the problem); and
+  \ii Show that each signature is realized by at least
+  one configuration (not immediate, but pretty easy).
+\end{enumerate}
+
+Most procedures to the second step are algorithmic in nature,
+but Ankan Bhattacharya gives the following far cleaner approach.
+Rather than having a grid of stones,
+we simply consider the multiset of ordered pairs $(x,y)$
+corresponding to the stones.
+Then:
+\begin{itemize}
+  \ii a stone move corresponds to switching two $y$-coordinates
+  in two different pairs.
+  \ii we \emph{redefine} the signature to be the multiset $(X,Y)$
+  of $x$ and $y$ coordinates which appear.
+  Explicitly, $X$ is the multiset that contains $c_i$ copies
+  of the number $i$ for each $i$.
+\end{itemize}
+For example, consider the earlier example which had
+\begin{itemize}
+  \ii Two stones each at $(1,1)$, $(1,2)$.
+  \ii One stone each at $(1,3)$, $(2,1)$, $(2,3)$, $(3,2)$.
+\end{itemize}
+Its signature can then be reinterpreted as
+\[
+  (5,2,1; 3,3,2)
+  \longleftrightarrow
+  \begin{cases}
+    X = \{1,1,1,1,1,2,2,3\} \\
+    Y = \{1,1,1,2,2,2,3,3\}.
+  \end{cases}
+\]
+In that sense, the entire grid is quite misleading!
+
+\paragraph{Proof that two configurations with the same signature are equivalent.}
+The second part is completed just because
+transpositions generate any permutation.
+To be explicit, given two sets of stones,
+we can permute the labels so that the first set is
+$(x_1, y_1)$, \dots, $(x_m, y_m)$ and
+the second set of stones is
+$(x_1, y_1')$, \dots, $(x_m, y_m')$.
+Then we just induce the correct permutation on $(y_i)$ to get $(y_i')$.
+
+\paragraph{Proof that any signature has at least one configuration.}
+Sort the elements of $X$ and $Y$ arbitrarily (say, in non-decreasing order).
+Put a stone whose $x$-coordinate is the $i$th element of $X$,
+and whose $y$-coordinate is the $i$th element of $Y$,
+for each $i = 1, 2, \dots, m$.
+Then this gives a stone placement of $m$ stones with signature $(X,Y)$.
+
+For example, if
+\begin{align*}
+  X &= \{1,1,1,1,1,2,2,3\} \\
+  Y &= \{1,1,1,2,2,2,3,3\}
+\end{align*}
+then placing stones at
+$(1,1)$, $(1,1)$, $(1,1)$, $(1,2)$, $(1,2)$, $(2,2)$, $(2,3)$, $(3,3)$
+gives a valid piling with this signature.
+\pagebreak
+
+
+\end{document}

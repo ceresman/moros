@@ -1,0 +1,530 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2010 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2010 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $AXYZB$ be a convex pentagon inscribed in a semicircle of diameter $AB$.
+Denote by $P$, $Q$, $R$, $S$ the feet of the perpendiculars
+from $Y$ onto lines $AX$, $BX$, $AZ$, $BZ$, respectively.
+Prove that the acute angle formed by lines $PQ$ and $RS$
+is half the size of $\angle XOZ$,
+where $O$ is the midpoint of segment $AB$.
+
+\item %% Problem 2
+There are $n$ students standing in a circle, one behind the other.
+The students have heights $h_1<h_2<\dots <h_n$.
+If a student with height $h_k$ is standing directly
+behind a student with height $h_{k-2}$ or less,
+the two students are permitted to switch places.
+Prove that it is not possible to make more than
+$\binom{n}{3}$ such switches
+before reaching a position in which no
+further switches are possible.
+
+\item %% Problem 3
+The $2010$ positive real numbers $a_1$, $a_2$, \dots , $a_{2010}$
+satisfy the inequality $a_i a_j \le i+j$
+for all $1 \le i < j \le 2010$.
+Determine, with proof, the largest possible value
+of the product $a_1a_2\dots a_{2010}$.
+
+\item %% Problem 4
+Let $ABC$ be a triangle with $\angle A = 90^{\circ}$. Points $D$ and $E$ lie on sides $AC$ and $AB$, respectively, such that $\angle ABD = \angle DBC$ and $\angle ACE = \angle ECB$. Segments $BD$ and $CE$ meet at $I$. Determine whether or not it is possible for segments $AB$, $AC$, $BI$, $ID$, $CI$, $IE$ to all have integer lengths.
+
+\item %% Problem 5
+Let $q = \frac{3p-5}{2}$ where $p$ is an odd prime, and let
+\[ S_q = \frac{1}{2\cdot 3 \cdot 4} + \frac{1}{5\cdot 6 \cdot 7}
++ \dots + \frac{1}{q(q+1)(q+2)}. \]
+Prove that if $\frac{1}{p}-2S_q = \frac{m}{n}$ for integers $m$ and $n$,
+then $m - n$ is divisible by $p$.
+
+\item %% Problem 6
+There are $68$ ordered pairs (not necessarily distinct)
+of nonzero integers on a blackboard.
+It's known that for no integer $k$ does both $(k,k)$ and $(-k,-k)$ appear.
+A student erases some of the $136$ integers such that
+no two erased integers have sum zero, and scores one point
+for each ordered pair with at least one erased integer.
+What is the maximum possible score the student can guarantee?
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2010/1, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p1860802}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $AXYZB$ be a convex pentagon inscribed in a semicircle of diameter $AB$.
+Denote by $P$, $Q$, $R$, $S$ the feet of the perpendiculars
+from $Y$ onto lines $AX$, $BX$, $AZ$, $BZ$, respectively.
+Prove that the acute angle formed by lines $PQ$ and $RS$
+is half the size of $\angle XOZ$,
+where $O$ is the midpoint of segment $AB$.
+\end{mdframed}
+Let $T$ be the foot from $Y$ to $\ol{AB}$.
+Then the Simson line implies that lines $PQ$ and $RS$ meet at $T$.
+
+\begin{center}
+\begin{asy}
+pair A = dir(180);
+pair B = dir(0);
+pair X = dir(140);
+pair Y = dir(100);
+pair Z = dir(60);
+
+pair P = foot(Y, A, X);
+pair Q = foot(Y, B, X);
+pair R = foot(Y, A, Z);
+pair S = foot(Y, B, Z);
+
+pair T = extension(P, Q, R, S);
+
+draw(A--X--Y--Z--B, orange);
+filldraw(unitcircle, opacity(0.1)+orange, red);
+
+draw(Y--P, red);
+draw(Y--Q, red);
+draw(Y--R, red);
+draw(Y--S, red);
+draw(P--X--B, brown);
+draw(P--T--S, red);
+draw(S--Z--A, brown);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$X$", X, dir(X));
+dot("$Y$", Y, dir(Y));
+dot("$Z$", Z, dir(Z));
+dot("$P$", P, dir(P));
+dot("$Q$", Q, dir(Q));
+dot("$R$", R, dir(R));
+dot("$S$", S, dir(S));
+dot("$T$", T, dir(T));
+
+/* TSQ Source:
+
+A = dir 180
+B = dir 0
+X = dir 140
+Y = dir 100
+Z = dir 60
+
+P = foot Y A X
+Q = foot Y B X
+R = foot Y A Z
+S = foot Y B Z
+
+T = extension P Q R S
+
+A--X--Y--Z--B orange
+unitcircle 0.1 orange / red
+
+Y--P red
+Y--Q red
+Y--R red
+Y--S red
+P--X--B brown
+P--T--S red
+S--Z--A brown
+
+*/
+\end{asy}
+\end{center}
+
+Now it's straightforward to see $APYRT$ is cyclic
+(in the circle with diameter $\ol{AY}$),
+and therefore
+\[ \angle RTY = \angle RAY = \angle ZAY. \]
+Similarly,
+\[ \angle YTQ = \angle YBQ = \angle YBX. \]
+Summing these gives $\angle RTQ$ is equal to
+half the measure of arc $\widehat{XZ}$ as needed.
+
+(Of course, one can also just angle chase;
+the Simson line is not so necessary.)
+\pagebreak
+
+\subsection{USAMO 2010/2, proposed by David Speyer}
+\textsl{Available online at \url{https://aops.com/community/p1860777}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+There are $n$ students standing in a circle, one behind the other.
+The students have heights $h_1<h_2<\dots <h_n$.
+If a student with height $h_k$ is standing directly
+behind a student with height $h_{k-2}$ or less,
+the two students are permitted to switch places.
+Prove that it is not possible to make more than
+$\binom{n}{3}$ such switches
+before reaching a position in which no
+further switches are possible.
+\end{mdframed}
+The main claim is the following observation,
+which is most motivated in the situation $j-i = 2$.
+\begin{claim*}
+  The students with heights $h_i$ and $h_j$
+  switch at most $|j-i|-1$ times.
+\end{claim*}
+\begin{proof}
+  By induction on $d = |j-i|$, assuming $j > i$.
+  For $d = 1$ there is nothing to prove.
+
+  For $d \ge 2$, look at only students $h_j$, $h_{i+1}$
+  and $h_{i}$ ignoring all other students.
+  After $h_j$ and $h_i$ switch the first time,
+  the relative ordering of the students must be
+  $h_i \to h_j \to h_{i+1}$.
+  Thereafter $h_j$ must always switch with $h_{i+1}$
+  before switching with $h_i$,
+  so the inductive hypothesis applies to give the bound
+  $1 + j - (i+1) - 1 = j-i - 1$.
+\end{proof}
+Hence, the number of switches is at most
+\[ \sum_{1 \le i < j \le n} \left( |j-i| - 1 \right) = \binom n3. \]
+\pagebreak
+
+\subsection{USAMO 2010/3, proposed by Gabriel Carroll}
+\textsl{Available online at \url{https://aops.com/community/p1860806}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+The $2010$ positive real numbers $a_1$, $a_2$, \dots , $a_{2010}$
+satisfy the inequality $a_i a_j \le i+j$
+for all $1 \le i < j \le 2010$.
+Determine, with proof, the largest possible value
+of the product $a_1a_2\dots a_{2010}$.
+\end{mdframed}
+The answer is $3 \times 7 \times 11 \times \dots \times 4019$,
+which is clearly an upper bound
+(and it's not too hard to show this is the lowest
+number we may obtain by multiplying $1005$ equalities together;
+this is essentially the rearrangement inequality).
+The tricky part is the construction.
+Intuitively we want $a_i \approx \sqrt{2i}$,
+but the details require significant care.
+
+Note that if this is achievable,
+we will require $a_n a_{n+1} = 2n+1$ for all odd $n$.
+Here are two constructions:
+\begin{itemize}
+\ii One can take the sequence such that $a_{2008} a_{2010} = 4018$
+  and $a_n a_{n+1} = 2n+1$ for all $n = 1, 2, \dots, 2009$.
+  This can be shown to work by some calculation. As an illustrative example,
+  \[ a_1 a_4 = \frac{a_1a_2 \cdot a_3a_4}{a_2a_3} = \frac{3 \cdot 7}{5} < 5. \]
+
+\ii In fact one can also take $a_n = \sqrt{2n}$ for all even $n$
+  (and hence $a_{n-1} = \sqrt{2n} - \frac{1}{\sqrt{2n}}$ for such even $n$).
+\end{itemize}
+
+\begin{remark*}
+This is a chief example of an ``abstract'' restriction-based approach.
+One can motivate it in three steps:
+\begin{itemize}
+\ii The bound $3 \cdot 7 \cdot \dots \cdot 4019$ is provably best possible
+upper bound by pairing the inequalities;
+also the situation with $2010$ replaced by $4$
+is constructible with bound $21$.
+\ii We have $a_n \approx \sqrt{2n}$ heuristically;
+in fact $a_n = \sqrt{2n}$ satisfies inequalities by AM-GM.
+\ii So we are most worried about $a_i a_j \le i+j$
+when $|i-j|$ is small, like $|i-j| = 1$.
+\end{itemize}
+I then proceeded to spend five hours on various constructions,
+but it turns out that the right thing to do was just require
+$a_k a_{k+1} = 2k+1$, to make sure these pass:
+and the problem almost solves itself.
+\end{remark*}
+
+\begin{remark*}
+  When $2010$ is replaced by $4$
+  it is not too hard to manually write an explicit example:
+  say $a_1 = \frac{\sqrt3}{1.1}$, $a_2 = 1.1\sqrt3$,
+  $a_3 = \frac{\sqrt7}{1.1}$ and $a_4 = 1.1\sqrt7$.
+  So this is a reason one might guess that
+  $3 \times 7 \times \dots \times 4019$
+  can actually be achieved in the large case.
+\end{remark*}
+
+\begin{remark*}
+  Victor Wang says:
+  I believe we can actually prove that WLOG (!) assume $a_i a_{i+1} = 2i+1$
+  for all $i$ (but there are other ways to motivate that as well,
+  like linear programming after taking logs),
+  which makes things a bit simpler to think about.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2010/4, proposed by Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p1860753}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle with $\angle A = 90^{\circ}$. Points $D$ and $E$ lie on sides $AC$ and $AB$, respectively, such that $\angle ABD = \angle DBC$ and $\angle ACE = \angle ECB$. Segments $BD$ and $CE$ meet at $I$. Determine whether or not it is possible for segments $AB$, $AC$, $BI$, $ID$, $CI$, $IE$ to all have integer lengths.
+\end{mdframed}
+The answer is no.
+We prove that it is not even possible that $AB$, $AC$, $CI$, $IB$ are all integers.
+
+\begin{center}
+  \begin{asy}
+    size(5cm);
+    pair B = dir(140);
+    pair A = conj(B);
+    pair C = -B;
+    filldraw(A--B--C--cycle, opacity(0.1)+lightblue, blue);
+    pair I = incenter(A, B, C);
+    pair D = extension(B, I, A, C);
+    pair E = extension(C, I, A, B);
+    draw(B--D);
+    draw(C--E);
+    filldraw(incircle(A,B,C), opacity(0.1)+lightred, red+dotted);
+
+    dot("$B$", B, dir(B));
+    dot("$A$", A, dir(A));
+    dot("$C$", C, dir(C));
+    dot("$I$", I, dir(45));
+    dot("$D$", D, dir(D));
+    dot("$E$", E, dir(E));
+
+    /* Source generated by TSQ */
+  \end{asy}
+\end{center}
+
+First, we claim that $\angle BIC = 135\dg$.
+To see why, note that
+\[ \angle IBC + \angle ICB = \frac{\angle B}{2} + \frac{\angle C}{2}
+  = \frac{90\dg}{2} = 45\dg. \]
+So, $\angle BIC = 180\dg - (\angle IBC + \angle ICB) = 135\dg$, as desired.
+
+We now proceed by contradiction.
+The Pythagorean theorem implies
+\[ BC^2 = AB^2 + AC^2 \]
+and so $BC^2$ is an integer.
+However, the law of cosines gives
+\begin{align*}
+  BC^2 &= BI^2 + CI^2 - 2 BI \cdot CI \cos \angle BIC \\
+  &= BI^2 + CI^2 + BI \cdot CI \cdot \sqrt 2.
+\end{align*}
+which is irrational, and this produces the desired contradiction.
+\pagebreak
+
+\subsection{USAMO 2010/5, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p1860791}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $q = \frac{3p-5}{2}$ where $p$ is an odd prime, and let
+\[ S_q = \frac{1}{2\cdot 3 \cdot 4} + \frac{1}{5\cdot 6 \cdot 7}
++ \dots + \frac{1}{q(q+1)(q+2)}. \]
+Prove that if $\frac{1}{p}-2S_q = \frac{m}{n}$ for integers $m$ and $n$,
+then $m - n$ is divisible by $p$.
+\end{mdframed}
+By partial fractions, we have
+\[
+  \frac{2}{(3k-1)(3k)(3k+1)}
+  = \frac{1}{3k-1} - \frac{2}{3k} + \frac{1}{3k+1}.
+\]
+Thus
+\begin{align*}
+  2S_q
+  &= \left( \frac12 - \frac23 + \frac14 \right)
+  + \left( \frac 15 - \frac26 + \frac17 \right)
+  + \dots
+  + \left( \frac1q - \frac2{q+1} + \frac{1}{q+2} \right) \\
+  &= \left( \half + \frac13 + \frac14 + \dots + \frac{1}{q+2} \right)
+  - 3\left( \frac13 + \frac 16 + \dots + \frac{1}{q+1} \right) \\
+  &= \left( \half + \frac13 + \frac14 + \dots + \frac{1}{q+2} \right)
+  - \left( \frac11 + \frac 12 + \dots + \frac{1}{\frac{q+1}{3}} \right) \\
+  \implies 2S_q - \frac1p + 1
+  &=  \left( \frac11 + \frac12 + \dots + \frac{1}{p-1} \right)
+  + \left( \frac{1}{p+1} + \frac{1}{p+2} \dots + \frac{1}{q+2} \right)
+  - \left( \frac11 + \frac 12 + \dots + \frac{1}{\frac{q+1}{3}} \right)
+\end{align*}
+
+Now we are ready to take modulo $p$.
+The given says that $q-p+2 = \frac{q+1}{3}$, so
+\begin{align*}
+  2S_q - \frac1p + 1
+  &=  \left( \frac11 + \frac12 + \dots + \frac{1}{p-1} \right)
+  + \left( \frac{1}{p+1} + \frac{1}{p+2} + \dots + \frac{1}{q+2} \right)
+  - \left( \frac11 + \frac 12 + \dots + \frac{1}{\frac{q+1}{3}} \right) \\
+  &\equiv  \left( \frac11 + \frac12 + \dots + \frac{1}{p-1} \right)
+  + \left( \frac11 + \frac12 + \dots + \frac{1}{q-p+2} \right)
+  - \left( \frac11 + \frac 12 + \dots + \frac{1}{\frac{q+1}{3}} \right) \\
+  &= \frac11 + \frac12+ \dots + \frac{1}{p-1} \\
+  &\equiv 0 \pmod p.
+\end{align*}
+
+So $\frac1p - 2S_q \equiv 1 \pmod p$ which is the desired.
+\pagebreak
+
+\subsection{USAMO 2010/6, proposed by Zuming Feng, Paul Zeitz}
+\textsl{Available online at \url{https://aops.com/community/p1860794}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+There are $68$ ordered pairs (not necessarily distinct)
+of nonzero integers on a blackboard.
+It's known that for no integer $k$ does both $(k,k)$ and $(-k,-k)$ appear.
+A student erases some of the $136$ integers such that
+no two erased integers have sum zero, and scores one point
+for each ordered pair with at least one erased integer.
+What is the maximum possible score the student can guarantee?
+\end{mdframed}
+The answer is $43$.
+
+The structure of this problem is better understood as follows:
+we construct a multigraph whose vertices are the entries,
+and the edges are the $68$ ordered pairs on the blackboard.
+To be precise, construct a multigraph $G$ with vertices
+$a_1$, $b_1$, \dots, $a_n$, $b_n$,
+with $a_i = -b_i$ for each $i$.
+The ordered pairs then correspond to $68$ edges in $G$,
+with self-loops allowed (WLOG) only for vertices $a_i$.
+The student may then choose one of $\{a_i, b_i\}$ for each $i$
+and wishes to maximize the number of edges adjacent
+to the set of chosen vertices.
+
+\begin{center}
+\begin{asy}
+size(5cm);
+pair a1 = (-1,6);
+pair b1 = (1,6);
+pair a2 = (-1,4);
+pair b2 = (1,4);
+pair a3 = (-1,2);
+pair b3 = (1,2);
+pair a4 = (-1,0);
+pair b4 = (1,0);
+
+draw(a1--a2, red);
+draw(a1--b3, red);
+draw(a3--b2, red);
+draw(b1..(0.7,4)..b3, red);
+draw(circle(a2+0.24*dir(0), 0.24), heavycyan);
+draw(circle(a2+0.28*dir(0), 0.28), heavycyan);
+draw(circle(a3+0.25*dir(0), 0.25), heavycyan);
+draw(a4--b3, red);
+draw(a4..(0,0.7)..b3, red);
+draw(a4--b4, red);
+
+dot("$3$", a1, dir(180));
+dot("$7$", a2, dir(180));
+dot("$8$", a3, dir(180));
+dot("$2$", a4, dir(180));
+dot("$-3$", b1, dir(0));
+dot("$-7$", b2, dir(0));
+dot("$-8$", b3, dir(0));
+dot("$-2$", b4, dir(0));
+\end{asy}
+\end{center}
+
+First we use the probabilistic method to show $N \ge 43$.
+We select the real number $p = \frac{\sqrt5-1}{2} \approx 0.618$
+satisfying $p = 1-p^2$.
+For each $i$ we then select $a_i$ with probability $p$
+and $b_i$ with probability $1-p$.
+Then
+\begin{itemize}
+  \ii Every self-loop $(a_i, a_i)$ is chosen with probability $p$.
+  \ii Any edge $(b_i, b_j)$ is chosen with probability $1-p^2$.
+\end{itemize}
+All other edges are selected with probability at least $p$,
+so in expectation we have $68p \approx 42.024$ edges scored.
+Hence $N \ge 43$.
+
+For a construction showing $43$ is optimal, we let $n = 8$,
+and put five self-loops on each $a_i$,
+while taking a single $K_8$ on the $b_i$'s.
+The score achieved for selecting $m$ of the $a_i$'s
+and $8-m$ of the $b_i$'s is
+\[ 5m + \left( \binom82-\binom m2 \right) \le 43 \]
+with equality when either $m=5$ and $m=6$.
+
+\begin{remark*}
+  [Colin Tang]
+  Here is one possible motivation for
+  finding the construction.
+  In equality case we probably want
+  all the edges to either be $a_i$ loops or $b_i b_j$ edges.
+  Now if $b_i$ and $b_j$ are not joined by an edge,
+  one can ``merge them together'',
+  also combining the corresponding $a_i$'s,
+  to get another multigraph with $68$ edges
+  whose optimal score is at most the original ones.
+  So by using this smoothing algorithm,
+  we can reduce to a situation where the $b_i$ and $b_j$
+  are all connected to each other.
+
+  It's not unnatural to assume it's a clique then,
+  at which point fiddling with parameters gives the construction.
+  Also, there is a construction for $\left\lceil 2/3 n \right\rceil$
+  which is not too difficult to find,
+  and applying this smoothing operation to this construction
+  could suggest a clique of at least $8$ vertices too.
+\end{remark*}
+
+\begin{remark*}
+  [David Lee]
+  One could consider changing the probability $p(n)$
+  to be a function of the number $n$ of non-loops
+  (hence there are $68-n$ loops);
+  we would then have
+  \[ \mathbb E[\text{points}]
+    \ge (68-n)p(n) + n(1-p(n)^2). \]
+  The optimal value of $p(n)$ is then
+  \[
+    p(n) = \begin{cases}
+      \frac{68-n}{2n} = \frac{34}{n} - \half & n \ge 23 \\
+      1 & n < 22.
+    \end{cases}
+  \]
+  For $n > 23$ we then have
+  \begin{align*}
+    E(n) = & (68-n)\left( \frac{34}{n}-\half \right)
+  + n\left( 1-\left( \frac{34}{n}-\half \right)^2 \right) \\
+    &= \frac{5n}{4} + \frac{34^2}{n} - 34
+  \end{align*}
+  which has its worst case at around $5n^2 = 68^2$,
+  so at $n=30$ and $n=31$.
+  Indeed, one can find
+  \begin{align*}
+    E(30) &= 42.033 \\
+    E(31) &= 42.040.
+  \end{align*}
+  This gives another way to get the lower bound $43$,
+  and gives a hint about approximately how many non-loops
+  one would want in order to achieve such a bound.
+\end{remark*}
+\pagebreak
+
+
+\end{document}

@@ -1,0 +1,872 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{USA TSTST 2017 Solutions}
+\subtitle{United States of America --- TST Selection Test}
+\date{59\ts{th} IMO 2018 Romania and 7\ts{th} EGMO 2018 Italy}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $ABC$ be a triangle with circumcircle $\Gamma$,
+circumcenter $O$, and orthocenter $H$.
+Assume that $AB \neq AC$ and $\angle A \neq 90\dg$.
+Let $M$ and $N$ be the midpoints of $\ol{AB}$ and $\ol{AC}$,
+respectively, and let $E$ and $F$ be the feet of the altitudes
+from $B$ and $C$ in $\triangle ABC$, respectively.
+Let $P$ be the intersection point of line $MN$
+with the tangent line to $\Gamma$ at $A$.
+Let $Q$ be the intersection point,
+other than $A$, of $\Gamma$ with the circumcircle of $\triangle AEF$.
+Let $R$ be the intersection point of lines $AQ$ and $EF$.
+Prove that $\ol{PR} \perp \ol{OH}$.
+
+\item %% Problem 2
+Ana and Banana are playing a game. First Ana picks a word,
+which is defined to be a nonempty sequence of capital English letters.
+Then Banana picks a nonnegative integer $k$ and challenges Ana
+to supply a word with exactly $k$ subsequences which are equal to Ana's word.
+Ana wins if she is able to supply such a word, otherwise she loses.
+For example, if Ana picks the word ``TST'', and Banana chooses $k = 4$,
+then Ana can supply the word ``TSTST'' which has $4$ subsequences
+which are equal to Ana's word.
+Which words can Ana pick so that she can win no matter what value of
+$k$ Banana chooses?
+
+\item %% Problem 3
+Consider solutions to the equation
+\[ x^2 - cx + 1 = \frac{f(x)}{g(x)} \]
+where $f$ and $g$ are nonzero polynomials with nonnegative real coefficients.
+For each $c > 0$, determine the minimum possible degree of $f$, or show
+that no such $f$, $g$ exist.
+
+\item %% Problem 4
+Find all nonnegative integer solutions to \[ 2^a + 3^b + 5^c = n!. \]
+
+\item %% Problem 5
+Let $ABC$ be a triangle with incenter $I$.
+Let $D$ be a point on side $BC$ and let $\omega_B$ and $\omega_C$
+be the incircles of $\triangle ABD$ and $\triangle ACD$, respectively.
+Suppose that $\omega_B$ and $\omega_C$ are tangent to segment $BC$
+at points $E$ and $F$, respectively.
+Let $P$ be the intersection of segment $AD$ with the
+line joining the centers of $\omega_B$ and $\omega_C$.
+Let $X$ be the intersection point of lines $BI$ and $CP$
+and let $Y$ be the intersection point of lines $CI$ and $BP$.
+Prove that lines $EX$ and $FY$ meet on the incircle of $\triangle ABC$.
+
+\item %% Problem 6
+A sequence of positive integers $(a_{n})_{n \geq 1}$ is of
+\emph{Fibonacci type} if it satisfies the recursive relation
+$a_{n+2}=a_{n+1}+a_{n}$ for all $n \geq 1$.
+Is it possible to partition the set of positive integers
+into an infinite number of Fibonacci type sequences?
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{TSTST 2017/1, proposed by Ray Li}
+\textsl{Available online at \url{https://aops.com/community/p8526098}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle with circumcircle $\Gamma$,
+circumcenter $O$, and orthocenter $H$.
+Assume that $AB \neq AC$ and $\angle A \neq 90\dg$.
+Let $M$ and $N$ be the midpoints of $\ol{AB}$ and $\ol{AC}$,
+respectively, and let $E$ and $F$ be the feet of the altitudes
+from $B$ and $C$ in $\triangle ABC$, respectively.
+Let $P$ be the intersection point of line $MN$
+with the tangent line to $\Gamma$ at $A$.
+Let $Q$ be the intersection point,
+other than $A$, of $\Gamma$ with the circumcircle of $\triangle AEF$.
+Let $R$ be the intersection point of lines $AQ$ and $EF$.
+Prove that $\ol{PR} \perp \ol{OH}$.
+\end{mdframed}
+\paragraph{First solution (power of a point).}
+Let $\gamma$ denote the nine-point circle of $ABC$.
+\begin{center}
+\begin{asy}
+pair A = dir(125);
+pair B = dir(210);
+pair C = dir(330);
+pair M = midpoint(A--B);
+pair N = midpoint(A--C);
+pair O = origin;
+pair H = A+B+C;
+
+draw(A--B--C--cycle, blue);
+pair E = foot(B, A, C);
+pair F = foot(C, A, B);
+draw(B--E, lightblue);
+draw(C--F, lightblue);
+pair R = extension(E, F, B, C);
+pair Q = -A+2*foot(O, A, R);
+
+filldraw(unitcircle, opacity(0.1)+lightcyan, blue);
+draw(A--R--E, heavygreen);
+pair P = extension(M, N, A, A+dir(90)*A);
+draw(A--P--N, red);
+filldraw(circumcircle(A, M, N), opacity(0.1)+lightred, red);
+filldraw(circumcircle(A, E, F), opacity(0.1)+lightgreen, heavygreen);
+
+filldraw(circumcircle(M, N, E), opacity(0.1)+lightcyan, heavycyan);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$M$", M, dir(145));
+dot("$N$", N, dir(20));
+dot("$O$", O, dir(315));
+dot("$H$", H, dir(H));
+dot("$E$", E, dir(40));
+dot("$F$", F, dir(F));
+dot("$R$", R, dir(R));
+dot("$Q$", Q, dir(Q));
+dot("$P$", P, dir(P));
+
+/* TSQ Source:
+
+A = dir 125
+B = dir 210
+C = dir 330
+M = midpoint A--B R145
+N = midpoint A--C R20
+O = origin R315
+H = A+B+C
+
+A--B--C--cycle blue
+E = foot B A C R40
+F = foot C A B
+B--E lightblue
+C--F lightblue
+R = extension E F B C
+Q = -A+2*foot O A R
+
+unitcircle 0.1 lightcyan / blue
+A--R--E heavygreen
+P = extension M N A A+dir(90)*A
+A--P--N red
+circumcircle A M N 0.1 lightred / red
+circumcircle A E F 0.1 lightgreen / heavygreen
+
+circumcircle M N E 0.1 lightcyan / heavycyan
+
+*/
+\end{asy}
+\end{center}
+Note that
+\begin{itemize}
+  \ii $PA^2 = PM \cdot PN$,
+  so $P$ lies on the radical axis of $\Gamma$ and $\gamma$.
+  \ii $RA \cdot RQ = RE \cdot RF$,
+  so $R$ lies on the radical axis of $\Gamma$ and $\gamma$.
+\end{itemize}
+Thus $\ol{PR}$ is the radical axis of $\Gamma$ and $\gamma$,
+which is evidently perpendicular to $\ol{OH}$.
+
+\begin{remark*}
+  In fact, by power of a point one may also observe
+  that $R$ lies on $\ol{BC}$,
+  since it is on the radical axis of $(AQFHE)$, $(BFEC)$, $(ABC)$.
+  Ironically, this fact is not used in the solution.
+\end{remark*}
+
+\paragraph{Second solution (barycentric coordinates).}
+Again note first $R \in \ol{BC}$ (although this can be avoided too).
+We compute the points in much the same way as before.
+Since $\ol{AP} \cap \ol{BC} = (0 : b^2 : -c^2)$
+we have \[ P = \left( b^2-c^2 : b^2 : -c^2  \right) \]
+(since $x=y+z$ is the equation of line $\ol{MN}$).
+Now in Conway notation we have
+\[ R = \ol{EF} \cap \ol{BC} = (0 : S_C : -S_B)
+  =\left( 0 : a^2+b^2-c^2 : -a^2+b^2-c^2 \right). \]
+Hence
+\[ \overrightarrow{PR}
+  = \frac{1}{2(b^2-c^2)} \left( b^2-c^2 , c^2-a^2 , a^2-b^2 \right).  \]
+On the other hand, we have
+$\overrightarrow{OH} = \vec A + \vec B + \vec C$.
+So it suffices to check that
+\[ \sum_{\text{cyc}} a^2\left( (a^2-b^2) + (c^2-a^2) \right) = 0 \]
+which is immediate.
+
+\paragraph{Third solution (complex numbers).}
+Let $ABC$ be the unit circle.
+We first compute $P$ as the midpoint of $A$ and $\ol{AA} \cap \ol{BC}$:
+\begin{align*}
+  p &= \half \left( a + \frac{a^2(b+c)-bc\cdot2a}{a^2-bc} \right) \\
+  &= \frac{a(a^2-bc)+a^2(b+c)-2abc}{2(a^2-bc)}.
+\end{align*}
+Using the remark above, $R$ is the inverse of $D$ with
+respect to the circle with diameter $\ol{BC}$,
+which has radius $\left\lvert \half(b-c) \right\rvert$.
+Thus
+\begin{align*}
+  r - \frac{b+c}{2}
+  &= \frac{\frac14(b-c)\left( \frac1b-\frac1c \right)}%
+  {\ol{\half\left( a-\frac{bc}{a} \right)}} \\
+  r &= \frac{b+c}{2}
+  + \frac{-\half \frac{(b-c)^2}{bc}}{\frac1a-\frac{a}{bc}} \\
+  &= \frac{b+c}{2} + \frac{a(b-c)^2}{2(a^2-bc)} \\
+  &= \frac{a(b-c)^2+(b+c)(a^2-bc)}{2(a^2-bc)}.
+\end{align*}
+Expanding and subtracting gives
+\[ p-r = \frac{a^3-abc-ab^2-ac^2+b^2c+bc^2}{2(a^2-bc)}
+  = \frac{(a+b+c)(a-b)(a-c)}{2(a^2-bc)} \]
+which is visibly equal to the negation of its conjugate
+once the factor of $a+b+c$ is deleted.
+
+(Actually, one can guess this factorization ahead of time
+by noting that if $A=B$, then $P=B=R$, so $a-b$ must be a factor;
+analogously $a-c$ must be as well.)
+\pagebreak
+
+\subsection{TSTST 2017/2, proposed by Kevin Sun}
+\textsl{Available online at \url{https://aops.com/community/p8526115}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Ana and Banana are playing a game. First Ana picks a word,
+which is defined to be a nonempty sequence of capital English letters.
+Then Banana picks a nonnegative integer $k$ and challenges Ana
+to supply a word with exactly $k$ subsequences which are equal to Ana's word.
+Ana wins if she is able to supply such a word, otherwise she loses.
+For example, if Ana picks the word ``TST'', and Banana chooses $k = 4$,
+then Ana can supply the word ``TSTST'' which has $4$ subsequences
+which are equal to Ana's word.
+Which words can Ana pick so that she can win no matter what value of
+$k$ Banana chooses?
+\end{mdframed}
+First we introduce some notation.
+Define a \emph{block} of letters to be a maximal
+contiguous subsequence of consecutive letters.
+Throughout the solution, we fix the word $A$ that Ana picks,
+and introduce the following notation for its $m$ blocks:
+\[ A =
+  A_1 A_2 \dots A_m
+  = \underbrace{a_1 \dots a_1}_{x_1}
+  \underbrace{a_2 \dots a_2}_{x_2}
+  \dots
+  \underbrace{a_m \dots a_m}_{x_m}.
+\]
+A \emph{rainbow} will be a subsequence equal to Ana's initial word $A$
+(meaning Ana seeks words with exactly $k$ rainbows).
+Finally, for brevity, let $A_i = \underbrace{a_i \dots a_i}_{x_i}$,
+so $A = A_1 \dots A_m$.
+
+
+We prove two claims that resolve the problem.
+\begin{claim*}
+  If $x_i = 1$ for some $i$, then for any $k \ge 1$, the word
+  \[ W = A_1 \dots A_{i-1} \underbrace{a_i \dots a_i}_{k}
+    A_{i+1} \dots A_m  \]
+  obtained by repeating the $i$th letter $k$ times
+  has exactly $k$ rainbows.
+\end{claim*}
+\begin{proof}
+  Obviously there are at least $\binom{k}{k-1}=k$ rainbows,
+  obtained by deleting $k-1$ choices of the letter $a_i$
+  in the repeated block.
+  We show they are the only ones.
+
+  Given a rainbow, consider the location of this singleton block in $W$.
+  It cannot occur within the first $|A_1| + \dots + |A_{i-1}|$ letters,
+  nor can it occur within the final $|A_{i+1}| + \dots + |A_m|$ letters.
+  So it must appear in the $i$th block of $W$.
+  That implies that all the other $a_i$'s in the
+  $i$th block of $W$ must be deleted, as desired.
+  (This last argument is actually nontrivial, and has some substance;
+  many students failed to realize that the upper bound requires care.)
+\end{proof}
+
+\begin{claim*}
+  If $x_i \ge 2$ for all $i$, then no word $W$ has exactly two rainbows.
+\end{claim*}
+\begin{proof}
+  We prove if there are two rainbows of $W$, then we can construct
+  at least three rainbows.
+
+  Let $W = w_1 \dots w_n$ and consider the two rainbows of $W$.
+  Since they are not the same,
+  there must be a block $A_p$ of the rainbow,
+  of length $\ell \ge 2$,
+  which do not occupy the same locations in $W$.
+
+  Assume the first rainbow uses $w_{i_1}$, \dots, $w_{i_\ell}$ for this block
+  and the second rainbow uses $w_{j_1}$, \dots, $w_{j_\ell}$ for this block.
+  Then among the letters $w_q$ for
+  $\min(i_1, j_1) \le q \le \max(i_\ell, j_\ell)$,
+  there must be at least $\ell+1$ copies of the letter $a_p$.
+  Moreover, given a choice of $\ell$ copies of the letter $a_p$
+  in this range, one can complete the subsequence to a rainbow.
+  So the number of rainbows is at least $\binom{\ell+1}{\ell} \ge \ell+1$.
+
+  Since $\ell \ge 2$, this proves $W$ has at least three rainbows.
+\end{proof}
+
+In summary, Ana wins if and only if $x_i = 1$ for some $i$,
+since she can duplicate the isolated letter $k$ times;
+but if $x_i \ge 2$ for all $i$ then Banana only needs to supply $k = 2$.
+\pagebreak
+
+\subsection{TSTST 2017/3, proposed by Calvin Deng, Linus Hamilton}
+\textsl{Available online at \url{https://aops.com/community/p8526130}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Consider solutions to the equation
+\[ x^2 - cx + 1 = \frac{f(x)}{g(x)} \]
+where $f$ and $g$ are nonzero polynomials with nonnegative real coefficients.
+For each $c > 0$, determine the minimum possible degree of $f$, or show
+that no such $f$, $g$ exist.
+\end{mdframed}
+First, if $c \ge 2$ then we claim no such $f$ and $g$ exist.
+Indeed, one simply takes $x=1$ to get $f(1)/g(1) \le 0$, impossible.
+
+For $c < 2$, let $c = 2 \cos \theta$, where $0 < \theta < \pi$.
+We claim that $f$ exists and has minimum degree equal to $n$,
+where $n$ is defined as the smallest integer
+satisfying $\sin n\theta \le 0$.
+In other words
+\[ n = \left\lceil \frac{\pi}{\arccos(c/2)} \right\rceil. \]
+
+First we show that this is necessary.
+To see it, write explicitly
+\[ g(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_{n-2} x^{n-2} \]
+with each $a_i \ge 0$, and $a_{n-2} \neq 0$.
+Assume that $n$ is such that $\sin(k\theta) \ge 0$ for $k=1,\dots,n-1$.
+Then, we have the following system of inequalities:
+\begin{align*}
+  a_1 &\ge 2 \cos \theta \cdot a_0 \\
+  a_0 + a_2 &\ge 2 \cos \theta \cdot a_1 \\
+  a_1 + a_3 &\ge 2 \cos \theta \cdot a_2 \\
+  &\vdots \\
+  a_{n-5} + a_{n-3} &\ge 2 \cos \theta \cdot a_{n-4} \\
+  a_{n-4} + a_{n-2} &\ge 2 \cos \theta \cdot a_{n-3} \\
+  a_{n-3} &\ge 2 \cos \theta \cdot a_{n-2}.
+\end{align*}
+Now, multiply the first equation by $\sin\theta$,
+the second equation by $\sin2\theta$, et cetera,
+up to $\sin\left( (n-1)\theta \right)$.
+This choice of weights is selected since we have
+\[ \sin \left( k\theta \right) + \sin\left( (k+2)\theta \right)
+  = 2 \sin\left( (k+1)\theta \right) \cos \theta \]
+so that summing the entire expression
+cancels nearly all terms and leaves only
+\[ \sin\left( (n-2)\theta \right) a_{n-2}
+  \ge \sin\left( (n-1)\theta  \right) \cdot 2\cos\theta \cdot a_{n-2} \]
+and so by dividing by $a_{n-2}$ and using the same identity
+gives us $\sin(n\theta) \le 0$, as claimed.
+
+This bound is best possible, because the example
+\[ a_k = \sin\left( (k+1)\theta \right) \ge 0 \]
+makes all inequalities above sharp, hence giving
+a working pair $(f,g)$.
+
+\begin{remark*}
+Calvin Deng points out that a cleaner proof of the lower bound
+is to take $\alpha = \cos \theta + i \sin \theta$.
+Then $f(\alpha) = 0$, but by condition the imaginary part of $f(\alpha)$
+is apparently strictly positive, contradiction.
+\end{remark*}
+
+
+\begin{remark*}
+  Guessing that $c < 2$ works at all (and realizing $c \ge 2$ fails)
+  is the first part of the problem.
+
+  The introduction of trigonometry into the solution may seem magical,
+  but is motivated in one of two ways:
+  \begin{itemize}
+    \ii Calvin Deng points out that it's possible to
+    guess the answer from small cases:
+    For $c \le 1$ we have $n = 3$, tight at $\frac{x^3+1}{x+1} = x^2-x+1$,
+    and essentially the ``sharpest $n=3$ example''.
+    A similar example exists at $n = 4$ with
+    $\frac{x^4+1}{x^2+\sqrt 2 x+1} = x^2-\sqrt2x+1$
+    by the Sophie-Germain identity.
+    In general, one can do long division to extract
+    an optimal value of $c$ for any given $n$,
+    although $c$ will be the root of some polynomial.
+
+    The thresholds $c \le 1$ for $n = 3$, $c \le \sqrt 2$ for $n = 4$,
+    $c \le \frac{1+\sqrt5}{2}$ for $n = 5$,
+    and $c \le 2$ for $n < \infty$ suggest the unusual form of the
+    answer via trigonometry.
+
+    \ii One may imagine trying to construct a polynomial
+    recursively / greedily by making all inequalities above hold
+    (again the ``sharpest situation'' in which $f$ has few coefficients).
+    If one sets $c = 2t$, then we have
+    \[ a_0 = 1, \quad a_1 = 2t, \quad a_2 = 4t^2-1, \quad
+      a_3 = 8t^3-4t, \quad \dots \]
+    which are the Chebyshev polynomials of the second type.
+    This means that trigonometry is essentially mandatory.
+    (One may also run into this when by using standard linear recursion techniques,
+    and noting that the characteristic polynomial
+    has two conjugate complex roots.)
+  \end{itemize}
+\end{remark*}
+
+\begin{remark*}
+  Mitchell Lee notes that an IMO longlist problem from 1997 shows that
+  if $P(x)$ is any polynomial satisfying $P(x) > 0$ for $x > 0$,
+  then $(x+1)^n P(x)$ has nonnegative coefficients
+  for large enough $n$.
+  This show that $f$ and $g$ at least exist for $c \le 2$,
+  but provides no way of finding the best possible $\deg f$.
+
+  Meghal Gupta also points out that showing $f$ and $g$ exist
+  is possible in the following way:
+  \[ \left( x^2-1.99x+1 \right) \left( x^2+1.99x+1 \right)
+    = \left( x^4 - 1.9601x^2 + 1 \right) \]
+  and so on, repeatedly multiplying by the ``conjugate''
+  until all coefficients become positive.
+  To my best knowledge, this also does not give any way
+  of actually minimizing $\deg f$,
+  although Ankan Bhattacharya points out that this construction
+  is actually optimal in the case where $n$ is a power of $2$.
+\end{remark*}
+
+\begin{remark*}
+  It's pointed out that Matematicheskoe Prosveshchenie, issue 1, 1997, page 194
+  contains a nearly analogous result,
+  available at \url{https://mccme.ru/free-books/matpros/pdf/mp-01.pdf}
+  with solutions presented in \url{https://mccme.ru/free-books/matpros/pdf/mp-05.pdf},
+  pages 221--223;
+  and \url{https://mccme.ru/free-books/matpros/pdf/mp-10.pdf}, page 274.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{TSTST 2017/4, proposed by Mark Sellke}
+\textsl{Available online at \url{https://aops.com/community/p8526131}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all nonnegative integer solutions to \[ 2^a + 3^b + 5^c = n!. \]
+\end{mdframed}
+For $n \le 4$, one can check the only solutions are:
+\begin{align*}
+  2^2 + 3^0 + 5^0 &= 3! \\
+  2^1 + 3^1 + 5^0 &= 3! \\
+  2^4 + 3^1 + 5^1 &= 4!.
+\end{align*}
+Now we prove there are no solutions for $n \ge 5$.
+
+A tricky way to do this is to take modulo $120$, since
+\begin{align*}
+  2^a \pmod{120} &\in \{ 1, 2, 4, 8, 16, 32, 64 \} \\
+  3^b \pmod{120} &\in \{ 1, 3, 9, 27, 81 \} \\
+  5^c \pmod{120} &\in \{ 1, 5, 25 \}
+\end{align*}
+and by inspection one notes that no three
+elements have vanishing sum modulo $120$.
+
+I expect most solutions to instead use casework.
+Here is one possible approach with cases (with $n \ge 5$).
+First, we analyze the cases where $a < 3$:
+\begin{itemize}
+  \ii $a=0$: No solutions for parity reasons.
+  \ii $a=1$: since $3^b + 5^c \equiv 6 \pmod 8$,
+  we find $b$ even and $c$ odd (hence $c \neq 0$).
+  Now looking modulo $5$ gives that $3^b + 5^c \equiv 3 \pmod 5$,
+  \ii $a=2$: From $3^b + 5^c \equiv 4 \pmod 8$,
+  we find $b$ is odd and $c$ is even.
+  Now looking modulo $5$ gives a contradiction,
+  even if $c = 0$,
+  since $3^b \in \{2,3 \pmod 5\}$ but $3^b + 5^c \equiv 1 \pmod 5$.
+\end{itemize}
+Henceforth assume $a \ge 3$.
+Next, by taking modulo $8$ we have $3^b+5^c \equiv 0 \pmod 8$,
+which forces both $b$ and $c$ to be odd (in particular, $b,c > 0$).
+We now have
+\begin{align*}
+  2^a + 5^c &\equiv 0 \pmod 3 \\
+  2^a + 3^b &\equiv 0 \pmod 5.
+\end{align*}
+The first equation implies $a$ is even,
+but the second equation requires $a$ to be odd, contradiction.
+Hence no solutions with $n \ge 5$.
+\pagebreak
+
+\subsection{TSTST 2017/5, proposed by Ray Li}
+\textsl{Available online at \url{https://aops.com/community/p8526136}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle with incenter $I$.
+Let $D$ be a point on side $BC$ and let $\omega_B$ and $\omega_C$
+be the incircles of $\triangle ABD$ and $\triangle ACD$, respectively.
+Suppose that $\omega_B$ and $\omega_C$ are tangent to segment $BC$
+at points $E$ and $F$, respectively.
+Let $P$ be the intersection of segment $AD$ with the
+line joining the centers of $\omega_B$ and $\omega_C$.
+Let $X$ be the intersection point of lines $BI$ and $CP$
+and let $Y$ be the intersection point of lines $CI$ and $BP$.
+Prove that lines $EX$ and $FY$ meet on the incircle of $\triangle ABC$.
+\end{mdframed}
+\paragraph{First solution (homothety).}
+Let $Z$ be the diametrically opposite point on the incircle.
+We claim this is the desired intersection.
+
+\begin{center}
+\begin{asy}
+pair A = dir(110);
+pair B = dir(210);
+pair C = dir(330);
+
+filldraw(A--B--C--cycle, opacity(0.1)+lightred, red);
+filldraw(incircle(A, B, C), opacity(0.1)+lightcyan, lightblue);
+
+pair D = 0.35*B+0.65*C;
+draw(A--D, red);
+
+pair I_B = incenter(A, B, D);
+pair I_C = incenter(A, C, D);
+pair E = foot(I_B, B, C);
+pair F = foot(I_C, B, C);
+
+filldraw(incircle(A, B, D), opacity(0.1)+green, heavygreen);
+filldraw(incircle(A, C, D), opacity(0.1)+green, heavygreen);
+pair I = incenter(A, B, C);
+
+pair P = extension(I_B, I_C, A, D);
+draw(I_B--I_C, heavygreen);
+
+pair X = extension(B, I, C, P);
+pair Y = extension(C, I, B, P);
+pair Z = extension(E, X, F, Y);
+draw(B--I--C, red);
+draw(X--C, dotted+heavygreen);
+draw(Y--B, dotted+heavygreen);
+draw(E--Z--F, dashed+heavygreen);
+
+pair T = extension(B, C, I_B, I_C);
+draw(I_C--T, dotted+heavygreen);
+draw(C--T, dotted+red);
+pair W = foot(I, B, C);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(270));
+dot("$C$", C, dir(270));
+dot("$D$", D, dir(D));
+dot("$I_B$", I_B, dir(170));
+dot("$I_C$", I_C, dir(30));
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(F));
+dot("$I$", I, dir(90));
+dot("$P$", P, dir(250));
+dot("$X$", X, dir(160));
+dot("$Y$", Y, dir(20));
+dot("$Z$", Z, dir(140));
+dot("$T$", T, dir(T));
+dot("$W$", W, dir(W));
+
+/* TSQ Source:
+
+A = dir 110
+B = dir 210 R270
+C = dir 330 R270
+
+A--B--C--cycle 0.1 lightred / red
+incircle A B C 0.1 lightcyan / lightblue
+
+D = 0.35*B+0.65*C
+A--D red
+
+I_B = incenter A B D R170
+I_C = incenter A C D R30
+E = foot I_B B C
+F = foot I_C B C
+
+incircle A B D 0.1 green / heavygreen
+incircle A C D 0.1 green / heavygreen
+I = incenter A B C R90
+
+P = extension I_B I_C A D R250
+I_B--I_C heavygreen
+
+X = extension B I C P R160
+Y = extension C I B P R20
+Z = extension E X F Y R140
+B--I--C red
+X--C dotted heavygreen
+Y--B dotted heavygreen
+E--Z--F dashed heavygreen
+
+T = extension B C I_B I_C
+I_C--T dotted heavygreen
+C--T dotted red
+W = foot I B C
+
+*/
+\end{asy}
+\end{center}
+
+Note that:
+\begin{itemize}
+  \ii $P$ is the insimilicenter of $\omega_B$ and $\omega_C$
+  \ii $C$ is the exsimilicenter of $\omega$ and $\omega_C$.
+\end{itemize}
+Thus by Monge theorem, the insimilicenter of $\omega_B$ and $\omega$
+lies on line $CP$.
+
+This insimilicenter should also lie on the line joining the
+centers of $\omega$ and $\omega_B$, which is $\ol{BI}$,
+hence it coincides with the point $X$.
+So $X \in \ol{EZ}$ as desired.
+
+\paragraph{Second solution (harmonic).}
+Let $T = \ol{I_B I_C} \cap \ol{BC}$, and $W$ the foot from $I$ to $\ol{BC}$.
+Define $Z = \ol{FY} \cap \ol{IW}$.
+Because $\angle I_B D I_C = 90\dg$, we have
+\[ -1 = (I_B I_C; PT) \overset{B}{=} (I I_C; YC)
+  \overset{F}{=} (I\infty; ZW) \]
+So $I$ is the midpoint of $\ol{ZW}$ as desired.
+
+\paragraph{Third solution (outline, barycentric, Andrew Gu).}
+Let $AD = t$, $BD = x$, $CD = y$, so $a=x+y$ and by Stewart's theorem we have
+\begin{equation}
+  (x+y)(xy+t^2) = b^2x+c^2y.
+  \label{eq:17TSTST5stewart}
+\end{equation}
+We then have $D = (0:y:x)$ and so
+\[ \ol{AI_B} \cap \ol{BC} = \left( 0 : y + \frac{tx}{c+t} : \frac{cx}{c+t} \right) \]
+hence intersection with $BI$ gives
+\begin{align*}
+  I_B &= (ax : cy+at : cx).
+  \intertext{Similarly,}
+  I_C &= (ay : by : bx+at).
+\end{align*}
+
+Then, we can compute
+\[ P = \left( 2axy : y(at+bx+cy) : x(at+bx+cy) \right) \]
+since $P \in \ol{I_B I_C}$, and clearly $P \in \ol{AD}$.
+Intersection now gives
+\begin{align*}
+  X &= \left( 2ax : at+bx+cy : 2cx \right) \\
+  Y &= \left( 2ay : 2by : at+bx+cy \right).
+\end{align*}
+
+Finally, we have $BE = \half(c+x-t)$, and similarly for $CF$.
+Now if we reflect
+$D = (0, \frac{s-c}{a}, \frac{s-b}{a})$ over
+$I = (\frac{a}{2s}, \frac{b}{2s}, \frac{c}{2s})$, we get the antipode
+\[ Q \coloneqq \left( 4a^2 : -a^2+2ab-b^2+c^2 : -a^2+2ac-c^2+b^2 \right). \]
+We may then check $Q$ lies on each of lines $EX$ and $FY$
+(by checking $\det(Q,E,X)=0$ using the equation \eqref{eq:17TSTST5stewart}).
+\pagebreak
+
+\subsection{TSTST 2017/6, proposed by Ivan Borsenco}
+\textsl{Available online at \url{https://aops.com/community/p8526142}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A sequence of positive integers $(a_{n})_{n \geq 1}$ is of
+\emph{Fibonacci type} if it satisfies the recursive relation
+$a_{n+2}=a_{n+1}+a_{n}$ for all $n \geq 1$.
+Is it possible to partition the set of positive integers
+into an infinite number of Fibonacci type sequences?
+\end{mdframed}
+Yes, it is possible.
+The following solutions were written for me by Kevin Sun and Mark Sellke.
+We let $F_1 = F_2 = 1$, $F_3 = 2$, $F_4 = 3$, $F_5 = 5$, \dots
+denote the Fibonacci numbers.
+
+\paragraph{First solution (Kevin Sun).}
+We are going to appeal to the so-called Zeckendorf theorem:
+\begin{theorem*}
+  [Zeckendorf]
+  Every positive integer can be uniquely expressed
+  as the sum of nonconsecutive Fibonacci numbers.
+\end{theorem*}
+This means every positive integer has a
+Zeckendorf (``Fibonacci-binary'') representation
+where we put $1$ in the $i$th digit from the right
+if $F_{i+1}$ is used.
+The idea is then to take the following so-called \emph{Wythoff array}:
+\begin{itemize}
+  \ii \textbf{Row 1}: $1$, $2$, $3$, $5$, \dots
+  \ii \textbf{Row 101}: $1+3$, $2+5$, $3+8$, \dots
+  \ii \textbf{Row 1001}: $1+5$, $2+8$, $3+13$, \dots
+  \ii \textbf{Row 10001}: $1+8$, $2+13$, $3+21$, \dots
+  \ii \textbf{Row 10101}: $1+3+8$, $2+5+13$, $3+8+21$, \dots
+  \ii \dots et cetera.
+\end{itemize}
+More concretely, the array has the following rows to start:
+\[
+\begin{matrix}
+1&2&3&5&8&13&21&\dotsb\\
+4&7&11&18&29&47&76&\dotsb\\
+6&10&16&26&42&68&110&\dotsb\\
+9&15&24&39&63&102&165&\dotsb\\
+12&20&32&52&84&136&220&\dotsb\\
+14&23&37&60&97&157&254&\dotsb\\
+17&28&45&73&118&191&309&\dotsb\\
+\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\ddots\\
+\end{matrix}.
+\]
+
+Here are the full details.
+
+We begin by outlining a proof of Zeckendorf's theorem,
+which implies the representation above is unique.
+Note that if $F_k$ is the greatest Fibonacci number at most $n$,
+then \[n - F_k < F_{k+1} - F_{k} = F_{k-1}.\]
+In particular, repeatedly subtracting off the largest $F_k$
+from $n$ will produce one such representation with
+no two consecutive Fibonacci numbers.
+On the other hand, this $F_k$ must be used, as
+\[ n \ge F_k > F_{k-1} + F_{k-3} + F_{k-5} + \dotsb \]
+This shows, by a simple inductive argument,
+that such a representation exists and unique.
+
+We write $n = \ol{a_k\dotso a_1}_{\text{Fib}}$
+for the Zeckendorf representation as we described
+(where $a_i = 1$ if $F_{i+1}$ is used).
+Now for each $\ol{a_k\dotso a_1}_{\text{Fib}}$
+with $a_1 = 1$, consider the sequence
+\[ \ol{a_k\dotso a_1}_{\text{Fib}}, \;
+  \ol{a_k\dotso a_1 0}_{\text{Fib}}, \;
+  \ol{a_k\dotso a_1 00}_{\text{Fib}}, \; \dots \]
+These sequences are Fibonacci-type by definition,
+and partition the positive integers since
+each positive integer has exactly one Fibonacci base representation.
+
+\paragraph{Second solution.} Call an infinite set of integers $S$ \textit{sandwiched} if there exist increasing sequences $\{a_i\}_{i=0}^{\infty}, \{b_i\}_{i=0}^{\infty}$ such that the following are true:
+\begin{itemize}
+\item $a_i + a_{i+1} = a_{i+2}$ and $b_i + b_{i+1} = b_{i+2}$.
+\item The intervals $[a_i+1,b_i-1]$ are disjoint and are nondecreasing in length.
+\item $\displaystyle S = \bigcup_{i=0}^{\infty} [a_i+1,b_i-1]$.
+\end{itemize}
+
+We claim that if $S$ is any nonempty sandwiched set, then $S$ can be partitioned into a Fibonacci-type sequence (involving the smallest element of $S$) and two smaller sandwiched sets. If this claim is proven, then we can start with $\NN \setminus \{1,2,3,5,\dots\}$, which is a sandwiched set, and repeatedly perform this partition, which will eventually sort each natural number into a Fibonacci-type sequence.
+
+Let $S$ be a sandwiched set given by $\{a_i\}_{i=0}^{\infty}, \{b_i\}_{i=0}^{\infty}$, so the smallest element in $S$ is $x = a_0 + 1$. Note that $y = a_1+1$ is also in $S$ and $x < y$. Then consider the Fibonacci-type sequence given by $f_0 = x, f_1 = y$, and $f_{k+2} = f_{k+1} + f_k$. We can then see that $f_i \in [a_i+1,b_i-1]$, as the sum of numbers in the intervals $[a_{k}+1,b_{k}-1]$, $[a_{k+1}+1,b_{k+1}-1]$ lies in the interval \[[a_{k} + a_{k+1} + 2,b_k + b_{k+1}-2] = [a_{k+2}+2,b_{k+2}-2] \subset [a_{k+2}+1,b_{k+2}-1].\]
+
+Therefore, this gives a natural partition of $S$ into this sequence and two sets: \begin{align*} S_1 &= \bigcup_{i=0}^{\infty} [a_i+1,f_i-1] \\ \text{and} \,\, S_2 &= \bigcup_{i=0}^{\infty} [f_i+1,b_i-1].\end{align*} (For convenience, $[x,x-1]$ will be treated as the empty set.)
+
+We now show that $S_1$ and $S_2$ are sandwiched. Since $\{a_i\}$, $\{f_i\}$, and $\{b_i\}$ satisfy the Fibonacci recurrence, it is enough to check that the intervals have nondecreasing lengths. For $S_1$, that is equivalent to $f_{k+1} - a_{k+1} \ge f_k - a_k$ for each $k$. Fortunately, for $k \ge 1$, the difference is $f_{k-1} - a_{k-1} \ge 0$, and for $k = 0$, $f_1 - a_1 = 1 = f_0 - a_0$. Similarly for $S_2$, checking $b_{k+1} - f_{k+1} \ge b_k - f_k$ is easy for $k \ge 1$ as $b_{k-1} - f_{k-1} \ge 0$, and \[(b_{1} - f_1) - (b_0 - f_0) = (b_1 - a_1) - (b_0 - a_0),\] which is nonnegative since the lengths of intervals in $S$ are nondecreasing.
+
+Therefore we have shown that $S_1$ and $S_2$ are sandwiched. (Note that some of the $[a_i+1,f_i-1]$ may be empty, which would shift some indices back.) Since this gives us a procedure to take a set $S$ and produce a Fibonacci-type sequence with its smallest element, along which two other sandwiched types, we can partition $\NN$ into an infinite number of Fibonacci-type sequences.
+
+\paragraph{Third solution.} We add Fibonacci-type sequences one-by-one. At each step, let $x$ be the smallest number that has not been used in any previous sequence. We generate a new Fibonacci-type sequence as follows. Set $a_0 = x$ and for $i \ge 1$, set \[a_i = \left \lfloor \varphi a_{i-1} + \frac{1}{2} \right \rfloor.\] Equivalently, $a_{i}$ is the closest integer to $\varphi a_{i-1}$. \\
+It suffices to show that this sequence is Fibonacci-type and that no two sequences generated in this way overlap.
+We first show that for a positive integer $n$, \[\left \lfloor \varphi \left \lfloor \varphi n + \frac{1}{2} \right \rfloor + \frac{1}{2} \right \rfloor = n + \left \lfloor \varphi n + \frac{1}{2} \right \rfloor . \]
+Indeed, \begin{align*} \left \lfloor \varphi \left \lfloor \varphi n + \frac{1}{2} \right \rfloor + \frac{1}{2} \right \rfloor &= \left \lfloor (1 + \varphi^{-1}) \left \lfloor \varphi n + \frac{1}{2} \right \rfloor + \frac{1}{2}\right \rfloor \\
+&= \left \lfloor \varphi n + \frac{1}{2} \right \rfloor + \left \lfloor \varphi^{-1} \left \lfloor \varphi n + \frac{1}{2}\right \rfloor + \frac{1}{2} \right \rfloor.
+\end{align*}
+Note that $\left \lfloor \varphi n + \frac{1}{2} \right \rfloor = \varphi n + c$ for some $|c| \le \frac{1}{2}$; this implies that $\varphi^{-1}\left \lfloor \varphi n + \frac{1}{2} \right \rfloor$ is within $\varphi^{-1}\cdot \frac{1}{2} < \frac{1}{2}$ of $n$, so its closest integer is $n$, proving the claim.
+
+Therefore these sequences are Fibonacci-type. Additionally, if $a \neq b$, then $|\varphi a - \varphi b| \ge \varphi > 1$. Then \[a \neq b \implies \left \lfloor \varphi a + \frac{1}{2} \right \rfloor \neq \left \lfloor \varphi b + \frac{1}{2} \right \rfloor,\]
+and since the first term of each sequence is chosen to not overlap with any previous sequences, these sequences are disjoint.
+
+\begin{remark*}
+  Ankan Bhattacharya points out that the same sequence
+  essentially appears in IMO 1993, Problem 5 --- in other words,
+  a strictly increasing function $f \colon \ZZ_{>0} \to \ZZ_{>0}$ with $f(1) = 2$,
+  and $f(f(n)) = f(n) + n$.
+
+  Nikolai Beluhov sent us an older reference from March 1977,
+  where Martin Gardner wrote in his column about Wythoff's Nim.
+  The relevant excerpt goes:
+  \begin{quote}
+    ``Imagine that we go through the infinite sequence of safe pairs (in
+    the manner of Eratosthenes' sieve for sifting out primes) and cross
+    out the infinite set of all safe pairs that are pairs in the Fibonacci
+    sequence. The smallest pair that is not crossed out is 4/7. We can now
+    cross out a second infinite set of safe pairs, starting with 4/7, that
+    are pairs in the Lucas sequence. An infinite number of safe pairs, of
+    which the lowest is now 6/10, remain. This pair too begins another
+    infinite Fibonacci sequence, all of whose pairs are safe. The process
+    continues forever. Robert Silber, a mathematician at North Carolina
+    State University, calls a safe pair ``primitive'' if it is the first
+    safe pair that generates a Fibonacci sequence.''
+  \end{quote}
+  The relevant article by Robert Silber is
+  \emph{A Fibonacci Property of Wythoff Pairs},
+  from The Fibonacci Quarterly 11/1976.
+\end{remark*}
+
+
+\paragraph{Fourth solution (Mark Sellke).}
+For later reference let \[ f_1=0, f_2=1, f_3=1, \dots \]
+denote the ordinary Fibonacci numbers.
+We will denote the Fibonacci-like sequences by $F^i$ and the elements with subscripts;
+hence $F^2_1$ is the first element of the second sequence.
+Our construction amounts to just iteratively add new sequences;
+hence the following claim is the whole problem.
+
+\begin{lemma*}
+  For any disjoint collection of Fibonacci-like sequences
+  $F^1,\dots,F^k$ and any integer $m$ contained in none of them,
+  there is a new Fibonacci-like sequence $F^{k+1}$ beginning
+  with $F^{k+1}_1=m$ which is disjoint from the previous sequences.
+\end{lemma*}
+
+Observe first that for each sequence $F^j$ there is $c^j\in \RR^n$ such that
+\[ F^j_n=c^j\phi^n+o(1)  \]
+where \[\phi=\frac{1+\sqrt{5}}{2}.\]
+
+Collapse the group $(\RR^+,\times)$ into the half-open interval
+$J = \left\{ x \mid 1 \le x < \phi \right\}$
+by defining $T(x)=y$ for the unique $y\in J$ with $x=y\phi^n$ for some integer $n$.
+
+Fix an interval $I=[a,b]\subseteq [1.2,1.3]$ (the last condition is to
+avoid wrap-around issues) which contains none of the $c^j$, and take
+$\varepsilon<0.001$ to be small enough that in fact each $c^j$ has
+distance at least $10\varepsilon$ from $I$; this means any $c_j$ and
+element of $I$ differ by at least a $(1+10\varepsilon)$ factor. The idea
+will be to take $F^{k+1}_1=m$ and $F^{k+1}_2$ to be a large such that
+the induced values of $F^{k+1}_j$ grow like $k\phi^j$ for $j\in
+T^{-1}(I)$, so that $F^{k+1}_n$ is separated from the $c^j$ after
+applying $T$. What's left to check is the convergence.
+
+Now let \[c=\lim_{n\to\infty} \frac{f_n}{\phi^n}\] and take
+$M$ large enough that for $n>M$ we have
+\[\left|\frac{f_n}{c\phi^n}-1\right|<\varepsilon.\]
+
+Now $\frac{T^{-1}(I)}{c}$ contains arbitrarily large integers,
+so there are infinitely many $N$ with $cN\in T^{-1}(I)$ with $N>\frac{10m}{\varepsilon}$.
+We claim that for any such $N$, the sequence $F^{(N)}$ defined by
+\[F^{(N)}_1=m,F^{(N)}_2=N\] will be very multiplicatively similar to the
+normal Fibonacci numbers up to rescaling;
+indeed for $j=2,j=3$ we have $\frac{F_2^{(N)}}{f_2}=N,\frac{F_3^{(N)}}{f_3}=N+m$
+and so by induction we will have
+\[ \frac{F^{(N)}_j}{f_j} \in [N,N+m] \subseteq [N,N(1+\varepsilon)] \]
+for $j\geq 2$.
+Therefore, up to small multiplicative errors, we have
+\[F_j^{(N)}\approx Nf_j\approx cN\phi^j.\]
+From this we see that for $j>M$ we have
+\[T(F_j^{(N)})\in  T(cN)\cdot [1-2\varepsilon,1+2\varepsilon].\]
+In particular, since $T(cN)\in I$ and $I$ is separated from each $c_j$
+by a factor of $(1+10\varepsilon)$,
+we get that $F_j^{(N)}$ is not in any of $F^1,F^2,\dots,F^k$.
+
+Finishing is easy, since we now have a uniform estimate on how many
+terms we need to check for a new element before the exponential growth
+takes over. We will just use pigeonhole to argue that there are few
+possible collisions among those early terms, so we can easily pick a
+value of $N$ which avoids them all. We write it out below.
+
+For large $L$, the set \[S_L=(I\cdot \phi^L)\cap\ZZ\] contains at
+least $k_I\phi^L$ elements. As $N$ ranges over $S_L$, for each fixed
+$j$, the value of $F^{(N)}_j$ varies by at most a factor of $1.1$
+because we imposed $I\subseteq [1.2,1.3]$ and so this is true for the
+first two terms, hence for all subsequent terms by induction. Now
+suppose $L$ is very large, and consider a fixed pair $(i,j)$ with $i\leq
+k$ and $j\leq M$. We claim there is at most $1$ possible value $k$ such
+that the term $F^i_k$ could equal $F^{(N)}_j$ for some $N\in S_L$;
+indeed, the terms of $F^i$ are growing at exponential rate with factor
+$\phi>1.1$, so at most one will be in a given interval of multiplicative
+width at most $1.1$.
+
+Hence, of these $k_I\phi^L$ values of $N$, at most $kM$ could cause
+problems, one for each pair $(i,j)$. However by monotonicity of
+$F^{(N)}_j$ in $N$, at most $1$ value of $N$ causes a collision for each
+pair $(i,j)$. Hence for large $L$ so that $k_I\phi^L>10kM$ we can find a
+suitable $N\in S_L$ by pigeonhole and the sequence $F^{(N)}$ defined by
+$(m,N,N+m,\dots)$ works.
+\pagebreak
+
+
+\end{document}

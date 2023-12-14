@@ -1,0 +1,450 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2005 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2005 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Determine all composite positive integers $n$ for which
+it is possible to arrange all divisors of $n$ that are greater than $1$
+in a circle so that no two adjacent divisors are relatively prime.
+
+\item %% Problem 2
+Prove that the system of equations
+\begin{align*}
+  x^6 + x^3 + x^3y + y &= 147^{157} \\
+  x^3 + x^3y + y^2 + y + z^9 &= 157^{147}
+\end{align*}
+has no integer solutions.
+
+\item %% Problem 3
+Let $ABC$ be an acute-angled triangle,
+and let $P$ and $Q$ be two points on side $BC$.
+Construct a point $C_1$
+in such a way that the convex quadrilateral
+$APBC_1$ is cyclic,
+$\ol{QC_1} \parallel \ol{CA}$,
+and $C_1$ and $Q$ lie on opposite sides of line $AB$.
+Construct a point $B_1$ in such a way that the
+convex quadrilateral $APCB_1$ is cyclic,
+$\ol{QB_1} \parallel \ol{BA}$,
+and $B_1$ and $Q$ lie on opposite sides of line $AC$.
+Prove that the points $B_1$, $C_1$, $P$, and $Q$ lie on a circle.
+
+\item %% Problem 4
+Legs $L_1$, $L_2$, $L_3$, $L_4$ of a square table each have length $n$,
+where $n$ is a positive integer.
+For how many ordered $4$-tuples $(k_1, k_2, k_3, k_4)$ of nonnegative integers
+can we cut a piece of length $k_i$ from the end of leg $L_i$
+and still have a stable table?
+
+(The table is \emph{stable} if it can be placed
+so that all four of the leg ends touch the floor.
+Note that a cut leg of length $0$ is permitted.)
+
+\item %% Problem 5
+Let $n > 1$ be an integer.
+Suppose $2n$ points are given in the plane,
+no three of which are collinear.
+Suppose $n$ of the given $2n$ points are colored blue
+and the other $n$ colored red.
+A line in the plane is called a \emph{balancing line}
+if it passes through one blue and one red point
+and, for each side of the line, the number of blue points on that
+side is equal to the number of red points on the same side.
+Prove that there exist at least two balancing lines.
+
+\item %% Problem 6
+For a positive integer $m$,
+let $s(m)$ denote the sum of the decimal digits of $m$.
+A set $S$ positive integers is \emph{$k$-stable}
+if $s(\sum_{x \in X} x) = k$ for any nonempty subset $X \subseteq S$.
+
+For each integer $n \ge 2$ let $f(n)$ be the minimal $k$
+for which there exists a $k$-stable set with $n$ integers.
+Prove that there are constants $0 < C_1 < C_2$ with
+\[ C_1 \log_{10} n \le f(n) \le C_2 \log_{10} n. \]
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2005/1, proposed by Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p213007}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Determine all composite positive integers $n$ for which
+it is possible to arrange all divisors of $n$ that are greater than $1$
+in a circle so that no two adjacent divisors are relatively prime.
+\end{mdframed}
+The only bad ones are $n = pq$,
+products of two distinct primes.
+Clearly they can't be so arranged,
+so we show all others work.
+\begin{itemize}
+\ii If $n$ is a power of a prime, the result is obvious.
+
+\ii If $n = p_1^{e_1} \dots p_k^{e_k}$ for some $k \ge 3$,
+then first situate $p_1p_2$, $p_2p_3$, \dots, $p_kp_1$
+on the circle.
+Then we can arbitrarily place any multiples of $p_i$
+between $p_{i-1} p_i$ and $p_i p_{i+1}$.
+This finishes this case.
+
+\ii Finally suppose $n = p^a q^b$.
+If $a > 1$, say, we can repeat the argument by first placing
+$pq$ and $p^2q$ and then placing multiples of $p$ in one arc
+and multiples of $q$ in the other arc.
+On the other hand the case $a=b=1$ is seen to be impossible.
+\end{itemize}
+\pagebreak
+
+\subsection{USAMO 2005/2, proposed by R\u{a}zvan Gelca}
+\textsl{Available online at \url{https://aops.com/community/p213009}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that the system of equations
+\begin{align*}
+  x^6 + x^3 + x^3y + y &= 147^{157} \\
+  x^3 + x^3y + y^2 + y + z^9 &= 157^{147}
+\end{align*}
+has no integer solutions.
+\end{mdframed}
+Sum the equations and add $1$ to both sides to get
+\[ (x^3+y+1)^2 + z^9 = 147^{157} + 157^{147} + 1
+  \equiv 14 \pmod{19} \]
+But $a^2 + b^9 \not\equiv 14 \pmod{19}$
+for any integers $a$ and $b$,
+since the ninth powers modulo $19$ are $0$, $\pm 1$
+and none of $\{13, 14, 15\}$ are squares modulo $19$.
+Therefore, there are no integer solutions.
+
+\begin{remark*}
+  In fact, $a^2 + b^3 \not\equiv 14 \pmod{19}$
+  has no solutions modulo $19$ either.
+\end{remark*}
+
+\begin{remark*}
+  It can also be checked that the original system has no equations modulo $13$,
+  although this requires using both equations rather than just their sum.
+  (As in the modulo $19$ situation, $z^9$ may be replaced by $z^3$
+  and this remark still holds.)
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2005/3, proposed by Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p213011}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be an acute-angled triangle,
+and let $P$ and $Q$ be two points on side $BC$.
+Construct a point $C_1$
+in such a way that the convex quadrilateral
+$APBC_1$ is cyclic,
+$\ol{QC_1} \parallel \ol{CA}$,
+and $C_1$ and $Q$ lie on opposite sides of line $AB$.
+Construct a point $B_1$ in such a way that the
+convex quadrilateral $APCB_1$ is cyclic,
+$\ol{QB_1} \parallel \ol{BA}$,
+and $B_1$ and $Q$ lie on opposite sides of line $AC$.
+Prove that the points $B_1$, $C_1$, $P$, and $Q$ lie on a circle.
+\end{mdframed}
+It is enough to prove that $A$, $B_1$, and $C_1$ are collinear,
+since then $\dang C_1QP = \dang ACP = \dang AB_1P = \dang C_1B_1P$.
+
+\begin{center}
+\begin{asy}
+pair A = dir(110);
+pair B = dir(210);
+pair C = dir(330);
+pair P = 0.7*C+0.3*B;
+draw(A--B--C--cycle);
+
+pair O_1 = circumcenter(A, P, C);
+pair B_1 = 2*O_1-C;
+pair Q = extension(B, C, B_1, B_1+B-A);
+pair C_1 = extension(A, B_1, Q, Q+C-A);
+
+draw(circumcircle(A, B, P));
+draw(circumcircle(A, C, P));
+
+draw(C_1--Q--B_1);
+draw(B_1--C_1, dotted);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$P$", P, dir(P));
+dot("$B_1$", B_1, dir(B_1));
+dot("$Q$", Q, dir(Q));
+dot("$C_1$", C_1, dir(C_1));
+
+/* Source generated by TSQ */
+\end{asy}
+\end{center}
+
+\paragraph{First solution.}
+Let $T$ be the second intersection of $\ol{AC_1}$
+with $(APC)$.
+Then readily $\triangle PC_1T \sim \triangle ABC$.
+Consequently, $\ol{QC_1} \parallel \ol{AC}$ implies $TC_1QP$ cyclic.
+Finally, $\ol{TQ} \parallel \ol{AB}$ now
+follows from the cyclic condition,
+so $T = B_1$ as desired.
+
+\paragraph{Second solution.}
+One may also use barycentric coordinates.
+Let $P = (0,m,n)$ and $Q = (0,r,s)$ with $m+n=r+s=1$.  Once again, \[ (APB) : -a^2yz-b^2zx-c^2xy + (x+y+z)(a^2m \cdot z) = 0.
+\] Set $C_1 = (s-z, r, z)$, where $C_1Q \parallel AC$ follows by $(s-z) + r + z = 1$.  We solve for this $z$.
+\begin{align*}
+0 &= -a^2rz + (s-z)(-b^2z-c^2r) + a^2mz \\
+&= b^2z^2 + (-sb^2+rc^2)z - a^2rz + a^2mz - c^2rs \\
+&= b^2z^2 + (-sb^2+rc^2+a^2(m-r))z - c^2rs \\
+\implies 0 &= rb^2 \left( \frac{z}{r} \right)^2 + (-sb^2+rc^2 + a^2(m-r)) \left(\frac{z}{r}\right) - c^2s.
+\end{align*}
+So the quotient of the $z$ and $y$ coordinates of $C_1$ satisfies this quadratic.  Similarly, if $B_1 = (r-y, y, s)$ we obtain that
+\[
+0 = sc^2 \left( \frac{y}{s} \right)^2 + (-rc^2 + sb^2 + a^2(n-s)) \left(\frac{y}{s}\right) - b^2r
+\]
+Since these two quadratics are the same when one is written backwards (and negated), it follows that their roots are reciprocals.  But the roots of the quadratics represent $\tfrac{z}{y}$ and $\tfrac{y}{z}$ for the points $C_1$ and $B_1$, respectively.  This implies (with some configuration blah) that the points $B_1$ and $C_1$ are collinear with $A=(1,0,0)$ (in some line of the form $\tfrac{y}{z} = k$), as desired.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2005/4, proposed by Elgin Johnston}
+\textsl{Available online at \url{https://aops.com/community/p213012}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Legs $L_1$, $L_2$, $L_3$, $L_4$ of a square table each have length $n$,
+where $n$ is a positive integer.
+For how many ordered $4$-tuples $(k_1, k_2, k_3, k_4)$ of nonnegative integers
+can we cut a piece of length $k_i$ from the end of leg $L_i$
+and still have a stable table?
+
+(The table is \emph{stable} if it can be placed
+so that all four of the leg ends touch the floor.
+Note that a cut leg of length $0$ is permitted.)
+\end{mdframed}
+Flip the table upside-down so that that the table's surface
+rests on the floor.
+Then, we see that we want the truncated legs
+to have endpoints $A$, $B$, $C$, $D$ which are coplanar (say).
+\begin{claim*}
+  This occurs if and only if $ABCD$ is a parallelogram.
+\end{claim*}
+\begin{proof}
+  Obviously $ABCD$ being a parallelogram is sufficient.
+  Conversely, if they are coplanar,
+  we let $D'$ be such that $ABCD'$ is a parallelogram.
+  Then $D'$ also lies in the same plane as $ABCD$,
+  but is situated directly above $D$
+  (since the table was a square).
+  This implies $D' = D$, as needed.
+\end{proof}
+In still other words, we are counting the number of solutions to
+\[ (n-k_1) + (n-k_3) = (n-k_2) + (n-k_4)
+  \iff k_1 + k_3 = k_2 + k_4. \]
+Define
+\[ a_r = \# \{(a,b) \mid a+b=r, \; 0 \le a,b \le n \} \]
+so that the number of solutions to $k_1 + k_3 = k_2 + k_4 = r$
+is just given by $a_r^2$.
+We now just compute
+\begin{align*}
+  \sum_{r=0}^{2n} a_r^2 &= 1^2 + 2^2 + \dots + n^2 + (n+1)^2 + n^2 + \dots + 1^2 \\
+  &= \frac{1}{3}(n+1)(2n^2 + 4n + 3).
+\end{align*}
+\pagebreak
+
+\subsection{USAMO 2005/5, proposed by Kiran Kedlaya}
+\textsl{Available online at \url{https://aops.com/community/p213018}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n > 1$ be an integer.
+Suppose $2n$ points are given in the plane,
+no three of which are collinear.
+Suppose $n$ of the given $2n$ points are colored blue
+and the other $n$ colored red.
+A line in the plane is called a \emph{balancing line}
+if it passes through one blue and one red point
+and, for each side of the line, the number of blue points on that
+side is equal to the number of red points on the same side.
+Prove that there exist at least two balancing lines.
+\end{mdframed}
+Consider the convex hull $\mathcal H$ of the polygon.
+There are two cases.
+
+\paragraph{Easy case: the convex hull has both colors.}
+If the convex hull $\mathcal H$ is not all the same color,
+there exist two edges of $\mathcal H$ (at least)
+which have differently colored endpoints.
+The extensions of those sides form balancing lines;
+indeed given any such line $\ell$
+one side of $\ell$ has no points,
+the other has $n-1$ red and $n-1$ blue points.
+
+\paragraph{Harder case: the convex hull is all one color.}
+Now assume $\mathcal H$ is all blue (WLOG).
+We will prove there are at least $|\mathcal H|$ balancing
+lines in the following way.
+\begin{claim*}
+For any vertex $B$ of $\mathcal H$ there is a balancing line through it.
+\end{claim*}
+\begin{proof}
+Assume $A$, $B$, $C$ are three consecutive
+blue vertices of $\mathcal H$.
+Imagine starting with line $\ell$ passing through $B$ and $A$,
+then rotating it through $B$ until it coincides with line $BC$,
+through the polygon.
+
+\begin{center}
+\begin{asy}
+size(5cm);
+filldraw(dir(90)--dir(210)--dir(330)--cycle,
+  rgb(1,1,0.9), blue);
+label(scale(2)*"$\mathcal H$", midpoint(dir(90)--dir(330)), dir(30), blue);
+dot("$B$", dir(90), dir(130), blue);
+dot("$A$", dir(210), dir(210), blue);
+dot("$C$", dir(330), dir(330), blue);
+dot( (0.2,-0.4), red);
+dot( (-0.1, 0.3), red);
+dot( (0.4, 0.1), red);
+dot( (-0.5, -0.1), red);
+dot( (0.3, -0.2), blue);
+draw(dir(90)--dir(234), dashed, EndArrow);
+label("$\ell$", dir(234), dir(234));
+\end{asy}
+\end{center}
+
+During this process, we consider the set of points
+on the same side of $\ell$ as $C$,
+and let $x$ be the number of such red points
+minus the number of such blue points.
+Note that:
+\begin{itemize}
+  \ii Every time $\ell$ touches a blue point, $x$ increases by $1$.
+  \ii Every time $\ell$ touches a red point, $x$ decreases by $1$.
+  \ii Initially, $x = +1$.
+  \ii Just before reaching the end we have $x = -1$.
+\end{itemize}
+So at the moment where $x$ first equals zero,
+we have found our balancing line.
+\end{proof}
+\pagebreak
+
+\subsection{USAMO 2005/6, proposed by Titu Andreescu, Gabriel Dospinescu}
+\textsl{Available online at \url{https://aops.com/community/p213014}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For a positive integer $m$,
+let $s(m)$ denote the sum of the decimal digits of $m$.
+A set $S$ positive integers is \emph{$k$-stable}
+if $s(\sum_{x \in X} x) = k$ for any nonempty subset $X \subseteq S$.
+
+For each integer $n \ge 2$ let $f(n)$ be the minimal $k$
+for which there exists a $k$-stable set with $n$ integers.
+Prove that there are constants $0 < C_1 < C_2$ with
+\[ C_1 \log_{10} n \le f(n) \le C_2 \log_{10} n. \]
+\end{mdframed}
+\paragraph{Construction showing $f(n) \le 9 \left\lceil \log_{10} \binom{n+1}{2} \right\rceil$.}
+Let $n \ge 1$ and $e \ge 1$ be integers satisfying $1 + 2 + \dots + n < 10^e$.
+Consider the set
+\[ S = \left\{ 10^e-1, \; 2(10^e-1), \; \dots, \; n(10^e-1) \right\}. \]
+For example, if $n = 6$ and $e = 3$,
+we have $S = \{999, 1998, 2997, 3996, 4995, 5994\}$.
+
+The set $S$ here is easily seen to be $9e$-stable.
+Thus $f(n) \le 9 \left\lceil \log_{10} \binom{n+1}{2} \right\rceil$,
+proving one direction.
+
+\begin{remark*}
+  I think the problem is actually more natural
+  with a multiset $S$ rather than a vanilla set,
+  in which case $S = \{10^e-1, 10^e-1, \dots, 10^e-1\}$ works fine,
+  and is easier to think of.
+
+  In some sense the actual construction is obtained
+  by starting with this one,
+  and then pushing together the terms together
+  in order to get the terms to be distinct,
+  hence the $1+2+\dots+n$ appearance.
+\end{remark*}
+
+\paragraph{Proof that $f(n) \ge \log_{12} n$.}
+We are going to prove the following, which obviously sufficient.
+\begin{claim*}
+  Let $k$ be a positive integer.
+  In any (multi)set $S$ of more than $12^k$ integers,
+  there exists a subset whose sum of decimal digits exceeds $k$.
+\end{claim*}
+\begin{proof}
+  Imagine writing entries of $S$ on a blackboard,
+  while keeping a running sum $\Sigma$ initially set to zero.
+  For $i = 1, 2, \dots$ we will have a process such that
+  at the end of the $i$th step all entries on the board
+  are divisible by $10^i$.
+  It goes as follows:
+  \begin{itemize}
+    \ii If the $i$th digit from the right of $\Sigma$ is nonzero,
+    then arbitrarily partition the numbers on the board
+    into groups of $10$, erasing any leftover numbers.
+    Within each group of $10$, we can find
+    a nonempty subset with sum $0 \bmod{10^i}$;
+    we then erase each group and replace it with that sum.
+
+    \ii If the $i$th digit from the right of $\Sigma$ is zero,
+    but some entry on the board is not divisible by $10^i$,
+    then we erase that entry and add it to $\Sigma$.
+    Then we do the grouping as in the previous step.
+
+    \ii If the $i$th digit from the right of $\Sigma$ is zero,
+    and all entries on the board are divisible by $10^i$,
+    we do nothing and move on to the next step.
+  \end{itemize}
+  This process ends when no numbers remain on the blackboard.
+  The first and second cases occur at least $k+1$ times
+  (the number of entries decreases by a factor of at most $12$ each step),
+  and each time $\Sigma$ gets some nonzero digit,
+  which is never changed at later steps.
+  Therefore $\Sigma$ has sum of digits at least $k+1$ as needed.
+\end{proof}
+
+\begin{remark*}
+  The official solutions contain a slicker proof:
+  it turns out that any multiple of $10^e-1$ has
+  sum of decimal digits at least $9e$.
+  However, if one does not know this lemma it seems
+  nontrivial to imagine coming up with it.
+\end{remark*}
+\pagebreak
+
+
+\end{document}

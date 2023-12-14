@@ -1,0 +1,427 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 1999 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 1999 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Some checkers placed on an $n \times n$ checkerboard satisfy the following conditions:
+\begin{enumerate}
+  \ii[(a)] every square that does not contain a checker shares a side with one that does;
+  \ii[(b)] given any pair of squares that contain checkers,
+  there is a sequence of squares containing checkers,
+  starting and ending with the given squares,
+  such that every two consecutive squares of the sequence share a side.
+\end{enumerate}
+Prove that at least $(n^{2}-2)/3$ checkers have been placed on the board.
+
+\item %% Problem 2
+Let $ABCD$ be a convex cyclic quadrilateral.
+Prove that \[ |AB - CD| + |AD - BC| \geq 2|AC - BD|. \]
+
+\item %% Problem 3
+Let $p > 2$ be a prime and let $a$, $b$, $c$, $d$ be integers not divisible by $p$,
+such that
+\[ \left\{ \dfrac{ra}{p} \right\} + \left\{ \dfrac{rb}{p} \right\}
+  + \left\{ \dfrac{rc}{p} \right\} + \left\{ \dfrac{rd}{p} \right\} = 2  \]
+for any integer $r$ not divisible by $p$.
+(Here, $\{t\} = t - \left\lfloor t \right\rfloor$ is the fractional part.)
+Prove that at least two of the numbers
+$a+b$, $a+c$, $a+d$, $b+c$, $b+d$, $c+d$ are divisible by $p$.
+
+\item %% Problem 4
+Let $a_1$, $a_2$, \dots, $a_n$ be a sequence of $n > 3$ real numbers
+such that
+\[ a_1 + \dots + a_n \ge n \quad\text{and}\quad
+  a_1^2 + \dots + a_n^2 \ge n^2. \]
+Prove that $\max(a_1, \dots, a_n) \ge 2$.
+
+\item %% Problem 5
+The Y2K Game is played on a $1 \times 2000$ grid as follows.
+Two players in turn write either an S or an O in an empty square.
+The first player who produces three consecutive boxes that spell SOS wins.
+If all boxes are filled without producing SOS then the game is a draw.
+Prove that the second player has a winning strategy.
+
+\item %% Problem 6
+Let $ABCD$ be an isosceles trapezoid with $AB \parallel CD$.
+The inscribed circle $\omega$ of triangle $BCD$ meets $CD$ at $E$.
+Let $F$ be a point on the (internal) angle bisector of $\angle DAC$
+such that $EF \perp CD$.
+Let the circumscribed circle of triangle $ACF$
+meet line $CD$ at $C$ and $G$.
+Prove that the triangle $AFG$ is isosceles.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 1999/1}
+\textsl{Available online at \url{https://aops.com/community/p340035}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Some checkers placed on an $n \times n$ checkerboard satisfy the following conditions:
+\begin{enumerate}
+  \ii[(a)] every square that does not contain a checker shares a side with one that does;
+  \ii[(b)] given any pair of squares that contain checkers,
+  there is a sequence of squares containing checkers,
+  starting and ending with the given squares,
+  such that every two consecutive squares of the sequence share a side.
+\end{enumerate}
+Prove that at least $(n^{2}-2)/3$ checkers have been placed on the board.
+\end{mdframed}
+Take a spanning tree on the set $V$ of checkers
+where the $|V|-1$ edges of the tree are given by orthogonal adjacency.
+By condition (a) we have
+\[ \sum_{v \in V} (4-\deg v) \ge n^2 - |V| \]
+and since $\sum_{v \in V} \deg v = 2(|V|-1)$
+we get
+\[ 4|V| - \left( 2|V|-2 \right) \ge n^2 - |V| \]
+which implies $|V| \ge \frac{n^2-2}{3}$.
+\pagebreak
+
+\subsection{USAMO 1999/2}
+\textsl{Available online at \url{https://aops.com/community/p340036}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCD$ be a convex cyclic quadrilateral.
+Prove that \[ |AB - CD| + |AD - BC| \geq 2|AC - BD|. \]
+\end{mdframed}
+Let the diagonals meet at $P$,
+and let $AP = pq$, $DP = pr$, $BP = qs$, $CP = rs$.
+Then set $AB = qx$, $CD = rx$, $AD = py$, $BC = sy$.
+
+
+In this way we compute
+\[ \left\lvert AC-BD \right\rvert
+  = \left\lvert (p-s)(q-r) \right\rvert  \]
+and
+\[ \left\lvert AB-CD \right\rvert
+  = \left\lvert q-r \right\rvert x. \]
+By triangle inequality on $\triangle AXB$,
+we have $x \ge \left\lvert p-s \right\rvert$.
+So $\left\lvert AB-CD \right\rvert \ge \left\lvert AC-BD \right\rvert$.
+\pagebreak
+
+\subsection{USAMO 1999/3}
+\textsl{Available online at \url{https://aops.com/community/p340038}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $p > 2$ be a prime and let $a$, $b$, $c$, $d$ be integers not divisible by $p$,
+such that
+\[ \left\{ \dfrac{ra}{p} \right\} + \left\{ \dfrac{rb}{p} \right\}
+  + \left\{ \dfrac{rc}{p} \right\} + \left\{ \dfrac{rd}{p} \right\} = 2  \]
+for any integer $r$ not divisible by $p$.
+(Here, $\{t\} = t - \left\lfloor t \right\rfloor$ is the fractional part.)
+Prove that at least two of the numbers
+$a+b$, $a+c$, $a+d$, $b+c$, $b+d$, $c+d$ are divisible by $p$.
+\end{mdframed}
+First of all, we apparently have $r(a+b+c+d) \equiv 0 \pmod p$
+for every prime $p$, so it automatically follows that $a+b+c+d \equiv 0 \pmod p$.
+By scaling appropriately, and also replacing each number with its remainder modulo $p$,
+we are going to assume that
+\[ 1 = a \le b \le c \le d < p. \]
+We are going to prove that $d = p-1$, which will solve the problem.
+
+\begin{claim*}
+  For each integer $r = 1, 2, \dots, p-1$ we have
+  \[ 2(r-1) = \left\lfloor \frac{rb}{p} \right\rfloor
+    + \left\lfloor \frac{rc}{p} \right\rfloor
+    + \left\lfloor \frac{rd}{p} \right\rfloor. \]
+\end{claim*}
+\begin{proof}
+  By plugging in $r=1$ to the given we have $a+b+c+d=2p$.
+  Now, we have
+  \[ 2 = \sum_{\text{cyc}} \left( \frac{ra}{p}
+    - \left\lfloor \frac{ra}{p} \right\rfloor \right) \]
+  and since $a+b+c+d=2p$ the conclusion follows.
+\end{proof}
+
+%We now define $x = b/p$, $y = c/p$, $z = d/p$.
+%Hence $0 < x \le y \le z < 1$.
+%Our goal it show that $z = (p-1)/p$.
+
+We vaguely outline the approach now, before giving a formalization.
+Imagine the interval $[0,1]$.
+One by one, for each $r = 1, 2, 3, \dots, p-1$,
+we mark the fractions with denominator $r$ on this number line;
+the resulting pictures may be better known as \emph{Farey fractions}.
+At each step, we can place the three numbers $b/p$, $c/p$, $d/p$
+into one of the resulting sub-intervals.
+Our goal is to show that $d/p$ is always in the rightmost interval,
+while $b/p$ and $c/p$ are always to the right of symmetrically mirrored points.
+An example of a possible diagram is shown below (not to scale).
+\begin{center}
+\begin{asy}
+  unitsize(11cm);
+  real h = 0.05;
+  draw( (0,0)--(1,0) );
+  void tick(string s, real x, real t, pen p) {
+    label(s, (x,-t), dir(-90), p);
+    draw((x,-t)--(x,t), p);
+  }
+  tick("$0$", 0, h, black);
+  tick("$1$", 1, h, black);
+  tick("$\frac{1}{2}$", 1/2, h, black);
+  tick("$\frac{1}{3}$", 1/3, 0.7*h, blue);
+  tick("$\frac{2}{3}$", 2/3, 0.7*h, blue);
+  tick("$\frac{1}{4}$", 1/4, 0.5*h, deepgreen);
+  tick("$\frac{3}{4}$", 3/4, 0.5*h, deepgreen);
+  tick("$\frac{1}{5}$", 1/6, 0.3*h, grey); // white lie
+  tick("$\frac{2}{5}$", 2/5, 0.3*h, grey);
+  tick("$\frac{3}{5}$", 3/5, 0.3*h, grey);
+  tick("$\frac{4}{5}$", 5/6, 0.3*h, grey); // white lie
+  dot("$\boxed{\frac{b}{p}}$", (0.3,0), dir(90), red);
+  dot("$\boxed{\frac{c}{p}}$", (0.72,0), dir(90), red);
+  dot("$\boxed{\frac{d}{p}}$", (0.95,0), dir(90), red);
+\end{asy}
+\end{center}
+
+In symbols, it will be enough to prove the following.
+\begin{claim*}
+  For each $r = 1, 2, \dots, p-2$ we have
+  $\frac{r-1}{r} < \frac dp < 1$.
+
+  Equivalently, for each $r = 1, 2, \dots, p-2$
+  we have $\left\lfloor \frac{rb}{p} \right\rfloor
+  + \left\lfloor \frac{rc}{p} \right\rfloor = r-1$.
+\end{claim*}
+\begin{proof}
+  Assume this is not true and take the minimal counterexample $r > 1$.
+  Then evidently
+  \[ r-1 > \left\lfloor \frac{rd}{p} \right\rfloor
+    \ge \left\lfloor \frac{(r-1)d}{p} \right\rfloor
+    = r-2.  \]
+  Now, we have that
+  \[ 2(r-1) = \left\lfloor \frac{rb}{p} \right\rfloor
+    + \left\lfloor \frac{rc}{p} \right\rfloor
+    + \underbrace{\left\lfloor \frac{rd}{p} \right\rfloor}_{= r-2}.  \]
+  Thus
+  $\left\lfloor \frac{rb}{p} \right\rfloor >
+  \left\lfloor \frac{(r-1)b}{p} \right\rfloor$,
+  and $\left\lfloor \frac{rc}{p} \right\rfloor >
+  \left\lfloor \frac{(r-1)b}{p} \right\rfloor$.
+  An example of this situation is illustrated below with $r = 7$
+  (not to scale).
+  \begin{center}
+  \begin{asy}
+    unitsize(11cm);
+    real h = 0.05;
+    draw( (0,0)--(1,0) );
+    void tick(string s, real x, real t, pen p) {
+      label(s, (x,-t), dir(-90), p);
+      draw((x,-t)--(x,t), p);
+    }
+    tick("$0$", 0, h, black);
+    tick("$1$", 1, h, black);
+    tick("$\frac{1}{2}$", 1/2, h, black);
+    tick("$\frac{1}{3}$", 1/3, 0.7*h, blue);
+    tick("$\frac{2}{3}$", 2/3, 0.7*h, blue);
+    tick("$\frac{1}{4}$", 1/4, 0.5*h, deepgreen);
+    tick("$\frac{3}{4}$", 3/4, 0.5*h, deepgreen);
+    tick("$\frac{1}{5}$", 1/6, 0.3*h, grey);
+    tick("$\frac{2}{5}$", 2/5, 0.3*h, grey);
+    tick("$\frac{3}{5}$", 3/5, 0.3*h, grey);
+    tick("$\frac{4}{5}$", 5/6, 0.3*h, grey);
+    tick("$\frac{1}{6}$", 1/8, 0.3*h, grey);
+    tick("$\frac{5}{6}$", 7/8, 0.3*h, grey);
+    dot("$\boxed{\frac{b}{p}}$", (0.31,0), dir(90), red);
+    dot("$\boxed{\frac{c}{p}}$", (0.725,0), dir(90), red);
+    dot("$\boxed{\frac{d}{p}}$", (0.92,0), dir(90), red);
+    tick("$\dfrac{2}{7}$", 2/7, 1.5*h, red+1);
+    tick("$\dfrac{5}{7}$", 0.7, 1.5*h, red+1);
+    tick("$\dfrac{6}{7}$", 0.9, 1.5*h, red+1);
+
+    tick("$\dfrac{7}{8}$", 0.95, 2*h, orange+1);
+    tick("$\dfrac{3}{8}$", 0.375, 2*h, orange+1);
+    tick("$\dfrac{6}{8}$", 0.75, 2*h, orange+1);
+  \end{asy}
+  \end{center}
+  Right now, $\frac bp$ and $\frac cp$
+  are just to the right of
+  $\frac ur$ and $\frac vr$ for some $u$ and $v$ with $u+v=r$.
+  The issue is that the there is some fraction just to the right of
+  $\frac bp$ and $\frac cp$ from an earlier value of $r$,
+  and by hypothesis its denominator is going to be strictly greater than $1$.
+
+  It is at this point we are going to use the properties of Farey sequences.
+  When we consider the fractions with denominator $r+1$,
+  they are going to lie outside of the interval
+  they we have constrained $\frac bp$ and $\frac cp$ to lie in.
+
+  Indeed, our minimality assumption on $r$ guarantees that there is no
+  fraction with denominator less than $r$ between $\frac ur$ and $\frac bp$.
+  So if $\frac ur < \frac bp < \frac st$
+  (where $\frac ur$ and $\frac st$ are the closest fractions
+  with denominator at most $r$ to $\frac bp$)
+  then Farey theory says the next fraction
+  inside the interval $[\frac ur, \frac st]$
+  is $\frac{u+s}{r+t}$, and since $t > 1$, we have $r+t > r+1$.
+  In other words, we get an inequality of the form
+  \[ \frac ur < \frac bp < \underbrace{\text{something}}_{=s/t} \le \frac{u+1}{r+1}. \]
+
+  The same holds for $\frac cp$ as
+  \[ \frac vr < \frac cp < \text{something} \le \frac{v+1}{r+1}. \]
+  Finally,
+  \[ \frac dp < \frac{r-1}{r} < \frac{r}{r+1}. \]
+  So now we have that
+  \[ \left\lfloor \frac{(r+1)b}{p} \right\rfloor
+    + \left\lfloor \frac{(r+1)c}{p} \right\rfloor
+    + \left\lfloor \frac{(r+1)d}{p} \right\rfloor
+    \le u + v + (r-1) = 2r-1 \]
+  which is a contradiction.
+\end{proof}
+Now, since
+\[ \frac{p-3}{p-2} < \frac dp
+  \implies d > \frac{p(p-3)}{p-2} = p - 1 - \frac{2}{p-2} \]
+which for $p > 2$ gives $d = p-1$.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 1999/4}
+\textsl{Available online at \url{https://aops.com/community/p63591}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a_1$, $a_2$, \dots, $a_n$ be a sequence of $n > 3$ real numbers
+such that
+\[ a_1 + \dots + a_n \ge n \quad\text{and}\quad
+  a_1^2 + \dots + a_n^2 \ge n^2. \]
+Prove that $\max(a_1, \dots, a_n) \ge 2$.
+\end{mdframed}
+Proceed by contradiction, assuming $a_i < 2$ for all $i$.
+
+If all $a_i \ge 0$, then $ n^2 \le \sum_i a_i^2 < n \cdot 2^2$,
+contradiction.
+
+Otherwise, assume at least one $a_i$ is negative.
+Note that if $-x$ and $-y$ are both present in the sequence ($x,y>0$),
+then we can replace them with $-(x+y)$ and $0$.
+So we may assume that there is exactly one negative term, say $a_n = -M$.
+
+Now, smooth all the nonnegative $a_i$ to be $2$,
+making all inequalities strict.
+Now, we have that
+\begin{align*}
+  2(n-1) - M &> n \\
+  4(n-1) + M^2 &> n^2.
+\end{align*}
+This gives $n-2 < M < n-2$, contradiction.
+
+Equality in the original occurs when $n-1$ of the $a_i$ are equal to $2$
+and the last one is equal to $-(n-2)$.
+\pagebreak
+
+\subsection{USAMO 1999/5}
+\textsl{Available online at \url{https://aops.com/community/p340040}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+The Y2K Game is played on a $1 \times 2000$ grid as follows.
+Two players in turn write either an S or an O in an empty square.
+The first player who produces three consecutive boxes that spell SOS wins.
+If all boxes are filled without producing SOS then the game is a draw.
+Prove that the second player has a winning strategy.
+\end{mdframed}
+The main insight is that a construct of the form
+\[ S \; \square \; \square \; S \]
+(here the $\square$ is blank)
+will kill any player which plays inside it.
+We call this a \emph{trap} accordingly.
+
+\begin{claim*}
+  The second player can force a trap to exist;
+  in this case the game will never end in a draw.
+\end{claim*}
+\begin{proof}
+  Actually the second player can construct a trap
+  on her second turn by playing an $S$ far enough away
+  from the edges of the board and the first player's initial move.
+\end{proof}
+
+\begin{claim*}
+  The second player always has a move which prevents
+  her from losing.
+\end{claim*}
+\begin{proof}
+  Since there are an odd number of empty squares at the start of
+  the second player's turn,
+  there must be a square which is bordered by either
+  two filled or two empty squares.
+  The second player can then play $O$ in this square,
+  which is always safe.
+\end{proof}
+
+Together these two claims finish the problem.
+
+\begin{remark*}
+  Actually, one can show that the ``only'' way to lose
+  is to be forced to play inside a trap.
+  Indeed, suppose playing in a certain cell $c$ loses.
+  If we wrote $O$, that means $c$ is bordered by exactly one $S$,
+  with a blank cell on the neighbor.
+  But we could also write $S$; checking cases we find $c$
+  is part of a trap.
+
+  Thus a player can lose only if all blank cells
+  are in traps; ergo, the number of blank cells is even.
+  This never happens for the second player.
+  Thus this gives an alternative solution,
+  and moreover a reason to believe that all
+  correct solutions must involve traps.
+
+  A similar proof shows that for large $n$, with a $1 \times n$ board,
+  the first player has a winning strategy for odd $n$,
+  and the second player has a winning strategy for even $n$.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 1999/6}
+\textsl{Available online at \url{https://aops.com/community/p340041}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCD$ be an isosceles trapezoid with $AB \parallel CD$.
+The inscribed circle $\omega$ of triangle $BCD$ meets $CD$ at $E$.
+Let $F$ be a point on the (internal) angle bisector of $\angle DAC$
+such that $EF \perp CD$.
+Let the circumscribed circle of triangle $ACF$
+meet line $CD$ at $C$ and $G$.
+Prove that the triangle $AFG$ is isosceles.
+\end{mdframed}
+Note $E$ is contact point of $A$-excircle of $\triangle ACD$,
+so $F$ is $A$-excenter.
+Hence $CF$ is external angle bisector of $\angle ACG$
+which implies $FA = FG$
+(since $F$ is the arc midpoint on the circumcircle of $AFG$).
+\pagebreak
+
+
+\end{document}

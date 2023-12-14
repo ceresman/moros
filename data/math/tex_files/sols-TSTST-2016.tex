@@ -1,0 +1,895 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{USA TSTST 2016 Solutions}
+\subtitle{United States of America --- TST Selection Test}
+\date{58\ts{th} IMO 2017 Brazil and 6\ts{th} EGMO 2017 Switzerland}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $A = A(x,y)$ and $B = B(x,y)$ be
+two-variable polynomials with real coefficients.
+Suppose that $A(x,y)/B(x,y)$ is a polynomial in $x$
+for infinitely many values of $y$,
+and a polynomial in $y$ for infinitely many values of $x$.
+Prove that $B$ divides $A$, meaning there exists a third polynomial $C$
+with real coefficients such that $A = B \cdot C$.
+
+\item %% Problem 2
+Let $ABC$ be a scalene triangle with orthocenter $H$ and circumcenter $O$
+and denote by $M$, $N$ the midpoints of $\ol{AH}$, $\ol{BC}$.
+Suppose the circle $\gamma$ with diameter $\ol{AH}$ meets
+the circumcircle of $ABC$ at $G \neq A$,
+and meets line $\ol{AN}$ at $Q \neq A$.
+The tangent to $\gamma$ at $G$ meets line $OM$ at $P$.
+Show that the circumcircles of $\triangle GNQ$
+and $\triangle MBC$ intersect on $\ol{PN}$.
+
+\item %% Problem 3
+Decide whether or not there exists a nonconstant polynomial $Q(x)$
+with integer coefficients with the following property:
+for every positive integer $n > 2$, the numbers
+\[ Q(0), \; Q(1), Q(2),  \; \dots, \; Q(n-1) \]
+produce at most $0.499n$ distinct residues when taken modulo $n$.
+
+\item %% Problem 4
+Prove that if $n$ and $k$ are positive integers
+satisfying $\varphi^k(n) = 1$, then $n \le 3^k$.
+(Here $\varphi^k$ denotes $k$ applications of the Euler phi function.)
+
+\item %% Problem 5
+In the coordinate plane are finitely many \emph{walls},
+which are disjoint line segments, none of which are parallel to either axis.
+A bulldozer starts at an arbitrary point and moves in the $+x$ direction.
+Every time it hits a wall, it turns at a right angle to its path,
+away from the wall, and continues moving.
+(Thus the bulldozer always moves parallel to the axes.)
+
+Prove that it is impossible for the bulldozer
+to hit both sides of every wall.
+
+\item %% Problem 6
+Let $ABC$ be a triangle with incenter $I$,
+and whose incircle is tangent to $\ol{BC}$, $\ol{CA}$, $\ol{AB}$
+at $D$, $E$, $F$, respectively.
+Let $K$ be the foot of the altitude from $D$ to $\ol{EF}$.
+Suppose that the circumcircle of $\triangle AIB$
+meets the incircle at two distinct points $C_1$ and $C_2$,
+while the circumcircle of $\triangle AIC$ meets the incircle
+at two distinct points $B_1$ and $B_2$.
+Prove that the radical axis of the circumcircles of
+$\triangle BB_1B_2$ and $\triangle CC_1C_2$ passes through
+the midpoint $M$ of $\ol{DK}$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{TSTST 2016/1, proposed by Victor Wang}
+\textsl{Available online at \url{https://aops.com/community/p6575197}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $A = A(x,y)$ and $B = B(x,y)$ be
+two-variable polynomials with real coefficients.
+Suppose that $A(x,y)/B(x,y)$ is a polynomial in $x$
+for infinitely many values of $y$,
+and a polynomial in $y$ for infinitely many values of $x$.
+Prove that $B$ divides $A$, meaning there exists a third polynomial $C$
+with real coefficients such that $A = B \cdot C$.
+\end{mdframed}
+This is essentially an application of the division algorithm,
+but the details require significant care.
+
+First, we claim that $A/B$ can be written as a polynomial in $x$
+whose coefficients are rational functions in $y$.
+To see this, use the division algorithm to get
+\[ A = Q \cdot B + R \qquad Q,R \in (\RR(y))[x] \]
+where $Q$ and $R$ are polynomials in $x$
+whose coefficients are rational functions in $y$,
+and moreover $\deg_x B > \deg_x R$.
+
+Now, we claim that $R \equiv 0$.
+Indeed, we have by hypothesis that for infinitely many values of $y_0$
+that $B(x,y_0)$ divides $A(x, y_0)$,
+which means $B(x,y_0) \mid R(x,y_0)$ as polynomials in $\RR[x]$.
+Now, we have $\deg_x B(x,y_0) > \deg_x R(x,y_0)$
+outside of finitely many values of $y_0$ (but not all of them!);
+this means for infinitely many $y_0$ we have $R(x,y_0) \equiv 0$.
+So each coefficient of $x^i$ (in $\RR(y)$)
+has infinitely many roots, hence is a zero polynomial.
+
+Consequently, we are able to write $A / B = F(x,y) / M(y)$
+where $F \in \RR[x,y]$ and $M \in \RR[y]$ are each polynomials.
+Repeating the same argument now gives
+\[ \frac AB = \frac{F(x,y)}{M(y)} = \frac{G(x,y)}{N(x)}. \]
+Now, by unique factorization of polynomials in $\RR[x,y]$,
+we can discuss GCD's.
+So, we tacitly assume $\gcd(F,M) = \gcd(G,N) = (1)$.
+Also, we obviously have $\gcd(M,N) = (1)$.
+But $F \cdot N = G \cdot M$, so $M \mid F \cdot N$,
+thus we conclude $M$ is the constant polynomial.
+This implies the result.
+
+\begin{remark*} This fact does not generalize to arbitrary functions that are separately polynomial:
+see e.g. \url{http://aops.com/community/c6h523650p2978180}. \end{remark*}
+\pagebreak
+
+\subsection{TSTST 2016/2, proposed by Evan Chen}
+\textsl{Available online at \url{https://aops.com/community/p6575204}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a scalene triangle with orthocenter $H$ and circumcenter $O$
+and denote by $M$, $N$ the midpoints of $\ol{AH}$, $\ol{BC}$.
+Suppose the circle $\gamma$ with diameter $\ol{AH}$ meets
+the circumcircle of $ABC$ at $G \neq A$,
+and meets line $\ol{AN}$ at $Q \neq A$.
+The tangent to $\gamma$ at $G$ meets line $OM$ at $P$.
+Show that the circumcircles of $\triangle GNQ$
+and $\triangle MBC$ intersect on $\ol{PN}$.
+\end{mdframed}
+We present two solutions,
+one using essentially only power of a point,
+and the other more involved.
+
+\paragraph{First solution (found by contestants).}
+Denote by $\triangle DEF$ the orthic triangle.
+Observe $\ol{PA}$ and $\ol{PG}$ are tangents to $\gamma$,
+since $\ol{OM}$ is the perpendicular bisector of $\ol{AG}$.
+Also note that $\ol{AG}$, $\ol{EF}$, $\ol{BC}$ are concurrent at some point $R$
+by radical axis on $(ABC)$, $\gamma$, $(BC)$.
+
+Now, consider circles $(PAGM)$, $(MFDNE)$, and $(MBC)$.
+They intersect at $M$ but have radical center $R$, so are coaxial;
+assume they meet again at $T \in \ol{RM}$, say.
+Then $\angle PTM$ and $\angle MTN$ are both right angles, hence $T$ lies on $\ol{PN}$.
+
+Finally $H$ is the orthocenter of $\triangle ARN$,
+and thus the circle with diameter $\ol{RN}$ passes through $G$, $Q$, $N$.
+
+\begin{center}
+\begin{asy}
+size(11cm);
+pair A = dir(120);
+pair B = dir(210);
+pair C = dir(330);
+pair N = midpoint(B--C);
+pair H = orthocenter(A, B, C);
+pair M = midpoint(A--H);
+pair O = circumcenter(A, B, C);
+pair P = extension(O, M, A, B-C+A);
+pair T = foot(M, P, N);
+pair D = foot(A, B, C);
+pair E = foot(B, C, A);
+pair F = foot(C, A, B);
+
+filldraw(A--B--C--cycle, opacity(0.1)+lightblue, blue);
+draw(unitcircle, blue);
+
+draw(A--D, heavygreen);
+draw(B--E, heavygreen);
+draw(C--F, heavygreen);
+draw(E--F, heavygreen);
+draw(B--M--C, lightred);
+// filldraw(circumcircle(M, B, C), opacity(0.05)+lightred, red);
+
+filldraw(circumcircle(D, E, F), opacity(0.05)+lightred, red);
+draw(O--P--N, heavycyan);
+draw(A--P, heavycyan);
+
+filldraw(circumcircle(A, E, F), opacity(0.1)+lightgreen, heavygreen);
+pair Q = foot(H, A, N);
+pair G = -A+2*foot(A, M, P);
+
+pair R = extension(E, F, B, C);
+draw(R--F, heavygreen);
+draw(R--B, blue);
+draw(R--Q, heavygreen);
+draw(A--R, heavygreen);
+draw(A--N, blue);
+draw(P--G, heavycyan);
+draw(G--N, blue);
+draw(M--R, heavygreen);
+filldraw(circumcircle(R, G, T), opacity(0.05)+lightred, red);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$N$", N, dir(N));
+dot("$H$", H, dir(H));
+dot("$M$", M, dir(M));
+dot("$O$", O, dir(225));
+dot("$P$", P, dir(P));
+dot("$T$", T, dir(T));
+dot("$D$", D, dir(D));
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(F));
+dot("$Q$", Q, dir(Q));
+dot("$G$", G, dir(G));
+dot("$R$", R, dir(R));
+
+/* TSQ Source:
+
+!size(11cm);
+A = dir 120
+B = dir 210
+C = dir 330
+N = midpoint B--C
+H = orthocenter A B C
+M = midpoint A--H
+O = circumcenter A B C R225
+P = extension O M A B-C+A
+T = foot M P N
+D = foot A B C
+E = foot B C A
+F = foot C A B
+
+A--B--C--cycle 0.1 lightblue / blue
+unitcircle blue
+
+A--D heavygreen
+B--E heavygreen
+C--F heavygreen
+E--F heavygreen
+B--M--C lightred
+// circumcircle M B C 0.05 lightred / red
+
+circumcircle D E F 0.1 lightred / red
+O--P--N heavycyan
+A--P heavycyan
+
+circumcircle A E F 0.1 lightgreen / heavygreen
+Q = foot H A N
+G = -A+2*foot A M P
+
+R = extension E F B C
+R--F heavygreen
+R--B blue
+R--Q heavygreen
+A--R heavygreen
+A--N blue
+P--G heavycyan
+G--N blue
+M--R heavygreen
+circumcircle R G T 0.1 lightred / red
+
+*/
+\end{asy}
+\end{center}
+
+\paragraph{Alternate solution (by proposer).}
+Let $L$ be diametrically opposite $A$ on the circumcircle.
+Denote by $\triangle DEF$ the orthic triangle.
+Let $X = \ol{AH} \cap \ol{EF}$.
+Finally, let $T$ be the second intersection of $(MFDNE)$ and $(MBC)$.
+
+\begin{center}
+\begin{asy}
+size(11cm);
+pair A = dir(120);
+pair B = dir(210);
+pair C = dir(330);
+pair N = midpoint(B--C);
+pair H = orthocenter(A, B, C);
+pair M = midpoint(A--H);
+pair O = circumcenter(A, B, C);
+pair P = extension(O, M, A, B-C+A);
+pair X = extension(P, N, A, H);
+pair T = foot(M, P, N);
+pair D = foot(A, B, C);
+pair E = foot(B, C, A);
+pair F = foot(C, A, B);
+pair L = -A;
+pair K = extension(H, N, A, P);
+
+filldraw(A--B--C--cycle, opacity(0.1)+lightblue, blue);
+filldraw(B--L--C--cycle, opacity(0.1)+lightblue, blue);
+draw(unitcircle, blue);
+draw(A--L, blue);
+
+draw(A--D, heavygreen);
+draw(B--E, heavygreen);
+draw(C--F, heavygreen);
+draw(E--F, heavygreen);
+draw(B--M--C, lightred);
+filldraw(circumcircle(M, B, C), opacity(0.05)+lightred, red);
+
+filldraw(circumcircle(D, E, F), opacity(0.05)+lightred, red);
+draw(A--K--L, heavycyan);
+draw(O--P--N, heavycyan);
+
+filldraw(circumcircle(A, E, F), opacity(0.1)+lightgreen, heavygreen);
+pair Q = foot(H, A, N);
+pair G = -A+2*foot(A, M, P);
+
+pair R = extension(E, F, B, C);
+draw(R--F, heavygreen);
+draw(R--B, blue);
+draw(R--Q, heavygreen);
+draw(A--R, heavygreen);
+draw(A--N, blue);
+draw(P--G, heavycyan);
+draw(M--R, heavygreen);
+filldraw(circumcircle(R, G, T), opacity(0.05)+lightred, red);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$N$", N, dir(N));
+dot("$H$", H, dir(H));
+dot("$M$", M, dir(M));
+dot("$O$", O, dir(225));
+dot("$P$", P, dir(P));
+dot("$X$", X, dir(X));
+dot("$T$", T, dir(T));
+dot("$D$", D, dir(D));
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(F));
+dot("$L$", L, dir(L));
+dot("$K$", K, dir(K));
+dot("$Q$", Q, dir(Q));
+dot("$G$", G, dir(G));
+dot("$R$", R, dir(R));
+
+/* TSQ Source:
+
+!size(11cm);
+A = dir 120
+B = dir 210
+C = dir 330
+N = midpoint B--C
+H = orthocenter A B C
+M = midpoint A--H
+O = circumcenter A B C R225
+P = extension O M A B-C+A
+X = extension P N A H
+T = foot M P N
+D = foot A B C
+E = foot B C A
+F = foot C A B
+L = -A
+K = extension H N A P
+
+A--B--C--cycle 0.1 lightblue / blue
+B--L--C--cycle 0.1 lightblue / blue
+unitcircle blue
+A--L blue
+
+A--D heavygreen
+B--E heavygreen
+C--F heavygreen
+E--F heavygreen
+B--M--C lightred
+circumcircle M B C 0.05 lightred / red
+
+circumcircle D E F 0.05 lightred / red
+A--K--L heavycyan
+O--P--N heavycyan
+
+circumcircle A E F 0.1 lightgreen / heavygreen
+Q = foot H A N
+G = -A+2*foot A M P
+
+R = extension E F B C
+R--F heavygreen
+R--B blue
+R--Q heavygreen
+A--R heavygreen
+A--N blue
+P--G heavycyan
+M--R heavygreen
+circumcircle R G T 0.05 lightred / red
+
+*/
+\end{asy}
+\end{center}
+
+We begin with a few easy observations.
+First, points $H$, $G$, $N$, $L$ are collinear and $\angle AGL = 90\dg$.
+Also, $Q$ is the foot from $H$ to $\ol{AN}$.
+Consequently, lines $AG$, $EF$, $HQ$, $BC$, $TM$
+concur at a point $R$ (radical axis).
+Moreover, we already know $\angle MTN = 90\dg$.
+This implies $T$ lies on the circle with diameter $\ol{RN}$,
+which is exactly the circumcircle of $\triangle GQN$.
+
+Note by Brokard's Theorem on $AFHE$, the point $X$ is the orthocenter of $\triangle MBC$.
+But $\angle MTN = 90\dg$ already, and $N$ is the midpoint of $\ol{BC}$.
+Consequently, points $T$, $X$, $N$ are collinear.
+
+Finally, we claim $P$, $X$, $N$ are collinear, which solves the problem.
+Note $P = \ol{GG} \cap \ol{AA}$.
+Set $K = \ol{HNL} \cap \ol{AP}$.
+Then by noting \[ -1 = (D,X;A,H) \overset{N}{=} (\infty, \ol{NX} \cap \ol{AK}; A, K) \]
+we see that $\ol{NX}$ bisects segment $\ol{AK}$, as desired.
+(A more projective finish is to show that $\ol{PXN}$ is the polar of $R$ to $\gamma$).
+
+\begin{remark*}
+The original problem proposal reads as follows:
+\begin{quote}
+Let $ABC$ be a triangle with orthocenter $H$ and circumcenter $O$
+and denote by $M$, $N$ the midpoints of $\ol{AH}$, $\ol{BC}$.
+Suppose ray $OM$ meets the line parallel to $\ol{BC}$ through $A$ at $P$.
+Prove that the line through the circumcenter of $\triangle MBC$
+and the midpoint of $\ol{OH}$ is parallel to $\ol{NP}$.
+\end{quote}
+The points $G$ and $Q$ were added to the picture later
+to prevent the problem from being immediate by coordinates.
+\end{remark*}
+\pagebreak
+
+\subsection{TSTST 2016/3, proposed by Yang Liu}
+\textsl{Available online at \url{https://aops.com/community/p6575217}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Decide whether or not there exists a nonconstant polynomial $Q(x)$
+with integer coefficients with the following property:
+for every positive integer $n > 2$, the numbers
+\[ Q(0), \; Q(1), Q(2),  \; \dots, \; Q(n-1) \]
+produce at most $0.499n$ distinct residues when taken modulo $n$.
+\end{mdframed}
+We claim that
+\[ Q(x) = 420(x^2-1)^2 \]
+works.
+Clearly, it suffices to prove the result when $n=4$ and when $n$ is an odd prime $p$.
+The case $n=4$ is trivial, so assume now $n=p$ is an odd prime.
+
+First, we prove the following easy claim.
+\begin{claim*}
+  For any odd prime $p$, there are at least $\frac12(p-3)$
+  values of $a$ for which $\left( \frac{1-a^2}{p} \right) = +1$.
+\end{claim*}
+\begin{proof}
+  Note that if $k \neq 0$, $k \neq \pm 1$, $k^2 \neq -1$, then $a = 2(k+k\inv)$ works.
+  Also $a=0$ works.
+\end{proof}
+
+Let $F(x) = (x^2-1)^2$.
+The range of $F$ modulo $p$ is contained within the $\half(p+1)$ quadratic residues modulo $p$.
+On the other hand, if for some $t$ neither of $1 \pm t$ is a quadratic residue,
+then $t^2$ is omitted from the range of $F$ as well.
+Call such a value of $t$ \emph{useful}, and let $N$ be the number of useful residues.
+We aim to show $N \ge \frac14 p - 2$.
+
+We compute a lower bound on the number $N$ of useful $t$ by writing
+\begin{align*}
+  N &= \frac{1}{4} \left( \sum_t \left[ \left(1 - \left(\frac{1-t}{p} \right) \right)
+    \left(1 - \left(\frac{1+t}{p} \right) \right) \right]
+    - \left( 1- \left( \frac2p \right) \right)
+    - \left( 1- \left( \frac{-2}p \right) \right)
+  \right) \\
+  &\ge \frac{1}{4} \sum_t \left[ \left(1 - \left(\frac{1-t}{p} \right) \right)
+    \left(1 - \left(\frac{1+t}{p} \right) \right) \right] -1 \\
+  &= \frac{1}{4} \left(p + \sum_t \left(\frac{1-t^2}{p} \right) \right) -1 \\
+  &\ge \frac14 \left( p + (+1) \cdot \tfrac12(p-3) + 0 \cdot 2
+    + (-1) \cdot ( (p-2) - \tfrac12(p-3)) \right) - 1 \\
+  &\ge \frac14 \left( p - 5 \right).
+\end{align*}
+
+Thus, the range of $F$ has size at most
+\[ \half(p+1) - \half N \le \frac38(p+3). \]
+This is less than $0.499p$ for any $p \ge 11$.
+
+\begin{remark*}
+  In fact, the computation above is essentially an equality.
+  There are only two points where terms are dropped:
+  one, when $p \equiv 3 \pmod 4$ there are no $k^2 = -1$ in the lemma,
+  and secondly, the terms $1-\left( 2/p \right)$ and $1-\left( -2/p \right)$
+  are dropped in the initial estimate for $N$.
+  With suitable modifications, one can show that in fact,
+  the range of $F$ is exactly equal to
+  \[
+    \half(p+1) - \half N =
+    \begin{cases}
+      \frac18(3p+5) & p \equiv 1 \pmod 8 \\
+      \frac18(3p+7) & p \equiv 3 \pmod 8 \\
+      \frac18(3p+9) & p \equiv 5 \pmod 8 \\
+      \frac18(3p+3) & p \equiv 7 \pmod 8.
+    \end{cases}
+  \]
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{TSTST 2016/4, proposed by Linus Hamilton}
+\textsl{Available online at \url{https://aops.com/community/p6580534}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that if $n$ and $k$ are positive integers
+satisfying $\varphi^k(n) = 1$, then $n \le 3^k$.
+(Here $\varphi^k$ denotes $k$ applications of the Euler phi function.)
+\end{mdframed}
+The main observation is that the exponent of $2$ decreases
+by at most $1$ with each application of $\varphi$.
+This will give us the desired estimate.
+
+Define the \emph{weight} function $w$ on positive integers as follows:
+it satisfies
+\begin{align*}
+  w(ab) &= w(a)+w(b); \\
+  w(2) &= 1; \quad\text{and} \\
+  w(p) &= w(p-1) \quad \text{for any prime $p > 2$}.
+\end{align*}
+By induction, we see that $w(n)$ counts the powers of $2$
+that are produced as $\varphi$ is repeatedly applied to $n$.
+In particular, $k \ge w(n)$.
+
+From $w(2) = 1$,
+it suffices to prove that $w(p) \ge \log_3 p$ for every $p > 2$.
+We use strong induction and note that
+\[
+ w(p) = w(2) + w\left( \frac{p-1}{2} \right)
+ \ge 1 + \log_3(p-1) - \log_3 2 \ge \log_3 p
+\]
+for any $p > 2$.
+This solves the problem.
+
+\begin{remark*}
+One can motivate this solution through small cases $2^x 3^y$
+like $2^x 17^w$, $2^x 3^y 7^z$, $2^x 11^t$.
+
+Moreover, the stronger bound \[ n \le 2 \cdot 3^{k-1} \]
+is true and best possible.
+\end{remark*}
+\pagebreak
+
+\subsection{TSTST 2016/5, proposed by Linus Hamilton, Cynthia Stoner}
+\textsl{Available online at \url{https://aops.com/community/p6580545}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+In the coordinate plane are finitely many \emph{walls},
+which are disjoint line segments, none of which are parallel to either axis.
+A bulldozer starts at an arbitrary point and moves in the $+x$ direction.
+Every time it hits a wall, it turns at a right angle to its path,
+away from the wall, and continues moving.
+(Thus the bulldozer always moves parallel to the axes.)
+
+Prove that it is impossible for the bulldozer
+to hit both sides of every wall.
+\end{mdframed}
+We say a wall $v$ is \emph{above} another wall $w$ if some point on
+$v$ is directly above a point on $w$.
+(This relation is anti-symmetric, as walls do not intersect).
+
+The critical claim is as follows:
+\begin{claim*}
+  There exists a lowest wall,
+  i.e.\ a wall not above any other walls.
+\end{claim*}
+\begin{proof}
+  Assume not.
+  Then we get a directed cycle of some length $n \ge 3$:
+  it's possible to construct a series of points $P_i$, $Q_i$,
+  for $i = 1, \dots, n$ (indices modulo $n$), such that
+  the point $Q_i$ is directly above $P_{i+1}$ for each $i$,
+  the segment $\ol{Q_i P_{i+1}}$ does not intersect any wall in its interior,
+  and finally each segment $\ol{P_i Q_i}$ is contained inside a wall.
+  This gives us a broken line on $2n$ vertices which is not self-intersecting.
+
+  Now consider the leftmost vertical segment $\ol{Q_i P_{i+1}}$
+  and the rightmost vertical segment $\ol{Q_j P_{j+1}}$.
+  The broken line gives a path from $P_{i+1}$ to $Q_j$,
+  as well as a path from $P_{j+1}$ to $Q_i$.
+  These clearly must intersect, contradiction.
+\end{proof}
+\begin{remark*}
+  This claim is Iran TST 2010.
+\end{remark*}
+
+Thus if the bulldozer eventually moves upwards indefinitely,
+it may never hit the bottom side of the lowest wall.
+Similarly, if the bulldozer eventually moves downwards indefinitely,
+it may never hit the upper side of the highest wall.
+\pagebreak
+
+\subsection{TSTST 2016/6, proposed by Danielle Wang}
+\textsl{Available online at \url{https://aops.com/community/p6580553}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle with incenter $I$,
+and whose incircle is tangent to $\ol{BC}$, $\ol{CA}$, $\ol{AB}$
+at $D$, $E$, $F$, respectively.
+Let $K$ be the foot of the altitude from $D$ to $\ol{EF}$.
+Suppose that the circumcircle of $\triangle AIB$
+meets the incircle at two distinct points $C_1$ and $C_2$,
+while the circumcircle of $\triangle AIC$ meets the incircle
+at two distinct points $B_1$ and $B_2$.
+Prove that the radical axis of the circumcircles of
+$\triangle BB_1B_2$ and $\triangle CC_1C_2$ passes through
+the midpoint $M$ of $\ol{DK}$.
+\end{mdframed}
+\paragraph{First solution (Allen Liu).}
+Let $X$, $Y$, $Z$ be midpoints of $EF$, $FD$, $DE$,
+and let $G$ be the Gergonne point.
+By radical axis on $(AEIF)$, $(DEF)$, $(AIC)$
+we see that $B_1$, $X$, $B_2$ are collinear.
+Likewise, $B_1$, $Z$, $B_2$ are collinear,
+so lines $B_1B_2$ and $XZ$ coincide.
+Similarly, lines $C_1C_2$ and $XY$ coincide.
+In particular lines $B_1B_2$ and $C_1C_2$ meet at $X$.
+
+\begin{center}
+\begin{asy}
+size(12cm);
+
+pair A = dir(70);
+pair B = dir(240);
+pair C = dir(300);
+pair I = incenter(A, B, C);
+pair D = foot(I, B, C);
+pair E = foot(I, C, A);
+pair F = foot(I, A, B);
+pair G = extension(A, D, B, E);
+filldraw(A--B--C--cycle, opacity(0.1)+lightcyan, blue);
+draw(D--E--F--cycle, blue);
+draw(incircle(A, B, C), blue);
+draw(A--D, blue);
+draw(B--E, blue);
+draw(C--F, blue);
+
+pair Q = extension(G, G+F-D, E, F);
+pair S = extension(G, G+F-D, E, D);
+pair R = extension(G, G+D-E, F, D);
+pair U = extension(G, G+D-E, F, E);
+
+pair X = midpoint(E--F);
+pair Y = midpoint(F--D);
+pair Z = midpoint(D--E);
+
+pair Qp = 2*Q-G;
+pair Rp = 2*R-G;
+pair Sp = 2*S-G;
+pair Up = 2*U-G;
+
+pair B_1 = OP(circumcircle(B, Qp, Sp), incircle(A, B, C));
+pair B_2 = IP(circumcircle(B, Qp, Sp), incircle(A, B, C));
+pair C_1 = OP(circumcircle(C, Rp, Up), incircle(A, B, C));
+pair C_2 = IP(circumcircle(C, Rp, Up), incircle(A, B, C));
+
+
+draw(circumcircle(B, B_1, B_2), red);
+draw(circumcircle(C, C_1, C_2), red);
+
+pair V = extension(X, Y, A, B);
+pair W = extension(X, Z, A, C);
+
+pair T = extension(B, W, C, V);
+draw(X--T, yellow);
+draw(unitcircle, blue);
+draw(B--W, heavygreen);
+draw(C--V, heavygreen);
+draw(B--V, blue);
+draw(C--W, blue);
+
+draw(C_2--V, heavygreen);
+draw(B_2--W, heavygreen);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(D));
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(170));
+dot("$G$", G, dir(G));
+dot("$X$", X, dir(110));
+dot("$Y$", Y, dir(350));
+dot("$Z$", Z, dir(Z));
+dot("$B_1$", B_1, dir(B_1));
+dot("$B_2$", B_2, dir(100));
+dot("$C_1$", C_1, dir(C_1));
+dot("$C_2$", C_2, dir(40));
+dot("$V$", V, dir(V));
+dot("$W$", W, dir(W));
+dot("$T$", T, dir(T));
+
+/* Source generated by TSQ */
+\end{asy}
+\end{center}
+
+Note $G$ is the symmedian point of $DEF$, so
+it is well-known that $XG$ passes through the midpoint of $DK$.
+So we just have to prove $G$ lies on the radical axis.
+
+
+First, note that $\triangle DEF$ is the cevian triangle
+of the Gergonne point $G$.
+Set $V = \ol{XY} \cap \ol{AB}$, $W = \ol{XZ} \cap \ol{AC}$,
+and $T = \ol{BW} \cap \ol{CV}$.
+
+We begin with the following completely projective claim.
+\begin{claim*}
+  The points $X$, $G$, $T$ are collinear.
+\end{claim*}
+\begin{proof}
+  It suffices to view $\triangle XYZ$ as any
+  cevian triangle of $\triangle DEF$
+  (which is likewise any cevian triangle of $\triangle ABC$).
+  Then
+  \begin{itemize}
+    \ii By Cevian Nest on $\triangle ABC$,
+    it follows that $\ol{AX}$, $\ol{BY}$, $\ol{CZ}$ are concurrent.
+    \ii Hence $\triangle BYV$ and $\triangle CZW$ are perspective.
+    \ii Hence $\triangle BZW$ and $\triangle CYV$ are perspective too.
+    \ii Hence we deduce by Desargues theorem that $T$, $X$,
+    and $\ol{BZ} \cap \ol{CY}$ are collinear.
+    \ii Finally, the Cevian Nest theorem applied on $\triangle GBC$
+    (which has cevian triangles $\triangle DFE$, $\triangle XZY$)
+    we deduce $G$, $X$, and $\ol{BZ} \cap \ol{CY}$, proving the claim.
+  \end{itemize}
+  One could also proceed by using
+  barycentric coordinates on $\triangle DEF$.
+\end{proof}
+\begin{remark*}
+  [Eric Shen]
+  The first four bullets can be replaced
+  by non-projective means:
+  one can check that $\ol{BZ} \cap \ol{CY}$ is the radical center
+  of $(BIC)$, $(BB_1B_2)$, $(CC_1C_2)$
+  and therefore it lies on line $\ol{XT}$.
+\end{remark*}
+
+
+Now, we contend point $V$ is the radical center $(CC_1C_2)$, $(ABC)$ and $(DEF)$.
+To see this, let $V' = \ol{ED} \cap \ol{AB}$;
+then $(FV';AB)$ is harmonic, and $V$ is the midpoint of $\ol{FV'}$,
+and thus $VA \cdot VB = VF^2 = VC_1 \cdot VC_2$.
+
+So in fact $\ol{CV}$ is the radical axis of $(ABC)$ and $(CC_1C_2)$.
+
+Similarly, $\ol{BW}$ is the radical axis of $(ABC)$ and $(BB_1B_2)$.
+Thus $T$ is the radical center of
+$(ABC)$, $(BB_1B_2)$, $(CC_1C_2)$.
+
+This completes the proof, as now $\ol{XT}$ is the desired radical axis.
+
+\paragraph{Second solution (Evan Chen).}
+Let $X$, $Y$, $Z$ be midpoints of $EF$, $FD$, $DE$,
+and let $G$ be the Gergonne point.
+By radical axis on $(AEIF)$, $(DEF)$, $(AIC)$
+we see that $B_1$, $X$, $B_2$ are collinear.
+Likewise, $B_1$, $Z$, $B_2$ are collinear,
+so lines $B_1B_2$ and $XZ$ coincide.
+Similarly, lines $C_1C_2$ and $XY$ coincide.
+In particular lines $B_1B_2$ and $C_1C_2$ meet at $X$.
+
+Note $G$ is the symmedian point of $DEF$, so
+it is well-known that $XG$ passes through the midpoint of $DK$.
+So we just have to prove $G$ lies on the radical axis.
+
+\begin{center}
+ \begin{asy}
+  size(14cm);
+
+  pair A = dir(50);
+  pair B = dir(220);
+  pair C = dir(320);
+  pair I = incenter(A, B, C);
+  pair D = foot(I, B, C);
+  pair E = foot(I, C, A);
+  pair F = foot(I, A, B);
+  pair G = extension(A, D, B, E);
+  filldraw(A--B--C--cycle, opacity(0.1)+lightcyan, blue);
+  draw(D--E--F--cycle, blue);
+  draw(incircle(A, B, C), blue);
+  draw(A--D, blue);
+  draw(B--E, blue);
+  draw(C--F, blue);
+
+  pair P = extension(G, G+E-F, D, F);
+  pair T = extension(G, G+E-F, D, E);
+  pair Q = extension(G, G+F-D, E, F);
+  pair S = extension(G, G+F-D, E, D);
+  pair R = extension(G, G+D-E, F, D);
+  pair U = extension(G, G+D-E, F, E);
+
+  pair X = midpoint(E--F);
+  pair Y = midpoint(F--D);
+  pair Z = midpoint(D--E);
+
+  pair Pp = 2*P-G;
+  pair Qp = 2*Q-G;
+  pair Rp = 2*R-G;
+  pair Sp = 2*S-G;
+  pair Tp = 2*T-G;
+  pair Up = 2*U-G;
+
+  draw(Pp--Tp, heavygreen);
+  draw(Rp--Up, heavygreen);
+  draw(Qp--Sp, heavygreen);
+
+  pair V = extension(B, X, Sp, Z);
+  pair W = extension(B, R, Qp, X);
+
+  pair B_1 = OP(circumcircle(B, Qp, Sp), incircle(A, B, C));
+  pair B_2 = IP(circumcircle(B, Qp, Sp), incircle(A, B, C));
+  pair C_1 = OP(circumcircle(C, Rp, Up), incircle(A, B, C));
+  pair C_2 = IP(circumcircle(C, Rp, Up), incircle(A, B, C));
+
+  pair K = foot(D, E, F);
+  pair M = midpoint(D--K);
+  draw(D--K, blue);
+
+  draw(C_1--C_2, red);
+  draw(B_1--B_2, red);
+  filldraw(circumcircle(P, Q, R), opacity(0.1)+lightgreen, green+1.4);
+  filldraw(circumcircle(Pp, Qp, Rp), opacity(0.1)+lightgreen, green);
+  draw(circumcircle(Sp, Q, P), orange);
+  draw(circumcircle(B, B_1, B_2), red);
+  draw(circumcircle(C, C_1, C_2), red);
+
+  draw(X--M, yellow);
+  draw(B--V, orange);
+  draw(B--W, orange);
+
+  dot("$A$", A, dir(A));
+  dot("$B$", B, dir(B));
+  dot("$C$", C, dir(C));
+  dot("$I$", I, dir(I));
+  dot("$D$", D, dir(D));
+  dot("$E$", E, dir(E));
+  dot("$F$", F, dir(F));
+  dot("$G$", G, dir(G));
+  dot("$P$", P, dir(200));
+  dot("$T$", T, dir(100));
+  dot("$Q$", Q, dir(70));
+  dot("$S$", S, dir(260));
+  dot("$R$", R, dir(250));
+  dot("$U$", U, dir(U));
+  dot("$X$", X, dir(X));
+  dot("$Y$", Y, dir(350));
+  dot("$Z$", Z, dir(Z));
+  dot("$P'$", Pp, dir(Pp));
+  dot("$Q'$", Qp, dir(Qp));
+  dot("$R'$", Rp, dir(240));
+  dot("$S'$", Sp, dir(Sp));
+  dot("$T'$", Tp, dir(Tp));
+  dot("$U'$", Up, dir(60));
+  dot("$V$", V, dir(V));
+  dot("$W$", W, dir(W));
+  dot("$B_1$", B_1, dir(B_1));
+  dot("$B_2$", B_2, dir(B_2));
+  dot("$C_1$", C_1, dir(C_1));
+  dot("$C_2$", C_2, dir(C_2));
+  dot("$K$", K, dir(200));
+  dot("$M$", M, dir(M));
+ \end{asy}
+\end{center}
+
+Construct parallelograms $GPFQ$, $GRDS$, $GTUE$
+such that $P,R \in DF$, $S,T \in DE$, $Q,U \in EF$.
+As $FG$ bisects $PQ$ and is isogonal to $FZ$,
+we find $PQED$, hence $PQRU$, is cyclic.
+Repeating the same logic and noticing $PR$, $ST$, $QU$ not concurrent,
+all six points $PQRSTU$ are cyclic.
+Moreover, since $PQ$ bisects $GF$, we see that
+a dilation with factor $2$ at $G$ sends $PQ$ to $P', Q' \in AB$, say,
+with $F$ the midpoint of $P'Q'$.
+Define $R', S' \in BC$ similarly now and $T', U' \in CA$.
+
+Note that $EQPDS'$ is in cyclic too,
+as $\dang DS'Q = \dang DRS = \dang DEF$.
+By homothety through $B$, points $B$, $P$, $X$ are collinear;
+assume they meet $(EQPDS')$ again at $V$.
+Thus $EVQPDS'$ is cyclic, and now
+\[ \dang BVS' = \dang PVS' = \dang PQS = \dang PTS = \dang FED = \dang XEZ = \dang XVZ \]
+hence $V$ lies on $(BQ'S')$.
+
+Since $FB \parallel QP$, we get $EVFB$ is cyclic too,
+so $XV \cdot XB = XE \cdot XF$ now;
+thus $X$ lies on the radical axis of $(BS'Q')$ and $(DEF)$.
+By the same argument with $W \in BZ$, we get $Z$ lies on the radical axis too.
+Thus the radical axis of $(BS'Q')$ and $(DEF)$ must be line $XZ$,
+which coincides with $B_1B_2$; so $(BB_1B_2) = (BS'Q')$.
+
+Analogously, $(CC_1C_2) = (CR'U')$.
+Since $G = Q'S' \cap R'U'$, we need only prove that $Q'R'S'U'$ is cyclic.
+But $QRSU$ is cyclic, so we are done.
+
+The circle $(PQRSTU)$ is called the \emph{Lemoine circle} of $ABC$.
+\pagebreak
+
+
+\end{document}

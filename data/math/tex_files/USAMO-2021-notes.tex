@@ -1,0 +1,991 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2021 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2021 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Rectangles $BCC_1B_2$, $CAA_1C_2$, and $ABB_1A_2$ are erected
+outside an acute triangle $ABC$. Suppose that
+\[ \angle BC_1C + \angle CA_1A + \angle AB_1B = 180^\circ. \]
+Prove that lines $B_1C_2$, $C_1A_2$, and $A_1B_2$ are concurrent.
+
+\item %% Problem 2
+The Planar National Park is a undirected 3-regular planar graph
+(i.e.\ all vertices have degree $3$).
+A visitor walks through the park as follows:
+she begins at a vertex and starts walking along an edge.
+When she reaches the other endpoint, she turns left.
+On the next vertex she turns right, and so on,
+alternating left and right turns at each vertex.
+She does this until she gets back to the vertex where she started.
+What is the largest possible number of times she could have entered
+any vertex during her walk, over all possible layouts of the park?
+
+\item %% Problem 3
+Let $n \ge 2$ be an integer.
+An $n \times n$ board is initially empty.
+Each minute, you may perform one of three moves:
+\begin{itemize}
+\item If there is an L-shaped tromino region
+  of three cells without stones on the board
+  (see figure; rotations not allowed),
+  you may place a stone in each of those cells.
+\begin{center}
+\begin{asy}
+  size(1.5cm);
+  filldraw( (0.1,0.1)--(1.9,0.1)--(1.9,0.9)
+    --(0.9,0.9)--(0.9,1.9)--(0.1,1.9)--cycle, rgb(0.7,0.7,0.7), black+2);
+  draw( scale(2)*unitsquare, black );
+  draw( (1,0)--(1,2), black );
+  draw( (0,1)--(2,1), black );
+\end{asy}
+\end{center}
+\item If all cells in a column have a stone, you may remove all stones from that column.
+\item If all cells in a row have a stone, you may remove all stones from that row.
+\end{itemize}
+For which $n$ is it possible that, after some non-zero number of
+moves, the board has no stones?
+
+\item %% Problem 4
+A finite set $S$ of positive integers has the property that,
+for each $s\in S$, and each positive integer divisor $d$ of $s$,
+there exists a unique element $t\in S$ satisfying $\gcd(s,t) = d$.
+(The elements $s$ and $t$ could be equal.)
+
+Given this information, find all possible values for the
+number of elements of $S$.
+
+\item %% Problem 5
+Let $n \ge 4$ be an integer.
+Find all positive real solutions to the following
+system of $2n$ equations:
+\begin{align*}
+  a_1 &= \frac{1}{a_{2n}} + \frac{1}{a_{2}}, & a_2 &= a_1 + a_3, \\[1ex]
+  a_3 &= \frac{1}{a_{2}} + \frac{1}{a_{4}}, & a_4 &= a_3 + a_5, \\[1ex]
+  a_5 &= \frac{1}{a_{4}} + \frac{1}{a_{6}}, & a_6 &= a_5 + a_7, \\[1ex]
+  &\vdotswithin{=} &&\vdotswithin{=} \\
+  a_{2n-1} &= \frac{1}{a_{2n-2}} + \frac{1}{a_{2n}}, & a_{2n} &= a_{2n-1} + a_1.
+\end{align*}
+
+\item %% Problem 6
+Let $ABCDEF$ be a convex hexagon satisfying
+$\ol{AB} \parallel \ol{DE}$,
+$\ol{BC} \parallel \ol{EF}$,
+$\ol{CD} \parallel \ol{FA}$, and
+\[ AB \cdot DE = BC \cdot EF = CD \cdot FA. \]
+
+Let $X$, $Y$, and $Z$ be the midpoints
+of $\ol{AD}$, $\ol{BE}$, and $\ol{CF}$.
+Prove that
+the circumcenter of $\triangle ACE$,
+the circumcenter of $\triangle BDF$, and
+the orthocenter of $\triangle XYZ$ are collinear.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2021/1, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p21498558}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Rectangles $BCC_1B_2$, $CAA_1C_2$, and $ABB_1A_2$ are erected
+outside an acute triangle $ABC$. Suppose that
+\[ \angle BC_1C + \angle CA_1A + \angle AB_1B = 180^\circ. \]
+Prove that lines $B_1C_2$, $C_1A_2$, and $A_1B_2$ are concurrent.
+\end{mdframed}
+The angle condition implies the circumcircles of the three
+rectangles concur at a single point $P$.
+Then $\dang C P B_2 = \dang C P A_1 = 90\dg$,
+hence $P$ lies on $A_1 B_2$ etc., so we're done.
+
+\begin{remark*}
+  As one might guess from the two-sentence solution,
+  the entire difficulty of the problem
+  is getting the characterization of the concurrence point.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2021/2, proposed by Zoran Sunic}
+\textsl{Available online at \url{https://aops.com/community/p21498640}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+The Planar National Park is a undirected 3-regular planar graph
+(i.e.\ all vertices have degree $3$).
+A visitor walks through the park as follows:
+she begins at a vertex and starts walking along an edge.
+When she reaches the other endpoint, she turns left.
+On the next vertex she turns right, and so on,
+alternating left and right turns at each vertex.
+She does this until she gets back to the vertex where she started.
+What is the largest possible number of times she could have entered
+any vertex during her walk, over all possible layouts of the park?
+\end{mdframed}
+The answer is $3$.
+
+We consider the trajectory of the visitor
+as an ordered sequence of \emph{turns}.
+A turn is defined by specifying a vertex,
+the incoming edge, and the outgoing edge.
+Hence there are six possible turns for each vertex.
+
+\begin{claim*}
+  Given one turn in the sequence,
+  one can reconstruct the entire sequence of turns.
+\end{claim*}
+\begin{proof}
+  This is clear from the process's definition:
+  given a turn $t$, one can compute the turn after it
+  and the turn before it.
+\end{proof}
+
+This implies already that the trajectory of the visitor,
+when extended to an infinite sequence,
+is totally periodic (not just eventually periodic),
+because there are finitely many possible turns,
+so some turn must be repeated.
+So, any turn appears at most once in the period of the sequence,
+giving a na\"{\i}ve bound of $6$ for the original problem.
+
+However, the following claim improves the bound to $3$.
+\begin{claim*}
+  It is impossible for both of the turns
+  $a \to b \to c$ and $c \to b \to a$ to occur
+  in the same trajectory.
+\end{claim*}
+\begin{proof}
+  If so, then extending the path, we get
+  $a \to b \to c \to d \to e \to \dotsb$
+  and $\dots \to e \to d \to c \to b \to a$, as illustrated below
+  in red and blue respectively.
+  \begin{center}
+  \begin{asy}
+    defaultpen(fontsize(11pt));
+    dotfactor *= 1.8;
+    pair A = (0,0);
+    pair B = (1,1);
+    pair C = (0,2);
+    pair D = (1,3);
+    pair E = (0,4);
+    draw(A--B--C--D--E--(0.5,4.5), black+1.3);
+    draw( (0.5,4.5)--(0.8,4.8), black+1.3+dotted );
+    draw((1,-1)--A--(-1,0), grey);
+    draw(B--(2,1), grey);
+    draw(C--(-1,2), grey);
+    draw(D--(2,3), grey);
+    draw(E--(-1,4), grey);
+    dot("$a$", A, -dir(B-A), deepgreen);
+    dot("$b$", B, -dir(C-B), deepgreen);
+    dot("$c$", C, -dir(D-C), deepgreen);
+    dot("$d$", D, -dir(E-D), deepgreen);
+    dot("$e$", E, dir(90), deepgreen);
+    draw( (1,0.2)..(1.4,1)..(1,1.8), red+1.8, EndArrow(TeXHead));
+    draw( (1,2.2)..(1.4,3)..(1,3.8), lightred+1, EndArrow(TeXHead));
+    draw( (0.8,1.6)..(0.4,2)..(0.8,2.4), lightred+1, EndArrow(TeXHead));
+    draw( (0.8,3.6)..(0.4,4)..(0.8,4.4), lightred+1, EndArrow(TeXHead));
+    draw( (0.2,1.4)..(0.6,1)..(0.2,0.6), blue+1.8, EndArrow(TeXHead));
+    draw( (0.2,3.4)..(0.6,3)..(0.2,2.6), lightblue+1, EndArrow(TeXHead));
+    draw( (0,2.8)..(-0.4,2)..(0,1.2), lightblue+1, EndArrow(TeXHead));
+    draw( (0,4.8)..(-0.4,4)..(0,3.2), lightblue+1, EndArrow(TeXHead));
+  \end{asy}
+  \end{center}
+  However, we assumed for contradiction the red and blue paths
+  were part of the same trajectory,
+  yet they clearly never meet.
+\end{proof}
+
+It remains to give a construction showing $3$ can be achieved.
+There are many, many valid constructions.
+One construction due to Danielle Wang is given here,
+who provided the following motivation:
+``I was lying in bed and drew the first thing I could think of''.
+The path is $CAHIFGDBAHEFGJBAC$ which visits $A$ three times.
+\begin{center}
+\begin{asy}
+size(10cm);
+defaultpen(fontsize(11pt));
+pair A = (-2,2);
+pair B = (2,2);
+pair C = (-1,1);
+pair D = (1,1);
+pair E = (-1,-1);
+pair F = (0,-1);
+pair G = (1,-1);
+pair H = (-2,-2);
+pair I = (0,-2);
+pair J = (2,-2);
+draw(A--H, blue);
+label("$2,9$", A--H, fontsize(8pt)+deepgreen);
+draw(A--C, blue);
+label("$16$", A--C, fontsize(8pt)+deepgreen);
+draw(A--B, blue);
+draw(B--D, blue);
+draw(B--J, blue);
+draw(B--A, blue);
+label("$8,15$", B--A, fontsize(8pt)+deepgreen);
+draw(C--E, blue);
+draw(C--D, blue);
+draw(C--A, blue);
+label("$1$", C--A, fontsize(8pt)+deepgreen);
+draw(D--C, blue);
+draw(D--G, blue);
+draw(D--B, blue);
+label("$7$", D--B, fontsize(8pt)+deepgreen);
+draw(E--H, blue);
+draw(E--F, blue);
+label("$11$", E--F, fontsize(8pt)+deepgreen);
+draw(E--C, blue);
+draw(F--I, blue);
+draw(F--G, blue);
+label("$5,12$", F--G, fontsize(8pt)+deepgreen);
+draw(F--E, blue);
+draw(G--F, blue);
+draw(G--J, blue);
+label("$13$", G--J, fontsize(8pt)+deepgreen);
+draw(G--D, blue);
+label("$6$", G--D, fontsize(8pt)+deepgreen);
+draw(H--I, blue);
+label("$3$", H--I, fontsize(8pt)+deepgreen);
+draw(H--E, blue);
+label("$10$", H--E, fontsize(8pt)+deepgreen);
+draw(H--A, blue);
+draw(I--H, blue);
+draw(I--J, blue);
+draw(I--F, blue);
+label("$4$", I--F, fontsize(8pt)+deepgreen);
+draw(J--B, blue);
+label("$14$", J--B, fontsize(8pt)+deepgreen);
+draw(J--G, blue);
+draw(J--I, blue);
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, -dir(C));
+dot("$D$", D, -dir(D));
+dot("$E$", E, -dir(E));
+dot("$F$", F, -dir(F));
+dot("$G$", G, -dir(G));
+dot("$H$", H, dir(H));
+dot("$I$", I, dir(I));
+dot("$J$", J, dir(J));
+\end{asy}
+\end{center}
+
+\begin{remark*}
+  As the above example shows it is possible to transverse
+  an edge more than once even in the same direction,
+  as in edge $AH$ above.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2021/3, proposed by Alex Zhai, Shaunak Kishore}
+\textsl{Available online at \url{https://aops.com/community/p21498538}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n \ge 2$ be an integer.
+An $n \times n$ board is initially empty.
+Each minute, you may perform one of three moves:
+\begin{itemize}
+\item If there is an L-shaped tromino region
+  of three cells without stones on the board
+  (see figure; rotations not allowed),
+  you may place a stone in each of those cells.
+\begin{center}
+\begin{asy}
+  size(1.5cm);
+  filldraw( (0.1,0.1)--(1.9,0.1)--(1.9,0.9)
+    --(0.9,0.9)--(0.9,1.9)--(0.1,1.9)--cycle, rgb(0.7,0.7,0.7), black+2);
+  draw( scale(2)*unitsquare, black );
+  draw( (1,0)--(1,2), black );
+  draw( (0,1)--(2,1), black );
+\end{asy}
+\end{center}
+\item If all cells in a column have a stone, you may remove all stones from that column.
+\item If all cells in a row have a stone, you may remove all stones from that row.
+\end{itemize}
+For which $n$ is it possible that, after some non-zero number of
+moves, the board has no stones?
+\end{mdframed}
+The answer is $3 \mid n$.
+
+\medskip
+
+\textbf{Construction}:
+For $n=3$, the construction is fairly straightforward,
+shown below.
+\begin{center}
+\begin{asy}
+  size(10cm);
+  picture g;
+  for (int i=0; i<=3; ++i) {
+  draw(g, (i-0.5,-0.5)--(i-0.5,2.5), grey);
+  draw(g, (-0.5,i-0.5)--(2.5,i-0.5), grey);
+  }
+  add(g);
+  add(shift(4,0)*g);
+  add(shift(8,0)*g);
+  add(shift(12,0)*g);
+
+  real r = 0.35;
+  fill(circle( (0,0), r ), red);
+  fill(circle( (1,0), r ), red);
+  fill(circle( (0,1), r ), red);
+  fill(circle( (1,1), r ), blue);
+  fill(circle( (2,1), r ), blue);
+  fill(circle( (1,2), r ), blue);
+
+  fill(circle( (4,0), r ), red);
+  fill(circle( (4,1), r ), red);
+  fill(circle( (6,1), r ), blue);
+
+  fill(circle( (8,0), r ), red);
+  fill(circle( (8,1), r ), red);
+  fill(circle( (10,1), r ), blue);
+  fill(circle( (9,0), r ), deepgreen);
+  fill(circle( (9,1), r ), deepgreen);
+  fill(circle( (10,0), r ), deepgreen);
+\end{asy}
+\end{center}
+This can be extended to any $3 \mid n$.
+
+\medskip
+
+\textbf{Polynomial-based proof of converse}:
+Assume for contradiction $3 \nmid n$.
+We will show the task is impossible
+even if we allow stones to have real weights in our process.
+A valid elimination corresponds to a polynomial $P \in \RR[x,y]$
+such that
+\begin{align*}
+  \deg_x P &\le n-2 \\
+  \deg_y P &\le n-2 \\
+  (1+x+y) P(x,y)
+  &\in \left< 1+x+\dots+x^{n-1}, \; 1+y+\dots+y^{n-1}\right>.
+\end{align*}
+(Here $\left< \dots\right>$ is an ideal of $\RR[x,y]$.)
+In particular, if $S$ is the set of $n$th roots of unity other than $1$,
+we should have
+\[ (1+z_1+z_2) P\left( z_1, z_2 \right) = 0 \]
+for any $z_1 , z_2 \in S$.
+Since $3 \nmid n$, it follows that $1+z_1+z_2 \neq 0$ always.
+
+So $P$ vanishes on $S \times S$,
+a contradiction to the bounds on $\deg P$
+(by, say, combinatorial nullstellensatz on any nonzero term).
+
+\textbf{Linear algebraic proof of converse}
+(due to \href{https://aops.com/community/p21499813}{William Wang}):
+Suppose there is a valid sequence of moves.
+Call $r_j$ the number of operations clearing row $j$,
+indexing from bottom-to-top.
+The idea behind the solution is that we are going to
+calculate, for each cell, the number of times it is operated
+on entirely as a function of $r_j$.
+For example, a hypothetical illustration with $n=6$ is partially drawn below,
+with the number in each cell denoting how many times it was the corner of an $L$.
+\[
+  \begin{bmatrix}
+    0 & 0 & 0 & 0 & 0 & 0 \\
+    c_1 & c_2 & {\color{blue}c_3}=r_3 & {\color{blue}c_4}=r_5-r_4 & {\color{blue}c_5}={\color{red}r_5} & 0 \\
+    \vdots & \vdots & r_2+r_3-r_5  & r_5-r_3 & {\color{red}r_4} & 0  \\
+    \vdots & \vdots & r_1+r_2+r_3-r_4-r_5 & r_5-r_2  & {\color{red}r_3} & 0  \\
+    \vdots & \vdots & r_1+r_2+r_4-r_5  & r_5-r_1  & {\color{red}r_2} & 0  \\
+    \vdots & \vdots & r_1+r_4-r_5  & r_5  & {\color{red}r_1} & 0  \\
+  \end{bmatrix}
+\]
+Let $a_{i,j}$ be the expression in $(i,j)$.
+It will also be helpful to define $c_i$ in the obvious way as well.
+
+\begin{claim*}
+  We have $c_n = r_n = 0$, $a_{n-1,j} = r_j$ and $a_{i,n-1} = c_i$.
+\end{claim*}
+\begin{proof}
+  The first statement follows since $(n,n)$ may never obtain a stone.
+  The equation $a_{n-1,j} = r_j$ follows as both equal the number of times
+  that cell $(n,j)$ obtains a stone.
+  The final equation is similar.
+\end{proof}
+
+\begin{claim*}
+  For $1 \le i,j \le n-1$, the following recursion holds:
+  \[ a_{i,j} + a_{i+1,j} + a_{i+1,j-1} = r_j + c_{i+1}. \]
+\end{claim*}
+\begin{proof}
+  Focus on cell $(i+1,j)$.
+  The left-hand side counts the number of times that gains a stone
+  while the right-hand side counts the number of times it loses a stone;
+  they must be equal.
+\end{proof}
+We can coerce the table above into matrix form now as follows.
+Define
+\[
+  K = \begin{bmatrix}
+    -1 & -1 & 0 & 0 & \dots & 0 & 0 & 0 \\
+    0 & -1 & -1 & 0 & \dots & 0 & 0 & 0 \\
+    0 & 0 & -1 & -1 & \dots & 0 & 0 & 0 \\
+    \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\
+    0 & 0 & 0 & 0 & \dots & -1 & -1 & 0 \\
+    0 & 0 & 0 & 0 & \dots & 0 & -1 & -1 \\
+    1 & 1 & 1 & 1 & \dots & 1 & 1 & 0 \\
+  \end{bmatrix}.
+\]
+Then define a sequence of matrices $M_i$ recursively by $M_{n-1} = \id$,
+and \[ M_i = \id + K M_{i+1} = \id + K + \dots  + K^{n-1-i}. \]
+The matrices are chosen so that, by construction,
+\[ \left< r_1, \dots, r_{n-1} \right> M_i = \left< a_{i,1}, \dots, a_{i,n-1} \right> \]
+for $i=1,2,\dots,n-1$.
+On the other hand, we can extend the recursion one level deeper and obtain
+\[ \left< r_1, \dots, r_{n-1} \right> M_0 = \left< 0, \dots, 0 \right>. \]
+However, the crux of the solution is the following.
+\begin{claim*}
+  The eigenvalues of $K$ are exactly $-(1+e^{\frac{2\pi i k}{n}})$
+  for $k=1,2,\dots,n-1$.
+\end{claim*}
+\begin{proof}
+  The matrix $-(K+\id)$ is fairly known to have roots of unity
+  as the coefficients.
+\end{proof}
+However, we are told that apparently
+\[ 0 = \det M_0 = \det\left( \id + K + K^2 + \dots + K^{n-1} \right) \]
+which means $\det(K^n - \id) = 0$.
+This can only happen if $K^n$ has eigenvalue $1$, meaning that
+\[ \left[ -(1+\omega) \right]^n = 1 \]
+for $\omega$ some $n$\ts{th} root of unity, not necessarily primitive.
+This can only happen if $\left\lvert 1+\omega \right\rvert = 1$, ergo $3 \mid n$.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2021/4, proposed by Carl Schildkraut}
+\textsl{Available online at \url{https://aops.com/community/p21498580}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A finite set $S$ of positive integers has the property that,
+for each $s\in S$, and each positive integer divisor $d$ of $s$,
+there exists a unique element $t\in S$ satisfying $\gcd(s,t) = d$.
+(The elements $s$ and $t$ could be equal.)
+
+Given this information, find all possible values for the
+number of elements of $S$.
+\end{mdframed}
+The answer is that $|S|$ must be a power of $2$ (including $1$),
+or $|S| = 0$ (a trivial case we do not discuss further).
+
+\medskip
+
+\textbf{Construction}:
+For any nonnegative integer $k$,
+a construction for $|S| = 2^k$ is given
+by
+\[ S = \left\{
+    (p_1 \text{ or } q_1)
+    \times
+    (p_2 \text{ or } q_2)
+    \times
+    \dots
+    \times
+    (p_k \text{ or } q_k)
+  \right\}
+\]
+for $2k$ distinct primes $p_1$, \dots, $p_k$, $q_1$, \dots, $q_k$.
+
+\medskip
+
+\textbf{Converse}: the main claim is as follows.
+\begin{claim*}
+  In any valid set $S$,
+  for any prime $p$ and $x \in S$, $\nu_p(x) \le 1$.
+\end{claim*}
+\begin{proof}
+  Assume for contradiction $e = \nu_p(x) \ge 2$.
+  \begin{itemize}
+    \ii On the one hand, by taking $x$ in the statement,
+    we see $\frac{e}{e+1}$ of the elements of $S$ are divisible by $p$.
+    \ii On the other hand, consider a $y \in S$ such that
+    $\nu_p(y)=1$ which must exist (say if $\gcd(x,y) = p$).
+    Taking $y$ in the statement,
+    we see $\half$ of the elements of $S$ are divisible by $p$.
+  \end{itemize}
+  So $e=1$, contradiction.
+\end{proof}
+Now since $|S|$ equals the number of divisors of any element of $S$,
+we are done.
+\pagebreak
+
+\subsection{USAMO 2021/5, proposed by Mohsen Jamaali}
+\textsl{Available online at \url{https://aops.com/community/p21498967}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n \ge 4$ be an integer.
+Find all positive real solutions to the following
+system of $2n$ equations:
+\begin{align*}
+  a_1 &= \frac{1}{a_{2n}} + \frac{1}{a_{2}}, & a_2 &= a_1 + a_3, \\[1ex]
+  a_3 &= \frac{1}{a_{2}} + \frac{1}{a_{4}}, & a_4 &= a_3 + a_5, \\[1ex]
+  a_5 &= \frac{1}{a_{4}} + \frac{1}{a_{6}}, & a_6 &= a_5 + a_7, \\[1ex]
+  &\vdotswithin{=} &&\vdotswithin{=} \\
+  a_{2n-1} &= \frac{1}{a_{2n-2}} + \frac{1}{a_{2n}}, & a_{2n} &= a_{2n-1} + a_1.
+\end{align*}
+\end{mdframed}
+The answer is that the only solution is
+$(1,2,1,2,\dots,1,2)$ which works.
+
+We will prove $a_{2k}$ is a constant sequence,
+at which point the result is obvious.
+
+\paragraph{First approach (Andrew Gu).}
+Apparently, with indices modulo $2n$, we should have
+\[ a_{2k} = \frac{1}{a_{2k-2}}
+  + \frac{2}{a_{2k}} + \frac{1}{a_{2k+2}} \]
+for every index $k$ (this eliminates all $a_{\text{odd}}$'s).
+Define
+\[ m = \min_k a_{2k} \qquad\text{and}\qquad M = \max_k a_{2k}. \]
+Look at the indices $i$ and $j$
+achieving $m$ and $M$ to respectively get
+\begin{align*}
+  m &= \frac2m + \frac{1}{a_{2i-2}} + \frac{1}{a_{2i+2}}
+  \ge \frac2m + \frac1M + \frac1M  = \frac2m + \frac2M \\[1ex]
+  M &= \frac2M + \frac{1}{a_{2j-2}} + \frac{1}{a_{2j+2}}
+  \le \frac2M + \frac1m + \frac1m = \frac2m + \frac2M.
+\end{align*}
+Together this gives $m \ge M$, so $m = M$.
+That means $a_{2i}$ is constant as $i$ varies,
+solving the problem.
+
+\paragraph{Second approach (author's solution).}
+As before, we have
+\[ a_{2k} = \frac{1}{a_{2k-2}}
+  + \frac{2}{a_{2k}} + \frac{1}{a_{2k+2}} \]
+The proof proceeds in three steps.
+\begin{itemize}
+\ii Define
+\[ S = \sum_k a_{2k},
+  \quad\text{and}\quad
+  T = \sum_k \frac{1}{a_{2k}}. \]
+Summing gives $S = 4T$.
+On the other hand, Cauchy-Schwarz says $S \cdot T \ge n^2$,
+so $T \ge \half n$.
+
+\ii On the other hand,
+\[ 1 = \frac{1}{a_{2k-2} a_{2k}}
+  + \frac{2}{a_{2k}^2} + \frac{1}{a_{2k} a_{2k+2}} \]
+Sum this modified statement to obtain
+\[
+  n = \sum_k \left( \frac{1}{a_{2k}} + \frac{1}{a_{2k+2}} \right)^2
+  \overset{\text{QM-AM}}{\ge}
+  \frac 1n \left( \sum_k \frac{1}{a_{2k}} + \frac{1}{a_{2k+2}} \right)^2
+  = \frac 1n \left( 2T \right)^2
+\]
+So $T \le \half n$.
+
+\ii Since $T \le \half n$ and $T \ge \half n$,
+we must have equality everywhere above.
+This means $a_{2k}$ is a constant sequence.
+\end{itemize}
+
+\begin{remark*}
+  The problem is likely intractable over $\CC$,
+  in the sense that one gets a high-degree polynomial
+  which almost certainly has many complex roots.
+  So it seems likely that most solutions must involve
+  some sort of inequality,
+  using the fact we are over $\RR_{>0}$ instead.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2021/6, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p21498548}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCDEF$ be a convex hexagon satisfying
+$\ol{AB} \parallel \ol{DE}$,
+$\ol{BC} \parallel \ol{EF}$,
+$\ol{CD} \parallel \ol{FA}$, and
+\[ AB \cdot DE = BC \cdot EF = CD \cdot FA. \]
+
+Let $X$, $Y$, and $Z$ be the midpoints
+of $\ol{AD}$, $\ol{BE}$, and $\ol{CF}$.
+Prove that
+the circumcenter of $\triangle ACE$,
+the circumcenter of $\triangle BDF$, and
+the orthocenter of $\triangle XYZ$ are collinear.
+\end{mdframed}
+We present two solutions.
+
+\paragraph{Parallelogram solution found by contestants.}
+Note that the following figure is intentionally
+\emph{not} drawn to scale, to aid legibility.
+We construct parallelograms $ABCE'$, etc as shown.
+Note that this gives two congruent triangles $A'C'E'$ and $B'D'F'$.
+(Assuming that triangle $XYZ$ is non-degenerate,
+the triangles $A'C'E'$ and $B'D'F'$ will also be non-degenerate.)
+\begin{center}
+\begin{asy}
+pair B = dir(123);
+pair C = dir(150);
+pair D = dir(250);
+pair E = -conj(D);
+pair F = B*C/E;
+pair A = D*C/F;
+
+pair Ap = C+E-D;
+pair Cp = E+A-F;
+pair Ep = A+C-B;
+pair Bp = D+F-E;
+pair Dp = F+B-A;
+pair Fp = B+D-C;
+
+filldraw(A--B--C--D--E--F--cycle, opacity(0.1)+lightcyan, blue);
+draw(A--Cp, red);
+draw(C--Ep, red);
+draw(E--Ap, red);
+draw(B--Fp, deepgreen);
+draw(D--Bp, deepgreen);
+draw(F--Dp, deepgreen);
+draw(A--D, grey);
+pair X = midpoint(A--D);
+
+pair M = midpoint(Cp--Ep);
+pair N = midpoint(Bp--Fp);
+draw(M--N, grey);
+
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(D));
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(F));
+dot("$A$", A, dir(A));
+dot("$A'$", Ap, dir(90));
+dot("$C'$", Cp, dir(160));
+dot("$E'$", Ep, dir(310));
+dot("$B'$", Bp, dir(90));
+dot("$D'$", Dp, dir(180));
+dot("$F'$", Fp, dir(315));
+dot("$X$", X, dir(X));
+dot("$M$", M, dir(350));
+dot("$N$", N, dir(270));
+
+/* TSQ Source:
+
+B = dir 123
+C = dir 150
+D = dir 250
+E = -conj(D)
+F = B*C/E
+A = D*C/F
+
+A' = C+E-D R90
+C' = E+A-F R160
+E' = A+C-B R310
+B' = D+F-E R90
+D' = F+B-A R180
+F' = B+D-C R315
+
+A--B--C--D--E--F--cycle 0.1 lightcyan / blue
+A--Cp red
+C--Ep red
+E--Ap red
+B--Fp deepgreen
+D--Bp deepgreen
+F--Dp deepgreen
+A--D grey
+X = midpoint A--D
+
+M = midpoint Cp--Ep R350
+N = midpoint Bp--Fp R270
+M--N grey
+
+*/
+\end{asy}
+\end{center}
+\begin{claim*}
+  If $AB \cdot DE = BC \cdot EF = CD \cdot FA = k$,
+  then the circumcenters of $ACE$ and $A'C'E'$ coincide.
+\end{claim*}
+\begin{proof}
+  The power of $A$ to $(A'C'E')$ is
+  $AE' \cdot AC' = BC \cdot EF = k$;
+  same for $C$ and $E$.
+\end{proof}
+
+
+\begin{center}
+\begin{asy}
+size(10cm);
+pair B = dir(123);
+pair C = dir(150);
+pair D = dir(250);
+pair E = -conj(D);
+pair F = B*C/E;
+pair A = D*C/F;
+
+pair Ap = C+E-D;
+pair Cp = E+A-F;
+pair Ep = A+C-B;
+pair Bp = D+F-E;
+pair Dp = F+B-A;
+pair Fp = B+D-C;
+
+pair Ma = midpoint(Cp--Ep);
+pair Mc = midpoint(Ep--Ap);
+pair Me = midpoint(Ap--Cp);
+pair Mb = midpoint(Dp--Fp);
+pair Md = midpoint(Fp--Bp);
+pair Mf = midpoint(Bp--Dp);
+
+pair X = midpoint(A--D);
+pair Y = midpoint(B--E);
+pair Z = midpoint(C--F);
+
+draw(Ap--Cp--Ep--cycle, red);
+draw(Bp--Dp--Fp--cycle, deepgreen);
+draw(X--Y--Z--cycle, blue);
+draw(Ma--Mc--Me--cycle, lightred);
+draw(Md--Mf--Mb--cycle, lightgreen);
+
+draw(Mc--Mf, grey);
+draw(Me--Mb, grey);
+draw(Ma--Md, grey);
+
+dot("$A'$", Ap, dir(180));
+dot("$C'$", Cp, dir(275));
+dot("$E'$", Ep, dir(0));
+dot("$B'$", Bp, dir(0));
+dot("$D'$", Dp, dir(180));
+dot("$F'$", Fp, dir(275));
+
+dot("$X$", X, dir(340), blue);
+dot("$Y$", Y, dir(225), blue);
+dot("$Z$", Z, dir(130), blue);
+dot(Ma, red);
+dot(Mc, red);
+dot(Me, red);
+dot(Mb, deepgreen);
+dot(Md, deepgreen);
+dot(Mf, deepgreen);
+
+dot(orthocentercenter(Ma, Mc, Me), red);
+dot(orthocentercenter(Mb, Md, Mf), deepgreen);
+dot(orthocentercenter(X, Y, Z), blue);
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  Triangle $XYZ$ is the vector average
+  of the (congruent) medial triangles of
+  triangles $A'C'E'$ and $B'D'F'$.
+\end{claim*}
+\begin{proof}
+  If $M$ and $N$ are the midpoints
+  of $\ol{C'E'}$ and $\ol{B'F'}$,
+  then $X$ is the midpoint of $\ol{MN}$ by vector calculation:
+  \begin{align*}
+    \frac{\vec M + \vec N}{2}
+    &= \frac{\frac{\vec C' + \vec E'}{2} + \frac{\vec B' + \vec F'}{2}}{2} \\
+    &= \frac{\vec C' + \vec E' + \vec B' + \vec F'}{4} \\
+    &= \frac{(\vec A + \vec E - \vec F) + (\vec C + \vec A - \vec B)
+      + (\vec D + \vec F - \vec E) + (\vec B + \vec D - \vec C)}{4} \\
+    &= \frac{\vec A + \vec D}{2} = \vec X. \qedhere
+  \end{align*}
+\end{proof}
+Hence the orthocenter of $XYZ$
+is the midpoint of the orthocenters
+of the medial triangles of $A'C'E'$ and $B'D'F'$ --- that is,
+their circumcenters.
+
+\paragraph{Author's solution.}
+Call $MNP$ and $UVW$ the medial triangles
+of $ACE$ and $BDF$.
+
+\begin{center}
+\begin{asy}
+size(11cm);
+pair M = dir(253.96);
+pair N = dir(14.7);
+pair P = dir(133.84);
+
+pair U = dir(283.18);
+pair V = dir(44.37);
+pair W = dir(163.96);
+
+pair A = N+P-M;
+pair C = P+M-N;
+pair E = M+N-P;
+
+pair B = V+W-U;
+pair D = W+U-V;
+pair F = U+V-W;
+
+draw(A--C--E--cycle, lightred);
+draw(M--N--P--cycle, lightred);
+draw(B--D--F--cycle, lightgreen);
+draw(U--V--W--cycle, lightgreen);
+
+pair X = midpoint(A--D);
+pair Y = midpoint(B--E);
+pair Z = midpoint(C--F);
+
+draw(A--D, grey);
+draw(B--E, grey);
+draw(C--F, grey);
+
+draw(unitcircle, dotted);
+
+draw(M--V, deepcyan+1);
+draw(B--C, deepcyan+1);
+draw(E--F, deepcyan+1);
+
+draw(A--B, blue+1);
+draw(N--W, blue+1);
+draw(D--E, blue+1);
+
+draw(A--F, purple+1);
+draw(U--P, purple+1);
+draw(D--C, purple+1);
+
+dot("$M$", M, dir(M));
+dot("$N$", N, dir(N));
+dot("$P$", P, dir(P));
+dot("$U$", U, dir(U));
+dot("$V$", V, dir(V));
+dot("$W$", W, dir(W));
+dot("$A$", A, dir(A));
+dot("$C$", C, dir(C));
+dot("$E$", E, dir(E));
+dot("$B$", B, dir(B));
+dot("$D$", D, dir(D));
+dot("$F$", F, dir(F));
+dot("$X$", X, dir(X));
+dot("$Y$", Y, dir(Y));
+dot("$Z$", Z, dir(Z));
+
+/* TSQ Source:
+
+!size(11cm);
+M = dir 253.96
+N = dir 14.7
+P = dir 133.84
+
+U = dir 283.18
+V = dir 44.37
+W = dir 163.96
+
+A = N+P-M
+C = P+M-N
+E = M+N-P
+
+B = V+W-U
+D = W+U-V
+F = U+V-W
+
+A--C--E--cycle lightred
+M--N--P--cycle lightred
+B--D--F--cycle lightgreen
+U--V--W--cycle lightgreen
+
+X = midpoint A--D
+Y = midpoint B--E
+Z = midpoint C--F
+
+A--D grey
+B--E grey
+C--F grey
+
+unitcircle dotted
+
+M--V deepcyan+1
+B--C deepcyan+1
+E--F deepcyan+1
+
+A--B blue+1
+N--W blue+1
+D--E blue+1
+
+A--F purple+1
+U--P purple+1
+D--C purple+1
+
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  In trapezoid $ABDE$, the perpendicular
+  bisector of $\ol{XY}$ is the same as the
+  perpendicular bisector of the midline $\ol{WN}$.
+\end{claim*}
+\begin{proof}
+  This is true for any trapezoid:
+  because $WX = \half AB = YN$.
+\end{proof}
+
+\begin{claim*}
+  The points $V$, $W$, $M$, $N$ are cyclic.
+\end{claim*}
+\begin{proof}
+  By power of a point from $Y$, since
+  \[ WY \cdot YN = \half DE \cdot \half AB
+    = \half EF \cdot \half BC
+    = VY \cdot YM. \qedhere \]
+\end{proof}
+
+Applying all the cyclic variations of the above two claims,
+it follows that all six points $U$, $V$, $W$, $M$, $N$, $P$
+are concyclic, and the center of that circle
+coincides with the circumcenter of $\triangle XYZ$.
+
+\begin{remark*}
+  It is also possible to implement ideas from the first solution here,
+  by showing all six midpoints have equal power to $(XYZ)$.
+\end{remark*}
+
+\begin{claim*}
+  The orthocenter of $XYZ$ is the midpoint
+  of the circumcenters of $\triangle ACE$ and $\triangle BDF$.
+\end{claim*}
+\begin{proof}
+  Apply complex numbers with the unit circle coinciding
+  with the circumcircle of $NVPWMU$.
+  Then
+  \begin{align*}
+    \opname{orthocenter}(XYZ) &= x+y+z = \frac{a+b+c+d+e+f}{2} \\
+    \opname{circumcenter}(ACE) &= \opname{orthocenter}(MNP) \\
+    &= m+n+p = \frac{c+e}{2} + \frac{e+a}{2} + \frac{a+c}{2} = a+c+e \\
+    \opname{circumcenter}(BDF) &= \opname{orthocenter}(UVW) \\
+    &= u+v+w = \frac{d+f}{2} + \frac{f+b}{2} + \frac{b+d}{2} = b+d+f.
+    \qedhere
+  \end{align*}
+\end{proof}
+\pagebreak
+
+
+\end{document}

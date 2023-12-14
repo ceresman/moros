@@ -1,0 +1,833 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2022 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2022 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $a$ and $b$ be positive integers.
+Every cell of an $(a+b+1)\times (a+b+1)$ grid is colored either amber or bronze
+such that there are at least $a^2+ab-b$ amber cells
+and at least $b^2+ab-a$ bronze cells.
+Prove that it is possible to choose $a$ amber cells and $b$ bronze cells
+such that no two of the $a+b$ chosen cells lie in the same row or column.
+
+\item %% Problem 2
+Let $b\geq 2$ and $w\geq 2$ be fixed integers, and $n=b+w$.
+Given are $2b$ identical black rods and $2w$ identical white rods,
+each of side length $1$.
+
+We assemble a regular $2n$-gon using these rods
+so that parallel sides are the same color.
+Then, a convex $2b$-gon $B$ is formed by translating the black rods,
+and a convex $2w$-gon $W$ is formed by translating the white rods.
+An example of one way of doing the assembly when $b=3$ and $w=2$ is shown below,
+as well as the resulting polygons $B$ and $W$.
+\begin{center}
+\begin{asy}
+size(10cm);
+real w = 2*Sin(18);
+real h = 0.10 * w;
+real d = 0.33 * h;
+picture wht;
+picture blk;
+
+draw(wht, (0,0)--(w,0)--(w+d,h)--(-d,h)--cycle);
+fill(blk, (0,0)--(w,0)--(w+d,h)--(-d,h)--cycle, black);
+
+// draw(unitcircle, blue+dotted);
+
+// Original polygon
+add(shift(dir(108))*blk);
+add(shift(dir(72))*rotate(324)*blk);
+add(shift(dir(36))*rotate(288)*wht);
+add(shift(dir(0))*rotate(252)*blk);
+add(shift(dir(324))*rotate(216)*wht);
+
+add(shift(dir(288))*rotate(180)*blk);
+add(shift(dir(252))*rotate(144)*blk);
+add(shift(dir(216))*rotate(108)*wht);
+add(shift(dir(180))*rotate(72)*blk);
+add(shift(dir(144))*rotate(36)*wht);
+
+// White shifted
+real Wk = 1.2;
+pair W1 = (1.8,0.1);
+pair W2 = W1 + w*dir(36);
+pair W3 = W2 + w*dir(108);
+pair W4 = W3 + w*dir(216);
+path Wgon = W1--W2--W3--W4--cycle;
+draw(Wgon);
+pair WO = (W1+W3)/2;
+transform Wt = shift(WO)*scale(Wk)*shift(-WO);
+draw(Wt * Wgon);
+label("$W$", WO);
+/*
+draw(W1--Wt*W1);
+draw(W2--Wt*W2);
+draw(W3--Wt*W3);
+draw(W4--Wt*W4);
+*/
+
+// Black shifted
+real Bk = 1.10;
+pair B1 = (1.5,-0.1);
+pair B2 = B1 + w*dir(0);
+pair B3 = B2 + w*dir(324);
+pair B4 = B3 + w*dir(252);
+pair B5 = B4 + w*dir(180);
+pair B6 = B5 + w*dir(144);
+path Bgon = B1--B2--B3--B4--B5--B6--cycle;
+pair BO = (B1+B4)/2;
+transform Bt = shift(BO)*scale(Bk)*shift(-BO);
+fill(Bt * Bgon, black);
+fill(Bgon, white);
+label("$B$", BO);
+\end{asy}
+\end{center}
+Prove that the difference of the areas of $B$ and $W$
+depends only on the numbers $b$ and $w$,
+and not on how the $2n$-gon was assembled.
+
+\item %% Problem 3
+Solve over positive real numbers the functional equation
+\[ f(x) = f(f(f(x)) + y) + f(xf(y)) f(x+y). \]
+
+\item %% Problem 4
+Find all pairs of primes $(p, q)$ for which $p-q$ and $pq-q$ are both perfect squares.
+
+\item %% Problem 5
+A function $f \colon \RR \to \RR$ is
+\emph{essentially increasing}
+if $f(s) \leq f(t)$ holds
+whenever $s\leq t$ are real numbers such that $f(s)\neq 0$ and $f(t)\neq 0$.
+
+Find the smallest integer $k$ such that
+for any $2022$ real numbers $x_1$, $x_2$, \dots, $x_{2022}$,
+there exist $k$ essentially increasing functions $f_1, \dots, f_k$ such that
+\[ f_1(n) + f_2(n) + \dotsb + f_k(n) = x_n
+  \qquad \hbox{ for every } n = 1, 2, \dots, 2022. \]
+
+\item %% Problem 6
+There are $2022$ users on a social network called Mathbook,
+and some of them are Mathbook-friends.
+(On Mathbook, friendship is always mutual and permanent.)
+
+Starting now, Mathbook will only allow a new friendship to be formed
+between two users if they have at least two friends in common.
+What is the minimum number of friendships that must already exist
+so that every user could eventually become friends with every other user?
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2022/1, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p24774812}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$ and $b$ be positive integers.
+Every cell of an $(a+b+1)\times (a+b+1)$ grid is colored either amber or bronze
+such that there are at least $a^2+ab-b$ amber cells
+and at least $b^2+ab-a$ bronze cells.
+Prove that it is possible to choose $a$ amber cells and $b$ bronze cells
+such that no two of the $a+b$ chosen cells lie in the same row or column.
+\end{mdframed}
+\begin{claim*}
+  There exists a transversal $T_a$ with at least $a$ amber cells.
+  Analogously, there exists a transversal $T_b$ with at least $b$ bronze cells.
+\end{claim*}
+\begin{proof}
+  If one picks a random transversal, the expected value
+  of the number of amber cells is at least
+  \[ \frac{a^2+ab-b^2}{a+b+1} = (a-1) + \frac{1}{a+b+1} > a-1. \qedhere \]
+\end{proof}
+
+Now imagine we transform $T_a$ to $T_b$ in some number of steps,
+by repeatedly choosing cells $c$ and $c'$ and swapping them
+with the two other corners of the rectangle formed by their row/column,
+as shown in the figure.
+\begin{center}
+\begin{asy}
+  filldraw(shift(0,0)*unitsquare, lightcyan, blue);
+  filldraw(shift(3,2)*unitsquare, lightcyan, blue);
+  draw(shift(3,0)*unitsquare, dotted+blue);
+  draw(shift(0,2)*unitsquare, dotted+blue);
+  label("$c$", (0.5,0.5));
+  label("$c'$", (3.5,2.5));
+
+  label(scale(2.5)*"$\implies$", (5.5, 1.5));
+  filldraw(shift(7,2)*unitsquare, lightcyan, blue);
+  filldraw(shift(10,0)*unitsquare, lightcyan, blue);
+  draw(shift(7,0)*unitsquare, dotted+blue);
+  draw(shift(10,2)*unitsquare, dotted+blue);
+\end{asy}
+\end{center}
+By ``discrete intermediate value theorem'',
+the number of amber cells will be either $a$ or $a+1$
+at some point during this transformation.
+This completes the proof.
+\pagebreak
+
+\subsection{USAMO 2022/2, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p24775345}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $b\geq 2$ and $w\geq 2$ be fixed integers, and $n=b+w$.
+Given are $2b$ identical black rods and $2w$ identical white rods,
+each of side length $1$.
+
+We assemble a regular $2n$-gon using these rods
+so that parallel sides are the same color.
+Then, a convex $2b$-gon $B$ is formed by translating the black rods,
+and a convex $2w$-gon $W$ is formed by translating the white rods.
+An example of one way of doing the assembly when $b=3$ and $w=2$ is shown below,
+as well as the resulting polygons $B$ and $W$.
+\begin{center}
+\begin{asy}
+size(10cm);
+real w = 2*Sin(18);
+real h = 0.10 * w;
+real d = 0.33 * h;
+picture wht;
+picture blk;
+
+draw(wht, (0,0)--(w,0)--(w+d,h)--(-d,h)--cycle);
+fill(blk, (0,0)--(w,0)--(w+d,h)--(-d,h)--cycle, black);
+
+// draw(unitcircle, blue+dotted);
+
+// Original polygon
+add(shift(dir(108))*blk);
+add(shift(dir(72))*rotate(324)*blk);
+add(shift(dir(36))*rotate(288)*wht);
+add(shift(dir(0))*rotate(252)*blk);
+add(shift(dir(324))*rotate(216)*wht);
+
+add(shift(dir(288))*rotate(180)*blk);
+add(shift(dir(252))*rotate(144)*blk);
+add(shift(dir(216))*rotate(108)*wht);
+add(shift(dir(180))*rotate(72)*blk);
+add(shift(dir(144))*rotate(36)*wht);
+
+// White shifted
+real Wk = 1.2;
+pair W1 = (1.8,0.1);
+pair W2 = W1 + w*dir(36);
+pair W3 = W2 + w*dir(108);
+pair W4 = W3 + w*dir(216);
+path Wgon = W1--W2--W3--W4--cycle;
+draw(Wgon);
+pair WO = (W1+W3)/2;
+transform Wt = shift(WO)*scale(Wk)*shift(-WO);
+draw(Wt * Wgon);
+label("$W$", WO);
+/*
+draw(W1--Wt*W1);
+draw(W2--Wt*W2);
+draw(W3--Wt*W3);
+draw(W4--Wt*W4);
+*/
+
+// Black shifted
+real Bk = 1.10;
+pair B1 = (1.5,-0.1);
+pair B2 = B1 + w*dir(0);
+pair B3 = B2 + w*dir(324);
+pair B4 = B3 + w*dir(252);
+pair B5 = B4 + w*dir(180);
+pair B6 = B5 + w*dir(144);
+path Bgon = B1--B2--B3--B4--B5--B6--cycle;
+pair BO = (B1+B4)/2;
+transform Bt = shift(BO)*scale(Bk)*shift(-BO);
+fill(Bt * Bgon, black);
+fill(Bgon, white);
+label("$B$", BO);
+\end{asy}
+\end{center}
+Prove that the difference of the areas of $B$ and $W$
+depends only on the numbers $b$ and $w$,
+and not on how the $2n$-gon was assembled.
+\end{mdframed}
+We are going to prove that one may swap a black rod with an adjacent white rod
+(as well as the rods parallel to them)
+without affecting the difference in the areas of $B-W$.
+Let $\vec u$ and $\vec v$ denote the originally black and white vectors
+that were adjacent on the $2n$-gon and are now going to be swapped.
+Let $\vec x$ denote the sum of all the other black vectors between
+$\vec u$ and $-\vec u$, and define $\vec y$ similarly.
+See the diagram below,
+where $B_0$ and $W_0$ are the polygons before the swap,
+and $B_1$ and $W_1$ are the resulting changed polygons.
+
+\begin{center}
+\begin{asy}
+size(12cm);
+picture B0;
+picture W0;
+picture B1;
+picture W1;
+
+pen br = black + 2;
+pen bp = black + dashed;
+path barc = (0,0)..(1,1)..(6,1)..(7,0);
+
+draw(B0, (3,-1)--(4,1), br);
+draw(B0, (-4,-1)--(-3,1), br);
+draw(B0, shift(-3,1)*barc, bp);
+draw(B0, shift(3,-1)*rotate(180)*barc, bp);
+label(B0, "$B_0$", (0,0));
+
+draw(B0, (-3,1)--(4,1), red, EndArrow(TeXHead), Margins);
+draw(B0, (3,-1)--(-4,-1), red, EndArrow(TeXHead), Margins);
+label(B0, "$\vec x$", (-3,1)--(4,1), dir(90), red);
+label(B0, "$-\vec x$", (3,-1)--(-4,-1), dir(-90), red);
+label(B0, "$\vec u$", (-3.5,0), dir(160));
+draw(B0, (-4,-1)--(-3,1), black+1, EndArrow(TeXHead));
+
+draw(B1, (4,-1)--(3,1), br);
+draw(B1, (-3,-1)--(-4,1), br);
+label(B1, "$B_1$", (0,0));
+draw(B1, shift(-4,1)*barc, bp);
+draw(B1, shift(4,-1)*rotate(180)*barc, bp);
+draw(B1, (-4,1)--(3,1), red, EndArrow(TeXHead), Margins);
+draw(B1, (4,-1)--(-3,-1), red, EndArrow(TeXHead), Margins);
+label(B1, "$\vec x$", (-4,1)--(3,1), dir(90), red);
+label(B1, "$-\vec x$", (4,-1)--(-3,-1), dir(180), red);
+label(B1, "$\vec v$", (-3.5,0), dir(210));
+draw(B1, (-3,-1)--(-4,1), black+1, EndArrow(TeXHead));
+
+path warc = (0,0)..(4,1)..(9,-2);
+draw(W0, shift(-5,1)*warc, bp);
+draw(W0, shift(5,-3)*rotate(180)*warc, bp);
+draw(W0, (5,-3)--(4,-1), br);
+draw(W0, (-4,-1)--(-5,1), br);
+draw(W0, (-5,1)--(4,-1), red, EndArrow(TeXHead), Margins);
+draw(W0, (5,-3)--(-4,-1), red, EndArrow(TeXHead), Margins);
+draw(W0, (5,-3)--(4,-1), white+1.2);
+draw(W0, (-4,-1)--(-5,1), white+1.2);
+label(W0, "$W_0$", (0,-1));
+label(W0, "$\vec v$", (-4.5,0), dir(200));
+label(W0, "$\vec y$", (-5,1)--(4,-1), dir(70), red);
+label(W0, "$-\vec y$", (5,-3)--(-4,-1), dir(250), red);
+
+draw(W1, shift(-4,1)*warc, bp);
+draw(W1, shift(4,-3)*rotate(180)*warc, bp);
+draw(W1, (4,-3)--(5,-1), br);
+draw(W1, (-5,-1)--(-4,1), br);
+draw(W1, (4,-3)--(5,-1), white+1.2);
+draw(W1, (-5,-1)--(-4,1), white+1.2);
+draw(W1, (-4,1)--(5,-1), red, EndArrow(TeXHead), Margins);
+draw(W1, (4,-3)--(-5,-1), red, EndArrow(TeXHead), Margins);
+label(W1, "$W_1$", (0,-1));
+label(W1, "$\vec u$", (-4.5,0), dir(140));
+label(W1, "$\vec y$", (0.5,0), dir(70), red);
+label(W1, "$-\vec y$", (-0.5,-2), dir(250), red);
+
+add(B0);
+add(shift(12,0)*B1);
+add(shift(0,-6)*W0);
+add(shift(12,-6)*W1);
+\end{asy}
+\end{center}
+
+Observe that the only change in $B$ and $W$
+is in the parallelograms shown above in each diagram.
+Letting $\wedge$ denote the wedge product,
+we need to show that
+\[ \vec u \wedge \vec x - \vec v \wedge \vec y
+  = \vec v \wedge \vec x - \vec u \wedge \vec y \]
+which can be rewritten as
+\[ (\vec u - \vec v) \wedge (\vec x + \vec y) = 0. \]
+In other words, it would suffice to show
+$\vec u - \vec v$ and $\vec x + \vec y$ are parallel.
+(Students not familiar with wedge products can replace
+every $\wedge$ with the cross product $\times$ instead.)
+\begin{claim*}
+  Both $\vec u - \vec v$ and $\vec x + \vec y$
+  are perpendicular to vector $\vec u + \vec v$.
+\end{claim*}
+\begin{proof}
+  We have $(\vec u - \vec v) \perp (\vec u + \vec v)$
+  because $\vec u$ and $\vec v$ are the same length.
+
+  For the other perpendicularity, note that
+  $\vec u + \vec v + \vec x + \vec y$
+  traces out a diameter of the circumcircle of the original $2n$-gon;
+  call this diameter $AB$, so
+  \[ A + \vec u + \vec v + \vec x + \vec y = B. \]
+  Now point $A + \vec u + \vec v$ is a point on this semicircle,
+  which means (by the inscribed angle theorem)
+  the angle between $\vec u + \vec v$ and $\vec x + \vec y$ is $90^\circ$.
+\end{proof}
+\pagebreak
+
+\subsection{USAMO 2022/3, proposed by Hung-Hsun Hans Yu}
+\textsl{Available online at \url{https://aops.com/community/p24774907}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Solve over positive real numbers the functional equation
+\[ f(x) = f(f(f(x)) + y) + f(xf(y)) f(x+y). \]
+\end{mdframed}
+The answer is $f(x) \equiv c/x$ for any $c > 0$.
+This works, so we'll prove this is the only solution.
+The following is based on the solution posted by \texttt{pad} on AoPS.
+
+In what follows, $f^n$ as usual denotes $f$ iterated $n$ times,
+and $P(x,y)$ is the given statement.
+Also, we introduce the notation $Q$ for the statement
+\[ Q(a,b) : \qquad f(a) \ge f(b) \implies f(f(b)) \ge a. \]
+To see why this statement $Q$ is true,
+assume for contradiction that $a > f(f(b))$;
+then consider $P(b, a-f(f(b)))$ to get a contradiction.
+
+The main idea of the problem is the following:
+\begin{claim*}
+  Any function $f \colon \RR_{>0} \to \RR_{>0}$ obeying
+  statement $Q$ satisfies $f^2(x) = f^4(x)$.
+\end{claim*}
+\begin{proof}
+  From $Q(t,t)$ we get
+  \[ f^2(t) \ge t \qquad \text{ for all } t > 0. \]
+  So this already implies $f^4(x) \ge f^2(x)$ by choosing $t = f^2(x)$.
+  It also gives $f(x) \le f^3(x) \le f^5(x)$
+  by choosing $t = f(x)$, $t = f^3(x)$.
+
+  Then $Q(f^4(x), x)$ is valid and gives $f^2(x) \ge f^4(x)$, as needed.
+\end{proof}
+
+\begin{claim*}
+  The function $f$ is injective.
+\end{claim*}
+\begin{proof}
+  Suppose $f(u) = f(v)$ for some $u > v$.
+  From $Q(u,v)$ and $Q(v,u)$ we have $f^2(v) \ge u$ and $f^2(u) \ge v$.
+  Note that for all $x > 0$ we have statements
+  \begin{align*}
+    P(f^2(x), u) &\implies f^3(x) = f(x+u) + f(xf(u)) f(x+u) = (1+f(xf(u)))f(x+u) \\
+    P(f^2(x), v) &\implies f^3(x) = f(x+v) + f(xf(v)) f(x+v) = (1+f(xf(v)))f(x+v).
+  \end{align*}
+  It follows that $f(x+u) = f(x+v)$ for all $x > 0$.
+
+  This means that $f$ is periodic with period $T = u-v > 0$.
+  However, this is incompatible with $Q$,
+  because we would have $Q(1+nT, 1)$ for all positive integers $n$,
+  which is obviously absurd.
+\end{proof}
+
+Since $f$ is injective, we obtain that $f^2(x) = x$.
+Thus $P(x,y)$ now becomes the statement
+\[ P(x,y) : \qquad f(x) = f(x+y) \cdot \Big[ 1+f(xf(y)) \Big]. \]
+In particular
+\[ P(1,y) \implies f(1+y) = \frac{f(1)}{1+y} \]
+so $f$ is determined on inputs greater than $1$.
+Finally, if $a,b > 1$ we get
+\[ P(a,b) \implies \frac 1a = \frac{1}{a+b} \cdot
+  \left[ 1 + f\left( \frac ab f(1) \right) \right] \]
+which is enough to determine $f$ on all inputs, by varying $(a,b)$.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2022/4, proposed by Holden Mui}
+\textsl{Available online at \url{https://aops.com/community/p24774670}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all pairs of primes $(p, q)$ for which $p-q$ and $pq-q$ are both perfect squares.
+\end{mdframed}
+The answer is $(3,2)$ only.
+This obviously works so we focus on showing it is the only one.
+
+\paragraph{Approach using difference of squares (from author).}
+Set
+\begin{align*}
+  a^2 &= p-q \\
+  b^2 &= pq-q.
+\end{align*}
+Note that $0 < a < p$, and $0 < b < p$ (because $q \le p$).
+Now subtracting gives
+\[ \underbrace{(b-a)}_{<p} \underbrace{(b+a)}_{<2p} = b^2-a^2 = p(q-1) \]
+The inequalities above now force $b+a = p$.
+Hence $q-1 = b-a$.
+
+This means $p$ and $q-1$ have the same parity,
+which can only occur if $q = 2$.
+Finally, taking mod $3$ shows $p \equiv 0 \pmod 3$.
+So $(3,2)$ is the only possibility (and it does work).
+
+\paragraph{Divisibility approach (Aharshi Roy).}
+Since $pq-q = q(p-1)$ is a square, it follows that $q$ divides $p-1$
+and that $\frac{p-1}{q}$ is a perfect square too.
+Hence the number
+\[ s^2 \coloneqq (p-q) \cdot \frac{p-1}{q} = \frac{p^2-qp-p+q}{q} \]
+is also a perfect square.
+Rewriting this equation gives
+\[ q = \frac{p^2-p}{s^2 + (p-1)}. \]
+In particular, $s^2 + (p-1)$ divides $p^2-p$, and in particular $s \leq p$.
+We consider two cases:
+\begin{itemize}
+  \ii If $s^2+(p-1)$ is not divisible by $p$, then it must divide $p-1$,
+  which can only happen if $s^2 = 0$, or $p = q$.
+  However, it's easy to check there are no solutions in this case.
+
+  \ii Otherwise, we should have $s^2 \equiv 1 \pmod p$,
+  so either $s = 1$ or $s = p-1$.
+  If $s = p-1$ we get $q=1$ which is absurd.
+  On the other hand, if $s=1$ we conclude $q = p-1$ and hence $q=2$, $p=3$.
+\end{itemize}
+\pagebreak
+
+\subsection{USAMO 2022/5, proposed by Gabriel Carroll}
+\textsl{Available online at \url{https://aops.com/community/p24774633}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A function $f \colon \RR \to \RR$ is
+\emph{essentially increasing}
+if $f(s) \leq f(t)$ holds
+whenever $s\leq t$ are real numbers such that $f(s)\neq 0$ and $f(t)\neq 0$.
+
+Find the smallest integer $k$ such that
+for any $2022$ real numbers $x_1$, $x_2$, \dots, $x_{2022}$,
+there exist $k$ essentially increasing functions $f_1, \dots, f_k$ such that
+\[ f_1(n) + f_2(n) + \dotsb + f_k(n) = x_n
+  \qquad \hbox{ for every } n = 1, 2, \dots, 2022. \]
+\end{mdframed}
+The answer is $11$ and, more generally, if $2022$ is replaced by $N$
+then the answer is $\left\lfloor \log_2 N \right\rfloor + 1$.
+
+\paragraph{Bound.}
+Suppose for contradiction that $2^k-1 > N$
+and choose $x_n = -n$ for each $n = 1, \dots, N$.
+Now for each index $1 \le n \le N$, define
+\[ S(n) = \left\{
+    \text{indices $i$ for which $f_i(n) \neq 0$}
+  \right\} \subseteq \{1,\dots,k\}.
+\]
+As each $S(nt)$ is nonempty, by pigeonhole, two $S(n)$'s coincide,
+say $S(n) = S(n')$ for $n < n'$.
+But it's plainly impossible that $x_n > x_{n'}$ in that case
+due to the essentially increasing condition.
+
+\paragraph{Construction.}
+It suffices to do $N = 2^k-1$.
+Rather than drown the reader in notation, we'll just illustrate
+an example of the (inductive) construction for $k=4$.
+Empty cells are zero.
+\[
+  \begin{array}{r|rrrr}
+    & f_1 & f_2 & f_3 & f_4 \\ \hline
+    x_1 = 3 & \mathbf{\color{red}3} &&& \\ \hline
+    x_2 = 1 & 10 & \mathbf{\color{red}-9} && \\
+    x_3 = 4 & & \mathbf{\color{red}4} && \\ \hline
+    x_4 = 1 & 100 & 200 & \mathbf{\color{red}-299} & \\
+    x_5 = 5 & & 200 & \mathbf{\color{red}-195} & \\
+    x_6 = 9 & 100 & & \mathbf{\color{red}-91} & \\
+    x_7 = 2 & & & \mathbf{\color{red}2} & \\ \hline
+    x_8 = 6 & 1000 & 2000 & 4000 & \mathbf{\color{red}-6994} \\
+    x_{9} = 5 & & 2000 & 4000 & \mathbf{\color{red}-5995} \\
+    x_{10} = 3 & 1000 & & 4000 & \mathbf{\color{red}-4997} \\
+    x_{11} = 5 & & & 4000 & \mathbf{\color{red}-3995} \\
+    x_{12} = 8 & 1000 & 2000 & & \mathbf{\color{red}-2992} \\
+    x_{13} = 9 & & 2000 & & \mathbf{\color{red}-1991} \\
+    x_{14} = 7 & 1000 & & & \mathbf{\color{red}-993} \\
+    x_{15} = 9 & & & & \mathbf{\color{red}9}
+  \end{array}
+\]
+The general case is handled in the same way with powers of $10$
+replaced by powers of $B$, for a sufficiently large number $B$.
+\pagebreak
+
+\subsection{USAMO 2022/6, proposed by Yannick Yao}
+\textsl{Available online at \url{https://aops.com/community/p24774626}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+There are $2022$ users on a social network called Mathbook,
+and some of them are Mathbook-friends.
+(On Mathbook, friendship is always mutual and permanent.)
+
+Starting now, Mathbook will only allow a new friendship to be formed
+between two users if they have at least two friends in common.
+What is the minimum number of friendships that must already exist
+so that every user could eventually become friends with every other user?
+\end{mdframed}
+With $2022$ replaced by $n$, the answer is
+$\left\lceil \frac 32 n  \right\rceil - 2$.
+
+\paragraph{Terminology.}
+Standard graph theory terms:
+starting from a graph $G$ on $n$ vertices,
+we're allowed to take any $C_4$ in the graph and complete it to a $K_4$.
+The problem asks the minimum number of edges needed
+so that this operation lets us transform $G$ to $K_n$.
+
+\paragraph{Construction.}
+For even $n$, start with an edge $ab$,
+and then create $n/2-1$ copies of $C_4$ that use $ab$ as an edge, as shown
+below for $n=14$ (six copies of $C_4$).
+
+\begin{center}
+\begin{asy}
+  dotfactor *= 2;
+  pair A = (-1,0);
+  pair B = (1,0);
+  pair X, Y;
+  for (int i=1; i<=6; ++i) {
+    X = (-(i+3)/10, i/7 + 0.4);
+    Y = ((i+3)/10, i/7 + 0.4);
+    dot(X, grey);
+    dot(Y, grey);
+    draw(A--X--Y--B, grey);
+  }
+  draw(A--B, red+2);
+  dot("$a$", A, 2*dir(-90), red);
+  dot("$b$", B, 2*dir(-90), red);
+\end{asy}
+\end{center}
+
+This can be completed into $K_n$ by first completing the $n/2-1$
+$C_4$'s into $K_4$, then connecting red vertices to every grey vertex,
+and then finishing up.
+
+The construction for odd $n$ is the same except with one extra vertex $c$
+which is connected to both $a$ and $b$.
+
+\paragraph{Bound.}
+Notice that additional operations or connections can never hurt.
+So we will describe a \emph{specific} algorithm that performs operations
+on the graph until no more operations are possible.
+This means that if this algorithm terminates with anything other $G = K_n$,
+the graph was never completable to $K_n$ to begin with.
+
+The algorithm uses the following data:
+it keeps a list $\mathcal C$ of cliques of $G$,
+and a labeling $\mathcal{L} \colon E(G) \to \mathcal C$ which assigns to every
+edge one of the cliques that contains it.
+\begin{itemize}
+  \ii Initially, $\mathcal C$ consists of one $K_2$ for every edge of $G$,
+  and each edge is labeled in the obvious way.
+
+  \ii At each step, the algorithm arbitrarily takes any $C_4 = abcd$
+  whose four edges $ab$, $bc$, $cd$, $da$ do not all have the same label.
+  Consider these labels that appear (at least two, and up to four),
+  and let $V$ be the union of all vertices in any of these 2-4 cliques.
+
+  \ii Do the following graph operations:
+  connect $ac$ and $bd$, then connect every vertex in $V - \{a,b,c,d\}$
+  to each of $\{a,b,c,d\}$.
+  Finally, complete this to a clique on $V$.
+
+  \ii Update $\mathcal C$ by merging these 2-4 cliques into a single clique $K_V$.
+
+  \ii Update $\mathcal{L}$ by replacing every edge
+  that was labeled with one of these 2-4 cliques with the label $K_V$.
+  Also, update every \emph{newly} created edge to have label $K_V$.
+  However, if there were existing edges
+  not labeled with one of the 2-4 cliques, then we do \emph{not} update these!
+
+  \ii Stop once every $C_4$ has only one label appearing among its edges.
+  When this occurs, no operations are possible at all on the graph.
+\end{itemize}
+A few steps of the process are illustrated below for a graph on six vertices
+with nine initial edges.
+There are initially nine $K_2$'s labeled A, B, \dots, I.
+Original edges are always bolder than added edges.
+The relabeled edges in each step are highlighted in color.
+Notice how we need an entirely separate operation to get G to become L,
+even though no new edges are drawn in the graph.
+
+\begin{center}
+\begin{asy}
+  size(12cm);
+  picture base;
+  dotfactor *= 2;
+  pair P1 = (0,1);
+  pair P2 = (1,1);
+  pair P3 = (2,1);
+  pair P4 = (2,0);
+  pair P5 = (1,0);
+  pair P6 = (0,0);
+  dot(base, "$1$", P1, 2*dir(90));
+  dot(base, "$2$", P2, 2*dir(90));
+  dot(base, "$3$", P3, 2*dir(90));
+  dot(base, "$4$", P4, 2*dir(-90));
+  dot(base, "$5$", P5, 2*dir(-90));
+  dot(base, "$6$", P6, 2*dir(-90));
+  real r = 7;
+
+  transform t = shift(0,0);
+  draw("A", t*(P6--P1), dir(180), black+2);
+  draw("B", t*(P1--P2), dir(90), black+2);
+  draw("C", t*(P2--P3), dir(90), black+2);
+  draw("D", t*(P3--P4), dir(0), black+2);
+  draw("E", t*(P4--P5), dir(-90), black+2);
+  draw("F", t*(P5--P6), dir(-90), black+2);
+  draw("G", t*(P6--P2), dir(135), black+2);
+  draw("H", t*(P2--P5), dir(180), black+2);
+  draw("I", t*(P5--P3), dir(135), black+2);
+  add(t*base);
+  label("Initial setup", P5, r*dir(270));
+
+  t = shift(3,0);
+  draw("J", t*(P6--P1), dir(180), red+2);
+  draw("J", t*(P1--P2), dir(90), red+2);
+  draw("C", t*(P2--P3), dir(90), black+2);
+  draw("D", t*(P3--P4), dir(0), black+2);
+  draw("E", t*(P4--P5), dir(-90), black+2);
+  draw("J", t*(P5--P6), dir(-90), red+2);
+  draw("G", t*(P6--P2), dir(180), black+2);
+  draw("J", t*(P2--P5), dir(180), red+2);
+  draw("I", t*(P5--P3), dir(135), black+2);
+  draw("J", t*(P1--P5), dir(0), red);
+  add(t*base);
+  label(minipage("Step 1: Operate on $1256$. \\ Merges ABFH into J. \\
+    $\theta(\text{J}) = 4$", 120pt), t*P5, r*dir(270));
+
+  t = shift(0,-2.5);
+  draw("K", t*(P6--P1), dir(180), deepgreen+2);
+  draw("K", t*(P1--P2), dir(90), deepgreen+2);
+  draw("K", t*(P2--P3), dir(90), deepgreen+2);
+  draw("D", t*(P3--P4), dir(0), black+2);
+  draw("E", t*(P4--P5), dir(-90), black+2);
+  draw("K", t*(P5--P6), dir(-90), deepgreen+2);
+  draw("G", t*(P6--P2), dir(180), black+2);
+  draw("K", t*(P2--P5), dir(180), deepgreen+2);
+  draw("K", t*(P5--P3), dir(135), deepgreen+2);
+  draw("K", t*(P1--P5), dir(0), deepgreen);
+  draw("K", t*(P6--P3), dir(0), deepgreen);
+  draw("K", t*(P1..(1,1.3)..P3), dir(90), deepgreen);
+  add(t*base);
+  label(minipage("Step 2: Operate on $1235$. \\ Merges CIJ into K. \\
+    $\theta(\text{K}) = 6$", 120pt), t*P5, r*dir(270));
+
+  t = shift(3,-2.5);
+  draw("L", t*(P6--P1), dir(180), blue+2);
+  draw("L", t*(P1--P2), dir(90), blue+2);
+  draw("L", t*(P2--P3), dir(90), blue+2);
+  draw("D", t*(P3--P4), dir(0), black+2);
+  draw("E", t*(P4--P5), dir(-90), black+2);
+  draw("L", t*(P5--P6), dir(-90), blue+2);
+  draw("L", t*(P6--P2), dir(180), blue+2);
+  draw("L", t*(P2--P5), dir(180), blue+2);
+  draw("L", t*(P5--P3), dir(135), blue+2);
+  draw("L", t*(P1--P5), dir(0), blue);
+  draw("L", t*(P6--P3), dir(0), blue);
+  draw("L", t*(P1..(1,1.3)..P3), dir(90), blue);
+  add(t*base);
+  label(minipage("Step 3: Operate on $2356$. \\ Merges GK into L. \\
+    $\theta(\text{L}) = 7$", 120pt), t*P5, r*dir(270));
+\end{asy}
+\end{center}
+
+
+As we remarked, if the graph is going to be completable to $K_n$ at all,
+then this algorithm must terminate with $\mathcal C = \{K_n\}$.
+We will use this to prove our bound.
+
+We proceed by induction in the following way.
+For a clique $K$, let $\theta(K)$ denote the number of edges
+of the \emph{original} graph $G$ which are labeled by $K$
+(this does \emph{not} include new edges added by the algorithm);
+hence the problem amounts to estimating how small $\theta(K_n)$ can be.
+We are trying to prove:
+\begin{claim*}
+  At any point in the operation, if $K$ is a clique in
+  the cover $\mathcal C$, then
+  \[ \theta(K) \ge \frac{3 |K|}{2} - 2. \]
+  where $|K|$ is the number of vertices in $K$.
+\end{claim*}
+\begin{proof}
+  By induction on the time step of the algorithm.
+  The base case is clear, because then $K$ is just a single edge of $G$,
+  so $\theta(K) = 1$ and $|K| = 2$.
+
+  The inductive step is annoying casework based on the how the merge occurred.
+  Let $C_4 = abcd$ be the $4$-cycle operated on.
+  In general, the $\theta$ value of a newly created $K$ is
+  exactly the sum of the $\theta$ values of the merged cliques, by definition.
+  Meanwhile, $|K|$ is the number of vertices in the union of the merged cliques;
+  so it's the sum of the sizes of these cliques
+  minus some error due to overcounting of vertices appearing more than once.
+  To be explicit:
+  \begin{itemize}
+    \ii Suppose we merged four cliques $W$, $X$, $Y$, $Z$.
+    By definition,
+    \begin{align*}
+      \theta(K) &= \theta(W)+\theta(X)+\theta(Y)+\theta(Z) \\
+      &\ge \frac32(|W|+|X|+|Y|+|Z|) - 8 = \frac32(|W|+|X|+|Y|+|Z|-4) - 2.
+    \end{align*}
+    On the other hand $|K| \le |W|+|X|+|Y|+|Z|-4$;
+    the $-4$ term comes from each of $\{a,b,c,d\}$ being in
+    two (or more) of $\{W,X,Y,Z\}$. So this case is OK.
+
+    \ii Suppose we merged three cliques $X$, $Y$, $Z$.
+    By definition,
+    \begin{align*}
+      \theta(K) &= \theta(X)+\theta(Y)+\theta(Z) \\
+      &\ge \frac32(|X|+|Y|+|Z|) - 6 = \frac32\left(|X|+|Y|+|Z|-\frac83\right) - 2.
+    \end{align*}
+    On the other hand, $|K| \le |X|+|Y|+|Z| - 3$,
+    since at least $3$ of $\{a,b,c,d\}$ are repeated among $X$, $Y$, $Z$.
+    Note in this case the desired inequality is actually strict.
+
+    \ii Suppose we merged two cliques $Y$, $Z$.
+    By definition,
+    \begin{align*}
+      \theta(K) &= \theta(Y)+\theta(Z) \\
+      &\ge \frac32(|Y|+|Z|) - 4 = \frac32\left(|Y|+|Z|-\frac43\right) - 2.
+    \end{align*}
+    On the other hand, $|K| \le |Y|+|Z| - 2$,
+    since at least $2$ of $\{a,b,c,d\}$ are repeated among $Y$, $Z$.
+    Note in this case the desired inequality is actually strict. \qedhere
+  \end{itemize}
+\end{proof}
+
+\begin{remark*}
+  Several subtle variations of this method do not seem to work.
+  \begin{itemize}
+    \ii It does not seem possible to require the cliques in $\mathcal C$
+    to be disjoint, which is why it's necessary to introduce
+    a label function $\mathcal L$ as well.
+    \ii It seems you do have to label the newly created edges,
+    even though they do not count towards any $\theta$ value.
+    Otherwise the termination of the algorithm doesn't tell you enough.
+    \ii Despite this, relabeling existing edges,
+    like G in step 1 of the example, 1 seems to cause a lot of issues.
+    The induction becomes convoluted if $\theta(K)$ is not exactly
+    the sum of $\theta$-values of the subparts,
+    while the disappearance of an edge from a clique
+    will also break induction.
+  \end{itemize}
+\end{remark*}
+\pagebreak
+
+
+\end{document}

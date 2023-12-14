@@ -1,0 +1,909 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2020 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2020 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $ABC$ be a fixed acute triangle
+inscribed in a circle $\omega$ with center $O$.
+A variable point $X$ is chosen on minor arc $AB$ of $\omega$,
+and segments $CX$ and $AB$ meet at $D$.
+Denote by $O_1$ and $O_2$ the circumcenters of
+triangles $ADX$ and $BDX$, respectively.
+Determine all points $X$ for which
+the area of triangle $OO_1O_2$ is minimized.
+
+\item %% Problem 2
+An empty $2020 \times 2020 \times 2020$ cube is given,
+and a $2020 \times 2020$ grid of square unit cells is drawn on each of its six faces.
+A \emph{beam} is a $1 \times 1 \times 2020$ rectangular prism.
+Several beams are placed inside the cube subject to the following conditions:
+\begin{itemize}
+\item The two $1 \times 1$ faces of each beam coincide
+  with unit cells lying on opposite faces of the cube.
+  (Hence, there are $3 \cdot 2020^2$ possible positions for a beam.)
+\item No two beams have intersecting interiors.
+\item The interiors of each of the four $1 \times 2020$ faces of each beam touch
+  either a face of the cube or the interior of the face of another beam.
+\end{itemize}
+What is the smallest positive number of beams that can be placed to satisfy these conditions?
+
+\item %% Problem 3
+Let $p$ be an odd prime.
+An integer $x$ is called a \emph{quadratic non-residue}
+if $p$ does not divide $x-t^2$ for any integer $t$.
+
+Denote by $A$ the set of all integers $a$
+such that $1 \le a < p$,
+and both $a$ and $4-a$ are quadratic non-residues.
+Calculate the remainder
+when the product of the elements of $A$ is divided by $p$.
+
+\item %% Problem 4
+Suppose that $(a_1, b_1)$, $(a_2, b_2)$, \dots, $(a_{100}, b_{100})$
+are distinct ordered pairs of nonnegative integers.
+Let $N$ denote the number of pairs of integers $(i,j)$ satisfying
+$1 \le i < j \le 100$ and $\left\lvert a_ib_j - a_jb_i \right\rvert = 1$.
+Determine the largest possible value of $N$
+over all possible choices of the $100$ ordered pairs.
+
+\item %% Problem 5
+A finite set $S$ of points in the coordinate plane
+is called \emph{overdetermined} if $|S| \ge 2$
+and there exists a nonzero polynomial $P(t)$,
+with real coefficients and of degree at most $|S|-2$,
+satisfying $P(x)=y$ for every point $(x,y) \in S$.
+
+For each integer $n \ge 2$,
+find the largest integer $k$ (in terms of $n$) such that
+there exists a set of $n$ distinct points
+that is \emph{not} overdetermined,
+but has $k$ overdetermined subsets.
+
+\item %% Problem 6
+Let $n \geq 2$ be an integer.
+Let $x_1 \ge x_2 \ge \dots \ge x_n$
+and $y_1 \ge y_2 \ge \dots \ge y_n$ be $2n$ real numbers
+such that
+\begin{align*}
+  0 &= x_1 + x_2 + \dots + x_n = y_1 + y_2 + \dots + y_n, \\
+  \text{and}\quad
+  1 &= x_1^2 + x_2^2 + \dots + x_n^2 = y_1^2 + y_2^2 + \dots + y_n^2.
+\end{align*}
+Prove that
+\[ \sum_{i=1}^n (x_i y_i - x_i y_{n+1-i})
+  \geq \frac{2}{\sqrt{n-1}}.  \]
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2020/1, proposed by Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p15952768}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a fixed acute triangle
+inscribed in a circle $\omega$ with center $O$.
+A variable point $X$ is chosen on minor arc $AB$ of $\omega$,
+and segments $CX$ and $AB$ meet at $D$.
+Denote by $O_1$ and $O_2$ the circumcenters of
+triangles $ADX$ and $BDX$, respectively.
+Determine all points $X$ for which
+the area of triangle $OO_1O_2$ is minimized.
+\end{mdframed}
+We prove $[OO_1O_2] \ge \frac14 [ABC]$,
+with equality if and only if $\ol{CX} \perp \ol{AB}$.
+
+\paragraph{First approach (Bobby Shen).}
+We use two simultaneous inequalities:
+\begin{itemize}
+  \ii Let $M$ and $N$ be the midpoints of $CX$ and $DX$.
+  Then $MN$ equals the length of the $O$-altitude of $\triangle OO_1O_2$,
+  since $\ol{O_1O_2}$ and $\ol{DX}$ meet at $N$ at a right angle.
+  Moreover, we have \[ MN = \half CD \ge \half h_a \]
+  where $h_a$ denotes the $A$-altitude.
+
+  \ii The projection of $O_1 O_2$ onto line $AB$ has length exactly $AB/2$.
+  Thus \[ O_1 O_2 \ge \half AB. \]
+\end{itemize}
+So, we find
+\[ [OO_1O_2] = \half \cdot MN \cdot O_1 O_2
+  \ge \frac 18 h_a \cdot AB = \frac14 [ABC]. \]
+Note that equality occurs in both cases if and only if $\ol{CX} \perp \ol{AB}$.
+So the area is minimized exactly when this occurs.
+
+
+\paragraph{Second approach (Evan's solution).}
+We need two claims.
+\begin{claim*}
+  We have $\triangle O O_1 O_2 \sim \triangle CBA$, with opposite orientation.
+\end{claim*}
+\begin{proof}
+  Notice that $\ol{OO_1} \perp \ol{AX}$
+  and $\ol{O_1 O_2} \perp \ol{CX}$,
+  so $\dang OO_1O_2 = \dang AXC = \dang ABC$.
+  Similarly $\dang OO_2O_1 = \dang BAC$.
+\end{proof}
+
+Therefore, the problem is equivalent to minimizing $O_1 O_2$.
+\begin{center}
+\begin{asy}
+pair C = dir(130);
+pair A = dir(200);
+pair B = dir(340);
+pair X = dir(280);
+pair D = extension(C, X, A, B);
+pair O_1 = circumcenter(A, D, X);
+pair O_2 = circumcenter(B, D, X);
+pair O = origin;
+filldraw(O--O_1--O_2--cycle, opacity(0.1)+lightcyan, deepcyan);
+filldraw(A--X--B--cycle, opacity(0.1)+lightred, red);
+filldraw(A--B--C--cycle, opacity(0.1)+lightcyan, blue);
+draw(X--C, red);
+filldraw(O_1--X--O_2--cycle, opacity(0.1)+yellow, orange);
+draw(unitcircle, grey);
+
+dot("$C$", C, dir(C));
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$X$", X, dir(X));
+dot("$D$", D, dir(245));
+dot("$O_1$", O_1, dir(O_1));
+dot("$O_2$", O_2, dir(20));
+dot("$O$", O, dir(45));
+
+/* TSQ Source:
+
+C = dir 130
+A = dir 200
+B = dir 340
+X = dir 280
+D = extension C X A B R245
+O_1 = circumcenter A D X
+O_2 = circumcenter B D X R20
+O = origin R45
+O--O_1--O_2--cycle 0.1 lightcyan / deepcyan
+A--X--B--cycle 0.1 lightred / red
+A--B--C--cycle 0.1 lightcyan / blue
+X--C red
+O_1--X--O_2--cycle 0.1 yellow / orange
+unitcircle grey
+
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  [Salmon theorem]
+  We have $\triangle X O_1 O_2 \sim \triangle XAB$.
+\end{claim*}
+\begin{proof}
+  It follows from the fact that $\triangle AO_1 X \sim \triangle BO_2 X$
+  (since $\dang ADX = \dang XDB \implies \dang XO_1A = \dang XO_2B$)
+  and that spiral similarities come in pairs.
+\end{proof}
+
+Let $\theta = \angle ADX$.
+The ratio of similarity in the previous claim is equal to
+$\frac{XO_1}{XA} = \frac{1}{2\sin \theta}$.
+In other words,
+\[ O_1 O_2 = \frac{AB}{2 \sin \theta}. \]
+This is minimized when $\theta = 90\dg$,
+in which case $O_1 O_2 = AB/2$
+and $[OO_1O_2] = \frac14 [ABC]$.
+This completes the solution.
+\pagebreak
+
+\subsection{USAMO 2020/2, proposed by Alex Zhai}
+\textsl{Available online at \url{https://aops.com/community/p15952773}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+An empty $2020 \times 2020 \times 2020$ cube is given,
+and a $2020 \times 2020$ grid of square unit cells is drawn on each of its six faces.
+A \emph{beam} is a $1 \times 1 \times 2020$ rectangular prism.
+Several beams are placed inside the cube subject to the following conditions:
+\begin{itemize}
+\item The two $1 \times 1$ faces of each beam coincide
+  with unit cells lying on opposite faces of the cube.
+  (Hence, there are $3 \cdot 2020^2$ possible positions for a beam.)
+\item No two beams have intersecting interiors.
+\item The interiors of each of the four $1 \times 2020$ faces of each beam touch
+  either a face of the cube or the interior of the face of another beam.
+\end{itemize}
+What is the smallest positive number of beams that can be placed to satisfy these conditions?
+\end{mdframed}
+Answer: $3030$ beams.
+
+\medskip
+
+\textbf{Construction}:
+We first give a construction with $3n/2$ beams for any $n \times n \times n$ box,
+where $n$ is an even integer.
+Shown below is the construction for $n=6$, which generalizes.
+(The left figure shows the cube in 3d;
+the right figure shows a direct view of the three visible faces.)
+\begin{center}
+\begin{asy}
+import three;
+import bsp;
+
+size(8cm);
+settings.prc = false;
+settings.render = 0;
+settings.tex="pdflatex";
+settings.outformat="pdf";
+
+triple O = (9,7,5);
+currentprojection = orthographic(O);
+currentlight = light(gray(2),specular=gray(0.7), specularfactor=3, (7,7,5));
+
+pen finalpen = yellow+2;
+pen meshpenlight = rgb(0.95,0.95,0.99);
+
+int M = 6;
+int s = 0;
+for (int i=0; i<=M; ++i) {
+draw( (s,i,0)--(s,i,M), meshpenlight);
+draw( (s,0,i)--(s,M,i), meshpenlight);
+draw( (i,s,0)--(i,s,M), meshpenlight);
+draw( (0,s,i)--(M,s,i), meshpenlight);
+draw( (i,0,s)--(i,M,s), meshpenlight);
+draw( (0,i,s)--(M,i,s), meshpenlight);
+}
+
+draw(box((0,0,0), (M,M,M)), finalpen);
+
+pen penA = red;
+pen penB = cyan;
+pen penC = green;
+
+draw(shift(0,0,0)*unitcube, penA);
+draw(shift(0,0,1)*unitcube, penA);
+draw(shift(0,0,2)*unitcube, penA);
+draw(shift(0,0,3)*unitcube, penA);
+draw(shift(0,0,4)*unitcube, penA);
+draw(shift(0,0,5)*unitcube, penA);
+
+draw(shift(1,0,0)*unitcube, penB);
+draw(shift(1,1,0)*unitcube, penB);
+draw(shift(1,2,0)*unitcube, penB);
+draw(shift(1,3,0)*unitcube, penB);
+draw(shift(1,4,0)*unitcube, penB);
+draw(shift(1,5,0)*unitcube, penB);
+
+draw(shift(0,1,1)*unitcube, penC);
+draw(shift(1,1,1)*unitcube, penC);
+draw(shift(2,1,1)*unitcube, penC);
+draw(shift(3,1,1)*unitcube, penC);
+draw(shift(4,1,1)*unitcube, penC);
+draw(shift(5,1,1)*unitcube, penC);
+
+draw(shift(2,2,0)*unitcube, penA);
+draw(shift(2,2,1)*unitcube, penA);
+draw(shift(2,2,2)*unitcube, penA);
+draw(shift(2,2,3)*unitcube, penA);
+draw(shift(2,2,4)*unitcube, penA);
+draw(shift(2,2,5)*unitcube, penA);
+
+draw(shift(3,0,2)*unitcube, penB);
+draw(shift(3,1,2)*unitcube, penB);
+draw(shift(3,2,2)*unitcube, penB);
+draw(shift(3,3,2)*unitcube, penB);
+draw(shift(3,4,2)*unitcube, penB);
+draw(shift(3,5,2)*unitcube, penB);
+
+draw(shift(0,3,3)*unitcube, penC);
+draw(shift(1,3,3)*unitcube, penC);
+draw(shift(2,3,3)*unitcube, penC);
+draw(shift(3,3,3)*unitcube, penC);
+draw(shift(4,3,3)*unitcube, penC);
+draw(shift(5,3,3)*unitcube, penC);
+
+draw(shift(4,4,0)*unitcube, penA);
+draw(shift(4,4,1)*unitcube, penA);
+draw(shift(4,4,2)*unitcube, penA);
+draw(shift(4,4,3)*unitcube, penA);
+draw(shift(4,4,4)*unitcube, penA);
+draw(shift(4,4,5)*unitcube, penA);
+
+draw(shift(5,0,4)*unitcube, penB);
+draw(shift(5,1,4)*unitcube, penB);
+draw(shift(5,2,4)*unitcube, penB);
+draw(shift(5,3,4)*unitcube, penB);
+draw(shift(5,4,4)*unitcube, penB);
+draw(shift(5,5,4)*unitcube, penB);
+
+draw(shift(0,5,5)*unitcube, penC);
+draw(shift(1,5,5)*unitcube, penC);
+draw(shift(2,5,5)*unitcube, penC);
+draw(shift(3,5,5)*unitcube, penC);
+draw(shift(4,5,5)*unitcube, penC);
+draw(shift(5,5,5)*unitcube, penC);
+
+pen meshpen = grey;
+int s = M;
+for (int i=1; i<=M-1; ++i) {
+draw( (s,i,0)--(s,i,M), meshpen);
+draw( (s,0,i)--(s,M,i), meshpen);
+draw( (i,s,0)--(i,s,M), meshpen);
+draw( (0,s,i)--(M,s,i), meshpen);
+draw( (i,0,s)--(i,M,s), meshpen);
+draw( (0,i,s)--(M,i,s), meshpen);
+}
+
+draw((M,M,M)--(0,M,M), finalpen);
+draw((M,M,M)--(M,0,M), finalpen);
+draw((M,M,M)--(M,M,0), finalpen);
+\end{asy}
+\quad
+\begin{asy}
+size(8cm);
+picture redface, greenface, blueface;
+
+void draw_grid(picture pic) {
+  for (int i=1; i<6; ++i) {
+    draw(pic, (i,0)--(i,6), grey);
+    draw(pic, (0,i)--(6,i), grey);
+  }
+  draw(pic, scale(6)*unitsquare, yellow+2);
+}
+
+fill(redface, shift(0,5)*unitsquare, red);
+fill(redface, shift(2,3)*unitsquare, red);
+fill(redface, shift(4,1)*unitsquare, red);
+draw_grid(redface);
+
+fill(greenface, shift(5,5)*unitsquare, green);
+fill(greenface, shift(3,3)*unitsquare, green);
+fill(greenface, shift(1,1)*unitsquare, green);
+draw_grid(greenface);
+
+fill(blueface, shift(0,4)*unitsquare, cyan);
+fill(blueface, shift(2,2)*unitsquare, cyan);
+fill(blueface, shift(4,0)*unitsquare, cyan);
+draw_grid(blueface);
+
+add(shift(0,8.5)*shift(3,3)*rotate(-45)*shift(-3,-3)*redface);
+add(shift(-4,0)*greenface);
+add(shift( 4,0)*blueface);
+label("Left face", (-1,0), dir(-90));
+label("Right face", (7,0), dir(-90));
+label("Top face", (3,16), dir(90));
+\end{asy}
+\end{center}
+To be explicit,
+impose coordinate axes such that one corner of the cube is the origin.
+We specify a beam by two opposite corners.
+The $3n/2$ beams come in three directions, $n/2$ in each direction:
+\begin{itemize}
+  \ii $(0,0,0) \to (1,1,n)$, $(2,2,0) \to (3,3,n)$, $(4,4,0) \to (5,5,n)$, and so on;
+  \ii $(1,0,0) \to (2,n,1)$, $(3,0,2) \to (4,n,3)$, $(5,0,4) \to (6,n,5)$, and so on;
+  \ii $(0,1,1) \to (n,2,2)$, $(0,3,3) \to (n,4,4)$, $(0,5,5) \to (n,6,6)$, and so on.
+\end{itemize}
+This gives the figure we drew earlier and shows $3030$ beams is possible.
+
+\bigskip
+
+\textbf{Necessity}:
+We now show at least $3n/2$ beams are necessary.
+Maintain coordinates,
+and call the beams $x$-beams, $y$-beams, $z$-beams
+according to which plane their long edges are perpendicular too.
+Let $N_x$, $N_y$, $N_z$ be the number of these.
+
+\begin{claim*}
+  If $\min(N_x, N_y, N_z) = 0$, then at least $n^2$ beams are needed.
+\end{claim*}
+\begin{proof}
+  Assume WLOG that $N_z = 0$.
+  Orient the cube so the $z$-plane touches the ground.
+  Then each of the $n$ layers of the cube (from top to bottom)
+  must be completely filled, and so at least $n^2$ beams are necessary,
+\end{proof}
+
+We henceforth assume $\min(N_x, N_y, N_z) > 0$.
+
+\begin{claim*}
+  If $N_z > 0$, then we have $N_x + N_y \ge n$.
+\end{claim*}
+\begin{proof}
+  Again orient the cube so the $z$-plane touches the ground.
+  We see that for each of the $n$ layers of the cube (from top to bottom),
+  there is at least one $x$-beam or $y$-beam.
+  (Pictorially, some of the $x$ and $y$ beams form a ``staircase''.)
+  This completes the proof.
+\end{proof}
+Proceeding in a similar fashion, we arrive at the three relations
+\begin{align*}
+  N_x + N_y &\ge n \\
+  N_y + N_z &\ge n \\
+  N_z + N_x &\ge n.
+\end{align*}
+Summing gives $N_x  + N_y + N_z \ge 3n/2$ too.
+
+\begin{remark*}
+  The problem condition has the following ``physics'' interpretation.
+  Imagine the cube is a metal box which is sturdy enough that
+  all beams must remain orthogonal to the faces of the box
+  (i.e.\ the beams cannot spin).
+  Then the condition of the problem is exactly what is needed so that,
+  if the box is shaken or rotated, the beams will not move.
+\end{remark*}
+
+\begin{remark*}
+  Walter Stromquist points out that the number of constructions
+  with $3030$ beams is actually enormous:
+  not dividing out by isometries,
+  the number is $(2 \cdot 1010!)^3$.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2020/3, proposed by Richard Stong, Toni Bluher}
+\textsl{Available online at \url{https://aops.com/community/p15952782}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $p$ be an odd prime.
+An integer $x$ is called a \emph{quadratic non-residue}
+if $p$ does not divide $x-t^2$ for any integer $t$.
+
+Denote by $A$ the set of all integers $a$
+such that $1 \le a < p$,
+and both $a$ and $4-a$ are quadratic non-residues.
+Calculate the remainder
+when the product of the elements of $A$ is divided by $p$.
+\end{mdframed}
+The answer is that $\prod_{a \in A} a \equiv 2 \pmod p$
+regardless of the value of $p$.
+In the following solution,
+we work in $\FF_p$ always
+and abbreviate ``quadratic residue'' and ``non-quadratic residue''
+to ``QR'' and ``non-QR'', respectively.
+
+We define
+\begin{align*}
+  A &= \left\{ a \in \FF_p \mid a, 4-a \text{ non-QR} \right\} \\
+  B &= \left\{ b \in \FF_p \mid b, 4-b \text{ QR}, b \neq 0, b \neq 4 \right\}.
+\end{align*}
+Notice that
+\[ A \cup B = \left\{ n \in \FF_p \mid
+    n(4-n) \text{ is QR} \;
+    n \neq 0, 4 \right\}. \]
+We now present two approaches both based on the set $B$.
+
+\paragraph{First approach (based on Holden Mui's presentation in Mathematics Magazine).}
+The idea behind this approach is that $n(4-n)$
+is itself an element of $B$ for $n \in A \cup B$,
+because $4 - n(4-n) = (n-2)^2$.
+This motivates the following claim.
+\begin{claim*}
+  The map
+  \[ A \cup B \setminus \{2\} \to B
+    \qquad \text{by}\quad n \mapsto n(4-n) \]
+  is a well-defined two-to-one map,
+  i.e.\ every $b \in B$ has exactly two pre-images.
+\end{claim*}
+\begin{proof}
+  Since $n \notin \{0,2,4\}$,
+  we have $n(4-n) \notin \{0,4\}$,
+  so as discussed previously, $n(4-n) \in B$.
+  Thus this map is well-defined.
+
+  Choose $b \in B$.
+  The quadratic equation $n(4-n) = b$ in $n$
+  rewrites as $n^2-4n+b=0$,
+  and has discriminant $4(4-b)$,
+  which is a nonzero QR.
+  Hence there are exactly two values of $n$, as desired.
+\end{proof}
+Therefore, it follows that
+\[ \prod_{n \in A \cup B \setminus \{2\}} n
+  = \prod_{b \in B} b \]
+by pairing $n$ with $4-n$ on the left-hand side.
+So, $\prod_{a \in A} a = 2$.
+
+\paragraph{Second calculation approach (along the lines of official solution).}
+We now do the following magical calculation in $\FF_p$:
+\begin{align*}
+  \prod_{b \in B} b
+  = \prod_{b \in B} (4-b)
+  &= \prod_{\substack{1 \le y \le (p-1)/2 \\ y \neq 2 \\ 4-y^2 \text{ is QR}}} (4-y^2) \\
+  &= \prod_{\substack{1 \le y \le (p-1)/2 \\ y \neq 2 \\ 4-y^2 \text{ is QR}}} (2+y)
+  \prod_{\substack{1 \le y \le (p-1)/2 \\ y \neq 2 \\ 4-y^2 \text{ is QR}}} (2-y) \\
+  &= \prod_{\substack{1 \le y \le (p-1)/2 \\ y \neq 2 \\ 4-y^2 \text{ is QR}}} (2+y)
+  \prod_{\substack{(p+1)/2 \le y \le p-1 \\ y \neq p-2 \\ 4-y^2 \text{ is QR}}} (2+y) \\
+  &= \prod_{\substack{1 \le y \le p-1 \\ y \neq 2, p-2 \\ 4-y^2 \text{ is QR}}} (2+y) \\
+  &= \prod_{\substack{3 \le z \le p+1 \\ z \neq 4,p \\ z(4-z) \text{ is QR}}} z \\
+  &= \prod_{\substack{0 \le z \le p-1 \\ z \neq 0,4,2 \\ z(4-z) \text{ is QR}}} z.
+\end{align*}
+Note $z(4-z)$ is a nonzero QR if and only if $z \in A \cup B$.
+So the right-hand side is almost the product over $z \in A \cup B$,
+except it is missing the $z=2$ term.
+Adding it in gives
+\[ \prod_{b \in B} b
+  = \half \prod_{\substack{0 \le z \le p-1 \\ z \neq 0,4 \\ z(4-z) \text{ is QR}}} z
+  = \half \prod_{a \in A} a \prod_{b \in B} b.  \]
+This gives $\prod_{a \in A} a = 2$ as desired.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2020/4, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p15952792}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Suppose that $(a_1, b_1)$, $(a_2, b_2)$, \dots, $(a_{100}, b_{100})$
+are distinct ordered pairs of nonnegative integers.
+Let $N$ denote the number of pairs of integers $(i,j)$ satisfying
+$1 \le i < j \le 100$ and $\left\lvert a_ib_j - a_jb_i \right\rvert = 1$.
+Determine the largest possible value of $N$
+over all possible choices of the $100$ ordered pairs.
+\end{mdframed}
+The answer is $197$.
+In general, if $100$ is replaced by $n \ge 2$ the answer is $2n-3$.
+
+The idea is that if we let $P_i = (a_i, b_i)$ be a point
+in the coordinate plane, and let $O = (0,0)$
+then we wish to maximize the number of triangles
+$\triangle O P_i P_j$ which have area $1/2$.
+Call such a triangle \emph{good}.
+
+\medskip
+
+\textbf{Construction of $197$ points}:
+It suffices to use the points
+$(1,0)$, $(1,1)$, $(2,1)$, $(3,1)$, \dots, $(99,1)$ as shown.
+Notice that:
+\begin{itemize}
+  \ii There are $98$ good triangles
+  with vertices $(0,0)$, $(k,1)$ and $(k+1,1)$ for $k=1, \dots, 98$.
+
+  \ii There are $99$ good triangles
+  with vertices $(0,0)$, $(1,0)$ and $(k,1)$ for $k=1, \dots, 99$.
+\end{itemize}
+This is a total of $98 + 99 = 197$ triangles.
+\begin{center}
+\begin{asy}
+  draw( (6,0)--(0,0)--(0,2), grey, Arrows );
+  dot("$O$", (0,0), dir(225), red );
+  dot("$(1,0)$", (1,0), dir(-90), blue);
+  dot("$(1,1)$", (1,1), dir(90), blue);
+  dot("$(2,1)$", (2,1), dir(90), blue);
+  dot("$(3,1)$", (3,1), dir(90), blue);
+  dot("$(4,1)$", (4,1), dir(90), blue);
+  label("$\dotsb$", (5,1), blue);
+\end{asy}
+\end{center}
+
+\medskip
+
+\textbf{Proof that $197$ points is optimal}:
+We proceed by induction on $n$ to show the bound of $2n-3$.
+The base case $n=2$ is evident.
+
+For the inductive step,
+suppose (without loss of generality) that the point $P = P_n = (a,b)$
+is the farthest away from the point $O$ among all points.
+\begin{claim*}
+  This farthest point $P = P_n$ is part of at most two good triangles.
+\end{claim*}
+\begin{proof}
+  We must have $\gcd(a,b) = 1$ for $P$ to be in any good triangles at all,
+  since otherwise any divisor of $\gcd(a,b)$ also divides $2[OPQ]$.
+  Now, we consider the locus of all points $Q$ for which $[OPQ] = 1/2$.
+  It consists of two parallel lines passing with slope $OP$, as shown.
+  \begin{center}
+  \begin{asy}
+    size(10cm);
+    int M = 6;
+    pair P = (3,2);
+    pair O = (0,0);
+    draw(O--P, blue);
+    draw(arc(O,abs(P),0,90), deepcyan);
+    for (int i=-M#2; i<=M; ++i) {
+      draw( (-M#2,i)--(M,i), grey);
+      draw( (i,-M#2)--(i,M), grey);
+    }
+    draw( (-M#2,0)--(M,0), black+1.4, Arrows(TeXHead) );
+    draw( (0,-M#2)--(0,M), black+1.4, Arrows(TeXHead) );
+
+    pair X = (1,1);
+    pair Y = O+P-X;
+    dot("$(u,v)$", X, dir(135), red);
+    dot("$(u',v')$", Y, dir(-45), red);
+
+    pair X1 = X+P;
+    pair X2 = X-P;
+    draw(X1--X2, red+dashed, Arrows);
+
+    pair Y1 = Y+P;
+    pair Y2 = Y-P;
+    draw(Y1--Y2, red+dashed, Arrows);
+
+    dot("$O$", O, dir(225), blue);
+    dot("$P=(a,b)$", P, dir(30), blue);
+  \end{asy}
+  \end{center}
+  Since $\gcd(a,b)=1$, see that only two lattice points on this locus
+  actually lie inside the quarter-circle centered at $O$ with radius $OP$.
+  Indeed if one of the points is $(u,v)$
+  then the others on the line are $(u \pm a, v \pm b)$ where the signs match.
+  This proves the claim.
+\end{proof}
+This claim allows us to complete the induction by simply deleting $P_n$.
+\pagebreak
+
+\subsection{USAMO 2020/5, proposed by Carl Schildkraut}
+\textsl{Available online at \url{https://aops.com/community/p15952824}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A finite set $S$ of points in the coordinate plane
+is called \emph{overdetermined} if $|S| \ge 2$
+and there exists a nonzero polynomial $P(t)$,
+with real coefficients and of degree at most $|S|-2$,
+satisfying $P(x)=y$ for every point $(x,y) \in S$.
+
+For each integer $n \ge 2$,
+find the largest integer $k$ (in terms of $n$) such that
+there exists a set of $n$ distinct points
+that is \emph{not} overdetermined,
+but has $k$ overdetermined subsets.
+\end{mdframed}
+We claim the answer is $k = 2^{n-1}-n$.
+We denote the $n$ points by $A$.
+
+Throughout the solution we will repeatedly use the following fact:
+\begin{lemma*}
+  If $S$ is a finite set of points in the plane
+  there is at most one polynomial with real coefficients
+  and of degree at most $|S|-1$
+  whose graph passes through all points of $S$.
+\end{lemma*}
+\begin{proof}
+  If any two of the points have the same $x$-coordinate
+  then obviously no such polynomial may exist at all.
+
+  Otherwise, suppose $f$ and $g$ are two such polynomials.
+  Then $f-g$ has degree at most $|S|-1$,
+  but it has $|S|$ roots, so is the zero polynomial.
+\end{proof}
+\begin{remark*}
+  Actually Lagrange interpolation implies
+  that such a polynomial exists
+  as long as all the $x$-coordinates are different!
+\end{remark*}
+
+\medskip
+
+\textbf{Construction}:
+Consider the set $A = \left\{ (1,a), (2,b), (3,b), (4,b), \dots, (n,b) \right\}$,
+where $a$ and $b$ are two distinct nonzero real numbers.
+Any subset of the latter $n-1$ points with at least one element
+is overdetermined, and there are $2^{n-1}-n$ such sets.
+
+\medskip
+
+\textbf{Bound}:
+Say a subset $S$ of $A$ is \emph{flooded}
+if it is not overdetermined.
+For brevity, an \emph{$m$-set}
+refers simply to a subset of $A$ with $m$ elements.
+
+\begin{claim*}
+  If $S$ is an flooded $m$-set for $m \ge 3$,
+  then at most one $(m-1)$-subset of $S$ is not flooded.
+\end{claim*}
+\begin{proof}
+  Let $S = \left\{ p_1, \dots, p_m \right\}$ be flooded.
+  Assume for contradiction that $S - \{p_i\}$
+  and $S - \{p_j\}$ are both overdetermined.
+  Then we can find polynomials $f$ and $g$ of degree at most $m-3$
+  passing through $S - \{p_i\}$ and $S - \{p_j\}$, respectively.
+
+  Since $f$ and $g$ agree on $S - \{p_i, p_j\}$,
+  which has $m-2$ elements, by the lemma we have $f = g$.
+  Thus this common polynomial (actually of degree at most $m-3$)
+  witnesses that $S$ is overdetermined,
+  which is a contradiction.
+\end{proof}
+
+\begin{claim*}
+  For all $m = 2, 3, \dots, n$ there are at least $\binom{n-1}{m-1}$
+  flooded $m$-sets of $A$.
+\end{claim*}
+\begin{proof}
+  The proof is by downwards induction on $m$.
+  The base case $m = n$ is by assumption.
+
+  For the inductive step, suppose it's true for $m$.
+  Each of the $\binom{n-1}{m-1}$ flooded $m$-sets
+  has at least $m-1$ flooded $(m-1)$-subsets.
+  Meanwhile, each $(m-1)$-set has exactly $n-(m-1)$ parent $m$-sets.
+  We conclude the number of flooded sets of size $m-1$ is at least
+  \[ \frac{m-1}{n-(m-1)} \binom{n-1}{m-1} = \binom{n-1}{m-2} \]
+  as desired.
+\end{proof}
+
+This final claim completes the proof,
+since it shows there are at most
+\[ \sum_{m=2}^n \left( \binom nm - \binom{n-1}{m-1} \right)
+  = 2^{n-1} - n \]
+overdetermined sets, as desired.
+
+\begin{remark*}
+  [On repeated $x$-coordinates]
+  Suppose $A$ has two points $p$ and $q$ with repeated $x$-coordinates.
+  We can argue directly that $A$ satisfies the bound.
+  Indeed, any overdetermined set contains at most one of $p$ and $q$.
+  Moreover, given $S \subseteq A - \{p,q\}$,
+  if $S \cup \{p\}$ is overdetermined
+  then $S \cup \{q\}$ is not, and vice-versa.
+  (Recall that overdetermined sets always
+  have distinct $x$-coordinates.)
+  This gives a bound $\left[ 2^{n-2}-(n-2)-1 \right]
+  + \left[ 2^{n-2}-1 \right] = 2^{n-1}-n$ already.
+\end{remark*}
+
+\begin{remark*}
+  [Alex Zhai]
+  An alternative approach to the double-counting
+  argument is to show that any overdetermined $m$-set
+  has an flooded $m$-superset.
+  Together with the first claim,
+  this lets us pair overdetermined sets in a way
+  that implies the bound.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2020/6, proposed by David Speyer, Kiran Kedlaya}
+\textsl{Available online at \url{https://aops.com/community/p15953303}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n \geq 2$ be an integer.
+Let $x_1 \ge x_2 \ge \dots \ge x_n$
+and $y_1 \ge y_2 \ge \dots \ge y_n$ be $2n$ real numbers
+such that
+\begin{align*}
+  0 &= x_1 + x_2 + \dots + x_n = y_1 + y_2 + \dots + y_n, \\
+  \text{and}\quad
+  1 &= x_1^2 + x_2^2 + \dots + x_n^2 = y_1^2 + y_2^2 + \dots + y_n^2.
+\end{align*}
+Prove that
+\[ \sum_{i=1}^n (x_i y_i - x_i y_{n+1-i})
+  \geq \frac{2}{\sqrt{n-1}}.  \]
+\end{mdframed}
+We present two approaches.
+In both approaches, it's helpful motivation that
+for even $n$, equality occurs at
+\begin{align*}
+  (x_i) &= \Big(
+    \underbrace{\frac{1}{\sqrt n}, \dots, \frac{1}{\sqrt n}}_{n/2},
+    \underbrace{-\frac{1}{\sqrt n}, \dots, -\frac{1}{\sqrt n}}_{n/2} \Big) \\
+  (y_i) &= \Big( \frac{n-1}{\sqrt{n(n-1)}},
+      \underbrace{- \frac{1}{\sqrt{n(n-1)}},
+      \dots,
+      - \frac{1}{\sqrt{n(n-1)}}}_{n-1} \Big)
+\end{align*}
+
+\paragraph{First approach (expected value).}
+For a permutation $\sigma$ on $\{1, 2, \dots, n\}$ we define
+\[ S_\sigma = \sum_{i=1}^n x_i y_{\sigma(i)}. \]
+
+\begin{claim*}
+  For random permutations $\sigma$,
+  $\mathbb E[S_\sigma] = 0$
+  and $\mathbb E[S_\sigma^2] = \frac{1}{n-1}$.
+\end{claim*}
+\begin{proof}
+  The first one is clear.
+
+  Since $\sum_{i < j} 2x_i x_j = -1$,
+  it follows that (for fixed $i$ and $j$),
+  $\mathbb E[y_{\sigma(i)} y_{\sigma(j)}] = -\frac{1}{n(n-1)}$,
+  Thus
+  \begin{align*}
+    \sum_{i} x_i^2 \cdot \mathbb E \left[ y_{\sigma(i)}^2 \right]
+      &= \frac 1n \\
+    2\sum_{i < j} x_i x_j \cdot \mathbb E \left[
+      y_{\sigma(i)} y_{\sigma(j)}
+      \right] &= (-1) \cdot \frac{1}{n(n-1)}
+  \end{align*}
+  the conclusion follows.
+\end{proof}
+
+%\begin{claim*}
+%  For two independent random permutations $\sigma$ and $\tau$,
+%  \[ \mathbb E \left[ \left( S_\sigma - S_\tau \right)^2
+%    \right] = \frac{2}{n-1}.  \]
+%\end{claim*}
+%\begin{proof}
+%  Since
+%  \[ \mathbb E[S_\sigma S_\tau]
+%    = \sum_i \sum_{i'} x_i x_{i'}
+%      \mathbb E \left[ y_{\sigma(i)} \right]
+%      \mathbb E \left[ y_{\tau(i')} \right] = 0 \]
+%  the conclusion follows.
+%\end{proof}
+
+\begin{claim*}
+  [A random variable in {$[0,1]$} has variance at most $1/4$]
+  If $A$ is a random variable with mean $\mu$
+  taking values in the closed interval $[m, M]$ then
+  \[ \mathbb E[(A-\mu)^2] \le \frac14 (M-m)^2. \]
+\end{claim*}
+\begin{proof}
+  By shifting and scaling, we may assume $m = 0$ and $M = 1$,
+  so $A \in [0,1]$ and hence $A^2 \le A$.
+  Then
+  \[
+    \mathbb E[(A-\mu)^2]
+    = \mathbb E[A^2] - \mu^2
+    \le \mathbb E[A] - \mu^2 = \mu-\mu^2 \le \frac14.
+  \]
+  This concludes the proof.
+\end{proof}
+Thus the previous two claims together give
+\[ \max_\sigma S_\sigma - \min_\sigma S_\sigma
+  \ge \sqrt{\frac{4}{n-1}} = \frac{2}{\sqrt{n-1}}.
+\]
+But $\sum_i x_i y_i = \max_\sigma S_\sigma$
+and $\sum_i x_i y_{n+1-i} = \min_\sigma S_\sigma$
+by rearrangement inequality
+and therefore we are done.
+
+\paragraph{Outline of second approach (by convexity, due to Alex Zhai).}
+We will instead prove a converse result: given the hypotheses
+\begin{itemize}
+  \ii $x_1 \ge \dots \ge x_n$
+  \ii $y_1 \ge \dots \ge y_n$
+  \ii $\sum_i x_i = \sum_i y_i = 0$
+  \ii $\sum_i x_i y_i - \sum_i x_i y_{n+1-i} = \frac{2}{\sqrt{n-1}}$
+\end{itemize}
+we will prove that $\sum x_i^2 \sum y_i^2 \le 1$.
+
+Fix the choice of $y$'s.
+We see that we are trying to maximize a convex function in $n$
+variables $(x_1, \dots, x_n)$ over a convex domain
+(actually the intersection of two planes with several half planes).
+So a maximum can only happen at the boundaries:
+when at most two of the $x$'s are different.
+
+An analogous argument applies to $y$.
+In this way we find that it suffices to consider situations
+where $x_\bullet$ takes on at most two different values.
+The same argument applies to $y_\bullet$.
+
+At this point the problem can be checked directly.
+\pagebreak
+
+
+\end{document}

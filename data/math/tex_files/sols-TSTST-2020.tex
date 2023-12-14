@@ -1,0 +1,1213 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{USA TSTST 2020 Solutions}
+\subtitle{United States of America --- TST Selection Test}
+\author{Ankan Bhattacharya and Evan Chen}
+\date{62\ts{nd} IMO 2021 Russia and 10\ts{th} EGMO 2021 Georgia}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $a$, $b$, $c$ be fixed positive integers.
+There are $a+b+c$ ducks sitting in a circle, one behind the other.
+Each duck picks either \emph{rock}, \emph{paper}, or \emph{scissors},
+with $a$ ducks picking rock, $b$ ducks picking paper,
+and $c$ ducks picking scissors.
+
+A \emph{move} consists of an operation of one of the following three forms:
+\begin{itemize}
+  \ii If a duck picking rock sits behind a duck
+  picking scissors, they switch places.
+  \ii If a duck picking paper sits behind a duck
+  picking rock, they switch places.
+  \ii If a duck picking scissors sits behind a duck
+  picking paper, they switch places.
+\end{itemize}
+Determine, in terms of $a$, $b$, and $c$,
+the maximum number of moves which could take place,
+over all possible initial configurations.
+
+\item %% Problem 2
+Let $ABC$ be a scalene triangle with incenter $I$.
+The incircle of $ABC$ touches $\ol{BC}$, $\ol{CA}$, $\ol{AB}$
+at points $D$, $E$, $F$, respectively.
+Let $P$ be the foot of the altitude from $D$ to $\ol{EF}$,
+and let $M$ be the midpoint of $\ol{BC}$.
+The rays $AP$ and $IP$ intersect the circumcircle
+of triangle $ABC$ again at points $G$ and $Q$, respectively.
+Show that the incenter of triangle $GQM$ coincides with $D$.
+
+\item %% Problem 3
+We say a nondegenerate triangle whose angles have
+measures $\theta_1$, $\theta_2$, $\theta_3$ is \emph{quirky}
+if there exists integers $r_1$, $r_2$, $r_3$, not all zero,
+such that \[ r_1 \theta_1 + r_2 \theta_2 + r_3 \theta_3 = 0. \]
+Find all integers $n \ge 3$ for which a triangle with
+side lengths $n-1$, $n$, $n+1$ is quirky.
+
+\item %% Problem 4
+Find all pairs of positive integers $(a, b)$ satisfying
+the following conditions:
+\begin{enumerate}[(i)]
+  \ii $a$ divides $b^4+1$,
+  \ii $b$ divides $a^4+1$,
+  \ii $\lfloor \sqrt{a} \rfloor = \lfloor \sqrt{b} \rfloor$.
+\end{enumerate}
+
+\item %% Problem 5
+Let $\NN^2$ denote the set of ordered pairs of positive integers.
+A finite subset $S$ of $\NN^2$ is \emph{stable}
+if whenever $(x,y)$ is in $S$,
+then so are all points $(x',y')$ of $\NN^2$
+with both $x' \leq x$ and $y' \leq y$.
+
+Prove that if $S$ is a stable set,
+then among all stable subsets of $S$
+(including the empty set and $S$ itself),
+at least half of them have an even number of elements.
+
+\item %% Problem 6
+Let $A$, $B$, $C$, $D$ be four points
+such that no three are collinear
+and $D$ is not the orthocenter of triangle $ABC$.
+Let $P$, $Q$, $R$ be the orthocenters of
+$\triangle BCD$, $\triangle CAD$, $\triangle ABD$, respectively.
+Suppose that lines $AP$, $BQ$, $CR$ are pairwise distinct
+and are concurrent.
+Show that the four points $A$, $B$, $C$, $D$ lie on a circle.
+
+\item %% Problem 7
+Find all nonconstant polynomials $P(z)$ with complex coefficients
+for which all complex roots of the polynomials
+$P(z)$ and $P(z)-1$ have absolute value $1$.
+
+\item %% Problem 8
+For every positive integer $N$,
+let $\sigma(N)$ denote the sum of the positive integer divisors of $N$.
+Find all integers $m \ge n \ge 2$ satisfying
+\[ \frac{\sigma(m)-1}{m-1}
+  = \frac{\sigma(n)-1}{n-1} = \frac{\sigma(mn)-1}{mn-1}.  \]
+
+\item %% Problem 9
+Ten million fireflies are glowing in $\RR^3$ at midnight.
+Some of the fireflies are friends, and friendship is always mutual.
+Every second, one firefly moves to a new position
+so that its distance from each one of its friends is the same
+as it was before moving.
+This is the only way that the fireflies ever change their positions.
+No two fireflies may ever occupy the same point.
+
+Initially, no two fireflies, friends or not, are more than a meter away.
+Following some finite number of seconds,
+all fireflies find themselves at least ten million meters
+away from their original positions.
+Given this information,
+find the greatest possible number of friendships between the fireflies.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{TSTST 2020/1, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p18933796}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$, $b$, $c$ be fixed positive integers.
+There are $a+b+c$ ducks sitting in a circle, one behind the other.
+Each duck picks either \emph{rock}, \emph{paper}, or \emph{scissors},
+with $a$ ducks picking rock, $b$ ducks picking paper,
+and $c$ ducks picking scissors.
+
+A \emph{move} consists of an operation of one of the following three forms:
+\begin{itemize}
+  \ii If a duck picking rock sits behind a duck
+  picking scissors, they switch places.
+  \ii If a duck picking paper sits behind a duck
+  picking rock, they switch places.
+  \ii If a duck picking scissors sits behind a duck
+  picking paper, they switch places.
+\end{itemize}
+Determine, in terms of $a$, $b$, and $c$,
+the maximum number of moves which could take place,
+over all possible initial configurations.
+\end{mdframed}
+The maximum possible number of moves is $\max(ab, ac, bc)$.
+
+First, we prove this is best possible.
+We define a \emph{feisty triplet} to be an unordered triple of ducks,
+one of each of rock, paper, scissors,
+such that the paper duck is between the rock and scissors duck
+and facing the rock duck, as shown.
+(There may be other ducks not pictured, but the orders are irrelevant.)
+\begin{center}
+\begin{asy}
+size(11cm);
+picture duck;
+pen duckborder = black+1.2;
+
+picture leg;
+draw(leg, (0.5*dir(-70))--(1.6*dir(-70)), duckborder);
+draw(leg, (1.3*dir(-70))--(1.3*dir(-70)+0.3*dir(-95)), duckborder);
+draw(leg, (1.3*dir(-70))--(1.3*dir(-70)+0.3*dir(-50)), duckborder);
+add(duck, leg);
+add(duck, reflect(dir(-90), dir(90))*leg);
+filldraw(duck, (1,0)--(-1,0)..(0,-1)..cycle, rgb("a67b5b"), duckborder); // body of duck
+draw(duck, (0.1,-0.4)..(-0.2,-0.35)..(-0.6,-0.2), duckborder); // part of wing
+draw(duck, (0.1,-0.8)..(-0.2,-0.7)..(-0.6,-0.2), duckborder); // part of wing
+filldraw(duck, (1.2,0.3)--(1.2,0)--(1.7,0.15)--cycle, yellow, duckborder); // beak of duck
+filldraw(duck, circle((0.7,0.3), 0.6), rgb("b9d3a4"), duckborder); // duck head
+fill(duck, ellipse((1.05,0.45), 0.08, 0.12), black);
+fill(duck, ellipse((1.07,0.49), 0.02, 0.03), white);
+draw(duck, (1.6,0.5)--(1.8,0.7)..(2.0,0.75)..(2.4,1.2)..(1.8,1.5)..(1.2,1.2)..(1.6,0.7)--cycle );
+label(duck, "\textsf{quack}", (1.8,1.1), fontsize(9pt));
+
+draw(scale(4)*unitcircle, blue+2);
+pen labelpen = red + fontsize(16pt);
+
+add(shift(5*dir(90))*duck);
+label("Rock", 3*dir(90), labelpen);
+add(rotate(120)*shift(5*dir(90))*duck);
+label("Paper", 3*dir(210), labelpen);
+add(rotate(240)*shift(5*dir(90))*duck);
+label("Scissors", 3*dir(330), labelpen);
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  The number of feisty triplets decreases
+  by $c$ if a paper duck swaps places with a rock duck, and so on.
+\end{claim*}
+\begin{proof}
+  Clear.
+\end{proof}
+Obviously the number of feisty triples is at most $abc$ to start.
+Thus at most $\max(ab,bc,ca)$ moves may occur,
+since the number of feisty triplets should always be nonnegative,
+at which point no moves are possible at all.
+
+To see that this many moves is possible,
+assume WLOG $a = \min(a, b, c)$
+and suppose we have $a$ rocks, $b$ papers, and $c$ scissors
+in that clockwise order.
+\begin{center}
+\begin{asy}
+size(11cm);
+picture duck;
+pen duckborder = black+1.2;
+
+picture leg;
+draw(leg, (0.5*dir(-70))--(1.6*dir(-70)), duckborder);
+draw(leg, (1.3*dir(-70))--(1.3*dir(-70)+0.3*dir(-95)), duckborder);
+draw(leg, (1.3*dir(-70))--(1.3*dir(-70)+0.3*dir(-50)), duckborder);
+add(duck, leg);
+add(duck, reflect(dir(-90), dir(90))*leg);
+filldraw(duck, (1,0)--(-1,0)..(0,-1)..cycle, rgb("a67b5b"), duckborder); // body of duck
+draw(duck, (0.1,-0.4)..(-0.2,-0.35)..(-0.6,-0.2), duckborder); // part of wing
+draw(duck, (0.1,-0.8)..(-0.2,-0.7)..(-0.6,-0.2), duckborder); // part of wing
+filldraw(duck, (1.2,0.3)--(1.2,0)--(1.7,0.15)--cycle, yellow, duckborder); // beak of duck
+filldraw(duck, circle((0.7,0.3), 0.6), rgb("b9d3a4"), duckborder); // duck head
+fill(duck, ellipse((1.05,0.45), 0.08, 0.12), black);
+fill(duck, ellipse((1.07,0.49), 0.02, 0.03), white);
+draw(duck, (1.6,0.5)--(1.8,0.7)..(2.0,0.75)..(2.4,1.2)..(1.8,1.5)..(1.2,1.2)..(1.6,0.7)--cycle );
+label(duck, "\textsf{quack}", (1.8,1.1), fontsize(9pt));
+
+draw(scale(4)*unitcircle, blue+2);
+pen labelpen = red + fontsize(16pt);
+
+add(rotate(-10)*shift(5*dir(90))*duck);
+add(rotate(10)*shift(5*dir(90))*duck);
+label("Rocks", 3*dir(90), labelpen);
+
+add(rotate(100)*shift(5*dir(90))*duck);
+add(rotate(120)*shift(5*dir(90))*duck);
+add(rotate(140)*shift(5*dir(90))*duck);
+label("Papers", 3*dir(210), labelpen);
+
+add(rotate(200)*shift(5*dir(90))*duck);
+add(rotate(220)*shift(5*dir(90))*duck);
+add(rotate(240)*shift(5*dir(90))*duck);
+add(rotate(260)*shift(5*dir(90))*duck);
+label("Scissors", 3*dir(330), labelpen);
+\end{asy}
+\end{center}
+Then, allow the scissors to filter through the papers
+while the rocks stay put.
+Each of the $b$ papers swaps with $c$ scissors,
+for a total of $bc = \max(ab, ac, bc)$ swaps.
+
+\begin{remark*}
+  [Common errors]
+  One small possible mistake:
+  it is not quite k\"{o}sher to say that ``WLOG $a \le b \le c$''
+  because the condition is not symmetric, only cyclic.
+  Therefore in this solution we only assume $a = \min(a,b,c)$.
+
+  It is true here that every pair of ducks swaps at most once,
+  and some solutions make use of this fact.
+  However, this fact implicitly uses the fact that $a,b,c > 0$
+  and is false without this hypothesis.
+\end{remark*}
+\pagebreak
+
+\subsection{TSTST 2020/2, proposed by Zack Chroman, Daniel Liu}
+\textsl{Available online at \url{https://aops.com/community/p18933557}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a scalene triangle with incenter $I$.
+The incircle of $ABC$ touches $\ol{BC}$, $\ol{CA}$, $\ol{AB}$
+at points $D$, $E$, $F$, respectively.
+Let $P$ be the foot of the altitude from $D$ to $\ol{EF}$,
+and let $M$ be the midpoint of $\ol{BC}$.
+The rays $AP$ and $IP$ intersect the circumcircle
+of triangle $ABC$ again at points $G$ and $Q$, respectively.
+Show that the incenter of triangle $GQM$ coincides with $D$.
+\end{mdframed}
+Refer to the figure below.
+\begin{center}
+\begin{asy}
+pair A = dir(130);
+pair B = dir(210);
+pair C = dir(330);
+pair I = incenter(A, B, C);
+pair D = foot(I, B, C);
+pair E = foot(I, C, A);
+pair F = foot(I, A, B);
+pair P = foot(D, E, F);
+pair Y = dir(270);
+pair Q = extension(Y, D, I, P);
+draw(A--B--C--cycle, lightblue);
+pair T = extension(E, F, B, C);
+filldraw(unitcircle, opacity(0.1)+lightcyan, blue);
+draw(D--E--F--cycle, blue);
+draw(circumcircle(A, E, F), deepgreen);
+pair M = midpoint(B--C);
+pair X = dir(90);
+pair G = extension(T, Y, X, D);
+draw(A--G, dotted);
+draw(D--P, deepgreen);
+// Q--Y red
+// G--X red
+// circumcircle Q P T 0.1 lightred / orange
+// F--T--B lightblue
+// X--Y dotted blue
+filldraw(G--Q--M--cycle, opacity(0.1)+lightred, red);
+draw(I--Q, deepgreen);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$I$", I, dir(270));
+dot("$D$", D, dir(315));
+dot("$E$", E, dir(20));
+dot("$F$", F, dir(200));
+dot("$P$", P, dir(60));
+dot("$Q$", Q, dir(140));
+dot("$M$", M, dir(300));
+dot("$G$", G, dir(G));
+
+/* TSQ Source:
+
+A = dir 130
+B = dir 210
+C = dir 330
+I = incenter A B C R270
+D = foot I B C R315
+E = foot I C A R20
+F = foot I A B R200
+P = foot D E F R60
+Y := dir 270
+Q = extension Y D I P R140
+A--B--C--cycle lightblue
+T := extension E F B C
+unitcircle 0.1 lightcyan / blue
+D--E--F--cycle blue
+circumcircle A E F deepgreen
+M = midpoint B--C R300
+X := dir 90
+G = extension T Y X D
+A--G dotted
+D--P deepgreen
+// Q--Y red
+// G--X red
+// circumcircle Q P T 0.1 lightred / orange
+// F--T--B lightblue
+// X--Y dotted blue
+G--Q--M--cycle 0.1 lightred / red
+I--Q deepgreen
+
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  The point $Q$ is the Miquel point of $BFEC$.
+  Also, $\ol{QD}$ bisects $\angle BQC$.
+\end{claim*}
+\begin{proof}
+  Inversion around the incircle maps line $EF$ to $(AIEF)$
+  and the nine-point circle of $\triangle DEF$
+  to the circumcircle of $\triangle ABC$
+  (as the midpoint of $\ol{EF}$ maps to $A$, etc.).
+  This implies $P$ maps to $Q$; that is, $Q$ coincides with
+  the second intersection of $(AFIE)$ with $(ABC)$.
+  This is the claimed Miquel point.
+
+  The spiral similarity mentioned then gives
+  $\frac{QB}{BF} = \frac{QC}{CE}$, so $\ol{QD}$ bisects $\angle BQC$.
+\end{proof}
+
+\begin{remark*}
+  The point $Q$ and its properties mentioned in the first claim
+  have appeared in other references.
+  See for example Canada 2007/5, ELMO 2010/6,
+  HMMT 2016 T-10, USA TST 2017/2, USA TST 2019/6 for a few examples.
+\end{remark*}
+
+\begin{claim*}
+  We have $(QG;BC) = -1$, so in particular $\ol{GD}$ bisects $\angle BGC$.
+\end{claim*}
+\begin{proof}
+  Note that
+  \[ -1 = (AI;EF) \overset{Q}{=} (\ol{AQ} \cap \ol{EF}, P; E, F)
+    \overset{A}{=} (QG;BC). \]
+  The last statement follows from Apollonian circle,
+  or more bluntly $\frac{GB}{GC} = \frac{QB}{QC} = \frac{BD}{DC}$.
+\end{proof}
+
+Hence $\ol{QD}$ and $\ol{GD}$ are angle bisectors of $\angle BQC$ and $\angle BGC$.
+However, $\ol{QM}$ and $\ol{QG}$ are isogonal in $\angle BQC$
+(as median and symmedian), and similarly for $\angle BGC$, as desired.
+\pagebreak
+
+\subsection{TSTST 2020/3, proposed by Evan Chen, Danielle Wang}
+\textsl{Available online at \url{https://aops.com/community/p18933954}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+We say a nondegenerate triangle whose angles have
+measures $\theta_1$, $\theta_2$, $\theta_3$ is \emph{quirky}
+if there exists integers $r_1$, $r_2$, $r_3$, not all zero,
+such that \[ r_1 \theta_1 + r_2 \theta_2 + r_3 \theta_3 = 0. \]
+Find all integers $n \ge 3$ for which a triangle with
+side lengths $n-1$, $n$, $n+1$ is quirky.
+\end{mdframed}
+The answer is $n = 3,\ 4,\ 5,\ 7$.
+
+We first introduce a variant of the $k$th Chebyshev polynomials
+in the following lemma
+(which is standard, and easily shown by induction).
+\begin{lemma*}
+  For each $k \ge 0$ there exists $P_k(X) \in \ZZ[X]$,
+  monic for $k \ge 1$ and with degree $k$, such that
+  \[ P_k( X + X^{-1} ) \equiv X^k + X^{-k}. \]
+  The first few are $P_0(X) \equiv 2$,
+  $P_1(X) \equiv X$, $P_2(X) \equiv X^2-2$, $P_3(X) \equiv X^3-3X$.
+  % In particular, $P_k(2\cos\theta) = 2\cos(k\theta)$.
+\end{lemma*}
+Suppose the angles of the triangle are $\alpha < \beta < \gamma$,
+so the law of cosines implies that
+\[ 2\cos\alpha =\frac{n+4}{n+1} \qquad \text{and} \qquad 2\cos\gamma = \frac{n-4}{n-1}. \]
+%\begin{align*}
+%  2\cos\alpha &= \tfrac{n^2+(n+1)^2-(n-1)^2}{n(n+1)}
+%    = \frac{n+4}{n+1} \\
+%  2\cos\beta &= \tfrac{(n-1)^2+(n+1)^2-n^2}{(n-1)(n+1)}
+%    = \frac{n^2+2}{n^2-1} \\
+%  2\cos\gamma &= \tfrac{n^2+(n-1)^2-(n+1)^2}{n(n-1)}
+%    = \frac{n-4}{n-1}.
+%\end{align*}
+\begin{claim*}
+  The triangle is quirky iff there exists $r,s \in \ZZ_{\ge0}$ not both zero such that
+  \[ \cos(r\alpha) = \pm \cos(s\gamma)
+    \qquad \text{or equivalently} \qquad
+    P_r\left( \frac{n+4}{n+1} \right) = \pm P_s\left( \frac{n-4}{n-1} \right). \]
+\end{claim*}
+\begin{proof}
+If there are integers $x$, $y$, $z$ for which $x\alpha + y\beta + z\gamma = 0$,
+then we have that $(x-y)\alpha = (y-z)\gamma - \pi y$,
+whence it follows that we may take $r = |x-y|$ and $s = |y-z|$
+(noting $r=s=0$ implies the absurd $x=y=z$).
+Conversely, given such $r$ and $s$ with $\cos(r\alpha) = \pm \cos(s\gamma)$,
+then it follows that $r \alpha \pm s \gamma = k\pi = k(\alpha + \beta + \gamma)$
+for some $k$, so the triangle is quirky.
+\end{proof}
+
+If $r=0$, then by rational root theorem on $P_s(X) \pm 2$ it follows
+$\frac{n-4}{n-1}$ must be an integer which occurs only when $n = 4$ (recall $n \ge 3$).
+Similarly we may discard the case $s = 0$.
+
+Thus in what follows assume $n \neq 4$ and $r,s > 0$.
+Then, from the fact that $P_r$ and $P_s$ are nonconstant
+monic polynomials, we find
+\begin{corollary*}
+  If $n \neq 4$ works, then when $\frac{n+4}{n+1}$
+  and $\frac{n-4}{n-1}$ are written as fractions in lowest terms,
+  the denominators have the same set of prime factors.
+\end{corollary*}
+But $\gcd(n+1, n-1)$ divides $2$, and $\gcd(n+4, n+1)$, $\gcd(n-4,n-1)$ divide $3$.
+So we only have three possibilities:
+\begin{itemize}
+  \ii $n+1 = 2^u$ and $n-1 = 2^v$ for some $u,v \ge 0$.
+  This is only possible if $n = 3$.
+  Here $2\cos\alpha = \frac74$ and $2\cos\gamma = -\frac12$,
+  and indeed $P_2(-1/2) = -7/4$.
+  \ii $n+1 = 3 \cdot 2^u$ and $n-1 = 2^v$ for some $u,v \ge 0$,
+  which implies $n = 5$.
+  Here $2\cos\alpha = \frac32$ and $2\cos\gamma = \frac14$,
+  and indeed $P_2(3/2) = 1/4$.
+  \ii $n+1 = 2^u$ and $n-1 = 3 \cdot 2^v$ for some $u,v \ge 0$,
+  which implies $n = 7$.
+  Here $2\cos\alpha = \frac{11}{8}$ and $2\cos\gamma = \frac12$,
+  and indeed $P_3(1/2) = -11/8$.
+\end{itemize}
+Finally, $n=4$ works because the triangle is right, completing the solution.
+
+\begin{remark*}
+  [Major generalization due to Luke Robitaille]
+  In fact one may find all quirky triangles
+  whose sides are integers in arithmetic progression.
+
+  Indeed, if the side lengths of the triangle are $x-y$, $x$, $x+y$
+  with $\gcd(x,y) = 1$ then the problem becomes
+  \[ P_r\left( \frac{x+4y}{x+y} \right) = \pm P_s \left( \frac{x-4y}{x-y} \right) \]
+  and so in the same way as before,
+  we ought to have $x+y$ and $x-y$ are both of the form $3 \cdot 2^{\ast}$ unless $rs = 0$.
+  This time, when $rs=0$, we get the extra solutions $(1,0)$ and $(5,2)$.
+
+  For $rs \neq 0$, by triangle inequality, we have $x-y \le x+y < 3(x-y)$,
+  and $\min(\nu_2(x-y), \nu_2(x+y)) \le 1$,
+  so it follows one of $x-y$ or $x+y$ must be in $\{1,2,3,6\}$.
+  An exhaustive check then leads to
+  \[ (x,y) \in \left\{ (3,1), (5,1), (7,1), (11,5) \right\}
+    \cup \left\{ (1,0), (5,2), (4,1) \right\} \]
+  as the solution set. And in fact they all work.
+
+  In conclusion the equilateral triangle, $3-5-7$ triangle (which has a $120\dg$ angle)
+  and $6-11-16$ triangle (which satisfies $B=3A+4C$)
+  are exactly the new quirky triangles (up to similarity)
+  whose sides are integers in arithmetic progression.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{TSTST 2020/4, proposed by Yang Liu}
+\textsl{Available online at \url{https://aops.com/community/p19444614}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all pairs of positive integers $(a, b)$ satisfying
+the following conditions:
+\begin{enumerate}[(i)]
+  \ii $a$ divides $b^4+1$,
+  \ii $b$ divides $a^4+1$,
+  \ii $\lfloor \sqrt{a} \rfloor = \lfloor \sqrt{b} \rfloor$.
+\end{enumerate}
+\end{mdframed}
+The only solutions are $(1, 1)$, $(1, 2)$, and $(2, 1)$,
+which clearly work. Now we show there are no others.
+
+Obviously, $\gcd(a,b) = 1$, so the problem conditions imply
+\[ ab \mid (a-b)^4+1 \]
+since each of $a$ and $b$ divide the right-hand side.
+We define
+\[ k \stackrel{\text{def}}{=} \frac{(b-a)^4 + 1}{ab}. \]
+
+\begin{claim*}
+  [Size estimate]
+  We must have $k \le 16$.
+\end{claim*}
+\begin{proof}
+  Let $n = \lfloor \sqrt{a} \rfloor = \lfloor \sqrt{b} \rfloor$,
+  so that $a,b \in [n^2, n^2+2n]$.
+  We have that
+  \begin{align*}
+    ab &\ge n^2(n^2 + 1) \ge n^4 + 1 \\
+    (b-a)^4+1 &\le (2n)^4+1 = 16n^4+1
+  \end{align*}
+  which shows $k \le 16$.
+\end{proof}
+
+\begin{claim*}
+  [Orders argument]
+  In fact, $k = 1$.
+\end{claim*}
+
+\begin{proof}
+  First of all, note that $k$ cannot be even:
+  if it was, then $a$, $b$ have opposite parity,
+  but then $4 \mid (b-a)^4 + 1$, contradiction.
+
+  Thus $k$ is odd. However, every odd prime divisor of $(b-a)^4 + 1$
+  is congruent to $1 \pmod{8}$ and is thus at least $17$,
+  so $k = 1$ or $k \ge 17$.
+  It follows that $k = 1$.
+\end{proof}
+
+At this point, we have reduced to solving
+\[ ab = (b-a)^4+1 \]
+and we need to prove the claimed solutions are the only ones.
+Write $b = a+d$, and assume WLOG that $d \ge 0$:
+then we have $a(a+d) = d^4 + 1$, or
+\[ a^2 - da - (d^4 + 1) = 0. \]
+The discriminant $d^2 + 4(d^4 + 1)
+= 4d^4 + d^2 + 4$ must be a perfect square.
+\begin{itemize}
+\ii The cases $d = 0$ and $d = 1$ lead to pairs $(1, 1)$ and $(1, 2)$.
+\ii If $d \ge 2$, then we can sandwich
+\[
+  (2d^2)^2 < 4d^4 + d^2 + 4
+  < 4d^4 + 4d^2 + 1 = (2d^2 + 1)^2,
+\]
+so the discriminant is not a square.
+\end{itemize}
+The solution is complete.
+
+\begin{remark*}[Author remarks on origin]
+  This comes from the problem of the existence of
+  a pair of elliptic curves over $\FF_a$, $\FF_b$ respectively,
+  such that the number of points on one is the field size of the other.
+  The bound $n^2 \le a,b < (n+1)^2$ is the Hasse bound.
+  The divisibility conditions correspond to asserting that the embedding degree of each curve is $8$,
+  so that they are \emph{pairing friendly}.
+  In this way, the problem is essentially the key result of \url{https://arxiv.org/pdf/1803.02067.pdf},
+  shown in Proposition 3.
+\end{remark*}
+\pagebreak
+
+\subsection{TSTST 2020/5, proposed by Ashwin Sah, Mehtaab Sawhney}
+\textsl{Available online at \url{https://aops.com/community/p19444403}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $\NN^2$ denote the set of ordered pairs of positive integers.
+A finite subset $S$ of $\NN^2$ is \emph{stable}
+if whenever $(x,y)$ is in $S$,
+then so are all points $(x',y')$ of $\NN^2$
+with both $x' \leq x$ and $y' \leq y$.
+
+Prove that if $S$ is a stable set,
+then among all stable subsets of $S$
+(including the empty set and $S$ itself),
+at least half of them have an even number of elements.
+\end{mdframed}
+The following inductive solution was given by Nikolai Beluhov.
+We proceed by induction on $|S|$, with $|S| \le 1$ clear.
+
+Suppose $|S| \ge 2$.
+For any $p \in S$, let $R(p)$ denote
+the stable rectangle with upper-right corner $p$.
+We say such $p$ is \emph{pivotal} if $p + (1, 1) \notin S$
+and $|R(p)|$ is even.
+
+\begin{center}
+\begin{asy}
+  path R = box( (0,0), (6,3) );
+  fill(R, palered);
+  fill(shift(5,2)*unitsquare, lightcyan);
+  label("$p$", (5.5,2.5));
+  for (int i=0; i<=0; ++i) {
+    draw(shift(i,5)*unitsquare);
+  }
+  for (int i=0; i<=1; ++i) {
+    draw(shift(i,4)*unitsquare);
+  }
+  for (int i=0; i<=3; ++i) {
+    draw(shift(i,3)*unitsquare);
+  }
+  for (int i=0; i<=7; ++i) {
+    draw(shift(i,2)*unitsquare);
+  }
+  for (int i=0; i<=10; ++i) {
+    draw(shift(i,1)*unitsquare);
+  }
+  for (int i=0; i<=10; ++i) {
+    draw(shift(i,0)*unitsquare);
+  }
+  draw(R, heavyred+1.5);
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  If $|S| \ge 2$, then a pivotal $p$ always exists.
+\end{claim*}
+
+\begin{proof}
+  Consider the top row of $S$.
+  \begin{itemize}
+    \ii If it has length at least $2$,
+    one of the two rightmost points in it is pivotal.
+    \ii Otherwise, the top row has length $1$.
+    Now either the top point or the point below it
+    (which exists as $|S| \ge 2$) is pivotal.
+    \qedhere
+  \end{itemize}
+\end{proof}
+
+We describe how to complete the induction,
+given some pivotal $p \in S$.
+There is a partition
+\[ S = R(p) \sqcup S_1 \sqcup S_2 \]
+where $S_1$ and $S_2$ are the sets of points in $S$
+above and to the right of $p$
+(possibly empty).
+
+\begin{claim*}
+  The desired inequality holds for stable subsets containing $p$.
+\end{claim*}
+\begin{proof}
+  Let $E_1$ denote the number of even stable subsets of $S_1$;
+  denote $E_2$, $O_1$, $O_2$ analogously.
+  The stable subsets containing $p$ are exactly $R(p) \sqcup T_1 \sqcup T_2$,
+  where $T_1 \subseteq S_1$ and $T_2 \subseteq S_2$ are stable.
+
+  Since $|R(p)|$ is even,
+  exactly $E_1E_2 + O_1O_2$ stable subsets containing $p$ are even,
+  and exactly $E_1O_2 + E_2O_1$ are odd.
+  As $E_1 \ge O_1$ and $E_2 \ge O_2$ by inductive hypothesis,
+  we obtain $E_1E_2 + O_1O_2 \ge E_1O_2 + E_2O_1$ as desired.
+\end{proof}
+
+By the inductive hypothesis, the desired inequality also holds
+for stable subsets not containing $p$, so we are done.
+\pagebreak
+
+\subsection{TSTST 2020/6, proposed by Andrew Gu}
+\textsl{Available online at \url{https://aops.com/community/p19444197}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $A$, $B$, $C$, $D$ be four points
+such that no three are collinear
+and $D$ is not the orthocenter of triangle $ABC$.
+Let $P$, $Q$, $R$ be the orthocenters of
+$\triangle BCD$, $\triangle CAD$, $\triangle ABD$, respectively.
+Suppose that lines $AP$, $BQ$, $CR$ are pairwise distinct
+and are concurrent.
+Show that the four points $A$, $B$, $C$, $D$ lie on a circle.
+\end{mdframed}
+Let $T$ be the concurrency point,
+and let $H$ be the orthocenter of $\triangle ABC$.
+\begin{center}
+\begin{asy}
+pair A = dir(130);
+pair B = dir(210);
+pair C = dir(330);
+pair D = dir(97);
+pair P = B+C+D;
+pair Q = C+A+D;
+pair R = A+B+D;
+
+filldraw(R--B--D--cycle, opacity(0.1)+lightcyan, palecyan);
+filldraw(Q--A--C--cycle, opacity(0.1)+lightred, palered);
+filldraw(C--B--D--cycle, opacity(0.1)+lightgreen, palegreen);
+
+draw(R--foot(R,B,D), lightgrey+dashed);
+draw(B--foot(B,D,R), lightgrey+dashed);
+draw(D--foot(D,R,B), lightgrey+dashed);
+
+draw(A--foot(A,C,Q), lightgrey+dashed);
+draw(C--foot(C,Q,A), lightgrey+dashed);
+draw(Q--foot(Q,A,C), lightgrey+dashed);
+
+draw(C--foot(C,B,D), lightgrey+dashed);
+draw(B--foot(B,D,C), lightgrey+dashed);
+draw(D--foot(D,C,B), lightgrey+dashed);
+
+draw(A--foot(A,B,C), lightgrey+dashed);
+draw(B--foot(B,C,A), lightgrey+dashed);
+draw(C--foot(C,A,B), lightgrey+dashed);
+
+pair T = midpoint(A--P);
+pair S = (A+B+C+D)/4;
+pair O = 2*S-T;
+/*
+A' = foot A B C R270
+T' = foot T B C R270
+D' = foot D B C R300
+O' = foot O B C R300
+S' = foot S B C R270
+T--Tp lightgrey dashed
+S--Sp lightgrey dashed
+O--Op lightgrey dashed
+*/
+
+draw(T--O, lightblue);
+
+filldraw(A--B--C--cycle, opacity(0.1)+yellow, lightgrey);
+draw(A--C, palered);
+
+draw(A--Q, red+1);
+draw(B--P, red+1);
+
+draw(A--P, blue);
+draw(B--Q, blue);
+draw(C--R, blue);
+pair H = A+B+C;
+draw(D--H, lightblue);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(80));
+dot("$P$", P, dir(285));
+dot("$Q$", Q, dir(Q));
+dot("$R$", R, dir(R));
+dot("$T$", T, 1.8*dir(90));
+dot("$S$", S, 1.8*dir(75));
+dot("$O$", O, dir(315));
+dot("$H$", H, dir(45));
+
+/* TSQ Source:
+
+A = dir 130
+B = dir 210
+C = dir 330
+D = dir 97 R80
+P = B+C+D R285
+Q = C+A+D
+R = A+B+D
+
+R--B--D--cycle 0.1 lightcyan / palecyan
+Q--A--C--cycle 0.1 lightred / palered
+C--B--D--cycle 0.1 lightgreen / palegreen
+
+R--foot(R,B,D) lightgrey dashed
+B--foot(B,D,R) lightgrey dashed
+D--foot(D,R,B) lightgrey dashed
+
+A--foot(A,C,Q) lightgrey dashed
+C--foot(C,Q,A) lightgrey dashed
+Q--foot(Q,A,C) lightgrey dashed
+
+C--foot(C,B,D) lightgrey dashed
+B--foot(B,D,C) lightgrey dashed
+D--foot(D,C,B) lightgrey dashed
+
+A--foot(A,B,C) lightgrey dashed
+B--foot(B,C,A) lightgrey dashed
+C--foot(C,A,B) lightgrey dashed
+
+T = midpoint A--P 1.8R90
+S = (A+B+C+D)/4 1.8R75
+O = 2*S-T R315
+
+T--O lightblue
+
+A--B--C--cycle 0.1 yellow / lightgrey
+A--C palered
+
+A--Q red+1
+B--P red+1
+
+A--P blue
+B--Q blue
+C--R blue
+H = A+B+C R45
+D--H lightblue
+
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}[Key claim]
+  $T$ is the midpoint of $\ol{AP}$, $\ol{BQ}$, $\ol{CR}$, $\ol{DH}$,
+  and $D$ is the orthocenter of $\triangle PQR$.
+\end{claim*}
+\begin{proof}
+  Note that $\ol{AQ} \parallel \ol{BP}$,
+  as both are perpendicular to $\ol{CD}$.
+  Since lines $AP$ and $BQ$ are distinct,
+  lines $AQ$ and $BP$ are distinct.
+
+  By symmetric reasoning, we get that $AQCPBR$
+  is a hexagon with \emph{opposite sides parallel}
+  and \emph{concurrent diagonals} as $\ol{AP}$, $\ol{BQ}$, $\ol{CR}$ meet at $T$.
+  This implies that the \emph{hexagon is centrally symmetric} about $T$;
+  indeed \[ \frac{AT}{TP} = \frac{TQ}{BT} = \frac{CT}{TR} = \frac{TP}{AT} \]
+  so all the ratios are equal to $+1$.
+
+  % Thus, there exists a homothety $\Psi$ with center $T$ satisfying
+  % $\psi(A) = P$ and $\psi(Q) = B$.
+  % By repeating this with $\ol{BR}\parallel\ol{CQ}$
+  % and $\ol{CP}\parallel\ol{AR}$,
+  % we get $\psi(C) = R$ and $\psi(P) = A$.
+
+  % As $A \neq P$, it follows that $\psi$ is reflection about $T$.
+  Next, $\ol{PD} \perp \ol{BC} \parallel \ol{QR}$,
+  so by symmetry we get $D$ is the orthocenter of $\triangle PQR$.
+  This means that $T$ is the midpoint of $\ol{DH}$ as well.
+\end{proof}
+\begin{corollary*}
+  The configuration is now symmetric:
+  we have four points $A$, $B$, $C$, $D$,
+  and their reflections in $T$ are
+  four orthocenters $P$, $Q$, $R$, $H$.
+\end{corollary*}
+
+Let $S$ be the centroid of $\{A, B, C, D\}$,
+and let $O$ be the reflection of $T$ in $S$.
+We are ready to conclude:
+\begin{claim*}
+  $A$, $B$, $C$, $D$ are equidistant from $O$.
+\end{claim*}
+\begin{proof}
+  Let $A'$, $O'$, $S'$, $T'$, $D'$
+  be the projections of $A$, $O$, $S$, $T$, $D$
+  onto line $BC$.
+
+  Then $T'$ is the midpoint of $\ol{A'D'}$,
+  so $S' = \tfrac14(A'+D'+B+C)$
+  gives that $O'$ is the midpoint of $\ol{BC}$.
+
+  Thus $OB = OC$ and we're done.
+\end{proof}
+\pagebreak
+
+\section{Solutions to Day 3}
+\subsection{TSTST 2020/7, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p20020202}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all nonconstant polynomials $P(z)$ with complex coefficients
+for which all complex roots of the polynomials
+$P(z)$ and $P(z)-1$ have absolute value $1$.
+\end{mdframed}
+The answer is $P(x)$ should be a polynomial
+of the form $P(x) = \lambda x^n - \mu$
+where $|\lambda| = |\mu|$ and $\opname{Re} \mu = -\half$.
+One may check these all work;
+let's prove they are the only solutions.
+
+\paragraph{First approach (Evan Chen).}
+We introduce the following notations:
+\begin{align*}
+  P(x) &= c_n x^n + c_{n-1}x^{n-1} + \dots + c_1 x + c_0 \\
+    &= c_n (x+\alpha_1) \dots (x+\alpha_n) \\
+  P(x)-1 &= c_n (x+\beta_1) \dots (x+\beta_n)
+\end{align*}
+By taking conjugates,
+\begin{align*}
+  (x + \alpha_1) \dotsm (x + \alpha_n) &= (x + \beta_1) \dotsm (x + \beta_n) + c_n^{-1} \\
+  \implies \left(x + \frac{1}{\alpha_1}\right) \dotsm \left(x + \frac{1}{\alpha_n}\right)
+  & = \left(x + \frac{1}{\beta_1}\right) \dotsm \left(x + \frac{1}{\beta_n}\right)
+    + (\ol{c_n})^{-1} \qquad (\spadesuit)
+\end{align*}
+The equation $(\spadesuit)$ is the main player:
+\begin{claim*}
+  We have $c_k = 0$ for all $k = 1, \dots, n-1$.
+\end{claim*}
+\begin{proof}
+  By comparing coefficients of $x^k$ in $(\spadesuit)$
+  we obtain
+  \[ \frac{c_{n-k}}{\prod_i \alpha_i} = \frac{c_{n-k}}{\prod_i \beta_i} \]
+  but $\prod_i \alpha_i - \prod_i \beta_i = \frac{1}{c_n} \neq 0$.
+  Hence $c_k = 0$.
+\end{proof}
+
+It follows that $P(x)$
+must be of the form $P(x) = \lambda x^n - \mu$,
+so that $P(x) = \lambda x^n - (\mu + 1)$.
+This requires $|\mu| = |\mu+1| = |\lambda|$
+which is equivalent to the stated part.
+
+\paragraph{Second approach (from the author).}
+We let $A = P$ and $B = P-1$ to make the notation more symmetric.
+We will as before show that $A$ and $B$ have all coefficients equal to zero
+other than the leading and constant coefficient; the finish is the same.
+
+First, we rule out double roots.
+\begin{claim*}
+  Neither $A$ nor $B$ have double roots.
+\end{claim*}
+\begin{proof}
+  Suppose that $b$ is a double root of $B$.
+  By differentiating, we obtain $A' = B'$,
+  so $A'(b) = 0$.
+  However, by Gauss-Lucas,
+  this forces $A(b) = 0$, contradiction.
+\end{proof}
+Let $\omega = e^{2\pi i/n}$,
+let $a_1, \dots, a_n$ be the roots of $A$,
+and let $b_1, \dots, b_n$ be the roots of $B$.
+For each $k$,
+let $A_k$ and $B_k$ be the points in the complex plane
+corresponding to $a_k$ and $b_k$.
+\begin{claim*}[Main claim]
+  For any $i$ and $j$,
+  $\tfrac{a_i}{a_j}$ is a power of $\omega$.
+\end{claim*}
+\begin{proof}
+  Note that
+  \[ \frac{a_i - b_1}{a_j - b_1} \dotsm \frac{a_i - b_n}{a_j - b_n}
+    = \frac{B(a_i)}{B(a_j)} = \frac{A(a_i) - 1}{A(a_j) - 1} = \frac{0-1}{0-1} = 1. \]
+  Since the points $A_i$, $A_j$, $B_k$ all lie on the unit circle,
+  interpreting the left-hand side geometrically gives
+  \[ \dang A_iB_1A_j + \dots + \dang A_iB_nA_j = 0
+    \implies n \widehat{A_iA_j} = 0, \]
+  where angles are directed modulo $180\dg$
+  and arcs are directed modulo $360\dg$.
+  This implies that $\tfrac{a_i}{a_j}$ is a power of $\omega$.
+\end{proof}
+Now the finish is easy:
+since $a_1$, \dots, $a_n$ are all different,
+they must be $a_1 \omega^0$, \dots, $a_1 \omega^{n-1}$ in some order;
+this shows that $A$ is a multiple of $x^n-a_1^n$, as needed.
+\pagebreak
+
+\subsection{TSTST 2020/8, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p20020195}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For every positive integer $N$,
+let $\sigma(N)$ denote the sum of the positive integer divisors of $N$.
+Find all integers $m \ge n \ge 2$ satisfying
+\[ \frac{\sigma(m)-1}{m-1}
+  = \frac{\sigma(n)-1}{n-1} = \frac{\sigma(mn)-1}{mn-1}.  \]
+\end{mdframed}
+The answer is that $m$ and $n$ should be powers
+of the same prime number.
+These all work because for a prime power we have
+\[
+  \frac{\sigma(p^e) - 1}{p^e - 1}
+  = \frac{(1 + p + \dots + p^e) - 1}{p^e - 1}
+  = \frac{p(1 + \dots + p^{e-1})}{p^e - 1}
+  = \frac{p}{p-1}.
+\]
+So we now prove these are the only ones.
+Let $\lambda$ be the common value of the three fractions.
+
+\begin{claim*}
+  Any solution $(m,n)$ should satisfy
+  $d(mn) = d(m) + d(n) - 1$.
+\end{claim*}
+\begin{proof}
+  The divisors of $mn$ include the divisors of $m$,
+  plus $m$ times the divisors of $n$ (counting $m$ only once).
+  Let $\lambda$ be the common value; then this gives
+  \begin{align*}
+    \sigma(mn) & \ge \sigma(m) + m\sigma(n) - m\\
+    & = (\lambda m - \lambda + 1) + m(\lambda n - \lambda + 1) - m\\
+    & = \lambda mn - \lambda + 1
+  \end{align*}
+  and so equality holds.
+  Thus these are all the divisors of $mn$,
+  for a count of $d(m) + d(n) - 1$.
+\end{proof}
+
+\begin{claim*}
+  If $d(mn) = d(m) + d(n) - 1$ and $\min(m, n) \ge 2$,
+  then $m$ and $n$ are powers of the same prime.
+\end{claim*}
+\begin{proof}
+  Let $A$ denote the set of divisors of $m$ and $B$ denote the set of divisors of $n$.
+  Then $|A \cdot B| = |A| + |B| - 1$ and $\min(|A|, |B|) > 1$,
+  so $|A|$ and $|B|$ are geometric progressions with the same ratio.
+  It follows that $m$ and $n$ are powers of the same prime.
+\end{proof}
+
+\begin{remark*}[Nikolai Beluhov]
+  Here is a completion not relying on $|A \cdot B| = |A| + |B| - 1$.
+  By the above arguments, we see that every divisor of $mn$ is
+  either a divisor of $n$, or $n$ times a divisor of $m$.
+
+  Now suppose that some prime $p \mid m$ but $p \nmid n$.
+  Then $p \mid mn$ but $p$ does not appear in the above classification,
+  a contradiction.
+  By symmetry, it follows that $m$ and $n$ have the same prime divisors.
+
+  Now suppose we have different primes $p \mid m$ and $q \mid n$.
+  Write $\nu_p(m) = \alpha$ and $\nu_p(n) = \beta$.
+  Then $p^{\alpha+\beta} \mid mn$, but it does not appear in the above characterization,
+  a contradiction.
+  Thus, $m$ and $n$ are powers of the same prime.
+\end{remark*}
+
+\begin{remark*}
+  [Comments on the function in the problem]
+  Let $f(n) = \frac{\sigma(n)-1}{n-1}$.
+  Then $f$ is not really injective even outside the above solution;
+  for example, we have $f(6 \cdot 11^k) = \frac{11}{5}$ for all $k$,
+  plus sporadic equivalences like $f(14) = f(404)$,
+  as pointed out by one reviewer during test-solving.
+  This means that both relations should be used at once, not independently.
+\end{remark*}
+
+\begin{remark*}
+  [Authorship remarks]
+  Ankan gave the following story for how he came up with the problem
+  while thinking about so-called \emph{almost perfect} numbers.
+  \begin{quote}
+  I was in some boring talk when I recalled a conjecture
+  that if $\sigma(n) = 2n-1$, then $n$ is a power of $2$.
+  For some reason (divine intervention, maybe) I had the double idea of
+  (1) seeing whether $m$, $n$, $mn$ all almost perfect
+  implies $m$, $n$ powers of $2$,
+  and (2) trying the naive divisor bound to resolve this.
+  Through sheer dumb luck this happened to work out perfectly.
+  I thought this was kinda cool but I felt that I hadn't really
+  unlocked a lot of the potential this idea had:
+  then I basically tried to find the ``general situation''
+  which allows for this manipulation,
+  and was amazed that it led to such a striking statement.
+  \end{quote}
+\end{remark*}
+\pagebreak
+
+\subsection{TSTST 2020/9, proposed by Nikolai Beluhov}
+\textsl{Available online at \url{https://aops.com/community/p20020206}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Ten million fireflies are glowing in $\RR^3$ at midnight.
+Some of the fireflies are friends, and friendship is always mutual.
+Every second, one firefly moves to a new position
+so that its distance from each one of its friends is the same
+as it was before moving.
+This is the only way that the fireflies ever change their positions.
+No two fireflies may ever occupy the same point.
+
+Initially, no two fireflies, friends or not, are more than a meter away.
+Following some finite number of seconds,
+all fireflies find themselves at least ten million meters
+away from their original positions.
+Given this information,
+find the greatest possible number of friendships between the fireflies.
+\end{mdframed}
+In general, we show that when $n \ge 70$,
+the answer is $f(n) = \lfloor\tfrac{n^2}3\rfloor$.
+
+\bigskip
+
+\textbf{Construction}:
+Choose three pairwise parallel lines $\ell_A$, $\ell_B$, $\ell_C$
+forming an infinite equilateral triangle prism (with side larger than $1$).
+Split the $n$ fireflies among the lines
+as equally as possible,
+and say that two fireflies are friends iff they lie on different lines.
+
+To see this works:
+\begin{enumerate}
+  \ii Reflect $\ell_A$ and all fireflies on $\ell_A$
+  in the plane containing $\ell_B$ and $\ell_C$.
+  \ii Reflect $\ell_B$ and all fireflies on $\ell_B$
+  in the plane containing $\ell_C$ and $\ell_A$.
+  \ii Reflect $\ell_C$ and all fireflies on $\ell_C$
+  in the plane containing $\ell_A$ and $\ell_B$.
+  \ii[$\vdots$]
+\end{enumerate}
+
+\bigskip
+
+\textbf{Proof}:
+Consider a valid configuration of fireflies.
+If there is no $4$-clique of friends,
+then by Tur\'an's theorem, there are at most $f(n)$ pairs of friends.
+
+Let $g(n)$ be the answer, given that
+there exist four pairwise friends (say $a$, $b$, $c$, $d$).
+Note that for a firefly to move,
+all its friends must be coplanar.
+\begin{claim*}
+  [No coplanar $K_4$]
+  We can't have four coplanar fireflies
+  which are pairwise friends.
+\end{claim*}
+\begin{proof}
+  If we did, none of them could move
+  (unless three are collinear, in which case they can't move).
+\end{proof}
+
+\begin{claim*}[Key claim --- tetrahedrons don't share faces often]
+  There are at most $12$ fireflies $e$
+  which are friends with at least three of $a$, $b$, $c$, $d$.
+\end{claim*}
+\begin{proof}
+  First denote by $A$, $B$, $C$, $D$ the locations
+  of fireflies $a$, $b$, $c$, $d$.
+  These four positions change over time as fireflies move,
+  but the tetrahedron $ABCD$ always has a fixed shape,
+  and we will take this tetrahedron as our reference frame
+  for the remainder of the proof.
+
+  WLOG, will assume that $e$ is friends with $a$, $b$, $c$.
+  Then $e$ will always be located at one of two points $E_1$ and $E_2$
+  relative to $ABC$, such that $E_1ABC$ and $E_2ABC$
+  are two congruent tetrahedrons with fixed shape.
+  We note that points $D$, $E_1$, and $E_2$ are all different:
+  clearly $D \neq E_1$ and $E_1 \neq E_2$.
+  (If $D = E_2$,
+  then some fireflies won't be able to move.)
+
+  Consider the moment where firefly $a$ moves.
+  Its friends must be coplanar at that time,
+  so one of $E_1$, $E_2$ lies in plane $BCD$.
+  Similar reasoning holds for planes $ACD$ and $ABD$.
+
+  So, WLOG $E_1$ lies on both planes $BCD$ and $ACD$.
+  Then $E_1$ lies on line $CD$,
+  and $E_2$ lies in plane $ABD$.
+  This uniquely determines $(E_1, E_2)$ relative to $ABCD$:
+  \begin{itemize}
+    \ii $E_1$ is the intersection of line $CD$
+    with the reflection of plane $ABD$ in plane $ABC$.
+    \ii $E_2$ is the intersection of plane $ABD$
+    with the reflection of line $CD$ in plane $ABC$.
+  \end{itemize}
+  Accounting for WLOGs,
+  there are at most $12$ possibilities for the set $\{E_1, E_2\}$,
+  and thus at most $12$ possibilities for $E$.
+  (It's not possible for both elements of one pair $\{E_1, E_2\}$
+  to be occupied, because then they couldn't move.)
+\end{proof}
+
+Thus, the number of friendships involving exactly one of $a$, $b$, $c$, $d$
+is at most $(n-16) \cdot 2 + 12 \cdot 3 = 2n + 4$,
+so removing these four fireflies gives
+\[ g(n) \le 6 + (2n+4) + \max\{f(n-4), g(n-4)\}. \]
+
+The rest of the solution is bounding.
+When $n \ge 24$, we have $(2n+10) + f(n-4) \le f(n)$,
+so
+\[ g(n) \le \max\{f(n), (2n+10) + g(n-4)\}
+\quad \forall n \ge 24. \]
+
+By iterating the above inequality, we get
+\begin{align*}
+  g(n) \le \max\Big\{f(n), \; (2n+10) &+ (2(n-4)+10) \\
+  &+ \dots + (2(n-4r)+10) + g(n-4r-4)\Big\},
+\end{align*}
+where $r$ satisfies $n-4r-4 < 24 \le n-4r$.
+
+Now
+\begin{align*}
+  & \phantom{{} = {}}
+  (2n+10) + (2(n-4)+10) + \dots + (2(n-4r)+10) + g(n-4r-4)\\
+  & = (r+1) (2n-4r+10) + g(n-4r-4)\\
+  & \le \left(\frac n4 - 5\right)(n+37) + \binom{24}2.
+\end{align*}
+This is less than $f(n)$ for $n \ge 70$,
+which concludes the solution.
+
+\begin{remark*}
+  There are positive integers $n$ such that it is possible to do better than $f(n)$ friendships. For instance, $f(5) = 8$, whereas five fireflies $a$, $b$, $c$, $d$, and $e$ as in the proof of the Lemma ($E_1$ being the intersection point of line $CD$ with the reflection of plane $(ABD)$ in plane $(ABC)$, $E_2$ being the intersection point of plane $(ABD)$ with the reflection of line $CD$ in plane $(ABC)$, and tetrahedron $ABCD$ being sufficiently arbitrary that points $E_1$ and $E_2$ exist and points $D$, $E_1$, and $E_2$ are pairwise distinct) give a total of nine friendships.
+\end{remark*}
+
+\begin{remark*}
+  [Author comments]
+  It is natural to approach the problem by looking at the two-dimensional version first. In two dimensions, the following arrangement suggests itself almost immediately: We distribute all fireflies as equally as possible among two parallel lines, and two fireflies are friends if and only if they are on different lines.
+
+  Similarly to the three-dimensional version, this attains the greatest possible number of friendships for all sufficiently large $n$, though not for all $n$. For instance, at least one friendlier arrangements exists for $n = 4$, similarly to the above friendlier arrangement for $n = 5$ in three dimensions.
+
+  This observation strongly suggests that in three dimensions we should distribute the fireflies as equally as possible among two parallel planes, and that two fireflies should be friends if and only if they are on different planes. It was a great surprise for me to discover that this arrangement does not in fact give the correct answer!
+\end{remark*}
+
+\begin{remark*}
+  On the other hand, Ankan Bhattacharya gives the following
+  reasoning as to why the answer should not be that surprising:
+  \begin{quote}
+    I think the answer $(10^{14} - 1)/3$ is quite natural
+    if you realize that $(n/2)^2$ is probably optimal in 2D and
+    $\binom n2$ is optimal in super high dimensions (i.e.\ around $n$).
+    So going from dimension $2$ to $3$ should increase the answer
+    (and indeed it does).
+  \end{quote}
+\end{remark*}
+\pagebreak
+
+
+\end{document}

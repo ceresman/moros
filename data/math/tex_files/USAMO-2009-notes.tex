@@ -1,0 +1,693 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2009 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2009 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Given circles $\omega_1$ and $\omega_2$ intersecting at points $X$ and $Y$,
+let $\ell_1$ be a line through the center of $\omega_1$
+intersecting $\omega_2$ at points $P$ and $Q$
+and let $\ell_2$ be a line through the center of $\omega_2$
+intersecting $\omega_1$ at points $R$ and $S$.
+Prove that if $P$, $Q$, $R$, and $S$ lie on a circle
+then the center of this circle lies on line $XY$.
+
+\item %% Problem 2
+Let $n$ be a positive integer.
+Determine the size of the largest subset of $\{ -n, -n+1, \dots, n-1, n\}$
+which does not contain three elements $a$, $b$, $c$ (not necessarily distinct)
+satisfying $a+b+c=0$.
+
+\item %% Problem 3
+We define a \emph{chessboard polygon} to be a simple polygon whose sides are
+situated along lines of the form $x=a$ or $y=b$, where $a$ and $b$ are integers.
+These lines divide the interior into unit squares, which are shaded alternately
+grey and white so that adjacent squares have different colors.
+To tile a chessboard polygon by dominoes is to
+exactly cover the polygon by non-overlapping $ 1 \times 2$ rectangles.
+Finally, a \emph{tasteful tiling} is one which avoids the
+two configurations of dominoes and colors shown on the left below.
+Two tilings of a $3 \times 4$ rectangle are shown;
+the first one is tasteful, while the second is not,
+due to the vertical dominoes in the upper right corner.
+
+\begin{center}
+\begin{asy}
+size(300);
+pen rt = linewidth(2.5) + rgb(0.6,0.2,0.2);
+void chessboard(int a, int b, int eps, pair P) {
+  for(int i = 0; i < a; ++i) {
+  for(int j = 0; j < b; ++j) {
+    if((i+j+eps)#2 == (i+j+eps)/2)
+    fill(shift(P.x+i,P.y+j)*unitsquare,rgb(0.6,0.6,0.6));
+  }
+  }
+  draw(P--P+(a,0)--P+(a,b)--P+(0,b)--cycle, rt);
+}
+
+chessboard(2,2,0,(0,0));
+chessboard(2,2,1,(2.5,0));
+chessboard(4,3,1,(6,0));
+chessboard(4,3,1,(11,0));
+label("Distasteful tilings",(2.25,2.5),fontsize(10));
+
+/* draw lines */
+draw((1,0)--(1,2), rt);
+draw((2.5,1)--(4.5,1), rt);
+draw((7,0)--(7,2)--(6,2)--(10,2)--(9,2)--(9,0)--(9,1)--(7,1), rt);
+draw((8,2)--(8,3), rt);
+draw((12,0)--(12,2)--(11,2)--(13,2), rt);
+draw((13,1)--(15,1)--(14,1)--(14,3), rt);
+draw((13,0)--(13,3), rt);
+\end{asy}
+\end{center}
+
+Prove that (a) if a chessboard polygon can be tiled by dominoes,
+then it can be done so tastefully, and (b) such a tasteful tiling is unique.
+
+\item %% Problem 4
+For $n \ge 2$, let $a_1$, $a_2$, \dots, $a_n$ be positive real numbers such that
+\[
+  \left( a_1 + a_2 + \dots + a_n \right)
+  \left( \frac{1}{a_1} + \frac{1}{a_2} + \dots + \frac{1}{a_n} \right)
+  \le \left( n + \half \right)^2.
+\]
+Prove that $\max\left( a_1, \dots, a_n \right) \le 4 \min\left( a_1, \dots, a_n \right)$.
+
+\item %% Problem 5
+Trapezoid $ABCD$, with $\ol{AB} \parallel \ol{CD}$,
+is inscribed in circle $\omega$ and point $G$ lies inside triangle $BCD$.
+Rays $AG$ and $BG$ meet $\omega$ again at points $P$ and $Q$, respectively.
+Let the line through $G$ parallel to $\ol{AB}$ intersect
+$\ol{BD}$ and $\ol{BC}$ at points $R$ and $S$, respectively.
+Prove that quadrilateral $PQRS$ is cyclic
+if and only if $\ol{BG}$ bisects $\angle CBD$.
+
+\item %% Problem 6
+Let $s_1, s_2, s_3, \dots$ be an infinite,
+nonconstant sequence of rational numbers,
+meaning it is not the case that $s_1 = s_2 = s_3 = \dots$.
+Suppose that $t_1, t_2, t_3, \dots$ is also an infinite,
+nonconstant sequence of rational numbers
+with the property that $(s_i - s_j)(t_i - t_j)$
+is an integer for all $i$ and $j$.
+Prove that there exists a rational number $r$
+such that $(s_i - s_j)r$ and $(t_i - t_j)/r$
+are integers for all $i$ and $j$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2009/1, proposed by Ian Le}
+\textsl{Available online at \url{https://aops.com/community/p1485133}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Given circles $\omega_1$ and $\omega_2$ intersecting at points $X$ and $Y$,
+let $\ell_1$ be a line through the center of $\omega_1$
+intersecting $\omega_2$ at points $P$ and $Q$
+and let $\ell_2$ be a line through the center of $\omega_2$
+intersecting $\omega_1$ at points $R$ and $S$.
+Prove that if $P$, $Q$, $R$, and $S$ lie on a circle
+then the center of this circle lies on line $XY$.
+\end{mdframed}
+Let $r_1$, $r_2$, $r_3$ denote the
+circumradii of $\omega_1$, $\omega_2$, and $\omega_3$, respectively.
+
+\begin{center}
+\begin{asy}
+pair O_1 = dir(220);
+pair O_2 = dir(320);
+pair O = dir(110);
+pair T = foot(O, O_1, O_2);
+pair X = midpoint(O--T);
+pair Y = 2*T-X;
+
+filldraw(CP(O_1, X), opacity(0.1)+lightcyan, lightblue);
+filldraw(CP(O_2, X), opacity(0.1)+lightcyan, lightblue);
+
+draw(O--Y, red+dashed);
+
+pair K = foot(O_1, O, O_2);
+pair P = IP(O_1--K, CP(O_2, X));
+pair Q = 2*K-P;
+draw(O_1--Q, red);
+draw(O--O_2, heavycyan);
+
+pair L = foot(O_2, O, O_1);
+pair R = IP(O_2--L, CP(O_1, X));
+pair S = 2*L-R;
+draw(O_2--S, red);
+draw(O--O_1, heavycyan);
+
+draw(arc(O, abs(P-O), 180, 360), heavygreen);
+
+dot("$O_1$", O_1, dir(O_1));
+dot("$O_2$", O_2, dir(O_2));
+dot("$O$", O, dir(O));
+dot("$X$", X, dir(100));
+dot("$Y$", Y, dir(Y));
+dot("$P$", P, dir(120));
+dot("$Q$", Q, dir(Q));
+dot("$R$", R, dir(40));
+dot("$S$", S, dir(S));
+
+/* TSQ Source:
+
+O_1 = dir 220
+O_2 = dir 320
+O = dir 110
+T := foot O O_1 O_2
+X = midpoint O--T R100
+Y = 2*T-X
+
+CP O_1 X 0.1 lightcyan / lightblue
+CP O_2 X 0.1 lightcyan / lightblue
+
+O--Y red dashed
+
+K := foot O_1 O O_2
+P = IP O_1--K CP O_2 X R120
+Q = 2*K-P
+O_1--Q red
+O--O_2 heavycyan
+
+L := foot O_2 O O_1
+R = IP O_2--L CP O_1 X R40
+S = 2*L-R
+O_2--S red
+O--O_1 heavycyan
+
+!draw(arc(O, abs(P-O), 180, 360), heavygreen);
+
+*/
+\end{asy}
+\end{center}
+
+We wish to show that $O_3$ lies on the radical axis of $\omega_1$ and $\omega_2$.
+Let us encode the conditions using power of a point.
+Because $O_1$ is on the radical axis of $\omega_2$ and $\omega_3$,
+\begin{align*}
+  \opname{Pow}_{\omega_2}(O_1) &= \opname{Pow}_{\omega_3}(O_1) \\
+  \implies O_1O_2^2 - r_2^2 &= O_1O_3^2 - r_3^2.
+  \intertext{Similarly, because $O_2$ is on the radical axis of $\omega_1$ and $\omega_3$, we have}
+  \opname{Pow}_{\omega_1}(O_2) &= \opname{Pow}_{\omega_3}(O_2) \\
+  \implies O_1O_2^2 - r_1^2 &= O_2O_3^2 - r_3^2. \\
+  \intertext{Subtracting the two gives}
+  (O_1O_2^2-r_2^2)-(O_1O_2^2-r_1^2) &= (O_1O_3^2-r_3^2)-(O_2O_3^2-r_3^2) \\
+  \implies r_1^2-r_2^2 &= O_1O_3^2-O_2O_3^2 \\
+  \implies O_2O_3^2 - r_2^2 &= O_1O_3^2 - r_1^2 \\
+  \implies \opname{Pow}_{\omega_2}(O_3) &= \opname{Pow}_{\omega_1} (O_3)
+\end{align*}
+as desired.
+\pagebreak
+
+\subsection{USAMO 2009/2, proposed by Kiran Kedlaya, Tewordos Amdeberhan}
+\textsl{Available online at \url{https://aops.com/community/p1485139}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n$ be a positive integer.
+Determine the size of the largest subset of $\{ -n, -n+1, \dots, n-1, n\}$
+which does not contain three elements $a$, $b$, $c$ (not necessarily distinct)
+satisfying $a+b+c=0$.
+\end{mdframed}
+The answer is $n$ with $n$ even and $n+1$ with $n$ odd;
+the construction is to take all odd numbers.
+
+To prove this is maximal, it suffices to show it for $n$ even;
+we do so by induction on even $n \ge 2$ with the base case being trivial.
+Letting $A$ be the subset, we consider three cases:
+\begin{enumerate}[(i)]
+  \ii If $|A \cap \{-n,-n+1,n-1,n\}| \le 2$,
+  then by the hypothesis for $n-2$ we are done.
+  \ii If both $n \in A$ and $-n \in A$,
+  then there can be at most $n-2$ elements in $A \setminus \{\pm n\}$,
+  one from each of the pairs $(1,n-1)$, $(2,n-2)$, $\dots$
+  and their negations.
+  \ii If $n, n-1, -n+1 \in A$ and $-n \notin A$,
+  and at most $n-3$ more can be added,
+  one from each of $(1, n-2)$, $(2, n-3)$, $\dots$
+  and $(-2, -n+2)$, $(-3, -n+3)$, $\dots$.
+  (In particular $-1 \notin A$.
+  Analogous case for $-A$ if $n \notin A$.)
+\end{enumerate}
+Thus in all cases, $|A| \le n$ as needed.
+
+\begin{remark*}
+  A few examples of equality cases:
+  \begin{itemize}
+    \ii All odd numbers
+    \ii All numbers with absolute value at least $n/2$
+    \ii For $n$ even, the set $\{1, 2, \dots, n\}$
+  \end{itemize}
+  This list isn't exhaustive
+  e.g.\ for $n=4$, the set $\{-3,2,3,4\}$ achieves the optimum.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2009/3, proposed by Sam Vandervelde}
+\textsl{Available online at \url{https://aops.com/community/p1485321}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+We define a \emph{chessboard polygon} to be a simple polygon whose sides are
+situated along lines of the form $x=a$ or $y=b$, where $a$ and $b$ are integers.
+These lines divide the interior into unit squares, which are shaded alternately
+grey and white so that adjacent squares have different colors.
+To tile a chessboard polygon by dominoes is to
+exactly cover the polygon by non-overlapping $ 1 \times 2$ rectangles.
+Finally, a \emph{tasteful tiling} is one which avoids the
+two configurations of dominoes and colors shown on the left below.
+Two tilings of a $3 \times 4$ rectangle are shown;
+the first one is tasteful, while the second is not,
+due to the vertical dominoes in the upper right corner.
+
+\begin{center}
+\begin{asy}
+size(300);
+pen rt = linewidth(2.5) + rgb(0.6,0.2,0.2);
+void chessboard(int a, int b, int eps, pair P) {
+  for(int i = 0; i < a; ++i) {
+  for(int j = 0; j < b; ++j) {
+    if((i+j+eps)#2 == (i+j+eps)/2)
+    fill(shift(P.x+i,P.y+j)*unitsquare,rgb(0.6,0.6,0.6));
+  }
+  }
+  draw(P--P+(a,0)--P+(a,b)--P+(0,b)--cycle, rt);
+}
+
+chessboard(2,2,0,(0,0));
+chessboard(2,2,1,(2.5,0));
+chessboard(4,3,1,(6,0));
+chessboard(4,3,1,(11,0));
+label("Distasteful tilings",(2.25,2.5),fontsize(10));
+
+/* draw lines */
+draw((1,0)--(1,2), rt);
+draw((2.5,1)--(4.5,1), rt);
+draw((7,0)--(7,2)--(6,2)--(10,2)--(9,2)--(9,0)--(9,1)--(7,1), rt);
+draw((8,2)--(8,3), rt);
+draw((12,0)--(12,2)--(11,2)--(13,2), rt);
+draw((13,1)--(15,1)--(14,1)--(14,3), rt);
+draw((13,0)--(13,3), rt);
+\end{asy}
+\end{center}
+
+Prove that (a) if a chessboard polygon can be tiled by dominoes,
+then it can be done so tastefully, and (b) such a tasteful tiling is unique.
+\end{mdframed}
+\paragraph{Proof of (a).} This is easier, and by induction.
+Let $\mathcal P$ denote the chessboard polygon which can be tiled by dominoes.
+
+Consider a \emph{lower-left} square $s$ of the polygon,
+and WLOG is it white (other case similar).
+Then we have two cases:
+\begin{itemize}
+  \ii If there exists a domino tiling of $\mathcal P$
+  where $s$ is covered by a vertical domino,
+  then delete this domino and apply induction on the rest of $\mathcal P$.
+  This additional domino will not cause any distasteful tilings.
+
+  \ii Otherwise, assume $s$ is covered by a horizontal domino
+  in \emph{every} tiling.
+  Again delete this domino and apply induction on the rest of $\mathcal P$.
+  The resulting tasteful tiling should not have another horizontal domino
+  adjacent to the one covering $s$, because otherwise
+  we could have replaced that $2 \times 2$ square
+  with two vertical dominoes to arrive in the first case.
+  So this additional domino will not cause any distasteful tilings.
+\end{itemize}
+
+\begin{remark*}
+  The second case can actually arise, for example in the following picture.
+  \begin{center}
+  \begin{asy}
+    unitsize(0.6cm);
+    fill(shift(1,0)*unitsquare,rgb(0.6,0.6,0.6));
+    fill(shift(0,1)*unitsquare,rgb(0.6,0.6,0.6));
+    fill(shift(2,1)*unitsquare,rgb(0.6,0.6,0.6));
+    draw( (0,0)--(0,3)--(1,3)--(1,2)--(3,2)--(3,1)--(2,1)--(2,0)--cycle,
+      linewidth(2.5) + rgb(0.6,0.2,0.2));
+  \end{asy}
+  \end{center}
+  Thus one cannot just try to cover $s$ with a vertical
+  domino and claim the rest of $\mathcal P$ is tile-able.
+  So the induction is not as easy as one might hope.
+
+  One can phrase the solution algorithmically too,
+  in the following way: any time we see a distasteful tiling,
+  we rotate it to avoid the bad pattern.
+  The bottom-left corner eventually becomes stable,
+  and an induction shows the termination of the algorithm.
+\end{remark*}
+
+\paragraph{Proof of (b).} We now turn to proving uniqueness.
+Suppose for contradiction there are two distinct tasteful tilings.
+Overlaying the two tilings on top of each other induces
+several \emph{cycles} of overlapping dominoes at positions where the tilings differ.
+
+Henceforth, it will be convenient to work with the lattice $\ZZ^2$,
+treating the squares as black/white points, and we do so.
+Let $\gamma$ be any such cycle and let $s$ denote a
+lower left point, and again WLOG it is black.
+Orient $\gamma$ counterclockwise henceforth.
+Restrict attention to the lattice polygon $\mathcal Q$ enclosed by $\gamma$
+(we consider points of $\gamma$ as part of $\mathcal Q$).
+
+In one of the two tilings of (lattice points of) $\mathcal Q$,
+the point $s$ will be covered by a horizontal domino;
+in the other tiling $s$ will be covered by a vertical domino.
+From now on we will focus only on the latter one.
+Observe that we now have a set of dominoes along $\gamma$,
+such that $\gamma$ points from the white point to the black point
+within each domino.
+
+Now impose coordinates so that $s = (0,0)$.
+Consider the stair-case sequence of points
+$p_0 = s = (0,0)$, $p_1 = (1,0)$, $p_2 = (1,1)$, $p_3 = (2,1)$, and so on.
+By hypothesis, $p_0$ is covered by a vertical domino.
+Then $p_1$ must be covered by a horizontal domino, to avoid a distasteful tiling.
+Then if $p_2$ is in $\mathcal Q$, then it must be covered by a vertical domino
+to avoid a distasteful tiling, and so on.
+We may repeat this argument as long the points $p_i$ lie inside $\mathcal Q$.
+(See figure below; the staircase sequence is highlighted by red halos.)
+\begin{center}
+\begin{asy}
+  unitsize(1.5cm);
+
+  margin m = Margin(3,3);
+  arrowbar ar = EndArrow(TeXHead);
+  pen gamma = blue + 1;
+  draw( (0,0)--(1,0), gamma, ar, m);
+  draw( (1,0)--(2,0), gamma, ar, m);
+  draw( (2,0)--(3,0), gamma, ar, m);
+  draw( (3,0)--(3,-1), gamma, ar, m);
+  draw( (3,-1)--(4,-1), gamma, ar, m);
+  draw( (4,-1)--(4,0), gamma, ar, m);
+  draw( (4,0)--(4,1), gamma, ar, m);
+  draw( (4,1)--(4,2), gamma, ar, m);
+  draw( (4,2)--(3,2), gamma, ar, m);
+  draw( (3,2)--(3,3), gamma, ar, m);
+  draw( (3,3)--(4,3), gamma, ar, m);
+  draw( (4,3)--(4,4), gamma, ar, m);
+  draw( (4,4)--(3,4), gamma, ar, m);
+  draw( (3,4)--(2,4), gamma, ar, m);
+  draw( (2,4)--(1,4), gamma, ar, m);
+  draw( (1,4)--(1,3), gamma, ar, m);
+  draw( (1,3)--(0,3), gamma, ar, m);
+  draw( (0,3)--(0,2), gamma, ar, m);
+  draw( (0,2)--(0,1), gamma, ar, m);
+  draw( (0,1)--(0,0), gamma, ar, m);
+
+  fill( (0,0)--(3,0)--(3,-1)--(4,-1)--(4,2)--(3,2)
+    --(3,3)--(4,3)--(4,4)--(1,4)--(1,3)--(0,3)--cycle,
+    opacity(0.1) + lightcyan);
+  label("$s$", (0,0), 1.5*dir(225));
+  label("$a$", (3,2), 2*dir(45), red);
+  label("$b$", (1,0), 2*dir(225), red);
+  draw( (3,2)--(1,0), lightred);
+
+  real r = 0.07;
+  filldraw(CR( (3,-1), r), grey, black);
+  filldraw(CR( (0,0), r), grey, black);
+  filldraw(CR( (2,0), r), grey, black);
+  filldraw(CR( (4,0), r), grey, black);
+  filldraw(CR( (1,1), r), grey, black);
+  filldraw(CR( (3,1), r), grey, black);
+  filldraw(CR( (0,2), r), grey, black);
+  filldraw(CR( (2,2), r), grey, black);
+  filldraw(CR( (4,2), r), grey, black);
+  filldraw(CR( (1,3), r), grey, black);
+  filldraw(CR( (3,3), r), grey, black);
+  filldraw(CR( (2,4), r), grey, black);
+  filldraw(CR( (4,4), r), grey, black);
+
+  filldraw(CR( (4,-1), r), white, black);
+  filldraw(CR( (1,0), r), white, black);
+  filldraw(CR( (3,0), r), white, black);
+  filldraw(CR( (0,1), r), white, black);
+  filldraw(CR( (2,1), r), white, black);
+  filldraw(CR( (4,1), r), white, black);
+  filldraw(CR( (1,2), r), white, black);
+  filldraw(CR( (3,2), r), white, black);
+  filldraw(CR( (0,3), r), white, black);
+  filldraw(CR( (2,3), r), white, black);
+  filldraw(CR( (4,3), r), white, black);
+  filldraw(CR( (1,4), r), white, black);
+  filldraw(CR( (3,4), r), white, black);
+
+  real s = 3*r;
+  fill(CR( (0,0), s), opacity(0.2)+lightred );
+  fill(CR( (1,0), s), opacity(0.2)+lightred );
+  fill(CR( (1,1), s), opacity(0.2)+lightred );
+  fill(CR( (2,1), s), opacity(0.2)+lightred );
+  fill(CR( (2,2), s), opacity(0.2)+lightred );
+  fill(CR( (3,2), s), opacity(0.2)+lightred );
+
+  pen domino = heavygreen+1.2;
+  path vd = box( (-0.4, -0.4), (0.4, 1.4) );
+  path hd = rotate(-90)*vd;
+  draw(shift(0,0)*vd, domino);
+  draw(shift(1,1)*vd, domino);
+  draw(shift(2,2)*vd, domino);
+  draw(shift(1,0)*hd, domino);
+  draw(shift(2,1)*hd, domino);
+  draw(shift(3,2)*hd, domino);
+\end{asy}
+\end{center}
+
+The curve $\gamma$ by definition should cross $y=x-1$ at the point $b = (1,0)$.
+Let $a$ denote the first point of this sequence
+after $p_1$ for which $\gamma$ \emph{crosses} $y=x-1$ again.
+
+Now $a$ is tiled by a vertical domino whose black point is to the right of $\ell$.
+But the line segment $\ell$ cuts $\mathcal Q$ into two parts,
+and the orientation of $\gamma$ has this path also entering from the right.
+This contradicts the fact that the orientation of $\gamma$
+points only from white to black within dominoes.
+This contradiction completes the proof.
+
+\begin{remark*}
+  Note the problem is false if you allow holes
+  (consider a $3 \times 3$ with the middle square deleted).
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2009/4, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p1485147}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For $n \ge 2$, let $a_1$, $a_2$, \dots, $a_n$ be positive real numbers such that
+\[
+  \left( a_1 + a_2 + \dots + a_n \right)
+  \left( \frac{1}{a_1} + \frac{1}{a_2} + \dots + \frac{1}{a_n} \right)
+  \le \left( n + \half \right)^2.
+\]
+Prove that $\max\left( a_1, \dots, a_n \right) \le 4 \min\left( a_1, \dots, a_n \right)$.
+\end{mdframed}
+Assume $a_1$ is the largest and $a_2$ is the smallest.
+Let $M = a_1/a_2$.
+We wish to show $M \le 4$.
+
+In left-hand side of given, write as $a_2+a_1 + \dots + a_n$.
+By Cauchy Schwarz, one obtains
+\begin{align*}
+  \left( n+\half \right)^2 &\ge
+    \left( a_2 + a_1 + a_3 + \dots + a_n  \right)
+    \left( \frac{1}{a_1} + \frac{1}{a_2} + \frac{1}{a_3}
+      + \dots + \frac{1}{a_n} \right) \\
+  &\ge \left(\sqrt{\frac{a_2}{a_1}} + \sqrt{\frac{a_1}{a_2}}
+    + 1 + \dots + 1 \right)^2 \\
+  &\ge \left(\sqrt{1/M} + \sqrt{M} + (n-2) \right)^2.
+\end{align*}
+Expanding and solving for $M$ gives $1/4 \le M \le 4$ as needed.
+\pagebreak
+
+\subsection{USAMO 2009/5, proposed by Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p1485200}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Trapezoid $ABCD$, with $\ol{AB} \parallel \ol{CD}$,
+is inscribed in circle $\omega$ and point $G$ lies inside triangle $BCD$.
+Rays $AG$ and $BG$ meet $\omega$ again at points $P$ and $Q$, respectively.
+Let the line through $G$ parallel to $\ol{AB}$ intersect
+$\ol{BD}$ and $\ol{BC}$ at points $R$ and $S$, respectively.
+Prove that quadrilateral $PQRS$ is cyclic
+if and only if $\ol{BG}$ bisects $\angle CBD$.
+\end{mdframed}
+Perform an inversion around $B$ with arbitrary radius,
+and denote the inverse of a point $Z$ with $Z^\ast$.
+
+\begin{center}
+  \begin{asy}
+    unitsize(2cm);
+    pair A = Drawing("A", dir(130), dir(130));
+    pair B = Drawing("B", dir(50), dir(50));
+    pair C = Drawing("C", dir(-20), dir(-20));
+    pair D = Drawing("D", dir(200), dir(200));
+    pair Q = Drawing("Q", dir(270), dir(270));
+    pair G = Drawing("G", 0.3*Q+0.7*B, 1.414*dir(290));
+    pair R = Drawing("R", extension(B,D,G,G-(1,0)), dir(135));
+    pair S = Drawing("S", extension(B,C,G,G+(1,0)), dir(45));
+    pair P = Drawing("P", 2*foot(origin,A,G)-A, dir(G-A));
+    draw(unitcircle);
+    draw(D--A--B--C--D--B--Q--P--A);
+    draw(R--S);
+    draw(circumcircle(P,Q,R), dashed);
+  \end{asy}
+  \quad
+  \begin{asy}
+    unitsize(2cm);
+    pair B = Drawing("B", dir(130), dir(110));
+    pair R = Drawing("R^\ast", dir(210), dir(210));
+    pair S = Drawing("S^\ast", dir(330), dir(330));
+    pair G = Drawing("G^\ast", dir(270), dir(290));
+    pair D = Drawing("D^\ast", .6*R+.4*B, 1.414*dir(230));
+    pair C = Drawing("C^\ast", .6*S+.4*B, 1.414*dir(-90));
+    pair Q = Drawing("Q^\ast", extension(B,G,C,D), dir(45));
+    pair A = Drawing("A^\ast", extension(B,2/(B+conj(B)),C,D), dir(180));
+    pair P = Drawing("P^\ast", 2*foot(circumcenter(A,B,G),C,D)-A,dir(-25));
+    draw(unitcircle);
+    draw(circumcircle(B,C,D));
+    draw(A--P);
+    draw(R--B--S--cycle);
+    draw(G--B);
+    draw(circumcircle(A,B,G));
+    draw(A--B);
+    /*
+    pair X = Drawing("X", 2*foot(origin,P,G)-G, dir(P-G));
+    draw(G--X, dashed);
+    */
+  \end{asy}
+\end{center}
+
+After inversion, we obtain a cyclic quadrilateral
+$BS^\ast G^\ast R^\ast$ and points $C^\ast$, $D^\ast$
+on $\ol{BS^\ast}$, $\ol{BR^\ast}$,
+such that $(BC^\ast D^\ast)$ is tangent to $(BS^\ast G^\ast R^\ast)$ ---
+in other words, so that $\ol{C^\ast D^\ast}$
+is parallel to $\ol{S^\ast R^\ast}$.
+Point $A^\ast$ lies on line $\ol{C^\ast D^\ast}$
+so that $\ol{A^\ast B}$ is tangent to $(BS^\ast G^\ast R^\ast)$.
+Points $P^\ast$ and $Q^\ast$ are the
+intersections of $(A^\ast BG^\ast)$ and $\ol{BG^\ast}$
+with line $C^\ast D^\ast$.
+
+Observe that $P^\ast Q^\ast R^\ast S^\ast$ is a trapezoid,
+so it is cyclic if and only if it isosceles.
+
+Let $X$ be the second intersection of line $G^\ast P^\ast$
+with $(B S^\ast R^\ast)$.  Because
+\[ \dang Q^\ast P^\ast G^\ast
+  = \dang A^\ast B G^\ast = \dang BXG^\ast \]
+we find that $BXS^\ast R^\ast$ is an isosceles trapezoid.
+
+If $G^\ast$ is indeed the midpoint of the arc
+then everything is clear by symmetry now.
+Conversely, if $P^\ast R^\ast = Q^\ast S^\ast$ then
+that means $P^\ast Q^\ast R^\ast S^\ast$ is a cyclic trapezoid,
+and hence that the perpendicular bisectors of
+$\ol{P^\ast Q^\ast}$ and $\ol{R^\ast S^\ast}$ are the same.
+Hence $B$, $X$, $P^\ast$, $Q^\ast$ are symmetric around this line.
+This forces $G^\ast$ to be the midpoint of arc $R^\ast S^\ast$ as desired.
+\pagebreak
+
+\subsection{USAMO 2009/6, proposed by Gabriel Carroll}
+\textsl{Available online at \url{https://aops.com/community/p1485204}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $s_1, s_2, s_3, \dots$ be an infinite,
+nonconstant sequence of rational numbers,
+meaning it is not the case that $s_1 = s_2 = s_3 = \dots$.
+Suppose that $t_1, t_2, t_3, \dots$ is also an infinite,
+nonconstant sequence of rational numbers
+with the property that $(s_i - s_j)(t_i - t_j)$
+is an integer for all $i$ and $j$.
+Prove that there exists a rational number $r$
+such that $(s_i - s_j)r$ and $(t_i - t_j)/r$
+are integers for all $i$ and $j$.
+\end{mdframed}
+First we eliminate the silly edge case:
+\begin{claim*}
+  For some $i$ and $j$, we have
+  $(s_i - s_j)(t_i - t_j) \neq 0$.
+\end{claim*}
+\begin{proof}
+  Assume not.
+  WLOG $s_1 \neq s_2$, then $t_1 = t_2$.
+  Now select $i$ such that $t_i \neq t_1 = t_2$.
+  Then either $t_i - s_1 \neq 0$
+  or $t_i - s_2 \neq 0$, contradiction.
+\end{proof}
+
+So, WLOG (by permutation) that $n = (s_1-s_2)(t_1-t_2) \neq 0$.
+By shifting and scaling appropriately,
+we may assume
+\[ s_1 = t_1 = 0, \quad s_2 = 1, \quad t_2 = n. \]
+Thus we deduce \[ s_i t_i \in \ZZ, \quad s_i t_j + s_j t_i \in \ZZ
+  \qquad \forall i,j. \]
+
+\begin{claim*}
+  For any index $i$,
+  $t_i \in \ZZ$, $s_i \in \frac 1n \ZZ$.
+\end{claim*}
+\begin{proof}
+  We have $s_i t_i \in \ZZ$
+  and $t_i + n s_i \in \ZZ$ by problem condition.
+  By looking at $\nu_p$ of this,
+  we conclude $ns_i, t_i \in \ZZ$
+  (since if either as negative $p$-adic value,
+  so does the other, and then $s_i t_i \notin \ZZ$).
+\end{proof}
+
+Last claim:
+\begin{claim*}
+  If $d = \gcd t_\bullet$, then $ds_i \in \ZZ$ for all $i$.
+\end{claim*}
+\begin{proof}
+  Consider a prime $p \mid n$, and let $e = \nu_p(t_j)$.
+  We will show $\nu_p(s_i) \ge -e$ for any $i$.
+
+  This is already true for $i = j$,
+  so assume $i \neq j$.
+  Assume for contradiction $\nu_p(s_i) < -e$.
+  Then $\nu_p(t_i) > e = \nu_p(t_k)$.
+  Since $\nu_p(s_k) \ge -e$ we deduce
+  $\nu_p(s_i t_k) < \nu_p(s_k t_i)$;
+  so $\nu_p(s_i t_k) \ge 0$ and $\nu_p(s_i) \ge -e$ as desired.
+\end{proof}
+\pagebreak
+
+
+\end{document}

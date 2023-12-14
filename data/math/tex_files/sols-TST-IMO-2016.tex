@@ -1,0 +1,463 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{USA IMO TST 2016 Solutions}
+\subtitle{United States of America --- IMO Team Selection Tests}
+\date{60\ts{th} IMO 2016 Hong Kong}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $S = \{1, \dots, n\}$.
+Given a bijection $f \colon S \to S$ an \emph{orbit} of $f$ is a
+set of the form $\{x, f(x), f(f(x)), \dots \}$ for some $x \in S$.
+We denote by $c(f)$ the number of distinct orbits of $f$.
+For example, if $n=3$ and $f(1)=2$, $f(2)=1$, $f(3)=3$,
+the two orbits are $\{1,2\}$ and $\{3\}$, hence $c(f)=2$.
+
+Given $k$ bijections $f_1$, \dots, $f_k$ from $S$ to itself, prove that
+\[ c(f_1) + \dots + c(f_k) \le n(k-1) + c(f) \]
+where $f \colon S \to S$ is the composed function $f_1 \circ \dots \circ f_k$.
+
+\item %% Problem 2
+Let $ABC$ be a scalene triangle with circumcircle $\Omega$,
+and suppose the incircle of $ABC$ touches $BC$ at $D$.
+The angle bisector of $\angle A$ meets $BC$ and $\Omega$ at $K$ and $M$.
+The circumcircle of $\triangle DKM$ intersects the $A$-excircle
+at $S_1$, $S_2$, and $\Omega$ at $T \neq M$.
+Prove that line $AT$ passes through either $S_1$ or $S_2$.
+
+\item %% Problem 3
+Let $p$ be a prime number. Let $\FF_p$ denote the integers modulo $p$,
+and let $\FF_p[x]$ be the set of polynomials with coefficients in $\FF_p$.
+Define $\Psi \colon \FF_p[x] \to \FF_p[x]$ by
+\[ \Psi\left( \sum_{i=0}^n a_i x^i \right) = \sum_{i=0}^n a_i x^{p^i}. \]
+Prove that for nonzero polynomials $F,G \in \FF_p[x]$,
+\[ \Psi(\gcd(F,G)) = \gcd(\Psi(F), \Psi(G)). \]
+%Here, a polynomial $Q$ divides $P$ if there exists $R \in \FF_p[x]$
+%such that $P(x) - Q(x) R(x)$ is the polynomial with all coefficients $0$
+%(with all addition and multiplication in the coefficients taken modulo $p$),
+%and the gcd of two polynomials is the highest degree polynomial
+%with leading coefficient $1$ which divides both of them.
+%A non-zero polynomial is a polynomial with not all coefficients $0$.
+%As an example of multiplication, $(x+1)(x+2)(x+3) = x^3+x^2+x+1$
+%in $\FF_5[x]$.
+
+\item %% Problem 4
+Let $\sqrt{3}=1.b_1b_2b_3\dots_{(2)}$ be the binary representation
+of $\sqrt 3$. Prove that for any positive integer $n$, at least one of
+the digits $b_n, b_{n+1}, \dots, b_{2n}$ equals 1.
+
+\item %% Problem 5
+Let $n \ge 4$ be an integer.
+Find all functions $W \colon \{1, \dots, n\}^2 \to \RR$ such that
+for every partition $[n] = A \cup B \cup C$ into disjoint sets,
+\[ \sum_{a \in A} \sum_{b \in B} \sum_{c \in C} W(a,b) W(b,c)
+= |A| |B| |C|. \]
+
+\item %% Problem 6
+Let $ABC$ be an acute scalene triangle
+and let $P$ be a point in its interior.
+Let $A_1$, $B_1$, $C_1$ be projections of $P$ onto
+triangle sides $BC$, $CA$, $AB$, respectively.
+Find the locus of points $P$ such that
+$AA_1$, $BB_1$, $CC_1$ are concurrent
+and $\angle PAB + \angle PBC + \angle PCA = 90\dg$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USA TST 2016/1, proposed by Maria Monks}
+\textsl{Available online at \url{https://aops.com/community/p5679356}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $S = \{1, \dots, n\}$.
+Given a bijection $f \colon S \to S$ an \emph{orbit} of $f$ is a
+set of the form $\{x, f(x), f(f(x)), \dots \}$ for some $x \in S$.
+We denote by $c(f)$ the number of distinct orbits of $f$.
+For example, if $n=3$ and $f(1)=2$, $f(2)=1$, $f(3)=3$,
+the two orbits are $\{1,2\}$ and $\{3\}$, hence $c(f)=2$.
+
+Given $k$ bijections $f_1$, \dots, $f_k$ from $S$ to itself, prove that
+\[ c(f_1) + \dots + c(f_k) \le n(k-1) + c(f) \]
+where $f \colon S \to S$ is the composed function $f_1 \circ \dots \circ f_k$.
+\end{mdframed}
+Most motivated solution is to consider $n - c(f)$ and show this is the transposition distance.
+Dumb graph theory works as well.
+\pagebreak
+
+\subsection{USA TST 2016/2, proposed by Evan Chen}
+\textsl{Available online at \url{https://aops.com/community/p5679361}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a scalene triangle with circumcircle $\Omega$,
+and suppose the incircle of $ABC$ touches $BC$ at $D$.
+The angle bisector of $\angle A$ meets $BC$ and $\Omega$ at $K$ and $M$.
+The circumcircle of $\triangle DKM$ intersects the $A$-excircle
+at $S_1$, $S_2$, and $\Omega$ at $T \neq M$.
+Prove that line $AT$ passes through either $S_1$ or $S_2$.
+\end{mdframed}
+We present an angle-chasing solution,
+and then a more advanced alternative finish.
+
+\paragraph{First solution (angle chasing).}
+Assume for simplicity $AB < AC$.
+Let $E$ be the contact point of the $A$-excircle on $BC$;
+also let ray $TD$ meet $\Omega$ again at $L$.
+From the fact that $\angle MTL = \angle MTD = 180^{\circ} - \angle MKD$,
+we can deduce that $\angle MTL = \angle ACM$,
+meaning that $L$ is the reflection of $A$ across the
+perpendicular bisector $\ell$ of $BC$.
+If we reflect $T$, $D$, $L$ over $\ell$, we deduce $A$, $E$ and the reflection of $T$ across
+$\ell$ are collinear, which implies that $\angle BAT = \angle CAE$.
+
+Now, consider the reflection point $E$ across line $AI$, say $S$.
+Since ray $AI$ passes through the $A$-excenter, $S$ lies on the $A$-excircle.
+Since $\angle BAT = \angle CAE$, $S$ also lies on ray $AT$.
+But the circumcircles of triangles $DKM$ and $KME$ are congruent (from $DM = EM$),
+so $S$ lies on the circumcircle of $\triangle DKM$ too.
+Hence $S$ is the desired intersection point.
+
+\begin{center}
+\begin{asy}
+size(12cm);
+pair A = dir(40);
+pair B = dir(210);
+pair C = dir(330);
+pair I = incenter(A, B, C);
+pair D = foot(I, B, C);
+pair K = extension(A, I, B, C);
+pair M = dir(-90);
+pair E = B+C-D;
+pair I_A = 2*M-I;
+
+pair S = -E+2*foot(E, K, M);
+
+pair L = dir(90);
+
+filldraw(A--B--C--cycle, opacity(0.2)+lightblue, blue);
+filldraw(unitcircle, opacity(0.1)+lightblue, blue);
+
+filldraw(circumcircle(D, K, M), opacity(0.2)+lightgreen, green);
+filldraw(circumcircle(E, K, M), opacity(0.2)+lightred, red);
+
+draw(A--I_A, blue);
+
+draw(arc(I_A, abs(E-I_A), -20, 120), heavycyan);
+draw(E--S, orange);
+
+pair T = extension(I, L, A, S);
+draw(E--A--S, orange+dashed);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(90));
+dot("$K$", K, dir(100));
+dot("$M$", M, dir(M));
+dot("$E$", E, dir(E));
+dot("$I_A$", I_A, dir(I_A));
+dot("$S$", S, dir(10));
+dot("$T$", T, dir(T));
+
+/* Source generated by TSQ
+
+!size(12cm);
+A = dir 40
+B = dir 210
+C = dir 330
+I := incenter A B C
+D = foot I B C R90
+K = extension A I B C R100
+M = dir -90
+E = B+C-D
+I_A = 2*M-I
+
+S = -E+2*foot E K M R10
+L := dir 90
+
+A--B--C--cycle 0.2 lightblue / blue
+unitcircle 0.1 lightblue / blue
+
+circumcircle D K M 0.2 lightgreen / green
+circumcircle E K M 0.2 lightred / red
+
+A--I_A blue
+
+!draw(arc(I_A, abs(E-I_A), -20, 120), heavycyan);
+E--S orange
+
+T = extension I L A S
+E--A--S orange dashed
+*/
+\end{asy}
+\end{center}
+
+\paragraph{Second solution (advanced).}
+It's known that $T$ is the touch-point of the $A$-mixtilinear incircle.
+Let $E$ be contact point of $A$-excircle on $BC$.
+Now the circumcircles of $\triangle DKM$ and $\triangle KME$ are congruent,
+since $DM = ME$ and the angles at $K$ are supplementary.
+Let $S$ be the reflection of $E$ across line $KM$, which by
+the above the above comment lies on the circumcircle of $\triangle DKM$.
+Since $KM$ passes through the $A$-excenter, $S$ also lies on the $A$-excircle.
+But $S$ also lies on line $AT$, since lines $AT$ and $AE$ are isogonal
+(the mixtilinear cevian is isogonal to the Nagel line).
+Thus $S$ is the desired intersection point.
+
+\paragraph{Authorship comments.}
+This problem comes from an observation of mine:
+let $ABC$ be a triangle,
+let the $\angle A$ bisector meet $\ol{BC}$ and $(ABC)$ at $E$ and $M$.
+Let $W$ be the tangency point of the $A$-mixtilinear excircle
+with the circumcircle of $ABC$.
+Then $A$-Nagel line passed through a common intersection
+of the circumcircle of $\triangle MEW$
+and the $A$-mixtilinear incircle.
+
+This problem is the inverted version of this observation.
+\pagebreak
+
+\subsection{USA TST 2016/3, proposed by Mark Sellke}
+\textsl{Available online at \url{https://aops.com/community/p5679392}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $p$ be a prime number. Let $\FF_p$ denote the integers modulo $p$,
+and let $\FF_p[x]$ be the set of polynomials with coefficients in $\FF_p$.
+Define $\Psi \colon \FF_p[x] \to \FF_p[x]$ by
+\[ \Psi\left( \sum_{i=0}^n a_i x^i \right) = \sum_{i=0}^n a_i x^{p^i}. \]
+Prove that for nonzero polynomials $F,G \in \FF_p[x]$,
+\[ \Psi(\gcd(F,G)) = \gcd(\Psi(F), \Psi(G)). \]
+%Here, a polynomial $Q$ divides $P$ if there exists $R \in \FF_p[x]$
+%such that $P(x) - Q(x) R(x)$ is the polynomial with all coefficients $0$
+%(with all addition and multiplication in the coefficients taken modulo $p$),
+%and the gcd of two polynomials is the highest degree polynomial
+%with leading coefficient $1$ which divides both of them.
+%A non-zero polynomial is a polynomial with not all coefficients $0$.
+%As an example of multiplication, $(x+1)(x+2)(x+3) = x^3+x^2+x+1$
+%in $\FF_5[x]$.
+\end{mdframed}
+Observe that $\Psi$ is also a linear map of $\FF_p$ vector spaces,
+and that $\Psi(xP) = \Psi(P)^p$ for any $P \in \FF_p[x]$.
+(In particular, $\Psi(1) = x$, not $1$, take caution!)
+
+\paragraph{First solution (Ankan Bhattacharya).}
+We start with:
+\begin{claim*}
+  If $P \mid Q$ then $\Psi(P) \mid \Psi(Q)$.
+\end{claim*}
+\begin{proof}
+  Set $Q = PR$, where $R = \sum_{i=0}^k r_i x^i$.
+  Then
+  \[ \Psi(Q) = \Psi\left( P\sum_{i=0}^k r_i x^i \right) \\
+    = \sum_{i=0}^k \Psi\left( P \cdot r_i x^i  \right) \\
+    = \sum_{i=0}^k r_i \Psi(P)^{p^i} \]
+  which is divisible by $\Psi(P)$.
+\end{proof}
+
+This already implies
+\[ \Psi(\gcd(F,G)) \mid \gcd(\Psi(F), \Psi(G)). \]
+For the converse, by Bezout there exists $A,B \in \FF_p[x]$
+such that $AF + BG = \gcd(F,G)$, so taking $\Psi$ of both sides gives
+\[ \Psi(AF) + \Psi(BG) = \Psi\left( \gcd(F,G) \right). \]
+The left-hand side is divisible by $\gcd(\Psi(F), \Psi(G))$
+since the first term is divisible by $\Psi(F)$
+and the second term is divisible by $\Psi(G)$.
+So $\gcd(\Psi(F), \Psi(G)) \mid \Psi(\gcd(F,G))$
+and noting both sides are monic we are done.
+
+
+\paragraph{Second solution.}
+Here is an alternative (longer but more conceptual)
+way to finish without Bezout lemma.
+Let $\beth \subseteq \FF_p[x]$ denote the set of polynomials
+in the image of $\Psi$,
+thus $\Psi \colon \FF_p[x] \to \beth$ is a bijection on the level of sets.
+
+\begin{claim*}
+  If $A,B \in \beth$ then $\gcd(A,B) \in \beth$.
+\end{claim*}
+\begin{proof}
+  It suffices to show that if $A$ and $B$ are monic,
+  and $\deg A > \deg B$,
+  then the remainder when $A$ is divided by $B$ is in $\beth$.
+  Suppose $\deg A = p^k$ and $B = x^{p^{k-1}} - c_2x^{p^{k-2}} - \dots - c_k$.
+  Then
+  \begin{align*}
+    x^{p^k} &\equiv \left( c_2x^{p^{k-2}} + c_3x^{p^{k-3}}
+    + \dots + c_k  \right)^p \pmod B  \\
+    &\equiv c_2x^{p^{k-1}} + c_3x^{p^{k-2}} \dots + c_k \pmod B
+  \end{align*}
+  since exponentiation by $p$ commutes with addition in $\FF_p$.
+  This is enough to imply the conclusion.
+  The proof if $\deg B$ is smaller less than $p^{k-1}$ is similar.
+\end{proof}
+
+Thus, if we view $\FF_p[x]$ and $\beth$ as partially ordered sets
+under polynomial division, then $\gcd$ is the
+``greatest lower bound'' or ``meet'' in both partially ordered sets.
+We will now prove that $\Psi$ is an \emph{isomorphism} of the posets.
+We have already seen that $P \mid Q \implies \Psi(P) \mid \Psi(Q)$
+from the first solution. For the converse:
+
+\begin{claim*}
+  If $\Psi(P) \mid \Psi(Q)$ then $P \mid Q$.
+\end{claim*}
+\begin{proof}
+  Suppose $\Psi(P) \mid \Psi(Q)$, but $Q=PA+B$ where $\deg B < \deg P$.
+  Thus $\Psi(P) \mid \Psi(PA) + \Psi(B)$, hence $\Psi(P) \mid \Psi(B)$,
+  but $\deg \Psi(P) > \deg \Psi(B)$ hence $\Psi(B) = 0 \implies B = 0$.
+\end{proof}
+
+This completes the proof.
+
+\begin{remark*}
+   In fact $\Psi \colon \FF_p[x] \to \beth$
+   is a ring isomorphism
+   if we equip $\beth$ with function composition
+   as the ring multiplication.
+   Indeed in the proof of the first claim
+   (that $P \mid Q \implies \Psi(P) \mid \Psi(Q)$) we saw that
+   \[ \Psi(RP) = \sum_{i=0}^k r_i \Psi(P)^{p^i} = \Psi(R) \circ \Psi(P). \]
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USA TST 2016/4, proposed by Iurie Boreico}
+\textsl{Available online at \url{https://aops.com/community/p6368201}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $\sqrt{3}=1.b_1b_2b_3\dots_{(2)}$ be the binary representation
+of $\sqrt 3$. Prove that for any positive integer $n$, at least one of
+the digits $b_n, b_{n+1}, \dots, b_{2n}$ equals 1.
+\end{mdframed}
+Assume the contrary, so that for some integer $k$ we have
+\[k < 2^{n-1} \sqrt 3 < k + \frac{1}{2^{n+1}}. \]
+Squaring gives
+\begin{align*}
+k^2 < 3 \cdot 2^{2n-2} &< k^2 + \frac{k}{2^n} + \frac{1}{2^{2n+2}} \\
+&\le k^2 + \frac{2^{n-1} \sqrt 3}{2^n} + \frac{1}{2^{2n+2}} \\
+&= k^2 + \frac{\sqrt3}{2} + \frac{1}{2^{2n+2}} \\
+&\le k^2 + \frac{\sqrt3}{2} + \frac{1}{16} \\
+&< k^2+1
+\end{align*}
+and this is a contradiction.
+\pagebreak
+
+\subsection{USA TST 2016/5, proposed by Zilin Jiang}
+\textsl{Available online at \url{https://aops.com/community/p6368185}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n \ge 4$ be an integer.
+Find all functions $W \colon \{1, \dots, n\}^2 \to \RR$ such that
+for every partition $[n] = A \cup B \cup C$ into disjoint sets,
+\[ \sum_{a \in A} \sum_{b \in B} \sum_{c \in C} W(a,b) W(b,c)
+= |A| |B| |C|. \]
+\end{mdframed}
+Of course, $W(k,k)$ is arbitrary for $k \in [n]$.
+We claim that $W(a,b) = \pm 1$ for any $a \neq b$, with the sign fixed.
+(These evidently work.)
+
+First, let $X_{abc} = W(a,b)W(b,c)$ for all distinct $a$, $b$, $c$,
+so the given condition is
+\[ \sum_{a,b,c \in A \times B \times C} X_{abc} = |A| |B| |C|. \]
+Consider the given equation with the particular choices
+\begin{itemize}
+  \ii $A = \{1\}$, $B = \{2\}$, $C = \{3,4,\dots,n\}$.
+  \ii $A = \{1\}$, $B = \{3\}$, $C = \{2,4,\dots,n\}$.
+  \ii $A = \{1\}$, $B = \{2,3\}$, $C = \{4,\dots,n\}$.
+\end{itemize}
+This gives
+\begin{align*}
+  X_{123} + X_{124} + \dots + X_{12n} &= n-2 \\
+  X_{132} + X_{134} + \dots + X_{13n} &= n-2 \\
+  (X_{124} + \dots + X_{12n})
+  + (X_{134} + \dots + X_{13n}) &= 2(n-3).
+\end{align*}
+Adding the first two and
+subtracting the last one gives $X_{123} + X_{132} = 2$.
+Similarly, $X_{123} + X_{321} = 2$,
+and in this way we have $X_{321} = X_{132}$.
+Thus $W(3,2)W(2,1) = W(1,3)W(3,2)$,
+and since $W(3,2) \neq 0$ (clearly) we get $W(2,1) = W(3,2)$.
+
+Analogously, for any distinct $a$, $b$, $c$ we have $W(a,b) = W(b,c)$.
+For $n \ge 4$ this is enough to imply $W(a,b) = \pm 1$ for $a \neq b$
+where the choice of sign is the same for all $a$ and $b$.
+
+\begin{remark*}
+Surprisingly, the $n = 3$ case has ``extra'' solutions for
+$W(1,2) = W(2,3) = W(3,1) = \pm1$,
+$W(2,1) = W(3,2) = W(1,3) = \mp1$.
+\end{remark*}
+\begin{remark*}
+[Intuition]
+It should still be possible to solve the problem
+with $X_{abc}$ in place of $W(a,b) W(b,c)$,
+because we have about far more equations than variables $X_{a,b,c}$
+so linear algebra assures us we almost certainly have a unique solution.
+\end{remark*}
+\pagebreak
+
+\subsection{USA TST 2016/6, proposed by Ivan Borsenco}
+\textsl{Available online at \url{https://aops.com/community/p6368189}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be an acute scalene triangle
+and let $P$ be a point in its interior.
+Let $A_1$, $B_1$, $C_1$ be projections of $P$ onto
+triangle sides $BC$, $CA$, $AB$, respectively.
+Find the locus of points $P$ such that
+$AA_1$, $BB_1$, $CC_1$ are concurrent
+and $\angle PAB + \angle PBC + \angle PCA = 90\dg$.
+\end{mdframed}
+In complex numbers with $ABC$ the unit circle,
+it is equivalent to solving the following two cubic equations
+in $p$ and $q = \ol p$:
+\begin{align*}
+ (p-a)(p-b)(p-c) &= (abc)^2 (q -1/a)(q - 1/b)(q - 1/c) \\
+ 0 &= \prod_{\text{cyc}} (p+c-b-bcq) + \prod_{\text{cyc}} (p+b-c-bcq).
+\end{align*}
+Viewing this as two cubic curves in $(p,q) \in \CC^2$,
+by \emph{B\'ezout's Theorem} it follows there are at most nine solutions
+(unless both curves are not irreducible,
+but it's easy to check the first one cannot be factored).
+Moreover it is easy to name nine solutions (for $ABC$ scalene):
+the three vertices, the three excenters, and $I$, $O$, $H$.
+Hence the answer is just those three triangle centers $I$, $O$ and $H$.
+
+\begin{remark*}
+  On the other hand it is not easy to solve the cubics by hand;
+  I tried for an hour without success.
+  So I think this solution is only feasible
+  with knowledge of algebraic geometry.
+\end{remark*}
+\begin{remark*}
+  These two cubics have names:
+  \begin{itemize}
+    \ii The locus of $\angle PAB + \angle PBC + \angle PCA = 90\dg$
+    is the \textbf{McCay cubic},
+    which is the locus of points $P$
+    for which $P$, $P^\ast$, $O$ are collinear.
+    \ii The locus of the pedal condition
+    is the \textbf{Darboux cubic},
+    which is the locus of points $P$
+    for which $P$, $P^\ast$, $L$ are collinear,
+    $L$ denoting the de Longchamps point.
+  \end{itemize}
+  Assuming $P \neq P^\ast$,
+  this implies $P$ and $P^\ast$
+  both lie on the Euler line of $\triangle ABC$,
+  which is possible only if $P=O$ or $P=H$.
+
+  Some other synthetic solutions are posted at
+  \url{https://aops.com/community/c6h1243902p6368189}.
+\end{remark*}
+\pagebreak
+
+
+\end{document}

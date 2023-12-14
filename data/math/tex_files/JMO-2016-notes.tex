@@ -1,0 +1,663 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{JMO 2016 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2016 JMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+The isosceles triangle $\triangle ABC$, with $AB=AC$,
+is inscribed in the circle $\omega$.
+Let $P$ be a variable point on the arc $BC$
+that does not contain $A$,
+and let $I_B$ and $I_C$ denote the incenters of
+triangles $\triangle ABP$ and $\triangle ACP$, respectively.
+Prove that as $P$ varies, the circumcircle
+of triangle $\triangle PI_{B}I_{C}$ passes through a fixed point.
+
+\item %% Problem 2
+Prove that there exists a positive integer $n < 10^6$
+such that $5^n$ has six consecutive zeros in its decimal representation.
+
+\item %% Problem 3
+Let $X_1, X_2, \dots, X_{100}$ be a sequence of mutually distinct nonempty subsets of a set $S$.
+Any two sets $X_i$ and $X_{i+1}$ are disjoint and their
+union is not the whole set $S$,
+that is, $X_i\cap X_{i+1}=\emptyset$ and $X_i\cup X_{i+1}\neq S$,
+for all $i\in\{1, \dots, 99\}$.
+Find the smallest possible number of elements in $S$.
+
+\item %% Problem 4
+Find, with proof, the least integer $N$ such that
+if any $2016$ elements are removed
+from the set $\{1, 2, \dots, N\}$,
+one can still find $2016$ distinct numbers
+among the remaining elements with sum $N$.
+
+\item %% Problem 5
+Let $\triangle ABC$ be an acute triangle, with $O$ as its circumcenter.
+Point $H$ is the foot of the perpendicular from $A$ to line $BC$,
+and points $P$ and $Q$ are the feet of the perpendiculars
+from $H$ to the lines $AB$ and $AC$, respectively.
+
+Given that \[ AH^2 = 2AO^2, \]
+prove that the points $O$, $P$, and $Q$ are collinear.
+
+\item %% Problem 6
+Find all functions $f \colon \RR \to \RR$ such that
+for all real numbers $x$ and $y$,
+\[ (f(x)+xy) \cdot f(x-3y)
+ + (f(y)+xy) \cdot f(3x-y)
+ = (f(x+y))^2. \]
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{JMO 2016/1, proposed by Ivan Borsenco, Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p6213607}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+The isosceles triangle $\triangle ABC$, with $AB=AC$,
+is inscribed in the circle $\omega$.
+Let $P$ be a variable point on the arc $BC$
+that does not contain $A$,
+and let $I_B$ and $I_C$ denote the incenters of
+triangles $\triangle ABP$ and $\triangle ACP$, respectively.
+Prove that as $P$ varies, the circumcircle
+of triangle $\triangle PI_{B}I_{C}$ passes through a fixed point.
+\end{mdframed}
+Let $M$ be the midpoint of arc $BC$ not containing $A$.
+We claim $M$ is the desired fixed point.
+
+\begin{center}
+\begin{asy}
+pair A = dir(90);
+pair M_B = dir(152);
+pair B = M_B*M_B/A;
+pair M_C = A*A/M_B;
+pair C = A*A/B;
+pair P = dir(250);
+
+draw(unitcircle, blue);
+filldraw(A--B--P--cycle, opacity(0.1)+lightblue, blue);
+filldraw(A--C--P--cycle, opacity(0.1)+lightblue, blue);
+draw(B--C, blue);
+
+pair M = -A;
+pair I_B = incenter(P, A, B);
+pair I_C = incenter(P, A, C);
+
+draw(I_B--P--I_C, blue);
+draw(A--P, blue);
+
+filldraw(incircle(A, B, P), opacity(0.05)+heavycyan, heavycyan+dotted);
+filldraw(incircle(A, C, P), opacity(0.05)+heavycyan, heavycyan+dotted);
+
+
+filldraw(M_B--I_B--M--cycle, opacity(0.2)+yellow, orange+1);
+filldraw(M_C--I_C--M--cycle, opacity(0.2)+yellow, orange+1);
+
+draw(circumcircle(P, I_B, I_C), red+dashed);
+
+dot("$A$", A, dir(A));
+dot("$M_B$", M_B, dir(M_B));
+dot("$B$", B, dir(B));
+dot("$M_C$", M_C, dir(M_C));
+dot("$C$", C, dir(C));
+dot("$P$", P, dir(P));
+dot("$M$", M, dir(M));
+dot("$I_B$", I_B, dir(160));
+dot("$I_C$", I_C, dir(170));
+
+/* TSQ Source:
+
+A = dir 90
+M_B = dir 152
+B = M_B*M_B/A
+M_C = A*A/M_B
+C = A*A/B
+P = dir 250
+
+unitcircle blue
+A--B--P--cycle 0.1 lightblue / blue
+A--C--P--cycle 0.1 lightblue / blue
+B--C blue
+
+M = -A
+I_B = incenter P A B R160
+I_C = incenter P A C R170
+
+I_B--P--I_C blue
+A--P blue
+
+incircle A B P 0.05 heavycyan / heavycyan dotted
+incircle A C P 0.05 heavycyan / heavycyan dotted
+
+
+M_B--I_B--M--cycle 0.2 yellow / orange+1
+M_C--I_C--M--cycle 0.2 yellow / orange+1
+
+circumcircle P I_B I_C red dashed
+
+*/
+\end{asy}
+\end{center}
+
+Since $\angle MPA = 90^\circ$ and ray $PA$ bisects $\angle I_{B}PI_{C}$,
+it suffices to show that $MI_B = MI_C$.
+Let $M_B$, $M_C$ be the second intersections of $PI_B$ and $PI_C$ with circumcircle.
+Now $M_{B}I_{B} = M_{B}B = M_{C}C = M_{C}I_{C}$, and moreover $MM_B = MM_C$,
+and $\angle I_{B}M_{B}M = \frac{1}{2} \widehat{PM} = \angle I_{C}M_{C}M$,
+so triangles $\triangle I_{B}M_{B}M \cong \triangle I_{C}M_{C}M$.
+
+
+
+\begin{remark}
+Complex in the obvious way DOES NOT WORK,
+because the usual claim (``the fixed point is arc midpoint'') is FALSE
+if the hypothesis that $P$ lies in the interior of the arc is dropped.
+See figure below.
+\begin{center}
+\begin{asy}
+pair A = dir(90);
+pair M_B = dir(152);
+pair B = M_B*M_B/A;
+pair M_C = A*A/M_B;
+pair C = A*A/B;
+pair P = dir(140);
+
+draw(unitcircle, blue);
+filldraw(A--B--P--cycle, opacity(0.1)+lightblue, blue);
+filldraw(A--C--P--cycle, opacity(0.1)+lightblue, blue);
+draw(B--C, blue);
+
+pair M = -A;
+pair I_B = incenter(P, A, B);
+pair I_C = incenter(P, A, C);
+
+draw(A--P, blue);
+
+filldraw(incircle(A, B, P), opacity(0.05)+heavycyan, heavycyan+dotted);
+filldraw(incircle(A, C, P), opacity(0.05)+heavycyan, heavycyan+dotted);
+
+draw(circumcircle(P, I_B, I_C), red+dashed);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$P$", P, dir(P));
+dot("$M$", M, dir(M));
+dot("$I_B$", I_B, dir(100));
+dot("$I_C$", I_C, dir(340));
+
+/* TSQ Source:
+
+A = dir 90
+M_B := dir 152
+B = M_B*M_B/A
+M_C := A*A/M_B
+C = A*A/B
+P = dir 140
+
+unitcircle blue
+A--B--P--cycle 0.1 lightblue / blue
+A--C--P--cycle 0.1 lightblue / blue
+B--C blue
+
+M = -A
+I_B = incenter P A B R100
+I_C = incenter P A C R340
+
+A--P blue
+
+incircle A B P 0.05 heavycyan / heavycyan dotted
+incircle A C P 0.05 heavycyan / heavycyan dotted
+
+circumcircle P I_B I_C red dashed
+
+*/
+\end{asy}
+\end{center}
+Fun story, I pointed this out to Zuming during grading;
+I was the only one that realized the subtlety.
+\end{remark}
+\pagebreak
+
+\subsection{JMO 2016/2, proposed by Evan Chen}
+\textsl{Available online at \url{https://aops.com/community/p6213569}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that there exists a positive integer $n < 10^6$
+such that $5^n$ has six consecutive zeros in its decimal representation.
+\end{mdframed}
+We will prove that $\boxed{n = 20 + 2^{19} = 524308}$ fits the bill.
+
+First, we claim that
+\[ 5^n \equiv 5^{20} \pmod{5^{20}} \qquad\text{and}\qquad
+  5^n \equiv 5^{20} \pmod{2^{20}}. \]
+Indeed, the first equality holds since both sides are $0 \pmod{5^{20}}$,
+and the second by $\varphi(2^{20}) = 2^{19}$ and Euler's theorem.
+Hence \[ 5^n \equiv 5^{20} \pmod{10^{20}}. \]
+
+In other words, the last $20$ digits of $5^n$
+will match the decimal representation of $5^{20}$, with leading zeros.
+However, we have
+\[ 5^{20} = \frac{1}{2^{20}} \cdot 10^{20}
+  < \frac{1}{1000^2} \cdot 10^{20} = 10^{-6} \cdot 10^{20} \]
+and hence those first six of those $20$ digits will all be zero.
+This completes the proof!
+(To be concrete, it turns out that $5^{20} = 95367431640625$
+and so the last $20$ digits of $5^n$ will be $00000095367431640625$.)
+
+\begin{remark*}
+  Many of the first posts in the JMO 2016 discussion thread
+  (see \url{https://aops.com/community/c5h1230514})
+  claimed that the problem was ``super easy''.
+  In fact, the problem was solved by only about 10\% of contestants.
+\end{remark*}
+
+\paragraph{Authorship comments.}
+This problem was inspired by the observation $5^8 \equiv 5^4 \pmod{10^4}$,
+i.e.\ that $5^8$ ended with $0625$.
+
+I noticed this one day back in November, when I was lying on my bed after
+a long afternoon and was mindlessly computing powers of $5$ in my head
+because I was too tired to do much else.
+When I reached $5^8$ I noticed for the first time that the ending
+$0625$ was actually induced by $5^4$.
+(Given how much MathCounts I did, I really should have known this earlier!)
+
+Thinking about this for a few more seconds,
+I realized one could obtain arbitrarily long strings of $0$'s
+by using a similar trick modulo larger powers of $10$.
+This surprised me, because I would have thought that if this was true,
+then I would have learned about it back in my contest days.
+However, I could not find any references,
+and I thought the result was quite nice,
+so I submitted it as a proposal for the JMO,
+where I thought it might be appreciated.
+
+The joke about six consecutive zeros is due to Zuming Feng.
+\pagebreak
+
+\subsection{JMO 2016/3, proposed by Iurie Boreico}
+\textsl{Available online at \url{https://aops.com/community/p6213589}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $X_1, X_2, \dots, X_{100}$ be a sequence of mutually distinct nonempty subsets of a set $S$.
+Any two sets $X_i$ and $X_{i+1}$ are disjoint and their
+union is not the whole set $S$,
+that is, $X_i\cap X_{i+1}=\emptyset$ and $X_i\cup X_{i+1}\neq S$,
+for all $i\in\{1, \dots, 99\}$.
+Find the smallest possible number of elements in $S$.
+\end{mdframed}
+Solution with Danielle Wang: the answer is that $|S| \ge 8$.
+
+\textbf{Proof of sufficiency}
+Since we must have $2^{|S|} \geq 100$, we must have $|S| \geq 7$.
+
+To see that $|S| = 8$ is the minimum possible size,
+consider a chain on the set $S = \{1, 2, \dots, 7\}$
+satisfying $X_i \cap X_{i+1} = \emptyset$ and $X_i \cup X_{i+1} \neq S$.
+Because of these requirements any subset of size $4$ or more
+can only be neighbored by sets of size $2$ or less,
+of which there are $\binom 71 + \binom 72 = 28$ available.
+Thus, the chain can contain no more than $29$ sets of size $4$ or more
+and no more than $28$ sets of size $2$ or less.
+Finally, since there are only $\binom 73 = 35$ sets of size $3$ available,
+the total number of sets in such a chain
+can be at most $29 + 28 + 35 = 92 < 100$.
+
+\textbf{Construction}
+We will provide an inductive construction for a
+chain of subsets $X_1, X_2, \dots, X_{2^{n-1} + 1}$
+of  $S = \left\{ 1, \dots, n \right\}$
+satisfying $X_i \cap X_{i+1} = \varnothing$
+and $X_i \cup X_{i+1} \neq S$ for each $n \geq 4$.
+
+For $S = \{1, 2, 3, 4\}$,
+the following chain of length $2^3 + 1 = 9$ will work:
+\[
+\begin{array}{ccccccccc}
+  34 & 1 & 23 & 4 & 12 & 3 & 14 & 2 & 13
+\end{array}.
+\]
+Now, given a chain of subsets of $\{1, 2, \dots, n\}$
+the following procedure produces a
+chain of subsets of $\{1, 2, \dots, n+1\}$:
+\begin{enumerate}
+\item take the original chain, delete any element,
+  and make two copies of this chain, which now has even length;
+\item glue the two copies together,
+  joined by $\varnothing$ in between; and then
+\item insert the element $n+1$ into the sets in alternating positions
+  of the chain starting with the first.
+\end{enumerate}
+For example, the first iteration of this construction gives:
+\[
+ \begin{array}{ccccccccc}
+ 345 & 1 & 235 & 4 & 125 & 3 & 145 & 2 & 5 \\
+ 34 & 15 & 23 & 45 & 12 & 35 & 14 & 25 &
+ \end{array}
+\]
+It can be easily checked that if the original chain satisfies the requirements,
+then so does the new chain, and if the original chain has length $2^{n-1}+1$,
+then the new chain has length $2^{n}+1$, as desired.
+This construction yields a chain of length $129$
+when $S = \{1, 2, \dots, 8\}$.
+
+\begin{remark*}
+  Here is the construction for $n=8$ in its full glory.
+\[
+ \begin{array}{ccccccccc}
+ 345678 & 1 & 235678 & 4 & 125678 & 3 & 145678 & 2 & 5678 \\
+ 34 & 15678 & 23 & 45678 & 12 & 35678 & 14 & 678 & \\
+ 345 & 1678 & 235 & 4678 & 125 & 3678 & 145 & 2678 & 5 \\
+ 34678 & 15 & 23678 & 45 & 12678 & 35 & 78 & & \\\hline
+ 3456 & 178 & 2356 & 478 & 1256 & 378 & 1456 & 278 & 56 \\
+ 3478 & 156 & 2378 & 456 & 1278 & 356 & 1478 & 6 & \\
+ 34578 & 16 & 23578 & 46 & 12578 & 36 & 14578 & 26 & 578 \\
+ 346 & 1578 & 236 & 4578 & 126 & 8 & & & \\ \hline\hline
+ 34567 & 18 & 23567 & 48 & 12567 & 38 & 14567 & 28 & 567 \\
+ 348 & 1567 & 238 & 4567 & 128 & 3567 & 148 & 67 & \\
+ 3458 & 167 & 2358 & 467 & 1258 & 367 & 1458 & 267 & 58 \\
+ 3467 & 158 & 2367 & 458 & 1267 & 358 & 7 & & \\\hline
+ 34568 & 17 & 23568 & 47 & 12568 & 37 & 14568 & 27 & 568 \\
+ 347 & 1568 & 237 & 4568 & 127 & 3568 & 147 & 68 & \\
+ 3457 & 168 & 2357 & 468 & 1257 & 368 & 1457 & 268 & 57 \\
+ 3468 & 157 & 2368 & 457 & 1268 & & & & \\
+ \end{array}
+\]
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{JMO 2016/4, proposed by Gregory Galperin}
+\textsl{Available online at \url{https://aops.com/community/p6220314}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find, with proof, the least integer $N$ such that
+if any $2016$ elements are removed
+from the set $\{1, 2, \dots, N\}$,
+one can still find $2016$ distinct numbers
+among the remaining elements with sum $N$.
+\end{mdframed}
+The answer is
+\[ N = 2017 + 2018 + \dots + 4032
+  = 1008 \cdot 6049 = 6097392. \]
+
+To see that $N$ must be at least this large,
+consider the situation
+when $1$, $2$, \dots, $2016$ are removed.
+Among the remaining elements,
+any sum of $2016$ elements is certainly
+at least $2017 + 2018 + \dots + 4032$.
+
+Now we show this value of $N$ works.
+Consider the $3024$ pairs of numbers
+$(1, 6048)$, $(2, 6047)$, \dots, $(3024, 3025)$.
+Regardless of which $2016$ elements of $\{1, 2, \dots, N\}$ are deleted,
+at least $3024 - 2016 = 1008$ of these pairs have both elements remaining.
+Since each pair has sum $6049$, we can take these pairs to be the desired numbers.
+\pagebreak
+
+\subsection{JMO 2016/5, proposed by Zuming Feng, Jacek Fabrykowski}
+\textsl{Available online at \url{https://aops.com/community/p6220305}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $\triangle ABC$ be an acute triangle, with $O$ as its circumcenter.
+Point $H$ is the foot of the perpendicular from $A$ to line $BC$,
+and points $P$ and $Q$ are the feet of the perpendiculars
+from $H$ to the lines $AB$ and $AC$, respectively.
+
+Given that \[ AH^2 = 2AO^2, \]
+prove that the points $O$, $P$, and $Q$ are collinear.
+\end{mdframed}
+We present two approaches.
+
+\paragraph{First approach (synthetic).}
+First, since $AP \cdot AB = AH^2 = AQ \cdot AC$, it follows that $PQCB$ is cyclic.
+Consequently, we have $AO \perp PQ$.
+
+\begin{center}
+\begin{asy}
+size(8cm);
+pair A = dir(110);
+pair H = A+1.414*dir(-90);
+pair U = H+6*dir(0);
+pair V = H-6*dir(0);
+pair B = OP(U--V, unitcircle);
+pair C = IP(U--V, unitcircle);
+pair P = foot(H, A, B);
+pair Q = foot(H, A, C);
+
+pair D = -A;
+draw(A--B--C--cycle, blue);
+filldraw(unitcircle, opacity(0.1)+lightcyan, blue);
+
+draw(A--H);
+draw(P--H--Q);
+
+pair K = circumcenter(A, B, C);
+draw(P--Q, blue);
+
+draw(A--D--C, red);
+filldraw(circumcircle(P, Q, B), opacity(0.1)+yellow, dashed+orange);
+filldraw(circumcircle(Q, C, D), opacity(0.1)+yellow, dashed+orange);
+
+dot("$A$", A, dir(A));
+dot("$H$", H, dir(H));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$P$", P, dir(P));
+dot("$Q$", Q, dir(70));
+dot("$D$", D, dir(D));
+dot("$K$", K, dir(60));
+/* Source generated by TSQ */
+\end{asy}
+\end{center}
+
+Let $K$ be the foot of $A$ onto $PQ$,
+and let $D$ be the point diametrically opposite $A$.
+Thus $A$, $K$, $O$, $D$ are collinear.
+
+Since quadrilateral $KQCD$ is cyclic ($\angle QKD = \angle QCD = 90^\circ$),
+we have
+\[ AK \cdot AD = AQ \cdot AC = AH^2
+  \implies AK = \frac{AH^2}{AD} = \frac{AH^2}{2AO} = AO \]
+so $K = O$.
+
+\paragraph{Second approach (coordinates), with Joshua Hsieh.}
+We impose coordinates with $H$ at the origin
+and $A = (0,a)$, $B = (-b,0)$, $C = (c,0)$, for $a,b,c > 0$.
+
+\begin{claim*}
+  The circumcenter has coordinates $(\frac{c-b}{2}, \frac a2 - \frac{bc}{2a})$.
+\end{claim*}
+\begin{proof}
+  This is a known lemma but but we reproduce its proof for completeness.
+  It uses the following steps:
+  \begin{itemize}
+    \ii By power of a point, the second intersection
+    of line $AH$ with the circumcircle is $(0, -\frac{bc}{a})$.
+    \ii Since the orthocenter is the reflection of this point across line $BC$,
+    the orthocenter is given exactly by $(0, \frac{bc}{a})$.
+    \ii The centroid is is $\frac{\vec A + \vec B + \vec C}{3} = (\frac{c-b}{3}, \frac a3)$.
+    \ii Since $\vec H - \vec O = 3( \vec G - \vec O)$
+    according to the Euler line, we have $\vec O = \frac 32 \vec G - \frac 12 \vec H$.
+    This gives the desired formula. \qedhere
+  \end{itemize}
+\end{proof}
+Note that $HQ = \frac{HA \cdot HC}{AC} = \frac{ac}{\sqrt{a^2+c^2}}$.
+If we let $T$ be the foot from $Q$ to $BC$,
+then $\triangle HQT \overset{\sim}{+} \triangle AHC$
+and so the $x$-coordinate of $Q$ is given by
+$HQ \cdot \frac{AH}{AC} = \frac{a^2c}{a^2+c^2}$.
+Repeating the analogous calculation for $Q$ and $P$ gives
+\begin{align*}
+  Q &= \left( \frac{a^2 c}{a^2+c^2}, \frac{ac^2}{a^2+c^2} \right) \\
+  P &= \left( -\frac{a^2 b}{a^2+b^2}, \frac{ab^2}{a^2+b^2} \right).
+\end{align*}
+Then, $O$, $P$, $Q$ are collinear if and only if the
+following shoelace determinant vanishes
+(with denominators cleared out):
+\begin{align*}
+  0
+  &= \det
+  \begin{bmatrix}
+    -a^2b & ab^2 & a^2+b^2 \\
+    a^2c & ac^2 & a^2+c^2 \\
+    a(c-b) & a^2-bc & 2a
+  \end{bmatrix}
+  = a \det
+  \begin{bmatrix}
+    -ab & ab^2 & a^2+b^2 \\
+    ac & ac^2 & a^2+c^2 \\
+    c-b & a^2-bc & 2a
+  \end{bmatrix} \\
+  &= a \det
+  \begin{bmatrix}
+    -a(b+c) & a(b^2-c^2) & b^2-c^2 \\
+    ac & ac^2 & a^2+c^2 \\
+    c-b & a^2-bc & 2a
+  \end{bmatrix}
+  = a(b+c) \det
+  \begin{bmatrix}
+    -a & a(b-c) & b-c \\
+    ac & ac^2 & a^2+c^2 \\
+    c-b & a^2-bc & 2a
+  \end{bmatrix} \\
+  &= a(b+c) \cdot \big[ -a(a^2c^2-a^4+bc(a^2+c^2))
+  + ac(b-c) \left( -a^2-bc \right)
+- (b-c)^2 \cdot a^3 \big] \\
+  &= a^2(b+c)(a^4-a^2b^2-b^2c^2-c^2a^2).
+\end{align*}
+On the other hand,
+\begin{align*}
+  AH^2 &= a^2 \\
+  2AO^2 &= 2 \left[ \left( \frac{c-b}{2} \right)^2
+      + \left( - \frac{a}{2} - \frac{bc}{2a} \right)^2 \right]
+  = \frac{a^2+b^2+c^2 + \frac{b^2c^2}{a^2}}{2} \\
+  \implies AH^2 - 2AO^2 &= \half \left( a^2-b^2-c^2-\frac{b^2c^2}{a^2} \right).
+\end{align*}
+So the conditions are equivalent.
+\pagebreak
+
+\subsection{JMO 2016/6, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p6220308}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all functions $f \colon \RR \to \RR$ such that
+for all real numbers $x$ and $y$,
+\[ (f(x)+xy) \cdot f(x-3y)
+ + (f(y)+xy) \cdot f(3x-y)
+ = (f(x+y))^2. \]
+\end{mdframed}
+We claim that the only two functions satisfying
+the requirements are $f(x) \equiv 0$ and $f(x) \equiv x^2$.
+These work.
+
+First, taking $x=y=0$ in the given yields $f(0) = 0$,
+and then taking $x=0$ gives $f(y)f(-y) = f(y)^2$.
+So also $f(-y)^2 = f(y)f(-y)$, from which we conclude $f$ is even.
+Then taking $x = -y$ gives
+\[ \forall x \in \RR : \qquad
+f(x) = x^2 \qquad\text{or}\qquad f(4x) = 0 \qquad(\bigstar) \]
+for all $x$.
+
+\begin{remark*}
+  Note that an example of a function satisfying $(\bigstar)$ is
+  \[
+    f(x)
+    =
+    \begin{cases}
+      x^2 & \text{if } |x| < 1 \\
+      \log(x^{42} + 2016^{\cos(x)}) & \text{if } 1 \le |x| < 4 \\
+      0 & \text{if } |x| \ge 4.
+    \end{cases}
+  \]
+  So, yes, we are currently in a world of trouble, still.
+\end{remark*}
+
+Now we claim
+\begin{claim*}
+  $f(z) = 0 \iff f(2z) = 0 \qquad (\spadesuit)$.
+\end{claim*}
+\begin{proof}
+  Let $(x,y)=(3t,t)$ in the given to get
+  \[ \left( f(t)+3t^2 \right)f(8t) = f(4t)^2. \]
+  Now if $f(4t) \neq 0$ (in particular, $t \neq 0$),
+  then $f(8t) \neq 0$.
+  Thus we have $(\spadesuit)$ in the reverse direction.
+
+  Then $f(4t) \neq 0 \overset{(\bigstar)}{\implies} f(t) = t^2 \neq 0
+  \overset{(\spadesuit)}{\implies} f(2t) \neq 0$
+  implies the forwards direction,
+  the last step being the reverse direction $(\spadesuit)$.
+\end{proof}
+%so by $(\bigstar)$ we have $f(t) = t^2$, and moreover $f(8t) \neq 0$.
+%But we also have
+%\[ \left( f(t/4)+\frac{3}{16}t^2 \right)f(2t) = f(t)^2 = t^4 \neq 0 \]
+%and hence $f(2t) \neq 0$ as well.
+%Thus we have seen that $f(4t) \neq 0 \implies f(8t), f(2t) \neq 0$
+%which is logically equivalent to $(\spadesuit)$.
+
+By putting together $(\bigstar)$ and $(\spadesuit)$ we finally get
+\[ \forall x \in \RR : \qquad
+f(x) = x^2 \qquad\text{or}\qquad f(x) = 0 \qquad(\heartsuit) \]
+
+We are now ready to approach the main problem.
+Assume there's an $a \neq 0$ for which $f(a) = 0$;
+we show that $f \equiv 0$.
+
+Let $b \in \RR$ be given.
+Since $f$ is even, we can assume without loss of generality that $a, b > 0$.
+Also, note that $f(x) \ge 0$ for all $x$ by $(\heartsuit)$.
+By using $(\spadesuit)$ we can generate $c > b$
+such that $f(c) = 0$ by taking $c = 2^n a$ for a large enough integer $n$.
+Now, select $x, y > 0$ such that
+$x-3y=b$ and $x+y=c$. That is,
+\[
+  (x,y) = \left( \frac{3c+b}{4}, \frac{c-b}{4} \right).
+\]
+Substitution into the original equation gives
+\[
+  0 = \left( f(x) + xy \right) f(b)
+  + \left( f(y) + xy \right) f(3x-y)
+  \ge \left( f(x) + xy \right) f(b).
+\]
+But since $f(b) \ge 0$, it follows $f(b) = 0$, as desired.
+\pagebreak
+
+
+\end{document}

@@ -1,0 +1,547 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2003 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2003 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Prove that for every positive integer $n$
+there exists an $n$-digit number divisible by $5^n$
+all of whose digits are odd.
+
+\item %% Problem 2
+A convex polygon $\mathcal{P}$ in the plane
+is dissected into smaller convex polygons by
+drawing all of its diagonals.
+The lengths of all sides and all diagonals of the
+polygon $\mathcal{P}$ are rational numbers.
+Prove that the lengths of all sides of all polygons
+in the dissection are also rational numbers.
+
+\item %% Problem 3
+Let $n$ be a positive integer.
+For every sequence of integers
+\[ A = (a_0, \; a_1, \; a_2, \; \dots, a_n) \]
+satisfying $0 \le a_i \le i$, for $i=0,\dots,n$,
+we define another sequence
+\[ t(A)= (t(a_0), \; t(a_1), \; t(a_2), \; \dots, \; t(a_n)) \]
+by setting $t(a_i)$ to be the number of terms in the
+sequence $A$ that precede the term $a_i$ and are different from $a_i$.
+Show that, starting from any sequence $A$ as above,
+fewer than $n$ applications of the  transformation $t$
+lead to a sequence $B$ such that $t(B) = B$.
+
+\item %% Problem 4
+Let $ABC$ be a triangle.
+A circle passing through $A$ and $B$
+intersects segments $AC$ and $BC$ at $D$ and $E$, respectively.
+Lines $AB$ and $DE$ intersect at $F$,
+while lines $BD$ and $CF$ intersect at $M$.
+Prove that $MF = MC$ if and only if $MB \cdot MD = MC^2$.
+
+\item %% Problem 5
+Let $a$, $b$, $c$ be positive real numbers.
+Prove that
+\[ \frac{(2a+b+c)^2}{2a^2+(b+c)^2}
++ \frac{(2b+c+a)^2}{2b^2+(c+a)^2}
++ \frac{(2c+a+b)^2}{2c^2+(a+b)^2} \le 8.  \]
+
+\item %% Problem 6
+At the vertices of a regular hexagon are written six nonnegative integers
+whose sum is $2003^{2003}$.
+Bert is allowed to make moves of the following form:
+he may pick a vertex and replace the number written
+there by the absolute value of the difference between the numbers
+written at the two neighboring vertices.
+Prove that Bert can make a sequence of moves,
+after which the number $0$ appears at all six vertices.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2003/1, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p336189}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that for every positive integer $n$
+there exists an $n$-digit number divisible by $5^n$
+all of whose digits are odd.
+\end{mdframed}
+This is immediate by induction on $n$.
+For $n = 1$ we take $5$;
+moving forward if $M$ is a working $n$-digit number then exactly one of
+\begin{align*}
+  N_1 &= 10^n + M \\
+  N_3 &= 3 \cdot 10^n + M \\
+  N_5 &= 5 \cdot 10^n + M \\
+  N_7 &= 7 \cdot 10^n + M \\
+  N_9 &= 9 \cdot 10^n + M
+\end{align*}
+is divisible by $5^{n+1}$;
+as they are all divisible by $5^n$
+and $N_k/5^n$ are all distinct.
+\pagebreak
+
+\subsection{USAMO 2003/2}
+\textsl{Available online at \url{https://aops.com/community/p336193}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A convex polygon $\mathcal{P}$ in the plane
+is dissected into smaller convex polygons by
+drawing all of its diagonals.
+The lengths of all sides and all diagonals of the
+polygon $\mathcal{P}$ are rational numbers.
+Prove that the lengths of all sides of all polygons
+in the dissection are also rational numbers.
+\end{mdframed}
+Suppose $AB$ is a side of a polygon in the dissection,
+lying on diagonal $XY$, with $X$, $A$, $B$, $Y$ in that order.
+Then \[ AB = XY - XA - YB. \]
+In this way, we see that it actually just suffices to
+prove the result for a quadrilateral.
+
+We present two approaches to this end.
+
+\paragraph{First approach (trig).}
+Consider quadrilateral $ABCD$.
+There are twelve angles one can obtain using three of its four vertices,
+three at each vertex; denote this set of $12$ angles by $S$
+Note that:
+\begin{itemize}
+  \ii The law of cosines implies $\cos \theta \in \QQ$ for each $\theta \in S$.
+  \ii Hence, $(\sin \theta)^2 \in \QQ$ for $\theta \in S$.
+  (This is because $\sin\theta^2+\cos^2\theta$.)
+\end{itemize}
+We say two angles $\theta_1$ and $\theta_2$ are
+\emph{equivalent} if $\frac{\sin \theta_1}{\sin \theta_2}$
+This is the same as saying,
+when $\sin\theta_1$ and $\sin\theta_2$ are written in simplest radical form,
+the part under the square root is the same.
+
+Now we contend:
+\begin{claim*}
+  The angles $\angle BAC$, $\angle CAD$, $\angle BAD$ are equivalent.
+\end{claim*}
+\begin{proof}
+  Note that
+  \[ \QQ \ni \cos(\angle BAD) = \cos \angle BAC \cos \angle CAD - \sin \angle BAC \sin \angle CAD \]
+  so $\angle BAC$ and $\angle CAD$ are equivalent.
+  Then
+  \[ \sin (\angle BAD) = \sin \angle BAC \cos \angle CAD + \cos \angle BAC \sin \angle CAD \]
+  implies $\angle BAD$ is equivalent to those two.
+\end{proof}
+
+\begin{claim*}
+  The angles $\angle BAD$, $\angle DBA$, $\angle ADB$ are equivalent.
+\end{claim*}
+\begin{proof}
+  Law of sines on $\triangle BAD$.
+\end{proof}
+
+Iterating the argument implies that all angles are equivalent.
+
+Now, if $AB$ and $CD$ meet at $E$,
+the law of sines on $\triangle AEB$, etc.\ implies the result.
+
+\paragraph{Second approach (barycentric coordinates).}
+To do this, we apply barycentric coordinates.
+Consider quadrilateral $ABDC$
+(note the changed order of vertices),
+with $A=(1,0,0)$, $B=(0,1,0)$, $C=(0,0,1)$.
+Let $D = (x,y,z)$, with $x+y+z=1$.
+By hypothesis, each of the numbers
+\begin{align*}
+  -a^2yz + b^2(1-x)z + c^2(1-x)y &= AD^2 \\
+  a^2(1-y)z + b^2zx + c^2(1-y)x &= BD^2 \\
+  -a^2(1-z)y - b^2(1-z)x + c^2xy &= CD^2
+\end{align*}
+is rational. Let $W = a^2yz + b^2zx + c^2xy$. Then,
+\begin{align*}
+  b^2z + c^2y &=  AD^2 + W \\
+  a^2z + c^2x &= BD^2 + W \\
+  a^2y + b^2x &= CD^2 + W.
+\end{align*}
+This implies that $AD^2 + BD^2 + 2W - c^2 = 2S_C z$ and cyclically
+(as usual $2S_C = a^2+b^2-c^2$).
+If any of $S_A$, $S_B$, $S_C$ are zero, then we deduce $W$ is rational.
+Otherwise, we have that
+\[ 1 = x+y+z = \sum_{\text{cyc}} \frac{AD^2 + BD^2 + 2W - c^2}{2S_C} \]
+which implies that $W$ is rational,
+because it appears with coefficient
+$\frac{1}{S_A} + \frac{1}{S_B} + \frac{1}{S_C} \neq 0$
+(since $S_{BC} + S_{CA} + S_{AB}$ is actually the area of $ABC$).
+
+Hence from the rationality of $W$,
+we deduce that $x$ is rational as long as $S_A \neq 0$,
+and similarly for the others.
+So at most one of $x$, $y$, $z$ is irrational,
+but since $x+y+z=1$ this implies they are all rational.
+
+Finally, if $P = \ol{AD} \cap \ol{BC}$
+then $AP = \frac{1}{y+z} AD$, so $AP$ is rational too,
+completing the proof.
+
+\begin{remark*}
+  After the reduction to quadrilateral,
+  a third alternate approach goes by quoting Putnam 2018 A6,
+  reproduced below:
+  \begin{quote}
+  Four points are given in the plane, with no three collinear,
+  such that the squares of the $\binom42=6$ pairwise distances are all rational.
+  Show that the ratio of the areas between any two of the
+  $\binom43=4$ triangles determined by these points is also rational.
+  \end{quote}
+  If $ABCD$ is the quadrilateral,
+  the heights from $C$ and $D$ to $AB$ have rational ratio.
+  Letting $P = AC \cap BD$,
+  we see $AP/AB$ can be shown as rational via coordinates, as needed.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2003/3}
+\textsl{Available online at \url{https://aops.com/community/p336202}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n$ be a positive integer.
+For every sequence of integers
+\[ A = (a_0, \; a_1, \; a_2, \; \dots, a_n) \]
+satisfying $0 \le a_i \le i$, for $i=0,\dots,n$,
+we define another sequence
+\[ t(A)= (t(a_0), \; t(a_1), \; t(a_2), \; \dots, \; t(a_n)) \]
+by setting $t(a_i)$ to be the number of terms in the
+sequence $A$ that precede the term $a_i$ and are different from $a_i$.
+Show that, starting from any sequence $A$ as above,
+fewer than $n$ applications of the  transformation $t$
+lead to a sequence $B$ such that $t(B) = B$.
+\end{mdframed}
+We go by strong induction on $n$
+with the base cases $n=1$ and $n=2$ done by hand.
+Consider two cases:
+\begin{itemize}
+\ii If $a_0 = 0$ and $a_1 = 1$,
+then $1 \le t(a_i) \le i$ for $i \ge 1$;
+now apply induction to
+\[ \left(t(a_1)-1, \; t(a_2)-1, \;
+  \dots, \; t(a_n)-1\right). \]
+
+\ii Otherwise, assume that $a_0 = a_1 = \dots = a_{k-1} = 0$
+but $a_k \neq 0$, where $k \ge 2$.
+Assume $k < n$ or it's obvious.
+Then $t(a_i) \neq 0$ for $i \ge k$,
+thus $t(t(a_i)) \ge k$ for $i \ge k$,
+and we can apply induction hypothesis to
+\[ \left( t(t(a_k))-k, \; \dots,
+  \; t(t(a_n))-k \right). \]
+\end{itemize}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2003/4, proposed by Titu Andreescu, Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p336205}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle.
+A circle passing through $A$ and $B$
+intersects segments $AC$ and $BC$ at $D$ and $E$, respectively.
+Lines $AB$ and $DE$ intersect at $F$,
+while lines $BD$ and $CF$ intersect at $M$.
+Prove that $MF = MC$ if and only if $MB \cdot MD = MC^2$.
+\end{mdframed}
+Ceva theorem plus the similar triangles.
+
+\begin{center}
+\begin{asy}
+  size(7.5cm);
+  pair C = Drawing("C", (3,0), dir(-45));
+  pair D = Drawing("D", (0,0));
+  pair M = Drawing("M", (1,-0.7));
+  pair F = Drawing("F", 2*M-C);
+  pair B = Drawing("B", conj(C/M) * (M-C)+C, dir(130));
+  pair E = Drawing("E", extension(D,F,B,C), dir(40));
+  pair A = Drawing("A", extension(D,C,B,F), dir(225));
+  draw(A--B--C--cycle);
+  draw(circumcircle(B,D,E), dashed);
+  draw(A--F, dotted);
+  draw(E--F--C, dotted);
+  draw(B--M, dotted);
+\end{asy}
+\end{center}
+
+We know unconditionally that
+\[ \dang CBD = \dang EBD = \dang EAD = \dang EAC. \]
+Moreover, by Ceva's theorem on $\triangle BCF$,
+we have $MF = MC \iff \ol{FC} \parallel \ol{AE}$.
+So we have the equivalences
+\begin{align*}
+  MF = MC &\iff \ol{FC} \parallel \ol{AE} \\
+  &\iff \dang FCA = \dang EAC \\
+  &\iff \dang MCD = \dang CBD \\
+  &\iff MC^2 = MB \cdot MD.
+\end{align*}
+\pagebreak
+
+\subsection{USAMO 2003/5, proposed by Zuming Feng, Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p336208}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$, $b$, $c$ be positive real numbers.
+Prove that
+\[ \frac{(2a+b+c)^2}{2a^2+(b+c)^2}
++ \frac{(2b+c+a)^2}{2b^2+(c+a)^2}
++ \frac{(2c+a+b)^2}{2c^2+(a+b)^2} \le 8.  \]
+\end{mdframed}
+This is a canonical example of tangent line trick.
+Homogenize so that $a + b + c = 3$.
+The desired inequality reads
+\[ \sum_{\text{cyc}} \frac{(a+3)^2}{2a^2+(3-a)^2} \le 8. \]
+This follows from
+\[ f(x) = \frac{(x+3)^2}{2x^2+(3-x)^2}
+  \le \frac{1}{3} (4x + 4) \]
+which can be checked as
+$\frac 13 (4x+4)(2x^2+(3-x)^2) - (x+3)^2
+= (x-1)^2 (4x+3) \ge 0$.
+\pagebreak
+
+\subsection{USAMO 2003/6}
+\textsl{Available online at \url{https://aops.com/community/p336210}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+At the vertices of a regular hexagon are written six nonnegative integers
+whose sum is $2003^{2003}$.
+Bert is allowed to make moves of the following form:
+he may pick a vertex and replace the number written
+there by the absolute value of the difference between the numbers
+written at the two neighboring vertices.
+Prove that Bert can make a sequence of moves,
+after which the number $0$ appears at all six vertices.
+\end{mdframed}
+If $a \le b \le c$ are \emph{odd} integers,
+the configuration which has $(a,b-a,b,c-b,c,c-a)$ around the hexagon
+in some order (up to cyclic permutation and reflection)
+is said to be \emph{great} (picture below).
+
+\begin{claim*}
+  We can reach a great configuration
+  from any configuration with odd sum.
+\end{claim*}
+\begin{proof}
+  We should be able to find an equilateral triangle
+  whose vertices have odd sum.
+  If all three vertices are odd, then we are already done.
+  Otherwise, operate as in the following picture (modulo $2$).
+  \begin{center}
+  \begin{asy}
+  size(10cm);
+  picture[] h = new picture[4];
+  h[0] = new picture;
+  h[1] = new picture;
+  h[2] = new picture;
+  h[3] = new picture;
+
+  pen cu = blue + fontsize(9pt);
+  pen cd = deepgreen + fontsize(7pt);
+  pen mu = lightred + fontsize(9pt);
+  pen md = orange + fontsize(7pt);
+
+  for (int i=0; i<=3; ++i) {
+  draw(h[i], dir(30)--dir(150)--dir(270)--cycle, cd);
+  draw(h[i], dir(90)--dir(210)--dir(330)--cycle, cu);
+  draw(h[i], dir(30)--dir(90)--dir(150)--dir(210)--dir(270)--dir(330)--cycle, lightgrey);
+  }
+
+  label(h[0], "$1$", dir(90), dir(90), cu);
+  label(h[0], "$\ast$", dir(150), dir(150), cd);
+  label(h[0], "$0$", dir(210), dir(210), cu);
+  label(h[0], "$\ast$", dir(270), dir(270), cd);
+  label(h[0], "$0$", dir(330), dir(330), cu);
+  label(h[0], "$\ast$", dir(30), dir(30), cd);
+
+  label(h[1], "$1$", dir(90), dir(90), cu);
+  label(h[1], "$1$", dir(150), dir(150), md);
+  label(h[1], "$0$", dir(210), dir(210), cu);
+  label(h[1], "$0$", dir(270), dir(270), md);
+  label(h[1], "$0$", dir(330), dir(330), cu);
+  label(h[1], "$1$", dir(30), dir(30), md);
+
+  label(h[2], "$1$", dir(90), dir(90), cu);
+  label(h[2], "$1$", dir(150), dir(150), cd);
+  label(h[2], "$1$", dir(210), dir(210), mu);
+  label(h[2], "$0$", dir(270), dir(270), cd);
+  label(h[2], "$1$", dir(330), dir(330), mu);
+  label(h[2], "$1$", dir(30), dir(30), cd);
+
+  label(h[3], "$1$", dir(90), dir(90), cu);
+  label(h[3], "$0$", dir(150), dir(150), md);
+  label(h[3], "$1$", dir(210), dir(210), cu);
+  label(h[3], "$0$", dir(270), dir(270), md);
+  label(h[3], "$1$", dir(330), dir(330), cu);
+  label(h[3], "$0$", dir(30), dir(30), md);
+
+  add(shift(0,0)*h[0]);
+  add(shift(3,0)*h[1]);
+  add(shift(6,0)*h[2]);
+  add(shift(9,0)*h[3]);
+  \end{asy}
+  \end{center}
+  Thus we arrived at a great configuration.
+\end{proof}
+
+\begin{claim*}
+  Bert's goal is possible for all great configurations.
+\end{claim*}
+\begin{proof}
+  [Proof, suggested by Haoran Chen]
+  If $a=b=c$ then we have $(t,0,t,0,t,0)$ which is obviously winnable.
+
+  Otherwise, we can perform the following three operations
+  shown in the figure below,
+  which yield a great configuration whose odd entries
+  are $a$, $b$, $|c-2a|$.
+
+  \begin{center}
+  \begin{asy}
+  size(12.5cm);
+  picture[] h = new picture[5];
+  h[0] = new picture;
+  h[1] = new picture;
+  h[2] = new picture;
+  h[3] = new picture;
+  h[4] = new picture;
+
+  pen cu = blue + fontsize(9pt);
+  pen cd = deepgreen + fontsize(7pt);
+  pen mu = red + fontsize(9pt);
+  pen md = red + fontsize(9pt);
+
+  for (int i=0; i<=4; ++i) {
+  draw(h[i], dir(30)--dir(150)--dir(270)--cycle, cd);
+  draw(h[i], dir(90)--dir(210)--dir(330)--cycle, cu);
+  draw(h[i], dir(30)--dir(90)--dir(150)--dir(210)--dir(270)--dir(330)--cycle, lightgrey);
+  }
+
+  label(h[0], "$a$", dir(90), dir(90), cu);
+  label(h[0], "$b-a$", dir(150), dir(150), cd);
+  label(h[0], "$b$", dir(210), dir(210), cu);
+  label(h[0], "$c-b$", dir(270), dir(270), cd);
+  label(h[0], "$c$", dir(330), dir(330), cu);
+  label(h[0], "$c-a$", dir(30), dir(30), cd);
+
+  label(h[1], "$a$", dir(90), dir(90), cu);
+  label(h[1], "$b-a$", dir(150), dir(150), cd);
+  label(h[1], "$b$", dir(210), dir(210), cu);
+  label(h[1], "$c-b$", dir(270), dir(270), cd);
+  label(h[1], "$b-a$", dir(330), dir(330), mu);
+  label(h[1], "$c-a$", dir(30), dir(30), cd);
+
+  label(h[2], "$a$", dir(90), dir(90), cu);
+  label(h[2], "$b-a$", dir(150), dir(150), cd);
+  label(h[2], "$b$", dir(210), dir(210), cu);
+  label(h[2], "$a$", dir(270), dir(270), md);
+  label(h[2], "$b-a$", dir(330), dir(330), cu);
+  label(h[2], "$c-a$", dir(30), dir(30), cd);
+
+  label(h[3], "$a$", dir(90), dir(90), cu);
+  label(h[3], "$b-a$", dir(150), dir(150), cd);
+  label(h[3], "$b$", dir(210), dir(210), cu);
+  label(h[3], "$a$", dir(270), dir(270), cd);
+  label(h[3], "$|c-2a|$", dir(330), dir(330), mu);
+  label(h[3], "$c-a$", dir(30), dir(30), cd);
+
+  label(h[4], "$a$", dir(90), dir(90), cu);
+  label(h[4], "$b$", dir(210), dir(210), cu);
+  label(h[4], "$|c-2a|$", dir(330), dir(330), cu);
+
+  add(shift(0,3)*h[0]);
+  add(shift(4,3)*h[1]);
+  add(shift(8,3)*h[2]);
+  add(shift(2,0)*h[3]);
+  add(shift(6,0)*h[4]);
+  \end{asy}
+  \end{center}
+
+  Since $|c-2a| < c$ unless $a=b=c$,
+  this decreases the sum.
+  So an induction now completes the problem.
+%  This is annoying, but straightforward.
+%  Our standing assumption is $a \neq c$ (but possibly $b=c$).
+%  It's already obvious that $|c-2a| < c$,
+%  so focus on the last term.
+%  If $c > 2b$, then $\left\lvert (c-2b)-(c-a) \right\rvert =
+%  \left\lvert 2b-a \right\rvert < c$ as well for $a \neq c$.
+%  When $c \le 2b$ we instead have
+%  $\left\lvert (2b-c)-(c-a) \right\rvert
+%  \le \max \left( 2b-c, c-a \right)$
+%  with equality if and only if $c-a = 0$; but $2b-c \le c$ as needed.
+%  Thus, in all situations we have
+%  \[ c \neq a \implies
+%    \max\left( \left\lvert \left\lvert c-2b \right\rvert - (c-a)
+%    \right\rvert, \left\lvert c-2a \right\rvert \right) < c. \]
+%  Now denote the new odd entries by $a' \le b' \le c'$ (in some order).
+%  If $b < c$ then $c' < c$,
+%  while if $b = c$ then $c' = b$ but $b' < c = b$.
+%  Thus $(c', b', a')$ precedes $(c, b, a)$ lexicographically, and we
+%  can induct down.
+\end{proof}
+
+\begin{remark*}
+  One simple idea might be to try to overwrite
+  the maximum number at each point, decreasing the sum.
+  However, this fails on the arrangement $(t,t,0,t,t,0)$.
+
+  Unfortunately, this issue is actually fatal,
+  as the problem has a hidden parity obstruction.
+  The configuration $(1,1,0,1,1,0) \bmod 2$ is invariant modulo $2$,
+  and so Bert can walk into a ``fatal death-trap'' of this shape
+  long before the numbers start becoming equal/zero/etc.
+  In other words, you can mess up on the first move!
+  This is why the initial sum is given to be odd;
+  however, it's not possible for Bert to win
+  so one essentially has to ``tip-toe'' around the $110110$ trap
+  any time one leaves the space of odd sum.
+  That's why the great configurations defined above serve as an anchor,
+  making sure we never veer too far from the
+  safe $101010$ configuration.
+\end{remark*}
+
+\begin{remark*}
+  On the other hand, many other approaches are possible
+  which anchor around a different parity configuration,
+  like $100000$ for example.
+  The choice of $101010$ by me is due to symmetry --- ostensibly,
+  if it worked, there should be fewer cases.
+\end{remark*}
+\pagebreak
+
+
+\end{document}

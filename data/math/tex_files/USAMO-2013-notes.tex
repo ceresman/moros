@@ -1,0 +1,861 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2013 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2013 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+In triangle $ABC$,
+points $P$, $Q$, $R$ lie on sides $BC$, $CA$, $AB$, respectively.
+Let $\omega_A$, $\omega_B$, $\omega_C$ denote the
+circumcircles of triangles $AQR$, $BRP$, $CPQ$, respectively.
+Given the fact that segment $AP$ intersects
+$\omega_A$, $\omega_B$, $\omega_C$ again at $X$, $Y$, $Z$ respectively,
+prove that $YX/XZ=BP/PC$.
+
+\item %% Problem 2
+For a positive integer $n\geq 3$ plot $n$
+equally spaced points around a circle.
+Label one of them $A$, and place a marker at $A$.
+One may move the marker forward in a clockwise direction
+to either the next point or the point after that.
+Hence there are a total of $2n$ distinct moves available;
+two from each point.
+Let $a_n$ count the number of ways to advance
+around the circle exactly twice,
+beginning and ending at $A$, without repeating a move.
+Prove that $a_{n-1}+a_n=2^n$ for all $n\geq 4$.
+
+\item %% Problem 3
+Let $n$ be a positive integer.
+There are $\tfrac{n(n+1)}{2}$ tokens,
+each with a black side and a white side,
+arranged into an equilateral triangle,
+with the biggest row containing $n$ tokens.
+Initially, each token has the white side up.
+An operation is to choose a line parallel to the sides of the triangle,
+and flip all the token on that line.
+A configuration is called admissible if it can be obtained from the
+initial configuration by performing a finite number of operations.
+For each admissible configuration $C$,
+let $f(C)$ denote the smallest number of operations required to
+obtain $C$ from the initial configuration.
+Find the maximum value of $f(C)$,
+where $C$ varies over all admissible configurations.
+
+\item %% Problem 4
+Find all real numbers $x,y,z \ge 1$ satisfying
+\[ \min \left( \sqrt{x+xyz}, \sqrt{y+xyz}, \sqrt{z+xyz} \right)
+  = \sqrt{x-1} + \sqrt{y-1} + \sqrt{z-1}. \]
+
+\item %% Problem 5
+Let $m$ and $n$ be positive integers.
+Prove that there exists a positive integer $c$
+such that $cm$ and $cn$ have the same nonzero decimal digits.
+
+\item %% Problem 6
+Let $ABC$ be a triangle.
+Find all points $P$ on segment $BC$ satisfying the following property:
+If $X$ and $Y$ are the intersections of line $PA$ with the common external
+tangent lines of the circumcircles of triangles $PAB$ and $PAC$, then
+\[ \left( \frac{PA}{XY} \right)^2 + \frac{PB\cdot PC}{AB\cdot AC} = 1.\]
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2013/1, proposed by Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p3041822}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+In triangle $ABC$,
+points $P$, $Q$, $R$ lie on sides $BC$, $CA$, $AB$, respectively.
+Let $\omega_A$, $\omega_B$, $\omega_C$ denote the
+circumcircles of triangles $AQR$, $BRP$, $CPQ$, respectively.
+Given the fact that segment $AP$ intersects
+$\omega_A$, $\omega_B$, $\omega_C$ again at $X$, $Y$, $Z$ respectively,
+prove that $YX/XZ=BP/PC$.
+\end{mdframed}
+Let $M$ be the concurrence point of
+$\omega_A$, $\omega_B$, $\omega_C$
+(by Miquel's theorem).
+
+
+\begin{center}
+  \begin{asy}
+    size(8cm);
+    defaultpen(fontsize(9pt));
+    pair A = dir(110);
+    pair B = dir(210);
+    pair C = dir(330);
+    pair P = 0.4*B+0.6*C;
+    pair Q = 0.4*C+0.6*A;
+    pair R = 0.7*A+0.3*B;
+    draw(B--A--C);
+
+    draw(circumcircle(A, Q, R), blue);
+    draw(circumcircle(B, R, P), blue);
+    draw(circumcircle(C, P, Q), blue);
+
+    pair O_A = circumcenter(A, Q, R);
+    pair O_B = circumcenter(B, R, P);
+    pair O_C = circumcenter(C, P, Q);
+
+    pair M = -P+2*foot(P, O_B, O_C);
+    pair X = -A+2*foot(O_A, A, P);
+    pair Y = -P+2*foot(O_B, A, P);
+    pair Z = -P+2*foot(O_C, A, P);
+
+    draw(X--M--P, dotted);
+    draw(R--Q);
+    draw(A--Y);
+    draw(Z--P);
+
+    draw(B--C, red);
+    draw(Y--Z, red);
+
+    dot("$A$", A, dir(A));
+    dot("$B$", B, dir(B));
+    dot("$C$", C, dir(C));
+    dot("$P$", P, dir(P));
+    dot("$Q$", Q, dir(Q));
+    dot("$R$", R, dir(R));
+    dot("$M$", M, dir(-90));
+    dot("$X$", X, dir(225));
+    dot("$Y$", Y, dir(45));
+    dot("$Z$", Z, dir(180));
+
+    /* Source generated by TSQ
+    A = dir 110
+    B = dir 210
+    C = dir 330
+    P = 0.4*B+0.6*C
+    Q = 0.4*C+0.6*A
+    R = 0.7*A+0.3*B
+    B--A--C
+
+    circumcircle A Q R blue
+    circumcircle B R P blue
+    circumcircle C P Q blue
+
+    O_A := circumcenter A Q R
+    O_B := circumcenter B R P
+    O_C := circumcenter C P Q
+
+    M = -P+2*foot P O_B O_C R-90
+    X = -A+2*foot O_A A P R225
+    Y = -P+2*foot O_B A P R45
+    Z = -P+2*foot O_C A P R180
+
+    X--M--P dotted
+    R--Q
+    A--Y
+    Z--P
+
+    B--C red
+    Y--Z red
+    */
+  \end{asy}
+\end{center}
+
+
+Then $M$ is the center of a spiral similarity sending
+$\ol{YZ}$ to $\ol{BC}$.
+So it suffices to show that this spiral similarity
+also sends $X$ to $P$, but
+\[ \dang MXY = \dang MXA = \dang MRA = \dang MRB = \dang MPB \]
+so this follows.
+\pagebreak
+
+\subsection{USAMO 2013/2, proposed by Kiran Kedlaya}
+\textsl{Available online at \url{https://aops.com/community/p3041823}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For a positive integer $n\geq 3$ plot $n$
+equally spaced points around a circle.
+Label one of them $A$, and place a marker at $A$.
+One may move the marker forward in a clockwise direction
+to either the next point or the point after that.
+Hence there are a total of $2n$ distinct moves available;
+two from each point.
+Let $a_n$ count the number of ways to advance
+around the circle exactly twice,
+beginning and ending at $A$, without repeating a move.
+Prove that $a_{n-1}+a_n=2^n$ for all $n\geq 4$.
+\end{mdframed}
+We present two similar approaches.
+
+\paragraph{First solution.}
+Imagine the counter is moving along
+the set $S = \{0, 1, \dots, 2n\}$ instead,
+starting at $0$ and ending at $2n$, in jumps of length $1$ and $2$.
+We can then record the sequence of moves as a matrix of the form
+\[
+  \begin{bmatrix}
+    p_0 & p_1 & p_2 & \dots & p_{n-1} & p_n \\
+    p_n & p_{n+1} & p_{n+2} & \dots & p_{2n-1} & p_{2n}
+  \end{bmatrix}
+\]
+where $p_i = 1$ if the point $i$ was visited by the counter,
+and $p_i = 0$ if the point was not visited by the counter.
+Note that $p_0 = p_{2n} = 1$ and the upper-right and lower-left entries are equal.
+Then, the problem amounts to finding the number of such matrices
+which avoid the contiguous submatrices
+\[
+  \begin{bmatrix} 0 & 0 \end{bmatrix}
+  \qquad
+  \begin{bmatrix} 0 \\ 0 \end{bmatrix}
+  \qquad
+  \begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix}
+\]
+which correspond to forbidding jumps of length greater than $2$,
+repeating a length $2$ jump and repeating a length $1$ jump.
+
+We give a nice symmetric phrasing suggested by \texttt{fclvbfm934} at
+\url{https://aops.com/community/p27834267}.
+If we focus on just the three possible column vectors that appear, say
+\[
+  \mathbf u \coloneqq \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \qquad
+  \mathbf v \coloneqq \begin{bmatrix} 0 \\ 1 \end{bmatrix}, \qquad
+  \mathbf w \coloneqq \begin{bmatrix} 1 \\ 1 \end{bmatrix}
+\]
+then we can instead describe valid matrices
+as sequences of $n+1$ such column vectors,
+where no two column vectors are adjacent,
+and where the boundary condition is that
+\begin{itemize}
+  \ii either we start with $\mathbf u$ and end with $\mathbf v$, or
+  \ii either we start with $\mathbf w$ and end with $\mathbf w$.
+\end{itemize}
+Let $x_n$ and $y_n$ denote the number of such $2 \times (n+1)$ matrices.
+(Hence $a_n = x_n + y_n$.)
+But owing to the symmetry of the setup with $\mathbf u$, $\mathbf v$, $\mathbf w$,
+we could instead view $x_n$ and $y_n$ as the number of $2 \times (n+1)$ matrices
+for a fixed starting first column whose final column is the same/different.
+So we have the recursions
+\begin{align*}
+  x_{n+1} &= x_n + y_n \\
+  y_{n+1} &= 2x_n.
+\end{align*}
+We also have that
+\[ 2x_n + y_n = 2^n \]
+which may either be proved directly from the recursions (using $x_1 = 1$ and $y_1 = 0$),
+or by noting the left-hand side counts the total number of sequences
+of $n+1$ column vectors with no restrictions on the final column at all
+(in which case there are simply $2$ choices for each of the $n$ columns
+after the first one).
+Thus,
+\begin{align*}
+  a_{n+1} + a_n &= (x_{n+1} + y_{n+1}) + (x_n + y_n) \\
+  &= \left( (x_n + y_n) + 2x_n \right) + (x_n + y_n) \\
+  &= 2(2x_n + y_n) = 2^{n+1}
+\end{align*}
+as needed.
+
+\paragraph{Second (longer) solution.}
+If one does not notice the nice rephrasing with $\mathbf u$, $\mathbf v$,
+$\mathbf w$ above, one may still proceed with the following direct calculation.
+Retain the notation of
+\[
+  \begin{bmatrix}
+    p_0 & p_1 & p_2 & \dots & p_{n-1} & p_n \\
+    p_n & p_{n+1} & p_{n+2} & \dots & p_{2n-1} & p_{2n}
+  \end{bmatrix}
+\]
+described earlier.
+We will for now ignore the boundary conditions.
+Instead we say a $2 \times m$ matrix is \emph{silver} ($m \ge 2$)
+if it avoids the three shapes above.
+We consider three types of silver matrices
+(essentially doing casework on the last column):
+\begin{itemize}
+\ii \emph{type B matrices}, of the shape
+  $\begin{bmatrix}
+    1 & \dotsb & 1 \\
+    0 & \dotsb & 0
+  \end{bmatrix}$
+\ii \emph{type C matrices}, of the shape
+  $\begin{bmatrix}
+    1 & \dotsb & 0 \\
+    0 & \dotsb & 1
+  \end{bmatrix}$.
+\ii \emph{type D matrices}, of the shape
+  $\begin{bmatrix}
+    1 & \dotsb & 1 \\
+    0 & \dotsb & 1
+  \end{bmatrix}$.
+\end{itemize}
+We let $b_m$, $c_m$, $d_m$
+denote matrices of each type, of size $2 \times m$,
+and claim the following two recursions for $m \ge 4$:
+\begin{align*}
+  b_m &= c_{m-1} + d_{m-1} \\
+  c_m &= b_{m-1} + d_{m-1} \\
+  d_m &= b_{m-1} + c_{m-1}.
+\end{align*}
+Indeed, if we delete the last column of a type B matrix
+and consider what used to be the second-to-last column,
+we find that it is either type C or type D.
+This establishes the first recursion and the others are analogous.
+
+Note that $b_2 = 0$ and $c_2 = d_2 = 1$.
+So using this recursion, the first few values are
+\[
+  \begin{array}{rrrrrrrr}
+    m  & 2 & 3 & 4 & 5 &  6 &  7 &  8 \\ \hline
+    b_m & 0 & 2 & 2 & 6 & 10 & 22 & 42 \\
+    c_m & 1 & 1 & 3 & 5 & 11 & 21 & 43 \\
+    d_m & 1 & 1 & 3 & 5 & 11 & 21 & 43 \\
+  \end{array}
+\]
+and a calculation gives $b_m = \frac{2^{m-1} + 2(-1)^{m-1}}{3}$,
+$c_m = d_m = \frac{2^{m-1} - (-1)^{m-1}}{3}$.
+
+We now relate $a_n$ to $b_m$, $c_m$, $d_m$.
+Observe that a matrix as described in the problem is a silver
+matrix of one of two forms:
+\[
+  \begin{bmatrix}
+    1 & p_1 & p_2 & \dots & p_{n-1} & 0 \\
+    0 & p_{n+1} & p_{n+2} & \dots & p_{2n-1} & 1
+  \end{bmatrix}
+  \qquad
+  \text{or}\qquad
+  \begin{bmatrix}
+    1 & p_1 & p_2 & \dots & p_{n-1} & 1 \\
+    1 & p_{n+1} & p_{n+2} & \dots & p_{2n-1} & 1
+  \end{bmatrix}.
+\]
+There are $c_{n+1}$ matrices of the first form.
+Moreover, there are $2d_n$ matrices of the second form
+(to see this, delete the first column;
+we either get a type-D matrix
+or an upside-down type-D matrix).
+Thus we get
+\[ a_n = c_{n+1} + 2d_n
+  = \frac{2^{n+1} + (-1)^{n+1}}{3}. \]
+This implies the result.
+
+\begin{remark*}
+  The two solutions are closely related.
+  In fact, $c_n = x_{n-1}$ and $b_n = y_{n-1}$.
+  So the second solution is really the same as the first solution,
+  except the symmetry of $\mathbf u$, $\mathbf v$, $\mathbf w$ was not noticed,
+  thus requiring a third recursion to handle all the cases manually.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2013/3, proposed by Warut Suksompong}
+\textsl{Available online at \url{https://aops.com/community/p3041827}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n$ be a positive integer.
+There are $\tfrac{n(n+1)}{2}$ tokens,
+each with a black side and a white side,
+arranged into an equilateral triangle,
+with the biggest row containing $n$ tokens.
+Initially, each token has the white side up.
+An operation is to choose a line parallel to the sides of the triangle,
+and flip all the token on that line.
+A configuration is called admissible if it can be obtained from the
+initial configuration by performing a finite number of operations.
+For each admissible configuration $C$,
+let $f(C)$ denote the smallest number of operations required to
+obtain $C$ from the initial configuration.
+Find the maximum value of $f(C)$,
+where $C$ varies over all admissible configurations.
+\end{mdframed}
+The answer is
+\[
+  \max_C f(C) =
+  \begin{cases}
+    6k & n = 4k \\
+    6k+1 & n = 4k+1 \\
+    6k+2 & n = 4k+2 \\
+    6k+3 & n = 4k+3.
+  \end{cases}
+\]
+The main point of the problem is actually to determine
+all linear dependencies among the $3n$ possible moves
+(since the moves commute and applying a move twice
+is the same as doing nothing).
+In what follows, assume $n > 1$ for convenience.
+
+To this end, we consider sequences of operations as
+additive vectors in $v \in \FF_2^{3n}$, with the
+linear map $T \colon \FF_2^{3n} \to \FF_2^{\half n(n+1)}$
+denoting the result of applying a vector $v$.
+We in particular focus on the following four vectors.
+\begin{itemize}
+  \ii Three vectors $x$, $y$, $z$ are defined by
+  choosing all $n$ lines parallel to one axis.
+  Note $T(x) = T(y) = T(z) = \mathbf 1$
+  (i.e.\ these vectors flip all tokens).
+  \ii The vector $\theta$ which toggles
+  all lines with an even number of tokens.
+  One can check that $T(\theta) = \mathbf 0$.
+  (Easiest to guess from $n=2$ and $n=3$ case.)
+  One amusing proof that this works is to use Vivani's theorem:
+  in an equilateral triangle $ABC$,
+  the sum of distances from an interior point $P$
+  to the three sides is equal.
+\end{itemize}
+The main claim is:
+\begin{claim*}
+  For $n \ge 2$,
+  the kernel of $T$ has exactly eight elements,
+  namely $\{\mathbf 0, x+y, y+z, z+x,
+  \theta, \theta+x+y, \theta+y+z, \theta+z+x \}$.
+\end{claim*}
+% (This is motivated by the validity of the claim
+% when $n = 2$ and $n = 3$.)
+\begin{proof}
+  Suppose $T(v) = 0$.
+  \begin{itemize}
+    \ii If $v$ uses the $y$-move of length $n$,
+    then we replace $v$ with $v+(x+y)$
+    to obtain a vector in the kernel not using the $y$-move of length $n$.
+    \ii If $v$ uses the $z$-move of length $n$,
+    then we replace $v$ with $v+(x+z)$
+    to obtain a vector in the kernel not using the $z$-move of length $n$.
+    \ii If $v$ uses the $x$-move of length $2$, then
+    \begin{itemize}
+      \ii if $n$ is odd, replace $v$ with $v+\theta$;
+      \ii if $n$ is even, replace $v$ with $v+(\theta+y+z)$
+    \end{itemize}
+    to obtain a vector in the kernel not using the $x$-move of length $2$.
+  \end{itemize}
+  A picture is shown below,
+  with the unused rows being dotted.
+  \begin{center}
+  \begin{asy}
+    pair A = dir(60);
+    pair B = dir(0);
+    real r = 0.3;
+    draw( (-A)--(7*A), dashed );
+    draw( (7*B-A)--(7*A-B), dashed );
+    draw( (5*A-B)--(5*A+2*B), dashed );
+    for (int i=0; i<=6; ++i) {
+      for (int j=0; i+j<=6; ++j) {
+        filldraw(CR(i*A+j*B, r), opacity(0.2)+lightcyan, black);
+      }
+    }
+  \end{asy}
+  \end{center}
+
+  Then, it is easy to check inductively that $v$ must now be the
+  zero vector, after the replacements.
+  The idea is that for each token $t$,
+  if two of the moves involving $t$ are unused, so is the third,
+  and in this way we can show all rows are unused.
+  Thus the original $v$ was in the kernel we described.
+
+  (An alternative proof by induction is feasible too;
+  as a sequence of movings which does not affect the top $n$ rows
+  also does not affect the to $n-1$ rows.)
+\end{proof}
+Then problem is a coordinate bash,
+since given any $v$ we now know exactly which vectors $w$
+have $T(v) = T(w)$, so given any admissible configuration $C$
+one can exactly compute $f(C)$ as the minimum of eight values.
+
+To be explicit, we could represent a vector $v$ as
+\[ v \longleftrightarrow (a_1, a_2, b_1, b_2, c_1, c_2) \]
+where $a_1$ is the number of $1$'s in odd $x$-indices,
+$a_2$ number of $1$'s in even $x$-indices.
+Then for example
+\begin{align*}
+  v &\longleftrightarrow (a_1, a_2, b_1, b_2, c_1, c_2) \\
+  v+x+y &\longleftrightarrow \left( \left\lceil \frac n2 \right\rceil - a_1,
+    \left\lfloor \frac n2 \right\rfloor - a_2,
+    \left\lceil \frac n2  \right\rceil - b_1,
+    \left\lfloor \frac n2 \right\rfloor - b_2, c_1, c_2 \right) \\
+  v+\theta &\longleftrightarrow \left(a_1, \left\lfloor \frac n2  \right\rfloor - a_2, b_1,
+    \left\lfloor \frac n2 \right\rfloor -
+    b_2, c_1, \left\lfloor \frac n2 \right\rfloor - c_2\right)
+  &\vdotswithin{=}
+\end{align*}
+and $f(T(v))$ is the smallest sum of the six numbers across all eight $6$-tuples.
+So you expect to answer about $\frac32 n$
+if all things are about $n/4$.
+The details are too annoying to reproduce here, so they are omitted.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2013/4, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p3043752}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all real numbers $x,y,z \ge 1$ satisfying
+\[ \min \left( \sqrt{x+xyz}, \sqrt{y+xyz}, \sqrt{z+xyz} \right)
+  = \sqrt{x-1} + \sqrt{y-1} + \sqrt{z-1}. \]
+\end{mdframed}
+Set $x = 1+a$, $y = 1+b$, $z = 1+c$
+which eliminates the $x,y,z \ge 1$ condition.
+Assume without loss of generality that $a \leq b \leq c$.
+Then the given equation rewrites as
+\[ \sqrt{(1+a)\left( 1+(1+b)(1+c) \right)} = \sqrt a + \sqrt b + \sqrt c. \]
+
+In fact, we are going to prove the left-hand side always exceeds the
+right-hand side, and then determine the equality cases.
+We have:
+\begin{align*}
+  (1+a)\left( 1 + (1+b)(1+c) \right)
+  &= (a+1)\left( 1 + (b+1)(1+c) \right) \\
+  &\le (a+1) \left( 1 + \left( \sqrt b + \sqrt c \right)^2 \right) \\
+  &\le \left( \sqrt a + \left( \sqrt b + \sqrt c \right) \right)^2
+\end{align*}
+by two applications of Cauchy-Schwarz.
+
+Equality holds if $bc = 1$ and $1/a = \sqrt b + \sqrt c$.
+Letting $c = t^2$ for $t \ge 1$,
+we recover $b = t^{-2} \le t^2$ and $a = \frac{1}{t+1/t} \le t^2$.
+
+Hence the solution set is
+\[ (x,y,z) = \left( 1 + \left( \frac{t}{t^2+1} \right)^2,
+  1 + \frac{1}{t^2}, 1 + t^2 \right) \]
+and permutations, for any $t > 0$.
+\pagebreak
+
+\subsection{USAMO 2013/5, proposed by Richard Stong}
+\textsl{Available online at \url{https://aops.com/community/p3043754}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $m$ and $n$ be positive integers.
+Prove that there exists a positive integer $c$
+such that $cm$ and $cn$ have the same nonzero decimal digits.
+\end{mdframed}
+One-line spoiler: $142857$.
+
+More verbosely,
+the idea is to look at the decimal representation of $1/D$, $m/D$, $n/D$
+for a suitable denominator $D$, which have a ``cyclic shift'' property
+in which the digits of $n/D$ are the digits of $m/D$ shifted by $3$.
+
+\begin{remark*}
+  [An example to follow along]
+  Here is an example to follow along in the subsequent proof
+  If $m = 4$ and $n = 23$ then the magic numbers $e = 3$ and $D = 41$ obey
+  \[ 10^3 \cdot \frac{4}{41} = 97 + \frac{23}{41}. \]
+  The idea is that
+  \begin{align*}
+    \frac{1}{41} &= 0.\ol{02439} \\
+    \frac{4}{41} &= 0.\ol{09756} \\
+    \frac{23}{41} &= 0.\ol{56097}
+  \end{align*}
+  and so $c = 2349$ works;
+  we get $4c = 9756$ and $23c = 56097$
+  which are cyclic shifts of each other by $3$ places
+  (with some leading zeros appended).
+\end{remark*}
+
+Here is the one to use:
+\begin{claim*}
+  There exists positive integers $D$ and $e$
+  such that $\gcd(D,10)=1$, $D > \max(m,n)$,
+  and moreover \[ \frac{ 10^e m - n }{ D } \in \ZZ. \]
+\end{claim*}
+\begin{proof}
+  Suppose we pick some exponent $e$ and define the number
+  \[ A = 10^e n - m. \]
+  Let $r = \nu_2(m)$ and $s = \nu_5(m)$.
+  As long as $e > \max(r,s)$ we have $\nu_2(A) = r$ and $\nu_5(A) = s$, too.
+  Now choose any $e > \max(r,s)$ big enough that $A > 2^r 5^s \max(m,n)$ also holds.
+  Then the number $D = \frac{A}{2^r 5^s}$ works;
+  the first two properties hold by construction and
+  \[ 10^e \cdot \frac nD - \frac mD
+    = \frac{A}{D} = 2^r 5^s \]
+  is an integer.
+\end{proof}
+\begin{remark*}
+  [For people who like obscure theorems]
+  Kobayashi's theorem implies we can actually pick $D$ to be prime.
+\end{remark*}
+Now we take $c$ to be the
+number under the bar of $1/D$ (leading zeros removed).
+Then the decimal representation of $\frac mD$
+is the decimal representation of $cm$ repeated
+(possibly including leading zeros).
+Similarly, $\frac nD$ has the decimal representation of $cm$ repeated (possibly including leading zeros).
+Finally, since
+\[ 10^e \cdot \frac mD - \frac nD \text{ is an integer} \]
+it follows that these repeating decimal representations are rotations of each other by $e$ places,
+so in particular they have the same number of nonzero digits.
+
+
+\begin{remark*}
+  Many students tried to find a $D$ satisfying the stronger hypothesis
+  that $1/D$, $2/D$, \dots, $(D-1)/D$
+  are cyclic shifts of each other.
+  For example, this holds in the famous $D = 7$ case.
+
+  The official USAMO 2013 solutions try to do this by proving
+  that $10$ is a primitive root modulo $7^e$
+  for each $e \ge 1$, by Hensel lifting lemma.
+  I think this argument is actually \emph{incorrect},
+  because it breaks if either $m$ or $n$ are divisible by $7$.
+  Put bluntly, $\frac{7}{49}$ and $\frac{8}{49}$
+  are not shifts of each other.
+
+  One may be tempted to resort to using large primes $D$
+  rather than powers of $7$ to deal with this issue.
+  However it is an open conjecture
+  (a special case of Artin's primitive root conjecture)
+  whether or not $10 \pmod p$ is primitive infinitely often,
+  which is the necessary conjecture
+  so this is harder than it seems.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2013/6, proposed by Titu Andreescu, Cosmin Pohoata}
+\textsl{Available online at \url{https://aops.com/community/p3043749}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle.
+Find all points $P$ on segment $BC$ satisfying the following property:
+If $X$ and $Y$ are the intersections of line $PA$ with the common external
+tangent lines of the circumcircles of triangles $PAB$ and $PAC$, then
+\[ \left( \frac{PA}{XY} \right)^2 + \frac{PB\cdot PC}{AB\cdot AC} = 1.\]
+\end{mdframed}
+Let $O_1$ and $O_2$ denote the circumcenters of $PAB$ and $PAC$.
+The main idea is to notice that $\triangle ABC$ and $\triangle AO_1O_2$
+are spirally similar.
+
+\begin{center}
+\begin{asy}
+pair A = dir(140);
+pair B = dir(210);
+pair C = dir(330);
+pair P = 0.3*C+0.7*B;
+filldraw(A--B--C--cycle, opacity(0.1)+lightcyan, blue);
+
+pair O_1 = circumcenter(A, B, P);
+pair O_2 = circumcenter(A, C, P);
+
+real r1 = abs(P-O_1);
+real r2 = abs(P-O_2);
+pair Se = (r1*O_2-r2*O_1)/(r1-r2);
+path w1 = CP(O_1,P);
+path w2 = CP(O_2,P);
+filldraw(w1, opacity(0.1)+yellow, deepgreen);
+filldraw(w2, opacity(0.1)+yellow, deepgreen);
+
+pair X_1 = IP(w1, CP(midpoint(Se--O_1), Se));
+pair Y_1 = OP(w1, CP(midpoint(Se--O_1), Se));
+pair X_2 = IP(w2, CP(midpoint(Se--O_2), Se));
+pair Y_2 = OP(w2, CP(midpoint(Se--O_2), Se));
+
+draw(X_1--X_2, deepgreen);
+draw(Y_1--Y_2, deepgreen);
+pair X = extension(A, P, X_1, X_2);
+pair Y = extension(A, P, Y_1, Y_2);
+draw(X--Y, dotted);
+
+filldraw(A--O_1--O_2--cycle, opacity(0.1)+lightred, red);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$P$", P, dir(70));
+dot("$O_1$", O_1, dir(-90));
+dot("$O_2$", O_2, dir(-90));
+dot("$X_1$", X_1, dir(X_1));
+dot("$Y_1$", Y_1, dir(Y_1));
+dot("$X_2$", X_2, dir(X_2));
+dot("$Y_2$", Y_2, dir(Y_2));
+dot("$X$", X, dir(X));
+dot("$Y$", Y, dir(Y));
+
+/* TSQ Source:
+
+A = dir 140
+B = dir 210
+C = dir 330
+P = 0.3*C+0.7*B R70
+A--B--C--cycle 0.1 lightcyan / blue
+
+O_1 = circumcenter A B P R-90
+O_2 = circumcenter A C P R-90
+
+!real r1 = abs(P-O_1);
+!real r2 = abs(P-O_2);
+Se := (r1*O_2-r2*O_1)/(r1-r2)
+!path w1 = CP(O_1,P);
+!path w2 = CP(O_2,P);
+w1 0.1 yellow / deepgreen
+w2 0.1 yellow / deepgreen
+
+X_1 = IP w1 CP midpoint Se--O_1 Se
+Y_1 = OP w1 CP midpoint Se--O_1 Se
+X_2 = IP w2 CP midpoint Se--O_2 Se
+Y_2 = OP w2 CP midpoint Se--O_2 Se
+
+X_1--X_2 deepgreen
+Y_1--Y_2 deepgreen
+X = extension A P X_1 X_2
+Y = extension A P Y_1 Y_2
+X--Y dotted
+
+A--O_1--O_2--cycle 0.1 lightred / red
+
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  [Salmon theorem]
+  We have $\triangle ABC \overset{+}{\sim} \triangle AO_1O_2$.
+\end{claim*}
+\begin{proof}
+  We first claim $\triangle AO_1B \overset{+}{\sim} \triangle AO_2C$.
+  Assume without loss of generality that $\angle APB \le 90\dg$.
+  Then \[ \angle AO_1B = 2 \angle APB \]
+  but \[ \angle AO_2C = 2 \left( 180 - \angle APC \right) = 2 \angle ABP. \]
+  Hence $\angle AO_1B = \angle AO_2C$.
+  Moreover, both triangles are isosceles,
+  establishing the first similarity.
+  The second part follows from spiral similarities coming in pairs.
+\end{proof}
+
+\begin{claim*}
+  We always have
+  \[ \left( \frac{PA}{XY} \right)^2 = 1 - \left( \frac{a}{b+c} \right)^2. \]
+  (In particular, this does not depend on $P$.)
+\end{claim*}
+\begin{proof}
+We now delete the points $B$ and $C$
+and remember only the fact that $\triangle AO_1O_2$
+has angles $A$, $B$, $C$.
+The rest is a computation and several approaches are possible.
+
+Without loss of generality $A$ is closer to $X$ than $Y$,
+and let the common tangents be $\ol{X_1X_2}$ and $\ol{Y_1Y_2}$.
+We'll perform the main calculation
+with the convenient scaling $O_B O_C = a$, $AO_C = b$, and $AO_B = c$.
+Let $B_1$ and $C_1$ be the tangency points of $X$,
+and let $h = AM$ be the height of $\triangle A O_B O_C$.
+
+\begin{center}
+\begin{asy}
+pair O_1 = dir(180);
+pair O_2 = dir(0);
+pair A = dir(130);
+pair P = conj(A);
+pair M = midpoint(A--P);
+
+real r1 = abs(P-O_1);
+real r2 = abs(P-O_2);
+pair Se = (r1*O_2-r2*O_1)/(r1-r2);
+path w1 = CP(O_1,P);
+path w2 = CP(O_2,P);
+filldraw(w1, opacity(0.1)+yellow, deepgreen);
+filldraw(w2, opacity(0.1)+yellow, deepgreen);
+
+pair X_1 = IP(w1, CP(midpoint(Se--O_1), Se));
+pair X_2 = IP(w2, CP(midpoint(Se--O_2), Se));
+
+filldraw(A--O_1--O_2--cycle, opacity(0.1)+lightred, red);
+draw(O_1--X_1--X_2--O_2, deepgreen);
+pair X = extension(A, P, X_1, X_2);
+draw(P--X, deepgreen);
+
+dot("$O_1$", O_1, dir(O_1));
+dot("$O_2$", O_2, dir(O_2));
+dot("$A$", A, dir(30));
+dot("$P$", P, dir(330));
+dot("$M$", M, dir(315));
+dot("$X_1$", X_1, dir(X_1));
+dot("$X_2$", X_2, dir(105));
+dot("$X$", X, dir(X));
+
+/* TSQ Source:
+
+O_1 = dir 180
+O_2 = dir 0
+A = dir 130 R30
+P = conj A R330
+M = midpoint A--P R315
+
+!real r1 = abs(P-O_1);
+!real r2 = abs(P-O_2);
+Se := (r1*O_2-r2*O_1)/(r1-r2)
+!path w1 = CP(O_1,P);
+!path w2 = CP(O_2,P);
+w1 0.1 yellow / deepgreen
+w2 0.1 yellow / deepgreen
+
+X_1 = IP w1 CP midpoint Se--O_1 Se
+X_2 = IP w2 CP midpoint Se--O_2 Se R105
+
+A--O_1--O_2--cycle 0.1 lightred / red
+O_1--X_1--X_2--O_2 deepgreen
+X = extension A P X_1 X_2
+P--X deepgreen
+
+*/
+\end{asy}
+\end{center}
+
+Note that by Power of a Point, we have $XX_1^2 = XX_2^2 = XM^2 - h^2$.
+Also, by Pythagorean theorem we easily obtain $X_1X_2 = a^2 - (b-c)^2$.
+So putting these together gives
+\[ XM^2 - h^2 = \frac{a^2 - (b-c)^2}{4}
+  = \frac{(a+b-c)(a-b+c)}{4} = (s-b)(s-c). \]
+Therefore, we have
+
+Then
+\begin{align*}
+  \frac{XM^2}{h^2}
+  &= 1 + \frac{(s-b)(s-c)}{h^2}
+    = 1 + \frac{a^2(s-b)(s-c)}{a^2h^2} \\
+  &= 1 + \frac{a^2(s-b)(s-c)}{4s(s-a)(s-b)(s-c)}
+    = 1 + \frac{a^2}{4s(s-a)} \\
+  &= 1 + \frac{a^2}{(b+c)^2-a^2}
+  = \frac{(b+c)^2}{(b+c)^2-a^2}.
+\end{align*}
+Thus \[ \left( \frac{PA}{XY} \right)^2 = \left(\frac{h}{XM}\right)^2
+  = 1 - \left( \frac{a}{b+c} \right)^2. \qedhere \]
+\end{proof}
+
+To finish, note that when $P$ is the foot of the $\angle A$-bisector,
+we necessarily have
+\[
+  \frac{PB \cdot PC}{AB \cdot AC}
+  = \frac{\left( \frac{b}{b+c} a \right)\left( \frac{c}{b+c} a \right)}{bc}
+  = \left( \frac{a}{b+c} \right)^2.  \]
+Since there are clearly at most two solutions as $\tfrac{PA}{XY}$ is fixed,
+these are the only two solutions.
+\pagebreak
+
+
+\end{document}

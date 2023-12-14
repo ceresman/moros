@@ -1,0 +1,475 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2000 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2000 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Call a real-valued function $f$ \emph{very convex} if
+\[ \frac{f(x)+f(y)}{2}
+  \ge f\left( \frac{x+y}{2} \right) + \left\lvert x-y \right\rvert  \]
+holds for all real numbers $x$ and $y$.
+Prove that no very convex function exists.
+
+\item %% Problem 2
+Let $S$ be the set of all triangles $ABC$ for which
+\[ 5 \left( \frac{1}{AP} + \frac{1}{BQ} + \frac{1}{CR} \right)
+  - \frac{3}{\min\{ AP, BQ, CR \}} = \frac{6}{r}, \]
+where $r$ is the inradius and $P$, $Q$, $R$ are the points of tangency
+of the incircle with sides $AB$, $BC$, $CA$ respectively.
+Prove that all triangles in $S$ are isosceles and similar to one another.
+
+\item %% Problem 3
+A game of solitaire is played with $R$ red cards,
+$W$ white cards, and $B$ blue cards.
+A player plays all the cards one at a time.
+With each play he accumulates a penalty.
+If he plays a blue card, then he is charged a penalty
+which is the number of white cards still in his hand.
+If he plays a white card, then he is charged a penalty
+which is twice the number of red cards still in his hand.
+If he plays a red card, then he is charged a penalty
+which is three times the number of blue cards still in his hand.
+
+Find, as a function of $R$, $W$, and $B$, the minimal total penalty
+a player can amass and the number of ways in which this minimum can be achieved.
+
+\item %% Problem 4
+Find the smallest positive integer $n$ such
+that if $n$ squares of a $1000 \times 1000$ chessboard are colored,
+then there will exist three colored squares
+whose centers form a right triangle with sides
+parallel to the edges of the board.
+
+\item %% Problem 5
+Let $A_1 A_2 A_3$ be a triangle,
+and let $\omega_1$ be a circle in its plane
+passing through $A_1$ and $A_2$.
+Suppose there exists circles $\omega_2$, $\omega_3$, \dots, $\omega_7$
+such that for $k = 2, 3, \dots, 7,$
+circle $\omega_k$ is externally tangent to $\omega_{k-1}$ and passes
+through $A_k$ and $A_{k+1}$ (indices mod $3$).
+Prove that $\omega_7 = \omega_1$.
+
+\item %% Problem 6
+Let $a_1, b_1, a_2, b_2, \dots , a_n, b_n$ be nonnegative real numbers.
+Prove that
+\[ \sum_{i, j = 1}^{n} \min\{a_i a_j, b_i b_j\}
+  \le \sum_{i, j = 1}^{n} \min\{a_i b_j, a_j b_i\}.  \]
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2000/1}
+\textsl{Available online at \url{https://aops.com/community/p299244}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Call a real-valued function $f$ \emph{very convex} if
+\[ \frac{f(x)+f(y)}{2}
+  \ge f\left( \frac{x+y}{2} \right) + \left\lvert x-y \right\rvert  \]
+holds for all real numbers $x$ and $y$.
+Prove that no very convex function exists.
+\end{mdframed}
+For $C \ge 0$, we say a function $f$ is \emph{$C$-convex}
+\[ \frac{f(x)+f(y)}{2}
+  \ge f\left( \frac{x+y}{2} \right) + C\left\lvert x-y \right\rvert. \]
+
+Suppose $f$ is $C$-convex.
+Let $a < b < c < d < e$ be any arithmetic progression,
+such that $t = |e-a|$.
+Observe that
+\begin{align*}
+  f(a) + f(c) &\ge 2f(b) + C \cdot \half t \\
+  f(c) + f(e) &\ge 2f(d) + C \cdot \half t \\
+  f(b) + f(d) &\ge 2f(c) + C \cdot \half t
+\end{align*}
+Adding the first two to twice the third gives
+\[ f(a) + f(e) \ge 2f(c) + 2C \cdot t. \]
+So we conclude $C$-convex function is also $2C$-convex.
+This is clearly not okay for $C > 0$.
+\pagebreak
+
+\subsection{USAMO 2000/2}
+\textsl{Available online at \url{https://aops.com/community/p338078}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $S$ be the set of all triangles $ABC$ for which
+\[ 5 \left( \frac{1}{AP} + \frac{1}{BQ} + \frac{1}{CR} \right)
+  - \frac{3}{\min\{ AP, BQ, CR \}} = \frac{6}{r}, \]
+where $r$ is the inradius and $P$, $Q$, $R$ are the points of tangency
+of the incircle with sides $AB$, $BC$, $CA$ respectively.
+Prove that all triangles in $S$ are isosceles and similar to one another.
+\end{mdframed}
+We will prove the inequality
+\[ \frac{2}{AP} + \frac{5}{BQ} + \frac{5}{CR} \ge \frac 6r \]
+with equality when $AP : BQ : CR = 1 : 4 : 4$.
+This implies the problem statement.
+
+Letting $x= AP$, $y = BQ$, $z = CR$, the inequality becomes
+\[ \frac2x + \frac5y + \frac5z \ge 6\sqrt{\frac{x+y+z}{xyz}}. \]
+Squaring both sides and collecting terms gives
+\[
+  \frac{4}{x^2} + \frac{25}{y^2} + \frac{25}{z^2} + \frac{14}{yz}
+  \ge \frac{16}{xy} + \frac{16}{xz}.
+\]
+If we replace $x=1/a$, $y=4/b$, $z=4/c$,
+then it remains to prove the inequality
+\[ 64a^2 + 25(b+c)^2 \ge 64a(b+c) + 36bc \]
+where equality holds when $a=b=c$.
+This follows by two applications of AM-GM:
+\begin{align*}
+  16 \left( 4a^2 + (b+c)^2 \right) &\ge 64a(b+c) \\
+  9(b+c)^2 &\ge 36bc.
+\end{align*}
+
+Again one can tell this is an inequality by counting
+degrees of freedom.
+\pagebreak
+
+\subsection{USAMO 2000/3}
+\textsl{Available online at \url{https://aops.com/community/p338081}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A game of solitaire is played with $R$ red cards,
+$W$ white cards, and $B$ blue cards.
+A player plays all the cards one at a time.
+With each play he accumulates a penalty.
+If he plays a blue card, then he is charged a penalty
+which is the number of white cards still in his hand.
+If he plays a white card, then he is charged a penalty
+which is twice the number of red cards still in his hand.
+If he plays a red card, then he is charged a penalty
+which is three times the number of blue cards still in his hand.
+
+Find, as a function of $R$, $W$, and $B$, the minimal total penalty
+a player can amass and the number of ways in which this minimum can be achieved.
+\end{mdframed}
+The minimum penalty is
+\[ f(B,W,R) = \min (BW, 2WR, 3RB) \]
+or equivalently, the natural guess of
+``discard all cards of one color first''
+is actually optimal (though not necessarily unique).
+
+This can be proven directly by induction.
+Indeed the base case $BWR = 0$
+(in which case zero penalty is clearly achievable).
+The inductive step follows from
+\[ f(B,W,R) = \min
+  \begin{cases}
+    f(B-1,W,R) + W \\
+    f(B,W-1,R) + 2R \\
+    f(B,W,R-1) + 3B.
+  \end{cases}
+\]
+
+It remains to characterize the strategies.
+This is an annoying calculation, so we just state the result.
+\begin{itemize}
+  \ii If any of the three quantities $BW$, $2WR$, $3RB$
+  is strictly smaller than the other three,
+  there is one optimal strategy.
+  \ii If $BW = 2WR < 3RB$,
+  there are $W+1$ optimal strategies,
+  namely discarding from $0$ to $W$ white cards,
+  then discarding all blue cards.
+  (Each white card discarded still preserves $BW = 2WR$.)
+  \ii If $2WR = 3RB < BW$,
+  there are $R+1$ optimal strategies,
+  namely discarding from $0$ to $R$ red cards,
+  and then discarding all white cards.
+  \ii If $3WR = RB < 2WR$,
+  there are $B+1$ optimal strategies,
+  namely discarding from $0$ to $B$ blue cards,
+  and then discarding all red cards.
+  \ii Now suppose $BW = 2WR = 3RB$.
+  Discarding a card of one color
+  ends up in exactly one of the previous three cases.
+  This gives an answer of $R+W+B$ strategies.
+\end{itemize}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2000/4}
+\textsl{Available online at \url{https://aops.com/community/p338084}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find the smallest positive integer $n$ such
+that if $n$ squares of a $1000 \times 1000$ chessboard are colored,
+then there will exist three colored squares
+whose centers form a right triangle with sides
+parallel to the edges of the board.
+\end{mdframed}
+The answer is $n = 1999$.
+
+For a construction with $n = 1998$,
+take a punctured L as illustrated below (with $1000$ replaced by $4$):
+\[ \begin{bmatrix} 1 \\ 1 \\ 1 \\ & 1 & 1 & 1 \end{bmatrix}. \]
+
+We now show that if there is no right triangle,
+there are at most $1998$ tokens (colored squares).
+In every column with more than two tokens,
+we have token emit a bidirectional horizontal
+death ray (laser) covering its entire row:
+the hypothesis is that the death ray won't hit any other tokens.
+\begin{center}
+\begin{asy}
+size(6cm);
+for (int i=1; i<=8; ++i) {
+  if ((i-1)*(i-3)*(i-5) != 0) draw( (0.5,i)--(8.5,i), red+1, Arrows(TeXHead) );
+  for (int j=1; j<=8; ++j) {
+    if ( (i-j)/2 == (i-j)#2 )
+      filldraw(shift(i-0.5,j-0.5)*unitsquare, opacity(0.2)+grey, grey);
+    else
+      draw(shift(i-0.5,j-0.5)*unitsquare, grey);
+  }
+}
+
+draw( (3,2)--(3,7), blue);
+draw( (5,4)--(5,8), blue);
+void token(pair P) { fill(circle(P, 0.2), black); }
+token( (1,1) );
+token( (2,1) );
+token( (3,2) );
+token( (3,6) );
+token( (3,7) );
+token( (4,1) );
+token( (5,4) );
+token( (5,8) );
+token( (6,5) );
+token( (7,3) );
+token( (8,1) );
+\end{asy}
+\end{center}
+
+Assume there are $n$ tokens and that $n > 1000$.
+Then obviously some column has more than two tokens,
+so at most $999$ tokens don't emit a death ray
+(namely, any token in its own column).
+Thus there are at least $n-999$ death rays.
+On the other hand, we can have at most $999$ death rays total
+(since it would not be okay for the whole board to have death rays,
+as some row should have more than two tokens).
+Therefore, $n \le 999 + 999 = 1998$ as desired.
+\pagebreak
+
+\subsection{USAMO 2000/5}
+\textsl{Available online at \url{https://aops.com/community/p338089}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $A_1 A_2 A_3$ be a triangle,
+and let $\omega_1$ be a circle in its plane
+passing through $A_1$ and $A_2$.
+Suppose there exists circles $\omega_2$, $\omega_3$, \dots, $\omega_7$
+such that for $k = 2, 3, \dots, 7,$
+circle $\omega_k$ is externally tangent to $\omega_{k-1}$ and passes
+through $A_k$ and $A_{k+1}$ (indices mod $3$).
+Prove that $\omega_7 = \omega_1$.
+\end{mdframed}
+The idea is to keep track of the subtended arc
+$\widehat{A_i A_{i+1}}$ of $\omega_i$ for each $i$.
+To this end, let $\beta = \dang A_1 A_2 A_3$,
+$\gamma = \dang A_2 A_3 A_1$
+and $\alpha = \dang A_1 A_2 A_3$.
+
+\begin{center}
+\begin{asy}
+size(8cm);
+defaultpen(fontsize(9pt));
+pair A2 = (0,0);
+pair O1 = (-8,0);
+pair O2 = (5,0);
+pair A1 = abs(A2-O1)*dir(285)+O1;
+pair A3 = abs(A2-O2)*dir(245)+O2;
+pair O3 = extension(O2, A3, midpoint(A1--A3), midpoint(A1--A3)+dir(A1-A3)*dir(90));
+
+filldraw(circle(O1,abs(A1-O1)), opacity(0.1)+lightgreen, deepgreen);
+filldraw(circle(O2,abs(A2-O2)), opacity(0.1)+lightgreen, deepgreen);
+filldraw(circle(O3,abs(A3-O3)), opacity(0.1)+lightgreen, deepgreen);
+filldraw(A1--A2--A3--cycle, opacity(0.1)+orange, red);
+
+pair J = (0,-3.2);
+draw(O1--O2--O3, deepcyan+dotted);
+
+dot("$O_1$", O1, dir(90), deepcyan);
+dot("$O_2$", O2, dir(90), deepcyan);
+dot("$O_3$", O3, dir(-90), deepcyan);
+dot("$A_1$", A1, dir(A1-J), red);
+dot("$A_2$", A2, dir(A2-J), red);
+dot("$A_3$", A3, dir(A3-J), red);
+
+label("$\alpha$", A1, 2.4*dir(J-A1), red);
+label("$\beta$",  A2, 2*dir(J-A2), red);
+label("$\gamma$", A3, 2*dir(J-A3), red);
+\end{asy}
+\end{center}
+
+Initially, we set $\theta = \dang O_1 A_2 A_1$.
+Then we compute
+\begin{align*}
+  \dang O_1 A_2 A_1 &= \theta \\
+  \dang O_2 A_3 A_2 &= -\beta-\theta \\
+  \dang O_3 A_1 A_3 &= \beta-\gamma+\theta \\
+  \dang O_4 A_2 A_1 &= (\gamma-\beta-\alpha)-\theta \\
+\end{align*}
+and repeating the same calculation another round gives
+\[ \dang O_7 A_2 A_1 = k-(k-\theta) = \theta \]
+with $k = \gamma-\beta-\alpha$.
+This implies $O_7 = O_1$, so $\omega_7 = \omega_1$.
+\pagebreak
+
+\subsection{USAMO 2000/6, proposed by Gheorghita Zbaganu}
+\textsl{Available online at \url{https://aops.com/community/p108437}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a_1, b_1, a_2, b_2, \dots , a_n, b_n$ be nonnegative real numbers.
+Prove that
+\[ \sum_{i, j = 1}^{n} \min\{a_i a_j, b_i b_j\}
+  \le \sum_{i, j = 1}^{n} \min\{a_i b_j, a_j b_i\}.  \]
+\end{mdframed}
+We present two solutions.
+
+\paragraph{First solution by creating a single min (Vincent Huang and Ravi Boppana).}
+Let $b_i = r_i a_i$ for each $i$,
+and rewrite the inequality as
+\[ \sum_{i,j} a_i a_j \left[
+  \min (r_i, r_j) - \min(1, r_i r_j) \right] \ge 0. \]
+We now do the key manipulation to convert the double min
+into a separate single min.
+Let $\eps_i = +1$ if $r_i \ge 1$, and $\eps_i = -1$ otherwise,
+and let $s_i = |r_i-1|$.
+Then we pass to absolute values:
+\begin{align*}
+  2\min(r_i,r_j) - 2\min(1,r_i r_j)
+  &= |r_i r_j-1| - |r_i-r_j|  - (r_i-1)(r_j-1) \\
+  &= |r_i r_j-1| - |r_i-r_j| - \eps_i \eps_j s_i s_j \\
+  &= \eps_i \eps_j \min \left( |1-r_i r_j \pm (r_i-r_j)| \right)
+  - \eps_i \eps_j s_i s_j \\
+  &= \eps_i \eps_j \min \left( s_i(r_j+1), s_j(r_i+1) \right)
+  - \eps_i \eps_j s_i s_j \\
+  &= (\eps_i s_i)(\eps_j s_j)
+  \min \left( \frac{r_j+1}{s_j}-1, \frac{r_i+1}{s_i}-1  \right).
+\end{align*}
+So let us denote $x_i = a_i \eps_i s_i \in \RR$,
+and $t_i = \frac{r_i+1}{s_i}-1 \in \RR_{\ge 0}$.
+Thus it suffices to prove that:
+\begin{claim*}
+  We have
+  \[ \sum_{i,j} x_i x_j \min(t_i, t_j) \ge 0 \]
+  for arbitrary $x_i \in \RR$, $t_i \in \RR_{\ge 0}$.
+\end{claim*}
+\begin{proof}
+  One can just check this ``by hand''
+  by assuming $t_1 \le t_2 \le \dots \le t_n$;
+  then the left-hand side becomes
+  \[ \sum_i t_i x_i^2 + 2 \sum_{i < j} 2 t_i x_i x_j
+    = \sum_i (t_i - t_{i-1}) (x_i + x_{i+1} + \dots + x_n)^2 \ge 0.  \]
+  There is also a nice proof using the integral identity
+  \[ \min(t_i, t_j) = \int_0^\infty \mathbf1(u \le t_i) \mathbf1(u \le t_j) \; du \]
+  where the $\mathbf1$ are indicator functions.
+  Indeed,
+  \begin{align*}
+    \sum_{i,j} x_i x_j \min(t_i, t_j)
+    &= \sum_{i,j} x_i x_j \int_0^\infty \mathbf1(u \le t_i) \mathbf1(u \le t_j) \; du \\
+    &= \int_0^\infty \sum_i x_i \mathbf1(u \le t_i)
+    \sum_j x_j \mathbf1(u \le t_j) \; du \\
+    &= \int_0^\infty \left( \sum_i x_i \mathbf1(u \le t_i) \right)^2 \; du \\
+    &\ge 0. \qedhere
+  \end{align*}
+\end{proof}
+
+
+\paragraph{Second solution by smoothing (Alex Zhai).}
+The case $n=1$ is immediate, so we'll proceed by induction on $n \ge 2$.
+
+Again, let $b_i = r_i a_i$ for each $i$, and
+write the inequality as
+\[ L_n(a_1, \dots, a_n, r_1, \dots, r_n)
+  \coloneqq \sum_{i,j} a_i a_j \left[
+  \min (r_i, r_j) - \min(1, r_i r_j) \right] \ge 0. \]
+First note that if $r_1 = r_2$ then
+\[ L_n(a_1, a_2, a_3, \dots, r_1, r_1, r_3 \dots)
+  = L_{n-1}(a_1+a_2, a_3, \dots, r_1, r_3, \dots) \]
+and so our goal is to smooth to a situation
+where two of the $r_i$'s are equal,
+so that we may apply induction.
+
+On the other hand, $L_n$ is a \emph{piecewise linear} function in $r_1 \ge 0$.
+Let us smooth $r_1$ then.
+Note that if the minimum is attained at $r_1 = 0$,
+we can ignore $a_1$ and reduce to the $(n-1)$-variable case.
+On the other hand, the minimum must be achieved at a cusp
+which opens upward, which can only happen if $r_i r_j = 1$ for some $j$.
+(The $r_i = r_j$ cusps open downward, sadly.)
+
+In this way, whenever some $r_i$ is not equal to the reciprocal
+of any other $r_\bullet$, we can smooth it.
+This terminates; so we may smooth until we reach a situation for which
+\[ \{ r_1, \dots, r_n \} = \{ 1/r_1, \dots, 1/r_n \}. \]
+Now, assume WLOG that $r_1 = \max_i r_i$ and $r_2 = \min_i r_i$,
+hence $r_1 r_2 = 1$ and $r_1 \ge 1 \ge r_2$.
+We isolate the contributions from $a_1$, $a_2$, $r_1$ and $r_2$.
+\begin{align*}
+  L_n(\dots) &= a_1^2 \left[ r_1 - 1  \right] + a_2^2 \left[ r_2 - r_2^2 \right]
+    + 2a_1a_2 \left[ r_2 - 1 \right] \\
+  &+ 2a_1 \left[ (a_3r_3+\dots+a_n r_n) - (a_3+\dots+a_n) \right] \\
+  &+ 2a_2r_2 \left[ (a_3+\dots+a_n) - (a_3r_3+\dots+a_n r_n) \right] \\
+  &+ \sum_{i=3}^n \sum_{j=3}^n a_i a_j \left[
+    \min (r_i, r_j) - \min(1, r_i r_j) \right].
+\end{align*}
+The idea now is to smooth via
+\[ (a_1, a_2, r_1, r_2)
+  \longrightarrow
+  \left( a_1, \frac 1t a_2, \frac 1t r_1, tr_2 \right) \]
+where $t \ge 1$ is such that
+$\frac 1t r_1 \ge \max(1, r_3, \dots, r_n)$ holds.
+(This choice is such that $a_1$ and $a_2 r_2$ are unchanged,
+because we don't know the sign of $\sum_{i \ge 3} (1-r_i) a_i$
+and so the post-smoothing value is still at least the max.)
+Then,
+\begin{align*}
+  &\phantom{ {} = {} } L_n(a_1, a_2, \dots, r_1, r_2, \dots)
+  - L_n\left(a_1, \frac 1t a_2, \dots, \frac1t r_1, tr_2\right) \\
+  &= a_1^2 \left( r_1 - \frac 1t r_1 \right)
+  + a_2^2 \left( r_2 - \frac 1t r_2 \right)
+  + 2a_1a_2 \left( \frac 1t - 1 \right) \\
+  &= \left( 1 - \frac 1t \right) \left( r_1 a_1^2 + r_2 a_2^2 - 2a_1a_2 \right)
+  \ge 0
+\end{align*}
+the last line by AM-GM.
+Now pick $t = \frac{r_1}{\max(1, r_3, \dots, r_n)}$,
+and at last we can induct down.
+\pagebreak
+
+
+\end{document}

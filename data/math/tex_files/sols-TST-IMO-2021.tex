@@ -1,0 +1,605 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{USA IMO TST 2021 Solutions}
+\subtitle{United States of America --- IMO Team Selection Test}
+\author{Andrew Gu, Ankan Bhattacharya and Evan Chen}
+\date{62\ts{th} IMO 2021 Russia}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Determine all integers $s \ge 4$
+for which there exist positive integers $a$, $b$, $c$, $d$
+such that $s = a+b+c+d$
+and $s$ divides $abc+abd+acd+bcd$.
+
+\item %% Problem 2
+Points $A$, $V_1$, $V_2$, $B$, $U_2$, $U_1$
+lie fixed on a circle $\Gamma$, in that order,
+and such that $BU_2 > AU_1 > BV_2 > AV_1$.
+
+Let $X$ be a variable point on the arc $V_1 V_2$ of $\Gamma$
+not containing $A$ or $B$.
+Line $XA$ meets line $U_1 V_1$ at $C$,
+while line $XB$ meets line $U_2 V_2$ at $D$.
+
+Prove there exists a fixed point $K$, independent of $X$,
+such that the power of $K$ to the circumcircle
+of $\triangle XCD$ is constant.
+
+\item %% Problem 3
+Find all functions $f \colon \RR \to \RR$ that satisfy the inequality
+\[
+  f(y) -
+  \left(\frac{z-y}{z-x} f(x) + \frac{y-x}{z-x}f(z)\right) \leq
+  f\left(\frac{x+z}{2}\right) - \frac{f(x)+f(z)}{2}
+\]
+for all real numbers $x < y < z$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USA TST 2021/1, proposed by Ankan Bhattacharya, Michael Ren}
+\textsl{Available online at \url{https://aops.com/community/p20672573}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Determine all integers $s \ge 4$
+for which there exist positive integers $a$, $b$, $c$, $d$
+such that $s = a+b+c+d$
+and $s$ divides $abc+abd+acd+bcd$.
+\end{mdframed}
+The answer is $s$ composite.
+
+\paragraph{Composite construction.}
+Write $s = (w+x)(y+z)$,
+where $w$, $x$, $y$, $z$ are positive integers.
+Let $a=wy$, $b=wz$, $c=xy$, $d=xz$.
+Then
+\[ abc+abd+acd+bcd = wxyz(w+x)(y+z) \]
+so this works.
+
+\paragraph{Prime proof.}
+Choose suitable $a$, $b$, $c$, $d$. Then
+\[
+  (a+b)(a+c)(a+d)
+  = (abc+abd+acd+bcd) + a^2(a+b+c+d)
+  \equiv 0 \pmod s.
+\]
+Hence $s$ divides a product of positive integers less than $s$,
+so $s$ is composite.
+
+\begin{remark*}
+  Here is another proof that $s$ is composite.
+
+  Suppose that $s$ is prime.
+  Then the polynomial $(x-a)(x-b)(x-c)(x-d) \in \FF_s[x]$
+  is even, so the roots come in two opposite pairs in $\FF_s$.
+  Thus the sum of each pair is at least $s$,
+  so the sum of all four is at least $2s > s$, contradiction.
+\end{remark*}
+\pagebreak
+
+\subsection{USA TST 2021/2, proposed by Andrew Gu, Frank Han}
+\textsl{Available online at \url{https://aops.com/community/p20672623}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Points $A$, $V_1$, $V_2$, $B$, $U_2$, $U_1$
+lie fixed on a circle $\Gamma$, in that order,
+and such that $BU_2 > AU_1 > BV_2 > AV_1$.
+
+Let $X$ be a variable point on the arc $V_1 V_2$ of $\Gamma$
+not containing $A$ or $B$.
+Line $XA$ meets line $U_1 V_1$ at $C$,
+while line $XB$ meets line $U_2 V_2$ at $D$.
+
+Prove there exists a fixed point $K$, independent of $X$,
+such that the power of $K$ to the circumcircle
+of $\triangle XCD$ is constant.
+\end{mdframed}
+For brevity, we let $\ell_i$ denote line $U_iV_i$ for $i=1,2$.
+
+We first give an explicit description of the fixed point $K$.
+Let $E$ and $F$ be points on $\Gamma$ such that $\ol{AE} \parallel \ell_1$
+and $\ol{BF} \parallel \ell_2$.
+The problem conditions imply that $E$ lies between $U_1$ and $A$
+while $F$ lies between $U_2$ and $B$.
+Then we let \[ K = \ol{AF} \cap \ol{BE}. \]
+This point exists because $AEFB$ are the vertices
+of a convex quadrilateral.
+
+\begin{remark*}
+  [How to identify the fixed point]
+  If we drop the condition that $X$ lies on the arc,
+  then the choice above is motivated by choosing $X \in \{E,F\}$.
+  Essentially, when one chooses $X \to E$,
+  the point $C$ approaches an infinity point.
+  So in this degenerate case, the only points whose
+  power is finite to $(XCD)$ are bounded are those on line $BE$.
+  The same logic shows that $K$ must lie on line $AF$.
+  Therefore, if the problem is going to work,
+  the fixed point must be exactly $\ol{AF} \cap \ol{BE}$.
+\end{remark*}
+
+We give two possible approaches for proving the power
+of $K$ with respect to $(XCD)$ is fixed.
+
+\paragraph{First approach by Vincent Huang.}
+We need the following claim:
+\begin{claim*}
+  Suppose distinct lines $AC$ and $BD$ meet at $X$.
+  Then for any point $K$
+  \[ \opname{pow}(K, XAB) + \opname{pow}(K, XCD)
+    = \opname{pow}(K, XAD) + \opname{pow}(K, XBC). \]
+\end{claim*}
+\begin{proof}
+  The difference between the left-hand side and right-hand
+  side is a linear function in $K$,
+  which vanishes at all of $A$, $B$, $C$, $D$.
+\end{proof}
+
+Construct the points $P = \ell_1 \cap \ol{BE}$
+and $Q = \ell_2 \cap \ol{AF}$, which do not depend on $X$.
+\begin{claim*}
+  Quadrilaterals $BPCX$ and $AQDX$ are cyclic.
+\end{claim*}
+\begin{proof}
+  By Reim's theorem: $\dang CPB = \dang AEB = \dang AXB = \dang CXB$, etc.
+\end{proof}
+
+\begin{center}
+\begin{asy}
+pair A = dir(190);
+pair B = -conj(A);
+pair U_1 = dir(125);
+pair V_1 = dir(220);
+pair U_2 = dir(80);
+pair V_2 = dir(310);
+filldraw(unitcircle, opacity(0.1)+lightcyan, blue);
+draw(A--B, blue);
+draw(U_1--V_1, deepgreen);
+draw(U_2--V_2, deepgreen);
+
+pair E = V_1*U_1/A;
+pair F = V_2*U_2/B;
+
+pair X = dir(265);
+pair C = extension(A, X, U_1, V_1);
+pair D = extension(B, X, U_2, V_2);
+draw(A--X--B, lightred);
+draw(A--E, deepcyan);
+draw(B--F, deepcyan);
+pair K = extension(A, F, B, E);
+draw(A--F, blue);
+draw(B--E, blue);
+
+pair P = extension(B, E, U_1, V_1);
+pair Q = extension(A, F, U_2, V_2);
+
+filldraw(circumcircle(X, C, B), opacity(0.05)+yellow, dotted+orange);
+filldraw(circumcircle(X, A, D), opacity(0.05)+yellow, dotted+orange);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$U_1$", U_1, dir(U_1));
+dot("$V_1$", V_1, dir(V_1));
+dot("$U_2$", U_2, dir(U_2));
+dot("$V_2$", V_2, dir(V_2));
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(F));
+dot("$X$", X, dir(X));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(D));
+dot("$K$", K, dir(270));
+dot("$P$", P, dir(290));
+dot("$Q$", Q, dir(240));
+
+/* TSQ Source:
+
+A = dir 190
+B = -conj(A)
+U_1 = dir 125
+V_1 = dir 220
+U_2 = dir 80
+V_2 = dir 310
+unitcircle 0.1 lightcyan / blue
+A--B blue
+U_1--V_1 deepgreen
+U_2--V_2 deepgreen
+
+E = V_1*U_1/A
+F = V_2*U_2/B
+
+X = dir 265
+C = extension A X U_1 V_1
+D = extension B X U_2 V_2
+A--X--B lightred
+A--E deepcyan
+B--F deepcyan
+K = extension A F B E R270
+A--F blue
+B--E blue
+
+P = extension B E U_1 V_1 R290
+Q = extension A F U_2 V_2 R240
+
+circumcircle X C B 0.05 yellow / dotted orange
+circumcircle X A D 0.05 yellow / dotted orange
+
+*/
+\end{asy}
+\end{center}
+
+Now, for the particular $K$ we choose, we have
+\begin{align*}
+  \opname{pow}(K, XCD) &=
+  \opname{pow}(K, XAD) + \opname{pow}(K, XBC) - \opname{pow}(K, XAB) \\
+  &= KA \cdot KQ + KB \cdot KP - \opname{pow}(K, \Gamma).
+\end{align*}
+This is fixed, so the proof is completed.
+
+\paragraph{Second approach by authors.}
+Let $Y$ be the second intersection of $(XCD)$ with $\Gamma$.
+Let $S = \ol{EY} \cap \ell_1$ and $T = \ol{FY} \cap \ell_2$.
+\begin{claim*}
+  Points $S$ and $T$ lies on $(XCD)$ as well.
+\end{claim*}
+\begin{proof}
+  By Reim's theorem: $\dang CSY = \dang AEY = \dang AXY = \dang CXY$, etc.
+\end{proof}
+
+Now let $X'$ be any other choice of $X$,
+and define $C'$ and $D'$ in the obvious way.
+We are going to show that $K$ lies on the radical axis
+of $(XCD)$ and $(X'C'D')$.
+
+\begin{center}
+\begin{asy}
+pair A = dir(190);
+pair B = -conj(A);
+pair U_1 = dir(125);
+pair V_1 = dir(220);
+pair U_2 = dir(80);
+pair V_2 = dir(310);
+filldraw(unitcircle, opacity(0.1)+lightcyan, blue);
+draw(A--B, blue);
+draw(U_1--V_1, deepgreen);
+draw(U_2--V_2, deepgreen);
+
+pair E = V_1*U_1/A;
+pair F = V_2*U_2/B;
+
+pair X = dir(265);
+pair C = extension(A, X, U_1, V_1);
+pair D = extension(B, X, U_2, V_2);
+draw(A--X--B, lightred);
+draw(A--E, deepcyan);
+draw(B--F, deepcyan);
+pair K = extension(A, F, B, E);
+draw(A--F, blue);
+draw(B--E, blue);
+
+pair Y = -X+2*foot(X, origin, circumcenter(X, C, D));
+
+draw(circumcircle(X, C, D), red);
+pair S = extension(Y, E, U_1, V_1);
+pair T = extension(Y, F, U_2, V_2);
+draw(E--Y--F, brown);
+
+pair Xp = dir(300);
+pair Cp = extension(Xp, A, U_1, V_1);
+pair Dp = extension(Xp, B, U_2, V_2);
+draw(A--Xp--B, orange);
+
+pair L = extension(S, Y, Cp, Xp);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$U_1$", U_1, dir(U_1));
+dot("$V_1$", V_1, dir(V_1));
+dot("$U_2$", U_2, dir(U_2));
+dot("$V_2$", V_2, dir(V_2));
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(F));
+dot("$X$", X, dir(X));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(D));
+dot("$K$", K, dir(270));
+dot("$Y$", Y, dir(Y));
+dot("$S$", S, dir(S));
+dot("$T$", T, dir(T));
+dot("$X'$", Xp, dir(Xp));
+dot("$C'$", Cp, dir(170));
+dot("$D'$", Dp, dir(10));
+dot("$L$", L, dir(L));
+
+/* TSQ Source:
+
+A = dir 190
+B = -conj(A)
+U_1 = dir 125
+V_1 = dir 220
+U_2 = dir 80
+V_2 = dir 310
+unitcircle 0.1 lightcyan / blue
+A--B blue
+U_1--V_1 deepgreen
+U_2--V_2 deepgreen
+
+E = V_1*U_1/A
+F = V_2*U_2/B
+
+X = dir 265
+C = extension A X U_1 V_1
+D = extension B X U_2 V_2
+A--X--B lightred
+A--E deepcyan
+B--F deepcyan
+K = extension A F B E R270
+A--F blue
+B--E blue
+
+Y = -X+2*foot X origin circumcenter X C D
+
+circumcircle X C D red
+S = extension Y E U_1 V_1
+T = extension Y F U_2 V_2
+E--Y--F brown
+
+X' = dir 300
+C' = extension Xp A U_1 V_1 R170
+D' = extension Xp B U_2 V_2 R10
+A--Xp--B orange
+
+L = extension S Y Cp Xp
+
+*/
+\end{asy}
+\end{center}
+
+The main idea is as follows:
+\begin{claim*}
+  The point $L = \ol{EY} \cap \ol{AX'}$ lies on the radical axis.
+  By symmetry, so does the point $M = \ol{FY} \cap \ol{BX'}$ (not pictured).
+\end{claim*}
+\begin{proof}
+  Again by Reim's theorem, $SC'YX'$ is cyclic.
+  Hence we have
+  \[ \opname{pow}(L, X'C'D') = LC' \cdot LX'
+    = LS \cdot LY = \opname{pow}(L, XCD). \qedhere \]
+\end{proof}
+
+To conclude, note that by Pascal theorem on
+\[ EYFAX'B \]
+it follows $K$, $L$, $M$ are collinear,
+as needed.
+
+\begin{remark*}
+  All the conditions about $U_1$, $V_1$, $U_2$, $V_2$
+  at the beginning are there to eliminate configuration issues,
+  making the problem less obnoxious to the contestant.
+
+  In particular, without the various assumptions,
+  there exist configurations in which the point $K$ is at infinity.
+  In these cases, the center of $XCD$ moves along a fixed line.
+\end{remark*}
+\pagebreak
+
+\subsection{USA TST 2021/3, proposed by Gabriel Carroll}
+\textsl{Available online at \url{https://aops.com/community/p20672681}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all functions $f \colon \RR \to \RR$ that satisfy the inequality
+\[
+  f(y) -
+  \left(\frac{z-y}{z-x} f(x) + \frac{y-x}{z-x}f(z)\right) \leq
+  f\left(\frac{x+z}{2}\right) - \frac{f(x)+f(z)}{2}
+\]
+for all real numbers $x < y < z$.
+\end{mdframed}
+Answer: all functions of the form $f(y) = a y^2 + by + c$, where
+$a, b, c$ are constants with $a \leq 0$.
+
+If $I = (x,z)$ is an interval,
+we say that a real number $\alpha$ is a
+\emph{supergradient} of $f$ at $y \in I$
+if we always have
+\[ f(t) \le f(y) + \alpha(t-y) \]
+for every $t \in I$.
+(This inequality may be familiar as the so-called ``tangent line trick''.
+A cartoon of this situation is drawn below for intuition.)
+We will also say $\alpha$ is a supergradient of $f$ at $y$,
+without reference to the interval,
+if $\alpha$ is a supergradient of \emph{some} open interval containing $y$.
+\begin{center}
+\begin{asy}
+  size(4cm);
+  pair X = (0,0);
+  pair Z = (7,3);
+  pair Y = (3,4);
+  draw(X..Y..Z, blue);
+  pair t = 3*dir(X..Y..Z, 1);
+  draw( (Y-t)--(Y+t), red, Arrows);
+  label(rotate(15)*"slope $\alpha$", Y+0.45*t, dir(90), red );
+  dot("$x$", X, dir(-90), blue);
+  dot("$z$", Z, dir(-90), blue);
+  dot("$y$", Y, dir(90), blue);
+\end{asy}
+\qquad
+\begin{asy}
+  size(5cm);
+  pair X = (-3,-9/3);
+  pair Z = (2,-4/3);
+  draw( X..(-2,-4/3)..(-1,-1/3)..(0,0)..(1,-1/3)..Z, blue );
+  pair Y = (-0.5,-0.25/3);
+  draw(X--Z, deepgreen);
+  draw((Y-1.5*dir(Z-X))--(Y+1.5*dir(Z-X)), red, Arrows );
+  label(rotate(18)*"slope $\frac{f(z)-f(x)}{z-x}$",
+    midpoint(X--Z), dir(110), deepgreen);
+  dot("$x$", X, dir(-90), blue);
+  dot("$y = \frac{x+z}{2}$", Y, 1.5*dir(-60), blue);
+  dot("$z$", Z, dir(-90), blue);
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  The problem condition is equivalent to asserting
+  that $\frac{f(z) - f(x)}{z-x}$ is a supergradient of $f$
+  at $\frac{x+z}{2}$ for the interval $(x,z)$, for every $x < z$.
+\end{claim*}
+\begin{proof}
+  This is just manipulation.
+\end{proof}
+
+At this point, we may readily verify that all claimed
+quadratic functions $f(x) = ax^2+bx+c$ work --- these functions are concave,
+so the graphs lie below the tangent line at any point.
+Given $x < z$, the tangent at $\frac{x+z}{2}$ has slope
+given by the derivative $f'(x)=2ax+b$, that is
+\[ f'\left(\frac{x+z}{2}\right) = 2a \cdot \frac{x+z}{2} + b
+  = \frac{f(z)-f(x)}{z-x} \]
+as claimed.
+(Of course, it is also easy to verify the condition directly
+by elementary means, since it is just a polynomial inequality.)
+
+Now suppose $f$ satisfies the required condition; we prove that it has
+the above form.
+
+\begin{claim*}
+  The function $f$ is concave.
+\end{claim*}
+\begin{proof}
+  Choose any $\Delta > \max\{z-y,y-x\}$.
+  Since $f$ has a supergradient $\alpha$ at $y$ over the interval
+  $(y-\Delta,y+\Delta)$, and this interval includes $x$ and $z$, we have
+  \begin{align*}
+  \frac{z-y}{z-x}f(x) + \frac{y-x}{z-x}f(z) &\leq
+  \frac{z-y}{z-x}(f(y) + \alpha(x-y)) + \frac{y-x}{z-x}(f(y) +
+  \alpha(z-y)) \\
+  &= f(y).
+  \end{align*}
+  That is, $f$ is a concave function.
+  Continuity follows from the fact that any concave
+  function on $\RR$ is automatically continuous.
+\end{proof}
+
+\begin{lemma*}
+  [see e.g.\ {\url{https://math.stackexchange.com/a/615161}} for picture]
+  Any concave function $f$ on $\RR$ is continuous.
+\end{lemma*}
+\begin{proof}
+  Suppose we wish to prove continuity at $p \in \RR$.
+  Choose any real numbers $a$ and $b$ with $a < p < b$.
+  For any $0 < \eps < \max(b-p,p-a)$ we always have
+  \[ f(p) + \frac{f(b)-f(p)}{b-p} \eps \le f(p+\eps) \le f(p) + \frac{f(p)-f(a)}{p-a} \eps \]
+  which implies right continuity; the proof for left continuity is the same.
+\end{proof}
+
+\begin{claim*}
+  The function $f$ cannot have more than one supergradient
+  at any given point.
+\end{claim*}
+\begin{proof}
+  Fix $y \in \RR$.
+  For $t > 0$, let's define the function
+  \[ g(t) = \frac{f(y)-f(y-t)}{t} - \frac{f(y+t)-f(y)}{t}. \]
+  We contend that $g(\eps) \le \frac35g(3\eps)$
+  for any $\eps > 0$.
+  Indeed by the problem condition,
+
+  \noindent
+  \begin{minipage}{0.5\textwidth}
+  \begin{align*}
+    f(y) &\le f(y-\eps) + \frac{f(y+\eps)-f(y-3\eps)}{4} \\
+    f(y) &\le f(y+\eps) - \frac{f(y+3\eps)-f(y-\eps)}{4}.
+  \end{align*}
+  Summing gives the desired conclusion.
+  \end{minipage}
+  \begin{minipage}{0.4\textwidth}
+  \begin{asy}
+    size(6cm);
+    real f(real x) { return -x*x/6; }
+    pair A = (-3, f(3));
+    pair B = (-2, f(2));
+    pair C = (-1, f(1));
+    pair D = (-0, f(0));
+    pair E = (1, f(1));
+    pair F = (2, f(2));
+    pair G = (3, f(3));
+    draw(A..B..C..D..E..F..G, blue);
+    draw(A--E, lightred);
+    draw(C--G, deepgreen);
+    draw( (C-2*dir(E-A))--(C+2*dir(E-A)), lightred, Arrows );
+    draw( (E-2*dir(G-C))--(E+2*dir(G-C)), deepgreen, Arrows );
+
+    dot("$y-3\varepsilon$", A, dir(-90), blue);
+    dot("$y-\varepsilon$",  C, dir(-90), blue);
+    dot("$y$",  D, dir(-90), blue);
+    dot("$y+\varepsilon$",  E, dir(-90), blue);
+    dot("$y+3\varepsilon$", G, dir(-90), blue);
+  \end{asy}
+  \end{minipage}
+
+  Now suppose that $f$ has two supergradients $\alpha < \alpha'$ at point $y$.
+  For small enough $\eps$, we should have
+  we have $f(y-\eps) \leq f(y) - \alpha'\eps$
+  and $f(y+\eps) \leq f(y) + \alpha\eps$, hence
+  \[ g(\eps) = \frac{f(y)-f(y-\eps)}{\eps} - \frac{f(y+\eps)-f(y)}{\eps}
+    \geq \alpha' - \alpha. \]
+  This is impossible since $g(\eps)$ may be arbitrarily small.
+\end{proof}
+
+\begin{claim*}
+  The function $f$ is quadratic on the rational numbers.
+\end{claim*}
+\begin{proof}
+Consider any four-term arithmetic progression $x, x+d, x+2d, x+3d$.
+Because $(f(x+2d)-f(x+d))/d$ and $(f(x+3d)-f(x))/3d$ are both
+supergradients of $f$ at the point $x+3d/2$, they must be equal, hence
+\begin{equation} \label{quadratic}
+  f(x+3d) - 3f(x+2d) + 3f(x+d) - f(x) = 0.
+\end{equation}
+If we fix $d = 1/n$, it follows inductively
+that $f$ agrees with a quadratic function $\wt f_n$ on the set $\frac1n \ZZ$.
+On the other hand, for any $m \neq n$,
+we apparently have $\wt f_n = \wt f_{mn} = \wt f_m$,
+so the quadratic functions on each ``layer'' are all equal.
+\end{proof}
+Since $f$ is continuous, it follows $f$ is quadratic, as needed.
+
+\begin{remark*}
+  [Alternate finish using differentiability due to Michael Ren]
+  In the proof of the main claim (about uniqueness of supergradients),
+  we can actually notice the two terms $\frac{f(y)-f(y-t)}{t}$
+  and $\frac{f(y+t)-f(y)}{t}$ in the definition of $g(t)$ are both monotonic
+  (by concavity).
+  Since we supplied a proof that $\lim_{t \to 0} g(t) = 0$,
+  we find $f$ is differentiable.
+
+  Now, if the derivative at some point exists,
+  it must coincide with all the supergradients;
+  (informally, this is why ``tangent line trick'' always has the slope
+  as the derivative, and formally, we use the mean value theorem).
+  In other words, we must have
+  \[ f(x+y) - f(x-y) = 2f'(x) \cdot y \]
+  holds for all real numbers $x$ and $y$.
+  By choosing $y=1$ we obtain that $f'(x) = f(x+1) - f(x-1)$
+  which means $f'$ is also continuous.
+
+  Finally differentiating both sides with respect to $y$ gives
+  \[ f'(x+y) - f'(x-y) = 2f'(x) \]
+  which means $f'$ obeys Jensen's functional equation.
+  Since $f'$ is continuous, this means $f'$ is linear.
+  Thus $f$ is quadratic, as needed.
+\end{remark*}
+\pagebreak
+
+
+\end{document}

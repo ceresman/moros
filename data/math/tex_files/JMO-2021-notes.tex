@@ -1,0 +1,453 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{JMO 2021 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2021 JMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Find all functions $f \colon \NN \to \NN$
+which satisfy $f(a^2+b^2)=f(a)f(b)$ and
+$f(a^2)=f(a)^2$ for all positive integers $a$ and $b$.
+
+\item %% Problem 2
+Rectangles $BCC_1B_2$, $CAA_1C_2$, and $ABB_1A_2$ are erected
+outside an acute triangle $ABC$. Suppose that
+\[ \angle BC_1C + \angle CA_1A + \angle AB_1B = 180^\circ. \]
+Prove that lines $B_1C_2$, $C_1A_2$, and $A_1B_2$ are concurrent.
+
+\item %% Problem 3
+An equilateral triangle $\Delta$ of side length $L > 0$ is given.
+Suppose that $n$ equilateral triangles with side length $1$
+and with non-overlapping interiors are drawn inside $\Delta$,
+such that each unit equilateral triangle has sides parallel to $\Delta$,
+but with opposite orientation.
+Prove that \[ n \le \frac{2}{3} L^2. \]
+
+\item %% Problem 4
+Carina has three pins, labeled $A$, $B$, and $C$, respectively,
+located at the origin of the coordinate plane.
+In a \emph{move}, Carina may move a pin to
+an adjacent lattice point at distance $1$ away.
+What is the least number of moves that Carina can make
+in order for triangle $ABC$ to have area $2021$?
+
+\item %% Problem 5
+A finite set $S$ of positive integers has the property that,
+for each $s\in S$, and each positive integer divisor $d$ of $s$,
+there exists a unique element $t\in S$ satisfying $\gcd(s,t) = d$.
+(The elements $s$ and $t$ could be equal.)
+
+Given this information, find all possible values for the
+number of elements of $S$.
+
+\item %% Problem 6
+Let $n \ge 4$ be an integer.
+Find all positive real solutions to the following
+system of $2n$ equations:
+\begin{align*}
+  a_1 &= \frac{1}{a_{2n}} + \frac{1}{a_{2}}, & a_2 &= a_1 + a_3, \\[1ex]
+  a_3 &= \frac{1}{a_{2}} + \frac{1}{a_{4}}, & a_4 &= a_3 + a_5, \\[1ex]
+  a_5 &= \frac{1}{a_{4}} + \frac{1}{a_{6}}, & a_6 &= a_5 + a_7, \\[1ex]
+  &\vdotswithin{=} &&\vdotswithin{=} \\
+  a_{2n-1} &= \frac{1}{a_{2n-2}} + \frac{1}{a_{2n}}, & a_{2n} &= a_{2n-1} + a_1.
+\end{align*}
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{JMO 2021/1, proposed by Vincent Huang}
+\textsl{Available online at \url{https://aops.com/community/p21498724}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all functions $f \colon \NN \to \NN$
+which satisfy $f(a^2+b^2)=f(a)f(b)$ and
+$f(a^2)=f(a)^2$ for all positive integers $a$ and $b$.
+\end{mdframed}
+The answer is $f \equiv 1$ only, which works.
+We prove it's the only one.
+
+The bulk of the problem is:
+\begin{claim*}
+  If $f(a)=f(b)=1$ and $a>b$, then $f(a^2-b^2)=f(2ab)=1$.
+\end{claim*}
+\begin{proof}
+  Write
+  \begin{align*}
+    1 = f(a)f(b) &= f(a^2+b^2) = \sqrt{f\left( (a^2+b^2)^2 \right)} \\
+    &= \sqrt{f\left( (a^2-b^2)^2 + (2ab)^2 \right)} \\
+    &= \sqrt{f(a^2-b^2) f(2ab)}. \qedhere
+  \end{align*}
+\end{proof}
+
+By setting $a=b=1$ in the given statement
+we get $f(1) = f(2) = 1$.
+Now a simple induction on $n$ shows $f(n) = 1$:
+\begin{itemize}
+  \ii If $n = 2k$ take $(u,v) = (k,1)$ hence $2uv = n$.
+  \ii If $n = 2k+1$ take $(u,v) = (k+1,k)$ hence $u^2-v^2=n$.
+\end{itemize}
+\pagebreak
+
+\subsection{JMO 2021/2, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p21498558}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Rectangles $BCC_1B_2$, $CAA_1C_2$, and $ABB_1A_2$ are erected
+outside an acute triangle $ABC$. Suppose that
+\[ \angle BC_1C + \angle CA_1A + \angle AB_1B = 180^\circ. \]
+Prove that lines $B_1C_2$, $C_1A_2$, and $A_1B_2$ are concurrent.
+\end{mdframed}
+The angle condition implies the circumcircles of the three
+rectangles concur at a single point $P$.
+Then $\dang C P B_2 = \dang C P A_1 = 90\dg$,
+hence $P$ lies on $A_1 B_2$ etc., so we're done.
+
+\begin{remark*}
+  As one might guess from the two-sentence solution,
+  the entire difficulty of the problem
+  is getting the characterization of the concurrence point.
+\end{remark*}
+\pagebreak
+
+\subsection{JMO 2021/3, proposed by Alex Zhai}
+\textsl{Available online at \url{https://aops.com/community/p21499596}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+An equilateral triangle $\Delta$ of side length $L > 0$ is given.
+Suppose that $n$ equilateral triangles with side length $1$
+and with non-overlapping interiors are drawn inside $\Delta$,
+such that each unit equilateral triangle has sides parallel to $\Delta$,
+but with opposite orientation.
+Prove that \[ n \le \frac{2}{3} L^2. \]
+\end{mdframed}
+We present the approach of Andrew Gu.
+For each triangle, we draw a green regular hexagon
+of side length $1/2$ as shown below.
+
+\begin{center}
+\begin{asy}
+  size(2cm);
+  filldraw(dir(0)--dir(180)--(dir(240)+dir(300))--cycle,
+    opacity(0.2)+lightred, black);
+  filldraw(dir(0)--dir(60)--dir(120)--dir(180)--dir(240)--dir(300)--cycle,
+  opacity(0.1)+green, deepgreen+1.5);
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  All the hexagons are disjoint and lie inside $\Delta$.
+\end{claim*}
+\begin{proof}
+  Annoying casework.
+\end{proof}
+
+Since each hexagon has area $\frac{3\sqrt{3}}{8}$ and
+lies inside $\Delta$, we conclude
+\[ \frac{3\sqrt3}{8} \cdot n \le \frac{\sqrt3}{4} L^2
+  \implies n \le \frac 23 L^2. \]
+
+\begin{remark*}
+  The constant $\frac23$ is sharp and cannot be improved.
+  The following tessellation shows how to achieve the $\frac23$ density.
+  In the figure on the left,
+  one of the green hexagons is drawn in for illustration.
+  The version on the right has all the hexagons.
+  \begin{center}
+  \begin{asy}
+    size(11cm);
+    picture pic;
+    filldraw(pic, dir(0)--dir(180)--(dir(240)+dir(300))--cycle,
+      opacity(0.2)+lightred, black);
+    pair v = dir(180)+dir(240);
+    pair w = dir(0)+dir(-60);
+
+    for (int i=0; i<=7; ++i) {
+      for (int j=0; j<=7; ++j) {
+        if (abs(i-j) <= 4) {
+          add(shift(i*v+j*w)*pic);
+        }
+      }
+    }
+
+    filldraw(pic, (dir(0)--dir(60)--dir(120)--dir(180)--dir(240)--dir(300)--cycle),
+      opacity(0.1)+lightgreen, deepgreen+1.5);
+
+    for (int i=0; i<=7; ++i) {
+      for (int j=0; j<=7; ++j) {
+        if (abs(i-j) <= 4) {
+          add(shift(15,0)*shift(i*v+j*w)*pic);
+        }
+      }
+    }
+    filldraw(shift(0,-4*3**0.5)*(dir(0)--dir(60)--dir(120)--dir(180)--dir(240)--dir(300)--cycle),
+      opacity(0.1)+lightgreen, deepgreen+1.5);
+  \end{asy}
+  \end{center}
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{JMO 2021/4, proposed by Brandon Wang}
+\textsl{Available online at \url{https://aops.com/community/p21498566}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Carina has three pins, labeled $A$, $B$, and $C$, respectively,
+located at the origin of the coordinate plane.
+In a \emph{move}, Carina may move a pin to
+an adjacent lattice point at distance $1$ away.
+What is the least number of moves that Carina can make
+in order for triangle $ABC$ to have area $2021$?
+\end{mdframed}
+The answer is $128$.
+
+Define the \textbf{bounding box} of triangle $ABC$
+to be the smallest axis-parallel rectangle which
+contains all three of the vertices $A$, $B$, $C$.
+
+\begin{center}
+\begin{asy}
+  pair A = (0,0);
+  pair X = (7,0);
+  pair Z = (0,3);
+  pair Y = X+Z-A;
+  pair B = (7,1);
+  pair C = (2,3);
+  filldraw(A--B--C--cycle, opacity(0.1)+lightcyan, blue);
+  filldraw(A--X--Y--Z--cycle, opacity(0.1)+lightred, red);
+  dot("$A$", A, dir(225), blue);
+  dot("$B$", B, dir(0), blue);
+  dot("$C$", C, dir(90), blue);
+  dot("$X$", X, dir(315), red);
+  dot("$Y$", Y, dir(45), red);
+  dot("$Z$", Z, dir(135), red);
+\end{asy}
+\end{center}
+
+\begin{lemma*}
+  The area of a triangle $ABC$ is at
+  most half the area of the bounding box.
+\end{lemma*}
+\begin{proof}
+  This can be proven by explicit calculation in coordinates.
+  Nonetheless, we outline a geometric approach.
+  By considering the smallest/largest $x$ coordinate
+  and the smallest/largest $y$ coordinate,
+  one can check that some vertex of the triangle
+  must coincide with a corner of the bounding box
+  (there are four ``extreme'' coordinates
+  across the $3\cdot2=6$ coordinates of our three points).
+
+  So, suppose the bounding box is $AXYZ$.
+  Imagine fixing $C$ and varying $B$ along
+  the perimeter entire rectangle.
+  The area is a linear function of $B$,
+  so the maximal area should be achieved when $B$
+  coincides with one of the vertices $\{A,X,Y,Z\}$.
+  But obviously the area of $\triangle ABC$ is
+  \begin{itemize}
+    \ii exactly $0$ if $B=A$,
+    \ii at most half the bounding box if $B\in\{X,Z\}$
+    by one-half-base-height,
+    \ii at most half the bounding box if $B=Y$,
+    since $\triangle ABC$ is contained inside
+    either $\triangle AYZ$ or $\triangle AXZ$. \qedhere
+  \end{itemize}
+\end{proof}
+
+We now proceed to the main part of the proof.
+\begin{claim*}
+  If $n$ moves are made, the bounding box has area at most $(n/2)^2$.
+  (In other words, a bounding box of area $A$ requires
+  at least $\left\lceil 2\sqrt{A} \right\rceil$ moves.)
+\end{claim*}
+\begin{proof}
+  The sum of the width and height of the bounding box
+  increases by at most $1$ each move,
+  hence the width and height have sum at most $n$.
+  So, by AM-GM, their product is at most $(n/2)^2$.
+\end{proof}
+
+This immediately implies $n \ge 128$,
+since the bounding box needs to have area at least $4042 > 63.5^2$.
+
+On the other hand, if we start all the pins at
+the point $(3,18)$ then we can reach the
+following three points in $128$ moves:
+\begin{align*}
+  A &= (0,0) \\
+  B &= (64,18) \\
+  C &= (3,64)
+\end{align*}
+and indeed triangle $ABC$ has area exactly $2021$.
+\pagebreak
+
+\subsection{JMO 2021/5, proposed by Carl Schildkraut}
+\textsl{Available online at \url{https://aops.com/community/p21498580}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A finite set $S$ of positive integers has the property that,
+for each $s\in S$, and each positive integer divisor $d$ of $s$,
+there exists a unique element $t\in S$ satisfying $\gcd(s,t) = d$.
+(The elements $s$ and $t$ could be equal.)
+
+Given this information, find all possible values for the
+number of elements of $S$.
+\end{mdframed}
+The answer is that $|S|$ must be a power of $2$ (including $1$),
+or $|S| = 0$ (a trivial case we do not discuss further).
+
+\medskip
+
+\textbf{Construction}:
+For any nonnegative integer $k$,
+a construction for $|S| = 2^k$ is given
+by
+\[ S = \left\{
+    (p_1 \text{ or } q_1)
+    \times
+    (p_2 \text{ or } q_2)
+    \times
+    \dots
+    \times
+    (p_k \text{ or } q_k)
+  \right\}
+\]
+for $2k$ distinct primes $p_1$, \dots, $p_k$, $q_1$, \dots, $q_k$.
+
+\medskip
+
+\textbf{Converse}: the main claim is as follows.
+\begin{claim*}
+  In any valid set $S$,
+  for any prime $p$ and $x \in S$, $\nu_p(x) \le 1$.
+\end{claim*}
+\begin{proof}
+  Assume for contradiction $e = \nu_p(x) \ge 2$.
+  \begin{itemize}
+    \ii On the one hand, by taking $x$ in the statement,
+    we see $\frac{e}{e+1}$ of the elements of $S$ are divisible by $p$.
+    \ii On the other hand, consider a $y \in S$ such that
+    $\nu_p(y)=1$ which must exist (say if $\gcd(x,y) = p$).
+    Taking $y$ in the statement,
+    we see $\half$ of the elements of $S$ are divisible by $p$.
+  \end{itemize}
+  So $e=1$, contradiction.
+\end{proof}
+Now since $|S|$ equals the number of divisors of any element of $S$,
+we are done.
+\pagebreak
+
+\subsection{JMO 2021/6, proposed by Mohsen Jamaali}
+\textsl{Available online at \url{https://aops.com/community/p21498967}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n \ge 4$ be an integer.
+Find all positive real solutions to the following
+system of $2n$ equations:
+\begin{align*}
+  a_1 &= \frac{1}{a_{2n}} + \frac{1}{a_{2}}, & a_2 &= a_1 + a_3, \\[1ex]
+  a_3 &= \frac{1}{a_{2}} + \frac{1}{a_{4}}, & a_4 &= a_3 + a_5, \\[1ex]
+  a_5 &= \frac{1}{a_{4}} + \frac{1}{a_{6}}, & a_6 &= a_5 + a_7, \\[1ex]
+  &\vdotswithin{=} &&\vdotswithin{=} \\
+  a_{2n-1} &= \frac{1}{a_{2n-2}} + \frac{1}{a_{2n}}, & a_{2n} &= a_{2n-1} + a_1.
+\end{align*}
+\end{mdframed}
+The answer is that the only solution is
+$(1,2,1,2,\dots,1,2)$ which works.
+
+We will prove $a_{2k}$ is a constant sequence,
+at which point the result is obvious.
+
+\paragraph{First approach (Andrew Gu).}
+Apparently, with indices modulo $2n$, we should have
+\[ a_{2k} = \frac{1}{a_{2k-2}}
+  + \frac{2}{a_{2k}} + \frac{1}{a_{2k+2}} \]
+for every index $k$ (this eliminates all $a_{\text{odd}}$'s).
+Define
+\[ m = \min_k a_{2k} \qquad\text{and}\qquad M = \max_k a_{2k}. \]
+Look at the indices $i$ and $j$
+achieving $m$ and $M$ to respectively get
+\begin{align*}
+  m &= \frac2m + \frac{1}{a_{2i-2}} + \frac{1}{a_{2i+2}}
+  \ge \frac2m + \frac1M + \frac1M  = \frac2m + \frac2M \\[1ex]
+  M &= \frac2M + \frac{1}{a_{2j-2}} + \frac{1}{a_{2j+2}}
+  \le \frac2M + \frac1m + \frac1m = \frac2m + \frac2M.
+\end{align*}
+Together this gives $m \ge M$, so $m = M$.
+That means $a_{2i}$ is constant as $i$ varies,
+solving the problem.
+
+\paragraph{Second approach (author's solution).}
+As before, we have
+\[ a_{2k} = \frac{1}{a_{2k-2}}
+  + \frac{2}{a_{2k}} + \frac{1}{a_{2k+2}} \]
+The proof proceeds in three steps.
+\begin{itemize}
+\ii Define
+\[ S = \sum_k a_{2k},
+  \quad\text{and}\quad
+  T = \sum_k \frac{1}{a_{2k}}. \]
+Summing gives $S = 4T$.
+On the other hand, Cauchy-Schwarz says $S \cdot T \ge n^2$,
+so $T \ge \half n$.
+
+\ii On the other hand,
+\[ 1 = \frac{1}{a_{2k-2} a_{2k}}
+  + \frac{2}{a_{2k}^2} + \frac{1}{a_{2k} a_{2k+2}} \]
+Sum this modified statement to obtain
+\[
+  n = \sum_k \left( \frac{1}{a_{2k}} + \frac{1}{a_{2k+2}} \right)^2
+  \overset{\text{QM-AM}}{\ge}
+  \frac 1n \left( \sum_k \frac{1}{a_{2k}} + \frac{1}{a_{2k+2}} \right)^2
+  = \frac 1n \left( 2T \right)^2
+\]
+So $T \le \half n$.
+
+\ii Since $T \le \half n$ and $T \ge \half n$,
+we must have equality everywhere above.
+This means $a_{2k}$ is a constant sequence.
+\end{itemize}
+
+\begin{remark*}
+  The problem is likely intractable over $\CC$,
+  in the sense that one gets a high-degree polynomial
+  which almost certainly has many complex roots.
+  So it seems likely that most solutions must involve
+  some sort of inequality,
+  using the fact we are over $\RR_{>0}$ instead.
+\end{remark*}
+\pagebreak
+
+
+\end{document}

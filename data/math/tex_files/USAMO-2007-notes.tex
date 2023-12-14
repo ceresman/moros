@@ -1,0 +1,441 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2007 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2007 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $n$ be a positive integer.
+Define a sequence by setting $a_1 = n$ and, for each $k > 1$,
+letting $a_k$ be the unique integer in the range $0 \leq a_k \leq k-1$
+for which $a_1 + a_2 + \dots + a_k$ is divisible by $k$.
+(For instance, when $n = 9$
+the obtained sequence is $9,1,2,0,3,3,3,\dots$.)
+Prove that for any $n$ the sequence $a_1$, $a_2$, \dots
+eventually becomes constant.
+
+\item %% Problem 2
+Decide whether it possible to cover all lattice points in $\RR^2$
+by an (infinite) family of disks whose interiors are disjoint
+such that the radius of each disk is at least $5$.
+
+\item %% Problem 3
+Let $S$ be a set containing $n^2+n-1$ elements.
+Suppose that the $n$-element subsets of $S$
+are partitioned into two classes.
+Prove that there are at least $n$ pairwise disjoint sets
+in the same class.
+
+\item %% Problem 4
+An \emph{animal} with $n$ \emph{cells}
+is a connected figure consisting of $n$ equal-sized square cells
+(equivalently, a polyomino with $n$ cells).
+A \emph{dinosaur} is an animal with at least $2007$ cells.
+It is said to be \emph{primitive}
+it its cells cannot be partitioned into two or more dinosaurs.
+Find with proof the maximum number of cells in a primitive dinosaur.
+
+\item %% Problem 5
+Prove that for every nonnegative integer $n$,
+the number $7^{7^n}+1$ is the product
+of at least $2n+3$ (not necessarily distinct) primes.
+
+\item %% Problem 6
+Let $ABC$ be an acute triangle
+with $\omega$, $S$, and $R$ being its incircle,
+circumcircle, and circumradius, respectively.
+Circle $\omega_{A}$ is tangent internally to $S$
+at $A$ and tangent externally to $\omega$.
+Circle $S_{A}$ is tangent internally to $S$
+at $A$ and tangent internally to $\omega$.
+
+Let $P_A$ and $Q_A$ denote
+the centers of $\omega_A$ and $S_A$, respectively.
+Define points $P_B$, $Q_B$, $P_C$, $Q_C$ analogously.
+Prove that
+\[ 8 P_A Q_A \cdot P_B Q_B \cdot P_C Q_C \le R^3 \]
+with equality if and only if triangle $ABC$ is equilateral.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2007/1, proposed by Sam Vandervelde}
+\textsl{Available online at \url{https://aops.com/community/p825490}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n$ be a positive integer.
+Define a sequence by setting $a_1 = n$ and, for each $k > 1$,
+letting $a_k$ be the unique integer in the range $0 \leq a_k \leq k-1$
+for which $a_1 + a_2 + \dots + a_k$ is divisible by $k$.
+(For instance, when $n = 9$
+the obtained sequence is $9,1,2,0,3,3,3,\dots$.)
+Prove that for any $n$ the sequence $a_1$, $a_2$, \dots
+eventually becomes constant.
+\end{mdframed}
+For each $k$, the number
+\[ b_k \coloneqq \frac 1k (a_1 + \dots + a_k) \]
+is a nonnegative integer.
+\begin{claim*}
+  The sequence $(b_k)$ is eventually constant.
+\end{claim*}
+\begin{proof}
+  Since
+  \[ b_{k+1}
+    = \frac{a_1 + \dots + a_k + a_{k+1}}{k+1}
+    \le \frac{k b_k + k}{k+1} < b_k + 1 \]
+  and therefore $b_{k+1} \le b_k$ for all $k$.
+  Hence the sequence $b_k$ must eventually be constant.
+\end{proof}
+
+This can only happen once the sequence is constant:
+indeed if $N$ is an index such that $b_N = b_{N+1} = \dots = b$ then
+\[ a_k = (k+1) b_{k+1} - k \cdot b_k
+  = (k+1) \cdot b - k \cdot b = b \]
+for any $k \ge N$.
+In other words, $a_N = a_{N+1} = \dots = b$ as well.
+\pagebreak
+
+\subsection{USAMO 2007/2, proposed by Gregory Galperin}
+\textsl{Available online at \url{https://aops.com/community/p825495}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Decide whether it possible to cover all lattice points in $\RR^2$
+by an (infinite) family of disks whose interiors are disjoint
+such that the radius of each disk is at least $5$.
+\end{mdframed}
+The answer is no.
+
+Assume not.
+Take a disk $\odot O$ not touching any member of the family,
+and then enlarge it until it is maximal.
+Then, it must be tangent to at least three other disks,
+say $\odot A$, $\odot B$, $\odot C$.
+Suppose WLOG that $\angle AOB \le 120\dg$.
+Denote the radii of $\odot O$, $\odot A$, $\odot B$ by $r$, $a$, $b$.
+
+But the Law of Cosines gives
+\[ (a+b)^2 \le (a+r)^2 + (b+r)^2 + (a+r)(b+r) \]
+which rewrites as
+\[ 12r^2 \ge (a-3r)(b-3r) \ge (5-3r)^2 \]
+which one can check is impossible for $r \le 1/\sqrt2$.
+Thus $r > 1/\sqrt2$.
+
+In particular $(\odot O)$ must contain a lattice point
+as it contains a unit square.
+
+\begin{remark*}
+  The order of the argument here matters in subtle ways.
+  A common approach is to try and reduce to the ``optimal'' case
+  where we have three mutually tangent circles,
+  and then apply the Descarte circle theorem.
+  There are ways in which this approach can fail
+  if the execution is not done with care.
+  (In particular, one cannot simply say to reduce
+  to this case, without some justification.)
+
+  For example: it is not true that, given an infinite family of disks,
+  we can enlarge disks until we get three mutually tangent ones.
+  As a counterexample consider the ``square grid''
+  in which a circle is centered at $(10m, 10n)$ for each $m,n \in \ZZ$
+  and has radius $5$.
+  Thus it is also not possible to simply pick three nearby circles
+  and construct a circle tangent to all three:
+  that newly constructed circle might intersect a fourth disk
+  not in the picture.
+
+  Thus, when constructing the small disk $\odot O$
+  in the above solution,
+  it seems easiest to start with a point not covered and grow $\odot O$
+  until it is tangent to \emph{some} three circles,
+  and then argue by cosine law.
+  Otherwise it not easy to determine which three
+  circles to start with.
+
+  In all solutions it seems easier to prove that a disjoint circle
+  of radius $1/\sqrt2$ exists,
+  and then \emph{finally} deduce it has a lattice point,
+  rather than trying to work the lattice point into the existence proof.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2007/3, proposed by Andras Gyarfas}
+\textsl{Available online at \url{https://aops.com/community/p825499}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $S$ be a set containing $n^2+n-1$ elements.
+Suppose that the $n$-element subsets of $S$
+are partitioned into two classes.
+Prove that there are at least $n$ pairwise disjoint sets
+in the same class.
+\end{mdframed}
+We present two solutions which are really equivalent,
+but phrased differently.
+We refer to the two classes as ``red'' and ``blue'', respectively.
+
+\paragraph{First solution (Grant Yu).}
+We define a set of $n+1$ elements to be \emph{useful}
+if it has $n$-element subsets in each class.
+
+Consider a \textbf{maximal collection of disjoint useful sets}
+and assume there are $p$ such sets.
+Then, let $T$ be the set of elements remaining
+(i.e.\ not in one of chosen useful sets).
+\begin{claim*}
+  All subsets of $T$ of size $n$ are the same color.
+\end{claim*}
+\begin{proof}
+  Assume there was a red set $R$ in $T$.
+  Replace the elements of $R$ one by one
+  until we get to any other subset $R'$ of $T$.
+  At each step, because no sets of $T$ form a useful set,
+  the set remains red --- so $R'$ is red too.
+  Since $R'$ is arbitrary, this proves the claim.
+\end{proof}
+We have $|T| = n^2+n-1 - p(n+1)$, and in particular $p < n$.
+WLOG all sets in $T$ are red.
+We can extract another red set from each of our chosen useful sets.
+So we can get at least
+\[ p + \left\lfloor \frac{|T|}{n} \right\rfloor
+  = p + \left\lfloor n+1-p - \frac{1+p}{n} \right\rfloor
+  \ge p + (n-p) = n.  \]
+
+
+\paragraph{Second solution (by induction).}
+We prove more strongly that:
+\begin{claim*}
+  Let $S$ be a set containing $k \cdot (n+1)-1$ elements.
+  Then we can find $k$ pairwise disjoint sets of the same color.
+\end{claim*}
+The proof is by induction on $k \ge 1$.
+The base case $k=1$ this is immediate; $\binom{S}{n}$ is a single set.
+
+For the inductive step, assume for contradiction the problem fails.
+Let $T$ be any subset of $S$ of size $(k-1)(n+1)-1$.
+By the induction hypothesis, among the subsets of $T$ alone,
+we can already find $k-1$ pairwise disjoint sets of the same color.
+Now $S \setminus T$ has size $n+1$, and so we would have to have
+that all $\binom{n+1}{n}$ subsets of $S \setminus T$ are the same color.
+
+By varying $T$, the set $S \setminus T$ ranges over all of $\binom{S}{k+1}$.
+This causes all sets to be the same color, contradiction.
+
+\begin{remark*}
+  Victor Wang writes the following:
+  \begin{quote}
+  I don't really like this problem,
+  but I think the main motivation for generalizing the problem
+  is that the original problem doesn't allow you to look at small cases.
+  (Also, it's not initially clear where the $n^2+n-1$ comes from.)
+  And pretty much the simplest way to get lots of similarly-flavored
+  small cases is to start with $k=2,3$ in
+  ``find the smallest $N(n,k)$ such that when we partition the $n$-subsets
+  of a $\ge N(n,k)$-set into $2$ classes,
+  we can find some $k$ pairwise disjoint sets in the same class''.
+  \end{quote}
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2007/4, proposed by Reid Barton}
+\textsl{Available online at \url{https://aops.com/community/p825505}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+An \emph{animal} with $n$ \emph{cells}
+is a connected figure consisting of $n$ equal-sized square cells
+(equivalently, a polyomino with $n$ cells).
+A \emph{dinosaur} is an animal with at least $2007$ cells.
+It is said to be \emph{primitive}
+it its cells cannot be partitioned into two or more dinosaurs.
+Find with proof the maximum number of cells in a primitive dinosaur.
+\end{mdframed}
+In fact it's true for any tree with maximum degree $\le 4$.
+Here is the solution of Andrew Geng.
+
+Let $T$ be such a tree (a spanning tree of the dinosaur graph)
+which corresponds to a primitive dinosaur.
+
+\begin{claim*}
+  There exists a vertex $v$ such that when $v$ is deleted, no dinosaurs result.
+\end{claim*}
+\begin{proof}
+  Assume for contradiction that all vertices are bad
+  (leave a dinosaur when deleted).
+  Consider two adjacent vertices $v$, $w$ in $T$.
+  By checking possibilities, one sees that, say,
+  the dinosaur in $T-v$ contains $w$ and the dinosaur of $T-w$.
+  We can repeat in this way; since $T$ is acyclic,
+  this eventually becomes a contradiction.
+\end{proof}
+
+When this vertex is deleted,
+we get at most $4$ components, each with $\le 2006$ vertices,
+giving the answer of $4 \cdot 2006 + 1 = 8025$.
+The construction is easy (take a ``cross'', for example).
+\pagebreak
+
+\subsection{USAMO 2007/5, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p825508}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that for every nonnegative integer $n$,
+the number $7^{7^n}+1$ is the product
+of at least $2n+3$ (not necessarily distinct) primes.
+\end{mdframed}
+We prove this by induction on $n$ by showing that
+\[ \frac{X^7+1}{X+1} = X^6 - X^5 + \dots + 1 \]
+is never prime for $X = 7^{7^n}$,
+hence we gain at least two additional prime factors
+whenever we increase $n$ by one.
+
+Indeed, the quotient may be written as
+\[ \left( X+1 \right)^6 - 7X \cdot (X^2+X+1)^2 \]
+which becomes a difference of squares, hence composite.
+\pagebreak
+
+\subsection{USAMO 2007/6, proposed by Sung-Yoon Kim}
+\textsl{Available online at \url{https://aops.com/community/p825515}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be an acute triangle
+with $\omega$, $S$, and $R$ being its incircle,
+circumcircle, and circumradius, respectively.
+Circle $\omega_{A}$ is tangent internally to $S$
+at $A$ and tangent externally to $\omega$.
+Circle $S_{A}$ is tangent internally to $S$
+at $A$ and tangent internally to $\omega$.
+
+Let $P_A$ and $Q_A$ denote
+the centers of $\omega_A$ and $S_A$, respectively.
+Define points $P_B$, $Q_B$, $P_C$, $Q_C$ analogously.
+Prove that
+\[ 8 P_A Q_A \cdot P_B Q_B \cdot P_C Q_C \le R^3 \]
+with equality if and only if triangle $ABC$ is equilateral.
+\end{mdframed}
+It turns out we can compute $P_AQ_A$ explicitly.
+Let us invert around $A$ with radius $s-a$
+(hence fixing the incircle) and then compose this
+with a reflection around the angle bisector of $\angle BAC$.
+We denote the image of the composed map via
+\[ \bullet \mapsto \bullet^\ast \mapsto \bullet^+. \]
+We overlay this inversion with the original diagram.
+
+Let $P_AQ_A$ meet $\omega_A$ again at $P$ and $S_A$ again at $Q$.
+Now observe that $\omega_A^\ast$ is a line parallel to $S^\ast$;
+that is, it is perpendicular to $\ol{PQ}$.
+Moreover, it is tangent to $\omega^\ast = \omega$.
+
+Now upon the reflection,
+we find that $\omega^+ = \omega^\ast = \omega$,
+but line $\ol{PQ}$ gets mapped to the altitude from $A$ to $\ol{BC}$,
+since $\ol{PQ}$ originally contained the circumcenter $O$
+(isogonal to the orthocenter).
+But this means that $\omega_A^\ast$ is none other than the $\ol{BC}$!
+Hence $P^+$ is actually the foot of the altitude from $A$
+onto $\ol{BC}$.
+
+By similar work, we find that $Q^+$
+is the point on $\ol{AP^+}$ such that $P^+Q^+ = 2r$.
+\begin{center}
+\begin{asy}
+  size(8.5cm);
+  pair A = dir(140);
+  pair B = dir(210);
+  pair C = dir (330);
+  filldraw(A--B--C--cycle, opacity(0.1)+yellow, grey);
+  dot("$A$", A, A);
+  dot("$B$", B, B);
+  dot("$C$", C, C);
+  draw(incircle(A,B,C), black+1);
+  pair D = foot(A,B,C);
+  dot("$P^+$", D, dir(-45), brown);
+  draw(A--D, brown);
+  pair I = incenter(A,B,C);
+  pair O = circumcenter(A,B,C);
+
+  real a = abs(B-C);
+  real b = abs(C-A);
+  real c = abs(A-B);
+  real s = 0.5*(a+b+c);
+  real ha = abs(A-D);
+  real k = ((s-a)**3) / (s*ha*abs(A-I)**2);
+
+  pair PA = k*b*c/2*dir(O-A)+A;
+  dot("$P_A$", PA, dir(255), blue);
+  draw(CP(PA,A), lightblue);
+  pair P = Drawing("P", 2*PA-A, dir(180));
+
+  pair QA = PA + dir(PA-A)*( (s-a)*a**2 / (a*b*c) );
+  dot("$Q_A$", QA, dir(-80)*1.4, blue);
+  draw(CP(QA,A), lightblue);
+  pair Q = Drawing("Q", 2*QA-A, dir(-70));
+
+  draw(unitcircle, grey);
+  draw(A--Q);
+  real r = abs(I-foot(I,B,C));
+  Drawing("I", I, dir(90));
+  pair X = I + dir(O-A)*r;
+  pair P1 = foot(X,P,Q);
+  draw(Line(X,P1,2.5), red, Arrows(TeXHead));
+  dot("$P^\ast$", P1, dir(5), red);
+  draw(CP(A, foot(I,A,B)), dashed+deepgreen);
+
+  pair Q2 = D+dir(A-D)*2*r;
+  dot("$Q^+$", Q2, dir(145), brown);
+  draw(Q2--(I+r*dir(90)), brown);
+\end{asy}
+\end{center}
+
+Now we can compute all the lengths directly.  We have that
+\[ AP_A = \half AP = \frac{(s-a)^2}{2AP^+}
+= \half (s-a)^2 \cdot \frac{1}{h_a} \]
+and
+\[ AQ_A = \half AQ = \frac{(s-a)^2}{2AQ^+}
+= \half (s-a)^2 \cdot \frac{1}{h_a-2r} \]
+where $h_a = \frac{2K}{a}$ is the length of the $A$-altitude, with $K$ the area of $ABC$ as usual. Now it follows that
+\[ P_AQ_A = \half (s-a)^2 \left( \frac{2r}{h_a(h_a-2r)} \right). \]
+This can be simplified, as
+\[ h_a - 2r = \frac{2K}{a} - \frac{2K}{s} = 2K \cdot \frac{s-a}{as}. \]
+Hence
+\[ P_AQ_A = \frac{a^2rs(s-a)}{4K^2} = \frac{a^2(s-a)}{4K}. \]
+Hence, the problem is just asking us to show that
+\[ a^2b^2c^2(s-a)(s-b)(s-c) \le 8 (RK)^3. \]
+Using $abc=4RK$ and $(s-a)(s-b)(s-c) = \frac 1s K^2 = rK$, we find that this becomes
+\[ 2(s-a)(s-b)(s-c) \le RK \iff 2r \le R \]
+which follows immediately from $IO^2=R(R-2r)$.
+Alternatively, one may rewrite this as Schur's Inequality in the form
+\[ abc \ge (-a+b+c)(a-b+c)(a+b-c). \]
+\pagebreak
+
+
+\end{document}

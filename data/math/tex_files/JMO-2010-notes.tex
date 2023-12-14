@@ -1,0 +1,387 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{JMO 2010 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2010 JMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $P(n)$ be the number of permutations $(a_1, \dots, a_n)$
+of the numbers $(1, 2, \dots, n)$ for which $ka_k$ is a perfect square
+for all $1 \leq k \leq n$.
+Find with proof the smallest $n$ such that $P (n)$ is a multiple of $2010$.
+
+\item %% Problem 2
+Let $n > 1$ be an integer.  Find, with proof, all sequences
+$x_1$, $x_2$, \dots, $x_{n-1}$ of positive integers
+with the following three properties:
+\begin{enumerate}[(a)]
+ \ii $x_1 < x_2 < \dotsb < x_{n-1}$;
+ \ii $x_i + x_{n-i} = 2n$ for all $i = 1, 2, \dots , n - 1$;
+ \ii given any two indices $i$ and $j$ (not necessarily distinct)
+ for which $x_i + x_j < 2n$,
+ there is an index $k$ such that $x_i + x_j = x_k$.
+\end{enumerate}
+
+\item %% Problem 3
+Let $AXYZB$ be a convex pentagon inscribed in a semicircle of diameter $AB$.
+Denote by $P$, $Q$, $R$, $S$ the feet of the perpendiculars
+from $Y$ onto lines $AX$, $BX$, $AZ$, $BZ$, respectively.
+Prove that the acute angle formed by lines $PQ$ and $RS$
+is half the size of $\angle XOZ$,
+where $O$ is the midpoint of segment $AB$.
+
+\item %% Problem 4
+A triangle is called a \emph{parabolic} triangle
+if its vertices lie on a parabola $y = x^2$.
+Prove that for every nonnegative integer $n$,
+there is an odd number $m$ and a parabolic triangle
+with vertices at three distinct points
+with integer coordinates with area $(2^nm)^2$.
+
+\item %% Problem 5
+Two permutations $a_1,a_2,\dots,a_{2010}$
+and $b_1,b_2,\dots,b_{2010}$ of the numbers $1,2,\dots,2010$
+are said to intersect if $a_k=b_k$ for some value of $k$ in the range $1\le k\le 2010$.
+Show that there exist $1006$ permutations of the numbers $1,2,\dots,2010$
+such that any other such permutation is guaranteed to
+intersect at least one of these $1006$ permutations.
+
+\item %% Problem 6
+Let $ABC$ be a triangle with $\angle A = 90^{\circ}$. Points $D$ and $E$ lie on sides $AC$ and $AB$, respectively, such that $\angle ABD = \angle DBC$ and $\angle ACE = \angle ECB$. Segments $BD$ and $CE$ meet at $I$. Determine whether or not it is possible for segments $AB$, $AC$, $BI$, $ID$, $CI$, $IE$ to all have integer lengths.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{JMO 2010/1, proposed by Andy Niedermier}
+\textsl{Available online at \url{https://aops.com/community/p1860909}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $P(n)$ be the number of permutations $(a_1, \dots, a_n)$
+of the numbers $(1, 2, \dots, n)$ for which $ka_k$ is a perfect square
+for all $1 \leq k \leq n$.
+Find with proof the smallest $n$ such that $P (n)$ is a multiple of $2010$.
+\end{mdframed}
+The answer is $n= 4489$.
+
+We begin by giving a complete description of $P(n)$:
+\begin{claim*}
+  We have
+  \[ P(n) = \prod_{c \text{ squarefree}} \left\lfloor \sqrt{\frac nc} \right\rfloor! \]
+\end{claim*}
+\begin{proof}
+Every positive integer can be uniquely expressed in the form $c \cdot m^2$
+where $c$ is a squarefree integer and $m$ is a perfect square.
+So we may, for each squarefree positive integer $c$, define the set
+\[ S_c = \left\{ c \cdot 1^2, c \cdot 2^2, c \cdot 3^2, \dots \right\}
+  \cap \{1, 2, \dots, n\} \]
+and each integer from $1$ through $n$ will be in exactly one $S_c$.
+Note also that
+\[ \left\lvert S_c \right\rvert = \left\lfloor
+  \sqrt{\frac nc} \right\rfloor. \]
+
+Then, the permutations in the problem are exactly
+those which send elements of $S_c$ to elements of $S_c$.
+In other words,
+\[ P(n) = \prod_{c \text{ squarefree}} |S_c|!
+  = \prod_{c \text{ squarefree}} \left\lfloor \sqrt{\frac nc} \right\rfloor!
+  \qedhere \]
+\end{proof}
+
+We want the smallest $n$ such that $2010$ divides $P(n)$.
+\begin{itemize}
+  \ii Note that $P(67^2)$ contains $67!$ as a term,
+  which is divisible by $2010$, so $67^2$ is a candidate.
+  \ii On the other hand, if $n < 67^2$,
+  then no term in the product for $P(n)$ is divisible by the prime $67$.
+\end{itemize}
+So $n = 67^2 = 4489$ is indeed the minimum.
+\pagebreak
+
+\subsection{JMO 2010/2, proposed by R\u{a}zvan Gelca}
+\textsl{Available online at \url{https://aops.com/community/p1860914}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n > 1$ be an integer.  Find, with proof, all sequences
+$x_1$, $x_2$, \dots, $x_{n-1}$ of positive integers
+with the following three properties:
+\begin{enumerate}[(a)]
+ \ii $x_1 < x_2 < \dotsb < x_{n-1}$;
+ \ii $x_i + x_{n-i} = 2n$ for all $i = 1, 2, \dots , n - 1$;
+ \ii given any two indices $i$ and $j$ (not necessarily distinct)
+ for which $x_i + x_j < 2n$,
+ there is an index $k$ such that $x_i + x_j = x_k$.
+\end{enumerate}
+\end{mdframed}
+The answer is $x_k = 2k$ only, which obviously work,
+so we prove they are the only ones.
+
+Let $x_1 < x_2 < \dots < x_n$ be
+any sequence satisfying the conditions.
+Consider:
+\[ x_1 + x_1 < x_1 + x_2 < x_1 + x_3 < \dots
+  < x_1 + x_{n-2}. \]
+All these are results of condition (c),
+since $x_1 + x_{n-2} < x_1 + x_{n-1} = 2n$.
+So each of these must be a member of the sequence.
+
+However, there are $n-2$ of these terms,
+and there are exactly $n-2$ terms greater
+than $x_1$ in our sequence.
+Therefore, we get the one-to-one correspondence below:
+\begin{align*}
+  x_2 &= x_1 + x_1 \\
+  x_3 &= x_1 + x_2 \\
+  & \vdotswithin= \\
+  x_{n-1} &= x_1 + x_{n-2}
+\end{align*}
+It follows that $x_2 = 2x_1$,
+so that $x_3 = 3x_1$ and so on.
+Therefore, $x_m = m x_1$.
+We now solve for $x_1$ in condition (b)
+to find that $x_1=2$ is the only solution,
+and the desired conclusion follows.
+\pagebreak
+
+\subsection{JMO 2010/3, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p1860802}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $AXYZB$ be a convex pentagon inscribed in a semicircle of diameter $AB$.
+Denote by $P$, $Q$, $R$, $S$ the feet of the perpendiculars
+from $Y$ onto lines $AX$, $BX$, $AZ$, $BZ$, respectively.
+Prove that the acute angle formed by lines $PQ$ and $RS$
+is half the size of $\angle XOZ$,
+where $O$ is the midpoint of segment $AB$.
+\end{mdframed}
+Let $T$ be the foot from $Y$ to $\ol{AB}$.
+Then the Simson line implies that lines $PQ$ and $RS$ meet at $T$.
+
+\begin{center}
+\begin{asy}
+pair A = dir(180);
+pair B = dir(0);
+pair X = dir(140);
+pair Y = dir(100);
+pair Z = dir(60);
+
+pair P = foot(Y, A, X);
+pair Q = foot(Y, B, X);
+pair R = foot(Y, A, Z);
+pair S = foot(Y, B, Z);
+
+pair T = extension(P, Q, R, S);
+
+draw(A--X--Y--Z--B, orange);
+filldraw(unitcircle, opacity(0.1)+orange, red);
+
+draw(Y--P, red);
+draw(Y--Q, red);
+draw(Y--R, red);
+draw(Y--S, red);
+draw(P--X--B, brown);
+draw(P--T--S, red);
+draw(S--Z--A, brown);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$X$", X, dir(X));
+dot("$Y$", Y, dir(Y));
+dot("$Z$", Z, dir(Z));
+dot("$P$", P, dir(P));
+dot("$Q$", Q, dir(Q));
+dot("$R$", R, dir(R));
+dot("$S$", S, dir(S));
+dot("$T$", T, dir(T));
+
+/* TSQ Source:
+
+A = dir 180
+B = dir 0
+X = dir 140
+Y = dir 100
+Z = dir 60
+
+P = foot Y A X
+Q = foot Y B X
+R = foot Y A Z
+S = foot Y B Z
+
+T = extension P Q R S
+
+A--X--Y--Z--B orange
+unitcircle 0.1 orange / red
+
+Y--P red
+Y--Q red
+Y--R red
+Y--S red
+P--X--B brown
+P--T--S red
+S--Z--A brown
+
+*/
+\end{asy}
+\end{center}
+
+Now it's straightforward to see $APYRT$ is cyclic
+(in the circle with diameter $\ol{AY}$),
+and therefore
+\[ \angle RTY = \angle RAY = \angle ZAY. \]
+Similarly,
+\[ \angle YTQ = \angle YBQ = \angle YBX. \]
+Summing these gives $\angle RTQ$ is equal to
+half the measure of arc $\widehat{XZ}$ as needed.
+
+(Of course, one can also just angle chase;
+the Simson line is not so necessary.)
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{JMO 2010/4, proposed by Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p1860772}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A triangle is called a \emph{parabolic} triangle
+if its vertices lie on a parabola $y = x^2$.
+Prove that for every nonnegative integer $n$,
+there is an odd number $m$ and a parabolic triangle
+with vertices at three distinct points
+with integer coordinates with area $(2^nm)^2$.
+\end{mdframed}
+For $n=0$, take instead $(a,b) = (1,0)$.
+
+For $n > 0$, consider a triangle
+with vertices at $(a,a^2)$, $(-a,a^2)$ and $(b, b^2)$.
+Then the area of this triangle was equal to
+\[ \half (2a) \left( b^2-a^2 \right) = a(b^2-a^2). \]
+
+To make this equal $2^{2n} m^2$,
+simply pick $a = 2^{2n}$,
+and then pick $b$ such that $b^2-m^2 = 2^{4n}$,
+for example $m = 2^{4n-2}-1$ and $b=2^{4n-2}+1$.
+\pagebreak
+
+\subsection{JMO 2010/5, proposed by Gregory Galperin}
+\textsl{Available online at \url{https://aops.com/community/p1860912}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Two permutations $a_1,a_2,\dots,a_{2010}$
+and $b_1,b_2,\dots,b_{2010}$ of the numbers $1,2,\dots,2010$
+are said to intersect if $a_k=b_k$ for some value of $k$ in the range $1\le k\le 2010$.
+Show that there exist $1006$ permutations of the numbers $1,2,\dots,2010$
+such that any other such permutation is guaranteed to
+intersect at least one of these $1006$ permutations.
+\end{mdframed}
+A valid choice is the following $1006$ permutations:
+\[
+\begin{array}{cccc ccc | ccccc}
+1 & 2 & 3 & \dotsb & 1004 & 1005 & 1006 & 1007 & 1008 & \dotsb & 2009 & 2010 \\
+2 & 3 & 4 & \dotsb & 1005 & 1006 & 1 & 1007 & 1008 & \dotsb & 2009 & 2010 \\
+3 & 4 & 5 & \dotsb & 1006 & 1 & 2 & 1007 & 1008 & \dotsb & 2009 & 2010 \\
+\vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots &
+\vdots& \vdots & \vdots & \vdots & \vdots \\
+1004 & 1005 & 1006 & \dotsb & 1001 & 1002 & 1003 & 1007 & 1008 & \dotsb & 2009 & 2010 \\
+1005 & 1006 & 1 & \dotsb & 1002 & 1003 & 1004 & 1007 & 1008 & \dotsb & 2009 & 2010 \\
+1006 & 1 & 2 & \dotsb & 1003 & 1004 & 1005 & 1007 & 1008 & \dotsb & 2009 & 2010 \\
+\end{array}
+\]
+This works. Indeed, any permutation should have one of $\{1, 2, \dots, 1006\}$
+somewhere in the first $1006$ positions,
+so one will get an intersection.
+
+\begin{remark*}
+  In fact, the last $1004$ entries do not matter with this
+  construction, and we chose to leave them as $1007, 1008, \dots, 2010$
+  only for concreteness.
+\end{remark*}
+\begin{remark*}
+  Using Hall's marriage lemma one may prove that
+  the result becomes false with $1006$ replaced by $1005$.
+\end{remark*}
+\pagebreak
+
+\subsection{JMO 2010/6, proposed by Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p1860753}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle with $\angle A = 90^{\circ}$. Points $D$ and $E$ lie on sides $AC$ and $AB$, respectively, such that $\angle ABD = \angle DBC$ and $\angle ACE = \angle ECB$. Segments $BD$ and $CE$ meet at $I$. Determine whether or not it is possible for segments $AB$, $AC$, $BI$, $ID$, $CI$, $IE$ to all have integer lengths.
+\end{mdframed}
+The answer is no.
+We prove that it is not even possible that $AB$, $AC$, $CI$, $IB$ are all integers.
+
+\begin{center}
+  \begin{asy}
+    size(5cm);
+    pair B = dir(140);
+    pair A = conj(B);
+    pair C = -B;
+    filldraw(A--B--C--cycle, opacity(0.1)+lightblue, blue);
+    pair I = incenter(A, B, C);
+    pair D = extension(B, I, A, C);
+    pair E = extension(C, I, A, B);
+    draw(B--D);
+    draw(C--E);
+    filldraw(incircle(A,B,C), opacity(0.1)+lightred, red+dotted);
+
+    dot("$B$", B, dir(B));
+    dot("$A$", A, dir(A));
+    dot("$C$", C, dir(C));
+    dot("$I$", I, dir(45));
+    dot("$D$", D, dir(D));
+    dot("$E$", E, dir(E));
+
+    /* Source generated by TSQ */
+  \end{asy}
+\end{center}
+
+First, we claim that $\angle BIC = 135\dg$.
+To see why, note that
+\[ \angle IBC + \angle ICB = \frac{\angle B}{2} + \frac{\angle C}{2}
+  = \frac{90\dg}{2} = 45\dg. \]
+So, $\angle BIC = 180\dg - (\angle IBC + \angle ICB) = 135\dg$, as desired.
+
+We now proceed by contradiction.
+The Pythagorean theorem implies
+\[ BC^2 = AB^2 + AC^2 \]
+and so $BC^2$ is an integer.
+However, the law of cosines gives
+\begin{align*}
+  BC^2 &= BI^2 + CI^2 - 2 BI \cdot CI \cos \angle BIC \\
+  &= BI^2 + CI^2 + BI \cdot CI \cdot \sqrt 2.
+\end{align*}
+which is irrational, and this produces the desired contradiction.
+\pagebreak
+
+
+\end{document}

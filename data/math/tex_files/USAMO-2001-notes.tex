@@ -1,0 +1,422 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2001 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2001 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Each of eight boxes contains six balls.
+Each ball has been colored with one of $n$ colors,
+such that no two balls in the same box are the same color,
+and no two colors occur together in more than one box.
+Find with proof the smallest possible $n$.
+
+\item %% Problem 2
+Let $ABC$ be a triangle and let $\omega$ be its incircle.
+Denote by $D_1$ and $E_1$ the points where $\omega$
+is tangent to sides $BC$ and $AC$, respectively.
+Denote by $D_2$ and $E_2$ the points on sides $BC$ and $AC$,
+respectively, such that $CD_2=BD_1$ and $CE_2=AE_1$,
+and denote by $P$ the point of intersection of segments $AD_2$ and $BE_2$.
+Circle $\omega$ intersects segment $AD_2$ at two points,
+the closer of which to the vertex $A$ is denoted by $Q$.
+Prove that $AQ=D_2P$.
+
+\item %% Problem 3
+Let $a, b, c$ be nonnegative real numbers
+such that $a^2+b^2+c^2 + abc = 4$.
+Show that \[ 0 \le ab + bc + ca - abc \le 2. \]
+
+\item %% Problem 4
+Let $ABC$ be a triangle and $P$ any point
+such that $PA$, $PB$, $PC$ are the sides of an obtuse triangle,
+with $PA$ the longest side.
+Prove that $\angle BAC$ is acute.
+
+\item %% Problem 5
+Let $S \subseteq \ZZ$ be such that:
+\begin{enumerate}
+  \ii[(a)] there exist $a,b \in S$ with
+  $\gcd(a,b) = \gcd(a-2, b-2) = 1$;
+  \ii[(b)] if $x$ and $y$ are elements of $S$ (possibly equal),
+  then $x^2-y$ also belongs to $S$.
+\end{enumerate}
+Prove that $S = \ZZ$.
+
+\item %% Problem 6
+Each point in the plane is assigned a real number.
+Suppose that for any nondegenerate triangle, the number at its incenter
+is the arithmetic mean of the three numbers at its vertices.
+Prove that all points in the plane are equal to each other.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2001/1}
+\textsl{Available online at \url{https://aops.com/community/p337868}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Each of eight boxes contains six balls.
+Each ball has been colored with one of $n$ colors,
+such that no two balls in the same box are the same color,
+and no two colors occur together in more than one box.
+Find with proof the smallest possible $n$.
+\end{mdframed}
+The answer is $n = 23$.
+Shown below is a construction using that many colors,
+which we call $\{1,2,\dots,15,a,\dots,f,X,Y\}$.
+\[
+  \begin{bmatrix}
+    X & X & X & 1 & 2 & 3 & 4 & 5 \\
+    1 & 6 & 11 & 6 & 7 & 8 & 9 & 10 \\
+    2 & 7 & 12 & 11 & 12 & 13 & 14 & 15 \\
+    3 & 8 & 13 & Y & Y & Y & a & b \\
+    4 & 9 & 14 & a & c & e & c & d \\
+    5 & 10 & 15 & b & d & f & e & f
+  \end{bmatrix}
+\]
+We present now two proofs that $n = 23$ is best possible.
+I think the first is more motivated --- it will
+actually show us how we could come up with the example above.
+
+\paragraph{First solution (hands-on).}
+We say a color $x$ is \emph{overrated}
+if it is used at least three times.
+First we make the following smoothing argument.
+\begin{claim*}
+  Suppose some box contains a ball of overrated color $x$
+  plus a ball of color $y$ used only once.
+  Then we can change one ball of color $x$ to color $y$
+  while preserving all the conditions.
+\end{claim*}
+\begin{proof}
+  Obvious.
+  (Though the color $x$ could cease to be overrated after this operation.)
+\end{proof}
+By applying this operation as many times as possible,
+we arrive at a situation in which whenever we have
+a box with an overrated color,
+the other colors in the box are used twice or more.
+
+Assume now $n \le 23$ and the assumption;
+we will show the equality case must of the form we gave.
+Since there are a total of $48$ balls,
+at least two colors are overrated.
+Let $X$ be an overrated color and take three boxes where it appears.
+Then there are $15$ more distinct colors, say $\{1, \dots, 15\}$
+lying in those boxes.
+Each of them must appear at least once more,
+so we arrive at the situation
+\[
+  \begin{bmatrix}
+    X & X & X & 1 & 2 & 3 & 4 & 5 \\
+    1 & 6 & 11 & 6 & 7 & 8 & 9 & 10 \\
+    2 & 7 & 12 & 11 & 12 & 13 & 14 & 15 \\
+    3 & 8 & 13 \\
+    4 & 9 & 14 \\
+    5 & 10 & 15 \\
+  \end{bmatrix}
+\]
+up to harmless permutation of the color names.
+Now, note that none of these $15$ colors can reappear.
+So it remains to fill up the last five boxes.
+
+Now, there is at least one more overrated color,
+distinct from any we have seen; call it $Y$.
+In the three boxes $Y$ appears in,
+there must be six new colors,
+and this gives the lower bound $n \ge 1 + 15 + 1 + 6 = 23$
+which we sought,
+with equality occurring as we saw above.
+
+\begin{remark*}
+  [Partial progresses]
+  The fact that $\binom{16}{2} = 120 = 8 \binom{6}{2}$
+  (suggesting the bound $n \ge 16$) is misleading
+  and not that helpful.
+
+  There is a simple argument showing that $n$
+  should be much larger than $16$.
+  Imagine opening the boxes in any order.
+  The first box must contain six new colors.
+  The second box must contain five new colors,
+  and so on; thus $n \ge 6 + 5 + 4 + 3 + 2 + 1 = 21$.
+  This is sharp for seven boxes, as the example below shows.
+  \[
+    \begin{bmatrix}
+      1 & 1 & 2 & 3 & 4 & 5 & 6 \\
+      2 & 7 & 7 & 8 & 9 & 10 & 11 \\
+      3 & 8 & 12 & 12 & 13 & 14 & 15 \\
+      4 & 9 & 13 & 16 & 16 & 17 & 18 \\
+      5 & 10 & 14 & 17 & 19 & 19 & 20 \\
+      6 & 11 & 15 & 18 & 20 & 21 & 21
+    \end{bmatrix}
+  \]
+  However, one cannot add an eight box,
+  suggesting the answer should be a little larger than $21$.
+  One possible eight box is $\{1,12,19,a,b,c\}$
+  which gives $n \le 24$; but the true answer is a little trickier.
+\end{remark*}
+
+\paragraph{Second solution (slick).}
+Here is a short proof from the official solutions of the bound.
+Consider the $8 \times 6$ grid of colors as before.
+For each ball $b$, count the number of times $n_b$ its color is used,
+and write the fraction $\frac{1}{n_b}$.
+
+On the one hand, we should have
+\[ n = \sum_{\text{all $48$ balls $b$}} \frac{1}{n_b}. \]
+On the other hand, for any given box $B$, we have
+$\sum_{b \in B} (n_b-1) \le 7$, as among the other seven boxes
+at most one color from $B$ appears.
+Therefore, $\sum_{b \in B} n_b \le 13$,
+and a smoothing argument this implies
+\[ \sum_{b \in B} \frac{1}{n_b} \ge \frac13 \cdot 1 + \frac12 \cdot 5
+  = \frac{17}{6}. \]
+Thus, $n \ge 8 \cdot \frac{17}{6} = 22.66\dots$, so $n \ge 23$.
+\pagebreak
+
+\subsection{USAMO 2001/2}
+\textsl{Available online at \url{https://aops.com/community/p337870}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle and let $\omega$ be its incircle.
+Denote by $D_1$ and $E_1$ the points where $\omega$
+is tangent to sides $BC$ and $AC$, respectively.
+Denote by $D_2$ and $E_2$ the points on sides $BC$ and $AC$,
+respectively, such that $CD_2=BD_1$ and $CE_2=AE_1$,
+and denote by $P$ the point of intersection of segments $AD_2$ and $BE_2$.
+Circle $\omega$ intersects segment $AD_2$ at two points,
+the closer of which to the vertex $A$ is denoted by $Q$.
+Prove that $AQ=D_2P$.
+\end{mdframed}
+We have that $P$ is the Nagel point
+\[ P = \left( s-a : s-b : s-c \right). \]
+Therefore,
+\[ \frac{PD_2}{AD_2} = \frac{s-a}{(s-a)+(s-b)+(s-c)} = \frac{s-a}{s}. \]
+Meanwhile, $Q$ is the antipode of $D_1$.
+The classical homothety at $A$ mapping $Q$ to $D_1$
+(by mapping the incircle to the $A$-excircle)
+has ratio $\frac{s-a}{s}$ as well
+(by considering the length of the tangents from $A$),
+so we are done.
+\pagebreak
+
+\subsection{USAMO 2001/3, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p96705}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a, b, c$ be nonnegative real numbers
+such that $a^2+b^2+c^2 + abc = 4$.
+Show that \[ 0 \le ab + bc + ca - abc \le 2. \]
+\end{mdframed}
+The left-hand side of the inequality is trivial;
+just note that $\min \left\{ a,b,c \right\} \le 1$.
+Hence, we focus on the right side.
+We use Lagrange Multipliers.
+
+Define \[ U = \left\{ (a,b,c) \mid a,b,c > 0
+  \text{ and } a^2+b^2+c^2 < 1000 \right\}. \]
+This is an intersection of open sets, so it is open.
+Its closure is
+\[ \ol U = \left\{ (a,b,c) \mid a,b,c \ge 0
+\text{ and } a^2+b^2+c^2 \le 1000 \right\}. \]
+Hence the constraint set
+\[ \ol S = \left\{ \mathbf x \in \ol U : g(\ol x) = 4 \right\} \]
+is compact, where $g(a,b,c) = a^2+b^2+c^2+abc$.
+
+Define \[ f(a,b,c) = a^2+b^2+c^2+ab+bc+ca. \]
+It's equivalent to show that $f \le 6$ subject to $g$.
+Over $\ol S$, it must achieve a global maximum.
+Now we consider two cases.
+
+If $\mathbf x$ lies on the boundary,
+that means one of the components is zero
+(since $a^2+b^2+c^2=1000$ is clearly impossible).
+WLOG $c=0$, then we wish to show $a^2+b^2+ab \le 6$
+for $a^2+b^2=4$, which is trivial.
+
+Now for the interior $U$, we may use the method of Lagrange Multipliers.
+Consider a local maximum $\mathbf x \in U$.
+Compute \[ \nabla f = \left<2a+b+c, 2b+c+a, 2c+a+b \right> \]
+and \[ \nabla g = \left<2a+bc, 2b+ca, 2c+ab\right>. \]
+Of course, $\nabla g \neq \mathbf 0$ everywhere,
+so introducing our multiplier yields
+\[ \left<2a+b+c,a+2b+c,a+b+2c\right> = \lambda \left<2a+bc,2b+ca,2c+ab\right>. \]
+Note that $\lambda \neq 0$ since $a,b,c > 0$.
+Subtracting $2a+b+c = \lambda(2a+bc)$ from $a+2b+c = \lambda(2b+ca)$
+implies that \[ (a-b)(\left[ 2\lambda - 1 \right] - \lambda c) = 0. \]
+We can derive similar equations for the others.
+Hence, we have three cases.
+\begin{enumerate}
+  \ii If $a=b=c$, then $a=b=c=1$, and this satisfies $f(1,1,1) \le 6$.
+  \ii If $a$, $b$, $c$ are pairwise distinct,
+  then we derive $a = b = c = 2 - \lambda^{-1}$, contradiction.
+  \ii Now suppose that $a=b \neq c$.
+
+  Meanwhile, the constraint (with $a=b$) reads
+  \begin{align*}
+       a^2+b^2+c^2+abc=4
+       &\iff c^2 + a^2c + (2a^2-4) = 0 \\
+       &\iff (c+2)(c-(2-a^2)) = 0
+  \end{align*}
+  which since $c > 0$ gives $c = 2-a^2$.
+
+  Noah Walsh points out that at this point,
+  we don't need to calculate the critical point;
+  we just directly substitute $a=b$ and $c=2-a^2$ into
+  the desired inequality:
+  \[ a^2+2a(2-a)^2-a^2(2-a)^2
+    = 2 - (a-1)^2(a^2-4a+2) \le 0. \]
+  So any point here satisfies the inequality anyways.
+\end{enumerate}
+\begin{remark*}
+  It can actually be shown that the critical point
+  in the third case we skipped is pretty close: it is given by
+  \[ a = b = \frac{1+\sqrt{17}}{4}
+    \quad c = \frac{1}{8} \left( 7 - \sqrt{17} \right). \]
+  This satisfies
+  \[ f(a,b,c) = 3a^2+2ac+c^2
+    = \frac{1}{32} \left( 121 + 17\sqrt{17} \right)
+    \approx 5.97165 \]
+  which is just a bit less than $6$.
+\end{remark*}
+\begin{remark*}
+  Equality holds for the upper bound if $(a,b,c)=(1,1,1)$
+  or $(a,b,c)=(\sqrt2,\sqrt2,0)$ and permutations.
+  The lower bound is achieved if $(a,b,c)=(2,0,0)$ and permutations.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2001/4}
+\textsl{Available online at \url{https://aops.com/community/p337872}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle and $P$ any point
+such that $PA$, $PB$, $PC$ are the sides of an obtuse triangle,
+with $PA$ the longest side.
+Prove that $\angle BAC$ is acute.
+\end{mdframed}
+Using Ptolemy's inequality and Cauchy-Schwarz,
+\begin{align*}
+  PA \cdot BC
+  &\le PB \cdot AC + PC \cdot AB \\
+  &\le \sqrt{(PB^2+PC^2)(AB^2+AC^2)} \\
+  &< \sqrt{PA^2 \cdot (AB^2+AC)^2} = PA \cdot \sqrt{AB^2+AC^2}
+\end{align*}
+meaning $BC^2 < AB^2+AC^2$, so $\angle BAC$ is acute.
+
+\begin{remark*}
+  [Lokman G\"{o}k\c{c}e]
+  Here is another approach using Euler's quadrilateral formula.
+  Let $M$ and $N$ be midpoints of $AP$ and $BC$, respectively.
+  For the points $A$, $B$, $P$, $C$; apply Euler's quadrilateral formula to get
+  \[ AB^2 + BP^2 + PC^2 + CA^2 = AP^2 + BC^2 + 4MN^2 \geq AP^2 + BC^2. \]
+  We are given that $AP^2 > BP^2 + PC^2$, so $AB^2 + AC^2 > BC^2$,
+  and we get $\angle BAC$ is acute.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2001/5}
+\textsl{Available online at \url{https://aops.com/community/p337875}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $S \subseteq \ZZ$ be such that:
+\begin{enumerate}
+  \ii[(a)] there exist $a,b \in S$ with
+  $\gcd(a,b) = \gcd(a-2, b-2) = 1$;
+  \ii[(b)] if $x$ and $y$ are elements of $S$ (possibly equal),
+  then $x^2-y$ also belongs to $S$.
+\end{enumerate}
+Prove that $S = \ZZ$.
+\end{mdframed}
+Call an integer $d > 0$ \emph{shifty} if
+$S = S+d$ (meaning $S$ is invariant under shifting by $d$).
+
+First, note that if $u, v \in S$, then for any $x \in S$,
+\[ v^2 - (u^2-x) = (v^2-u^2) + x \in S. \]
+Since we can easily check that $|S| > 1$
+and $S \neq \{n, -n\}$ we conclude there exists a shifty integer.
+
+We claim $1$ is shifty, which implies the problem.
+Assume for contradiction that $1$ is not shifty.
+Then for GCD reasons the set of shifty integers must be $d \ZZ$ for some $d \ge 2$.
+
+\begin{claim*}
+  We have $S \subseteq \left\{ x : x^2 \equiv m \pmod d \right\}$ for some fixed $m$.
+\end{claim*}
+\begin{proof}
+  Otherwise if we take any $p,q \in S$ with distinct squares modulo $d$,
+  then $q^2-p^2 \not\equiv 0 \pmod d$ is shifty, which is impossible.
+\end{proof}
+
+Now take $a,b \in S$ as in (a).
+In that case we need to have
+\[ a^2 \equiv b^2 \equiv (a^2-a)^2 \equiv (b^2-b)^2 \pmod d. \]
+Passing to a prime $p \mid d$, we have the following:
+\begin{itemize}
+  \ii Since $a^2 \equiv (a^2-a)^2 \pmod p$ or equivalently $a^3(a-2) \equiv 0 \pmod p$,
+  either $a \equiv 0 \pmod p$ or $a \equiv 2 \pmod p$.
+  \ii Similarly, either $b \equiv 0 \pmod p$ or $b \equiv 2 \pmod p$.
+  \ii Since $a^2 \equiv b^2 \pmod p$, or $a \equiv \pm b \pmod p$, we find either
+  $a \equiv b \equiv 0 \pmod p$ or $a \equiv b \equiv 2 \pmod p$ (even if $p=2$).
+\end{itemize}
+This is a contradiction.
+
+\begin{remark*}
+  The condition (a) cannot be dropped, since otherwise we may take
+  $S = \left\{ 2 \pmod p \right\}$ or $S = \left\{ 0 \pmod p \right\}$, say.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2001/6, proposed by Bjorn Poonen}
+\textsl{Available online at \url{https://aops.com/community/p337877}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Each point in the plane is assigned a real number.
+Suppose that for any nondegenerate triangle, the number at its incenter
+is the arithmetic mean of the three numbers at its vertices.
+Prove that all points in the plane are equal to each other.
+\end{mdframed}
+First, we claim that in an isosceles trapezoid $ABCD$ we have $a+c=b+d$.
+Indeed, suppose WLOG that rays $BA$ and $CD$ meet at $X$.
+Then triangles $XAC$ and $XBD$ share an incircle, proving the claim.
+
+Now, given any two points $A$ and $B$, construct regular pentagon $ABCDE$.
+We have $a+c=b+d=c+e=d+a=e+b$, so $a=b=c=d=e$.
+\pagebreak
+
+
+\end{document}

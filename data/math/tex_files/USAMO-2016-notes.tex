@@ -1,0 +1,781 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2016 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2016 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $X_1, X_2, \dots, X_{100}$ be a sequence of mutually distinct nonempty subsets of a set $S$.
+Any two sets $X_i$ and $X_{i+1}$ are disjoint and their
+union is not the whole set $S$,
+that is, $X_i\cap X_{i+1}=\emptyset$ and $X_i\cup X_{i+1}\neq S$,
+for all $i\in\{1, \dots, 99\}$.
+Find the smallest possible number of elements in $S$.
+
+\item %% Problem 2
+Prove that for any positive integer $k$,
+\[ (k^2)!\cdot\displaystyle\prod_{j=0}^{k-1}\frac{j!}{(j+k)!} \]
+is an integer.
+
+\item %% Problem 3
+Let $ABC$ be an acute triangle
+and let $I_B$, $I_C$, and $O$ denote its
+$B$-excenter, $C$-excenter, and circumcenter, respectively.
+Points $E$ and $Y$ are selected on $\ol{AC}$ such that
+$\angle ABY = \angle CBY$ and $\ol{BE} \perp \ol{AC}$.
+Similarly, points $F$ and $Z$ are selected on $\ol{AB}$ such that
+$\angle ACZ = \angle BCZ$ and $\ol{CF} \perp \ol{AB}$.
+
+Lines $I_B F$ and $I_C E$ meet at $P$.
+Prove that $\ol{PO}$ and $\ol{YZ}$ are perpendicular.
+
+\item %% Problem 4
+Find all functions $f \colon \RR \to \RR$ such that
+for all real numbers $x$ and $y$,
+\[ (f(x)+xy) \cdot f(x-3y)
+ + (f(y)+xy) \cdot f(3x-y)
+ = (f(x+y))^2. \]
+
+\item %% Problem 5
+An equilateral pentagon $AMNPQ$ is inscribed in triangle $ABC$
+such that $M \in \ol{AB}$, $Q \in \ol {AC}$, and $N,P \in \ol{BC}$.
+Let $S$ be the intersection of $\ol{MN}$ and $\ol{PQ}$.
+Denote by $\ell$ the angle bisector of $\angle MSQ$.
+
+Prove that $\ol{OI}$ is parallel to $\ell$,
+where $O$ is the circumcenter of triangle $ABC$,
+and $I$ is the incenter of triangle $ABC$.
+
+\item %% Problem 6
+Integers $n$ and $k$ are given, with $n \ge k \ge 2$.
+You play the following game against an evil wizard.
+The wizard has $2n$ cards; for each $i=1,\dots,n$, there are two cards labeled $i$.
+Initially, the wizard places all cards face down in a row, in unknown order.
+You may repeatedly make moves of the following form: you point to any $k$ of the cards.
+The wizard then turns those cards face up.
+If any two of the cards match, the game is over and you win.
+Otherwise, you must look away, while the wizard arbitrarily permutes
+the $k$ chosen cards and then turns them back face-down. Then, it is your turn again.
+
+We say this game is \emph{winnable} if there exist some positive integer $m$ and
+some strategy that is guaranteed to win in at most $m$ moves,
+no matter how the wizard responds.
+For which values of $n$ and $k$ is the game winnable?
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2016/1, proposed by Iurie Boreico}
+\textsl{Available online at \url{https://aops.com/community/p6213589}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $X_1, X_2, \dots, X_{100}$ be a sequence of mutually distinct nonempty subsets of a set $S$.
+Any two sets $X_i$ and $X_{i+1}$ are disjoint and their
+union is not the whole set $S$,
+that is, $X_i\cap X_{i+1}=\emptyset$ and $X_i\cup X_{i+1}\neq S$,
+for all $i\in\{1, \dots, 99\}$.
+Find the smallest possible number of elements in $S$.
+\end{mdframed}
+Solution with Danielle Wang: the answer is that $|S| \ge 8$.
+
+\textbf{Proof of sufficiency}
+Since we must have $2^{|S|} \geq 100$, we must have $|S| \geq 7$.
+
+To see that $|S| = 8$ is the minimum possible size,
+consider a chain on the set $S = \{1, 2, \dots, 7\}$
+satisfying $X_i \cap X_{i+1} = \emptyset$ and $X_i \cup X_{i+1} \neq S$.
+Because of these requirements any subset of size $4$ or more
+can only be neighbored by sets of size $2$ or less,
+of which there are $\binom 71 + \binom 72 = 28$ available.
+Thus, the chain can contain no more than $29$ sets of size $4$ or more
+and no more than $28$ sets of size $2$ or less.
+Finally, since there are only $\binom 73 = 35$ sets of size $3$ available,
+the total number of sets in such a chain
+can be at most $29 + 28 + 35 = 92 < 100$.
+
+\textbf{Construction}
+We will provide an inductive construction for a
+chain of subsets $X_1, X_2, \dots, X_{2^{n-1} + 1}$
+of  $S = \left\{ 1, \dots, n \right\}$
+satisfying $X_i \cap X_{i+1} = \varnothing$
+and $X_i \cup X_{i+1} \neq S$ for each $n \geq 4$.
+
+For $S = \{1, 2, 3, 4\}$,
+the following chain of length $2^3 + 1 = 9$ will work:
+\[
+\begin{array}{ccccccccc}
+  34 & 1 & 23 & 4 & 12 & 3 & 14 & 2 & 13
+\end{array}.
+\]
+Now, given a chain of subsets of $\{1, 2, \dots, n\}$
+the following procedure produces a
+chain of subsets of $\{1, 2, \dots, n+1\}$:
+\begin{enumerate}
+\item take the original chain, delete any element,
+  and make two copies of this chain, which now has even length;
+\item glue the two copies together,
+  joined by $\varnothing$ in between; and then
+\item insert the element $n+1$ into the sets in alternating positions
+  of the chain starting with the first.
+\end{enumerate}
+For example, the first iteration of this construction gives:
+\[
+ \begin{array}{ccccccccc}
+ 345 & 1 & 235 & 4 & 125 & 3 & 145 & 2 & 5 \\
+ 34 & 15 & 23 & 45 & 12 & 35 & 14 & 25 &
+ \end{array}
+\]
+It can be easily checked that if the original chain satisfies the requirements,
+then so does the new chain, and if the original chain has length $2^{n-1}+1$,
+then the new chain has length $2^{n}+1$, as desired.
+This construction yields a chain of length $129$
+when $S = \{1, 2, \dots, 8\}$.
+
+\begin{remark*}
+  Here is the construction for $n=8$ in its full glory.
+\[
+ \begin{array}{ccccccccc}
+ 345678 & 1 & 235678 & 4 & 125678 & 3 & 145678 & 2 & 5678 \\
+ 34 & 15678 & 23 & 45678 & 12 & 35678 & 14 & 678 & \\
+ 345 & 1678 & 235 & 4678 & 125 & 3678 & 145 & 2678 & 5 \\
+ 34678 & 15 & 23678 & 45 & 12678 & 35 & 78 & & \\\hline
+ 3456 & 178 & 2356 & 478 & 1256 & 378 & 1456 & 278 & 56 \\
+ 3478 & 156 & 2378 & 456 & 1278 & 356 & 1478 & 6 & \\
+ 34578 & 16 & 23578 & 46 & 12578 & 36 & 14578 & 26 & 578 \\
+ 346 & 1578 & 236 & 4578 & 126 & 8 & & & \\ \hline\hline
+ 34567 & 18 & 23567 & 48 & 12567 & 38 & 14567 & 28 & 567 \\
+ 348 & 1567 & 238 & 4567 & 128 & 3567 & 148 & 67 & \\
+ 3458 & 167 & 2358 & 467 & 1258 & 367 & 1458 & 267 & 58 \\
+ 3467 & 158 & 2367 & 458 & 1267 & 358 & 7 & & \\\hline
+ 34568 & 17 & 23568 & 47 & 12568 & 37 & 14568 & 27 & 568 \\
+ 347 & 1568 & 237 & 4568 & 127 & 3568 & 147 & 68 & \\
+ 3457 & 168 & 2357 & 468 & 1257 & 368 & 1457 & 268 & 57 \\
+ 3468 & 157 & 2368 & 457 & 1268 & & & & \\
+ \end{array}
+\]
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2016/2, proposed by Kiran Kedlaya}
+\textsl{Available online at \url{https://aops.com/community/p6213627}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that for any positive integer $k$,
+\[ (k^2)!\cdot\displaystyle\prod_{j=0}^{k-1}\frac{j!}{(j+k)!} \]
+is an integer.
+\end{mdframed}
+We show the exponent of any given prime $p$ is nonnegative in the expression.
+Recall that the exponent of $p$ in $n!$ is equal to
+$\sum_{i \ge 1} \left\lfloor n/p^i \right\rfloor$.
+In light of this, it suffices to show
+that for any prime power $q$, we have
+\[
+\left\lfloor \frac{k^2}{q} \right\rfloor
++ \sum_{j=0}^{k-1} \left\lfloor \frac{j}{q} \right\rfloor
+\ge \sum_{j=0}^{k-1} \left\lfloor \frac{j+k}{q} \right\rfloor
+\]
+Since both sides are integers, we show
+\[
+\left\lfloor \frac{k^2}{q} \right\rfloor
++ \sum_{j=0}^{k-1} \left\lfloor \frac{j}{q} \right\rfloor
+> -1 + \sum_{j=0}^{k-1} \left\lfloor \frac{j+k}{q} \right\rfloor.
+\]
+If we denote by $\left\{ x \right\}$ the fractional part of $x$,
+then $\left\lfloor x \right\rfloor = x - \left\{ x \right\}$
+so it's equivalent to
+\[
+\left\{ \frac{k^2}{q} \right\}
++ \sum_{j=0}^{k-1} \left\{ \frac{j}{q} \right\}
+< 1 + \sum_{j=0}^{k-1} \left\{ \frac{j+k}{q} \right\}.
+\]
+However, the sum of remainders when $0, 1, \dots, k-1$ are taken modulo $q$
+is easily seen to be less than the sum of remainders
+when $k, k+1, \dots, 2k-1$ are taken modulo $q$.
+So \[ \sum_{j=0}^{k-1} \left\{ \frac{j}{q} \right\}
+\le \sum_{j=0}^{k-1} \left\{ \frac{j+k}{q} \right\} \] follows,
+and we are done upon noting $\left\{ k^2/q \right\} < 1$.
+\pagebreak
+
+\subsection{USAMO 2016/3, proposed by Evan Chen, Telv Cohl}
+\textsl{Available online at \url{https://aops.com/community/p6213572}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be an acute triangle
+and let $I_B$, $I_C$, and $O$ denote its
+$B$-excenter, $C$-excenter, and circumcenter, respectively.
+Points $E$ and $Y$ are selected on $\ol{AC}$ such that
+$\angle ABY = \angle CBY$ and $\ol{BE} \perp \ol{AC}$.
+Similarly, points $F$ and $Z$ are selected on $\ol{AB}$ such that
+$\angle ACZ = \angle BCZ$ and $\ol{CF} \perp \ol{AB}$.
+
+Lines $I_B F$ and $I_C E$ meet at $P$.
+Prove that $\ol{PO}$ and $\ol{YZ}$ are perpendicular.
+\end{mdframed}
+We present two solutions.
+
+\paragraph{First solution.}
+Let $I_A$ denote the $A$-excenter and $I$ the incenter.
+Then let $D$ denote the foot of the altitude from $A$.
+Suppose the $A$-excircle is tangent to $\ol{BC}$, $\ol{AB}$, $\ol{AC}$
+at $A_1$, $B_1$, $C_1$ and let
+$A_2$, $B_2$, $C_2$ denote the reflections of $I_A$ across these points.
+Let $S$ denote the circumcenter of $\triangle I I_B I_C$.
+
+\begin{center}
+\begin{asy}
+size(14cm);
+
+pair A = dir(110);
+pair B = dir(208);
+pair C = dir(332);
+draw(A--B--C--cycle, blue+1);
+pair I = incenter(A, B, C);
+pair O = circumcenter(A, B, C);
+pair E = foot(B, C, A);
+pair F = foot(C, A, B);
+pair M_A = extension(A, I, O, B+C);
+pair I_A = 2*M_A-I;
+pair M_B = extension(B, I, O, C+A);
+pair I_B = 2*M_B-I;
+pair M_C = extension(C, I, O, A+B);
+pair I_C = 2*M_C-I;
+
+pair P = extension(E, I_C, F, I_B);
+draw(A--I_A, blue+dashed);
+
+pair D = foot(A, B, C);
+filldraw(I--I_B--I_C--cycle, opacity(0.2)+lightred, red);
+filldraw(unitcircle, opacity(0.1)+lightblue, blue);
+
+pair A_1 = foot(I_A, B, C);
+pair B_1 = foot(I_A, A, B);
+pair C_1 = foot(I_A, C, A);
+draw(arc(I_A, abs(I_A-A_1), 15, 165), blue+dotted);
+draw(C--C_1, blue+dashed);
+draw(B--B_1, blue+dashed);
+pair A_2 = 2*A_1-I_A;
+pair B_2 = 2*B_1-I_A;
+pair C_2 = 2*C_1-I_A;
+draw(D--A_2, heavygreen);
+draw(I_B--B_2, heavygreen);
+draw(I_C--C_2, heavygreen);
+draw(I_A--A_2, heavygreen+dashed);
+draw(I_A--B_2, heavygreen+dashed);
+draw(I_A--C_2, heavygreen+dashed);
+
+draw(I_B--I_A--I_C, red+dashed);
+draw(B--I--C, red+dashed);
+filldraw(A_2--B_2--C_2--cycle, opacity(0.2)+lightgreen, deepgreen+1);
+pair S = circumcenter(I, I_B, I_C);
+draw(S--I_A, orange);
+draw(arc(S, abs(S-I), 185, 355), red+dotted);
+
+pair Y = extension(B, I, A, C);
+pair Z = extension(C, I, A, B);
+draw(Y--Z, red);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(180));
+dot("$C$", C, dir(0));
+dot("$I$", I, dir(270));
+dot("$O$", O, dir(-45));
+dot("$E$", E, dir(30));
+dot("$F$", F, dir(F));
+dot("$I_A$", I_A, dir(I_A));
+dot("$I_B$", I_B, dir(I_B));
+dot("$I_C$", I_C, dir(I_C));
+dot("$P$", P, dir(135));
+dot("$D$", D, dir(-90));
+dot("$A_1$", A_1, dir(A_1));
+dot("$B_1$", B_1, dir(200));
+dot("$C_1$", C_1, dir(20));
+dot("$A_2$", A_2, dir(A_2));
+dot("$B_2$", B_2, dir(B_2));
+dot("$C_2$", C_2, dir(C_2));
+dot("$S$", S, dir(S));
+dot("$Y$", Y, dir(350));
+dot("$Z$", Z, dir(110));
+
+/* Source generated by TSQ
+
+!size(14cm);
+
+A = dir 110
+B = dir 208 R180
+C = dir 332 R0
+A--B--C--cycle blue+1
+I = incenter A B C R270
+O = circumcenter A B C R-45
+E = foot B C A R30
+F = foot C A B
+M_A := extension A I O B+C
+I_A = 2*M_A-I
+M_B := extension B I O C+A
+I_B = 2*M_B-I
+M_C := extension C I O A+B
+I_C = 2*M_C-I
+
+P = extension E I_C F I_B R140
+A--I_A blue dashed
+
+D = foot A B C R-90
+I--I_B--I_C--cycle 0.2 lightred / red
+unitcircle 0.1 lightblue / blue
+
+A_1 = foot I_A B C
+B_1 = foot I_A A B R200
+C_1 = foot I_A C A R20
+!draw(arc(I_A, abs(I_A-A_1), 15, 165), blue+dotted);
+C--C_1 blue dashed
+B--B_1 blue dashed
+A_2 = 2*A_1-I_A
+B_2 = 2*B_1-I_A
+C_2 = 2*C_1-I_A
+D--A_2 heavygreen
+I_B--B_2 heavygreen
+I_C--C_2 heavygreen
+I_A--A_2 heavygreen dashed
+I_A--B_2 heavygreen dashed
+I_A--C_2 heavygreen dashed
+
+I_B--I_A--I_C red dashed
+B--I--C red dashed
+A_2--B_2--C_2--cycle 0.2 lightgreen / deepgreen+1
+S = circumcenter I I_B I_C
+S--I_A orange
+!draw(arc(S, abs(S-I), 185, 355), red+dotted);
+
+Y = extension B I A C R350
+Z = extension C I A B R110
+Y--Z red
+
+
+
+*/
+\end{asy}
+\end{center}
+
+We begin with the following observation:
+\begin{claim*}
+  Points $D$, $I$, $A_2$ are collinear, as are
+  points $E$, $I_C$, $C_2$ are collinear
+  and points $F$, $I_B$, $B_2$ are collinear.
+\end{claim*}
+
+\begin{proof}
+  This basically follows from the ``midpoints of altitudes'' lemma.
+  To see $D$, $I$, $A_2$ are collinear,
+  recall first that $\ol{IA_1}$ passes
+  through the midpoint $M$ of $\ol{AD}$.
+  \begin{center}
+  \begin{asy}
+    pair A = dir(125);
+    pair B = dir(220);
+    pair C = dir(320);
+    draw(A--B--C--cycle, blue);
+    pair I = incenter(A, B, C);
+    pair O = circumcenter(A, B, C);
+    pair M_A = extension(A, I, O, B+C);
+    pair I_A = 2*M_A-I;
+    filldraw(incircle(A, B, C), opacity(0.2)+lightblue, blue);
+
+    pair D = foot(A, B, C);
+    filldraw(unitcircle, opacity(0.1)+palecyan, blue);
+    draw(A--D, heavygreen);
+
+    pair A_1 = foot(I_A, B, C);
+    draw(arc(I_A, abs(I_A-A_1), 0, 180), blue+dashed);
+    pair B_1 = foot(I_A, A, B);
+    pair C_1 = foot(I_A, C, A);
+    draw(C--C_1, blue+dotted);
+    draw(B--B_1, blue+dotted);
+
+    pair A_2 = 2*A_1-I_A;
+    draw(A--I_A, blue);
+    draw(D--A_2, red);
+    draw(I_A--A_2, blue+dotted);
+
+    pair P = foot(I, B, C);
+    pair Q = 2*I-P;
+    draw(A--A_1, heavygreen);
+    draw(P--Q, heavygreen);
+
+    pair U = extension(Q, Q+B-C, A, B);
+    pair V = extension(Q, Q+C-B, A, C);
+    draw(U--V, heavygreen);
+
+    pair M = midpoint(A--D);
+    draw(M--A_1, dotted);
+
+    dot(P); dot(Q);
+
+
+    dot("$A$", A, dir(A));
+    dot("$B$", B, dir(180));
+    dot("$C$", C, dir(0));
+    dot("$I$", I, dir(10));
+    dot("$I_A$", I_A, dir(I_A));
+    dot("$D$", D, dir(-90));
+    dot("$A_1$", A_1, dir(-45));
+    dot("$B_1$", B_1, dir(200));
+    dot("$C_1$", C_1, dir(20));
+    dot("$A_2$", A_2, dir(A_2));
+    dot("$M$", M, dir(0));
+
+    /* TSQ Source:
+
+    A = dir 125
+    B = dir 220 R180
+    C = dir 320 R0
+    A--B--C--cycle blue
+    I = incenter A B C R10
+    O := circumcenter A B C R45
+    M_A := extension A I O B+C
+    I_A = 2*M_A-I
+    incircle A B C 0.2 lightblue / blue
+
+    D = foot A B C R-90
+    unitcircle 0.1 palecyan / blue
+    A--D heavygreen
+
+    A_1 = foot I_A B C R-45
+    !draw(arc(I_A, abs(I_A-A_1), 0, 180), blue+dashed);
+    B_1 = foot I_A A B R200
+    C_1 = foot I_A C A R20
+    C--C_1 blue dotted
+    B--B_1 blue dotted
+
+    A_2 = 2*A_1-I_A
+    A--I_A blue
+    D--A_2 red
+    I_A--A_2 blue dotted
+
+    P := foot I B C
+    Q := 2*I-P
+    A--A_1 heavygreen
+    P--Q heavygreen
+
+    U := extension Q Q+B-C A B
+    V := extension Q Q+C-B A C
+    U--V heavygreen
+
+    M = midpoint A--D R0
+    M--A_1 dotted
+
+    !dot(P); dot(Q);
+
+    */
+
+  \end{asy}
+  \end{center}
+  Now since $\ol{AD} \parallel \ol{I_A A_2}$,
+  and $M$ and $A_1$ are the midpoints of $\ol{AD}$ and $\ol{I_A A_2}$,
+  it follows from the collinearity of $A$, $I$, $I_A$
+  that $D$, $I$, $A_2$ are collinear as well.
+
+  The other two claims follow in a dual fashion.
+  For example, using the homothety taking the $A$ to $C$-excircle,
+  we find that $\ol{C_1I_C}$ bisects the altitude $\ol{BE}$,
+  and since $I_C$, $B$, $I_A$ are collinear the same argument
+  now gives $I_C$, $E$, $C_2$ are collinear.
+  The fact that $I_B$, $F$, $B_2$ are collinear is symmetric.
+\end{proof}
+
+Observe that $\ol{B_2C_2} \parallel \ol{B_1C_1} \parallel \ol{I_B I_C}$.
+Proceeding similarly on the other sides,
+we discover $\triangle I I_B I_C$ and $\triangle A_2 B_2 C_2$ are homothetic.
+Hence $P$ is the center of this homothety (in particular, $D$, $I$, $P$, $A_2$ are collinear).
+Moreover, $P$ lies on the line joining $I_A$ to $S$,
+which is the Euler line of $\triangle I I_B I_C$,
+so it passes through the nine-point center of $\triangle I I_B I_C$,
+which is $O$. Consequently, $P$, $O$, $I_A$ are collinear as well.
+
+To finish, we need only prove that $\ol{OS} \perp \ol{YZ}$.
+In fact, we claim that $\ol{YZ}$ is the radical axis
+of the circumcircles of $\triangle ABC$ and $\triangle I I_B I_C$.
+Actually, $Y$ is the radical center of these two circumcircles
+and the circle with diameter $\ol{II_B}$
+(which passes through $A$ and $C$).
+Analogously $Z$ is the radical center of the circumcircles
+and the circle with diameter $\ol{II_C}$, and the proof is complete.
+
+\paragraph{Second solution (barycentric, outline, Colin Tang).}
+we are going to use barycentric coordinates
+to show that the line through $O$ perpendicular to $\ol{YZ}$
+is concurrent with $\ol{I_B F}$ and $\ol{I_C E}$.
+
+The displacement vector $\overrightarrow{YZ}$
+is proportional to $(a(b-c):-b(a+c):c(a+b))$,
+and so by strong perpendicularity criterion
+and doing a calculation gives the line
+\[ x(b-c)bc(a+b+c) + y(a+c)ac(a+b-c) + z(a+b)ab(-a+b-c) = 0. \]
+On the other hand, line $I_C E$ has equation
+\[
+  0 =
+  \det \begin{bmatrix}
+    a &  b & -c \\
+    S_C & 0 & S_A \\
+    x & y & z
+  \end{bmatrix}
+  = bS_a \cdot x + (-cS_C-aS_A) \cdot y + (-bS_C) \cdot z
+\]
+and similarly for $I_B F$.
+Consequently, concurrence of these lines is equivalent to
+\[
+  \det \begin{bmatrix}
+    bS_A & -cS_C - aS_A & -bS_C \\
+    cS_A & -cS_B & -aS_A - bS_B \\
+    (b-c)bc(a+b+c) & (a+c)ac(a+b-c) & (a+b)ab(-a+b-c)
+  \end{bmatrix}
+  = 0
+\]
+which is a computation.
+
+\paragraph{Authorship comments.}
+I was intrigued by a Taiwan TST problem which implied that,
+in the configuration above, $\angle I_B D I_C$ was bisected by $\ol{DA}$.
+This motivated me to draw all three properties above where $I_A$ and $P$
+were isogonal conjugates with respect to $DEF$.
+After playing around with this picture for a long time,
+I finally noticed that $O$ was on line $PI_A$.
+(So the original was to show that $I_B F$, $I_C E$, $DA_2$ concurrent).
+Eventually I finally noticed in the picture that $PI_A$
+actually passed through the circumcenter of $ABC$ as well.
+This took me many hours to prove.
+
+The final restatement (which follows quickly from $P$, $O$, $I_A$ collinear)
+was discovered by Telv Cohl when I showed him the problem.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2016/4, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p6220308}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all functions $f \colon \RR \to \RR$ such that
+for all real numbers $x$ and $y$,
+\[ (f(x)+xy) \cdot f(x-3y)
+ + (f(y)+xy) \cdot f(3x-y)
+ = (f(x+y))^2. \]
+\end{mdframed}
+We claim that the only two functions satisfying
+the requirements are $f(x) \equiv 0$ and $f(x) \equiv x^2$.
+These work.
+
+First, taking $x=y=0$ in the given yields $f(0) = 0$,
+and then taking $x=0$ gives $f(y)f(-y) = f(y)^2$.
+So also $f(-y)^2 = f(y)f(-y)$, from which we conclude $f$ is even.
+Then taking $x = -y$ gives
+\[ \forall x \in \RR : \qquad
+f(x) = x^2 \qquad\text{or}\qquad f(4x) = 0 \qquad(\bigstar) \]
+for all $x$.
+
+\begin{remark*}
+  Note that an example of a function satisfying $(\bigstar)$ is
+  \[
+    f(x)
+    =
+    \begin{cases}
+      x^2 & \text{if } |x| < 1 \\
+      \log(x^{42} + 2016^{\cos(x)}) & \text{if } 1 \le |x| < 4 \\
+      0 & \text{if } |x| \ge 4.
+    \end{cases}
+  \]
+  So, yes, we are currently in a world of trouble, still.
+\end{remark*}
+
+Now we claim
+\begin{claim*}
+  $f(z) = 0 \iff f(2z) = 0 \qquad (\spadesuit)$.
+\end{claim*}
+\begin{proof}
+  Let $(x,y)=(3t,t)$ in the given to get
+  \[ \left( f(t)+3t^2 \right)f(8t) = f(4t)^2. \]
+  Now if $f(4t) \neq 0$ (in particular, $t \neq 0$),
+  then $f(8t) \neq 0$.
+  Thus we have $(\spadesuit)$ in the reverse direction.
+
+  Then $f(4t) \neq 0 \overset{(\bigstar)}{\implies} f(t) = t^2 \neq 0
+  \overset{(\spadesuit)}{\implies} f(2t) \neq 0$
+  implies the forwards direction,
+  the last step being the reverse direction $(\spadesuit)$.
+\end{proof}
+%so by $(\bigstar)$ we have $f(t) = t^2$, and moreover $f(8t) \neq 0$.
+%But we also have
+%\[ \left( f(t/4)+\frac{3}{16}t^2 \right)f(2t) = f(t)^2 = t^4 \neq 0 \]
+%and hence $f(2t) \neq 0$ as well.
+%Thus we have seen that $f(4t) \neq 0 \implies f(8t), f(2t) \neq 0$
+%which is logically equivalent to $(\spadesuit)$.
+
+By putting together $(\bigstar)$ and $(\spadesuit)$ we finally get
+\[ \forall x \in \RR : \qquad
+f(x) = x^2 \qquad\text{or}\qquad f(x) = 0 \qquad(\heartsuit) \]
+
+We are now ready to approach the main problem.
+Assume there's an $a \neq 0$ for which $f(a) = 0$;
+we show that $f \equiv 0$.
+
+Let $b \in \RR$ be given.
+Since $f$ is even, we can assume without loss of generality that $a, b > 0$.
+Also, note that $f(x) \ge 0$ for all $x$ by $(\heartsuit)$.
+By using $(\spadesuit)$ we can generate $c > b$
+such that $f(c) = 0$ by taking $c = 2^n a$ for a large enough integer $n$.
+Now, select $x, y > 0$ such that
+$x-3y=b$ and $x+y=c$. That is,
+\[
+  (x,y) = \left( \frac{3c+b}{4}, \frac{c-b}{4} \right).
+\]
+Substitution into the original equation gives
+\[
+  0 = \left( f(x) + xy \right) f(b)
+  + \left( f(y) + xy \right) f(3x-y)
+  \ge \left( f(x) + xy \right) f(b).
+\]
+But since $f(b) \ge 0$, it follows $f(b) = 0$, as desired.
+\pagebreak
+
+\subsection{USAMO 2016/5, proposed by Ivan Borsenco}
+\textsl{Available online at \url{https://aops.com/community/p6220306}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+An equilateral pentagon $AMNPQ$ is inscribed in triangle $ABC$
+such that $M \in \ol{AB}$, $Q \in \ol {AC}$, and $N,P \in \ol{BC}$.
+Let $S$ be the intersection of $\ol{MN}$ and $\ol{PQ}$.
+Denote by $\ell$ the angle bisector of $\angle MSQ$.
+
+Prove that $\ol{OI}$ is parallel to $\ell$,
+where $O$ is the circumcenter of triangle $ABC$,
+and $I$ is the incenter of triangle $ABC$.
+\end{mdframed}
+\paragraph{First solution (complex).}
+In fact, we only need $AM = AQ = NP$ and $MN = QP$.
+
+We use complex numbers with $ABC$ the unit circle,
+assuming WLOG that $A$, $B$, $C$ are labeled counterclockwise.
+Let $x$, $y$, $z$ be the complex numbers corresponding to the arc midpoints
+of $BC$, $CA$, $AB$, respectively; thus $x+y+z$ is the incenter of $\triangle ABC$.
+Finally, let $s > 0$ be the side length of $AM = AQ = NP$.
+
+Then, since $MA = s$ and $MA \perp OZ$, it follows that
+\[ m - a = i \cdot sz. \]
+Similarly, $p-n = i \cdot sy$ and $a-q = i \cdot sx$, so summing these up gives
+\[ i \cdot s(x+y+z) = (p-q) + (m-n) = (m-n) - (q-p). \]
+Since $MN = PQ$, the argument of $(m-n) - (q-p)$ is along
+the external angle bisector of the angle formed, which is perpendicular to $\ell$.
+On the other hand, $x+y+z$ is oriented in the same direction as $OI$, as desired.
+
+\paragraph{Second solution (trig, Danielle Wang).}
+Let $\delta$ and $\epsilon$ denote $\angle MNB$ and $\angle CPQ$.
+Also, assume $AMNPQ$ has side length $1$.
+
+In what follows, assume $AB < AC$.
+First, we note that
+\begin{align*}
+BN   &=   (c-1) \cos B + \cos \delta \textrm{,}    \\
+CP   &=   (b-1) \cos C + \cos \epsilon \textrm{, and}   \\
+a   &=   1 + BN + CP
+\end{align*}
+from which it follows that
+\[
+\cos \delta + \cos \epsilon = \cos B + \cos C - 1
+\]
+Also, by the Law of Sines, we have $\frac{c-1}{\sin\delta} = \frac{1}{\sin B}$
+and similarly on triangle $CPQ$, and from this we deduce
+\[ \sin \epsilon - \sin \delta = \sin B - \sin C. \]
+The sum-to-product formulas
+\begin{align*}
+\sin{\epsilon} - \sin{\delta} &= 2 \cos\left( \frac{\epsilon + \delta}{2} \right) \sin\left( \frac{\epsilon - \delta}{2} \right) \\
+\cos{\epsilon} - \cos{\delta} &= 2 \cos\left( \frac{\epsilon + \delta}{2} \right) \cos\left( \frac{\epsilon - \delta}{2} \right)
+\end{align*}
+give us
+\[
+\tan \left( \frac{\epsilon-\delta}{2} \right) = \frac{\sin{\epsilon} - \sin{\delta}}{\cos{\epsilon} - \cos{\delta}}
+= \frac{\sin B - \sin C}{\cos B + \cos C - 1}. \]
+Now note that $\ell$ makes an angle of
+$\frac{1}{2}(\pi+\epsilon-\delta)$ with line $BC$.
+Moreover, if line $OI$ intersects line $BC$ with angle $\varphi$ then
+\[ \tan\varphi = \frac{r - R \cos A}{\frac{1}{2}(b-c)}. \]
+So in order to prove the result, we only need to check that
+\[ \frac{r - R \cos A}{\frac{1}{2}(b-c)}
+  = \frac{\cos B + \cos C + 1}{\sin B - \sin C}. \]
+Using the fact that $b = 2R\sin B$, $c = 2R\sin C$, this  reduces to the fact that
+$r/R + 1 = \cos A + \cos B + \cos C$, which is the so-called Carnot theorem.
+\pagebreak
+
+\subsection{USAMO 2016/6, proposed by Gabriel Carroll}
+\textsl{Available online at \url{https://aops.com/community/p6220302}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Integers $n$ and $k$ are given, with $n \ge k \ge 2$.
+You play the following game against an evil wizard.
+The wizard has $2n$ cards; for each $i=1,\dots,n$, there are two cards labeled $i$.
+Initially, the wizard places all cards face down in a row, in unknown order.
+You may repeatedly make moves of the following form: you point to any $k$ of the cards.
+The wizard then turns those cards face up.
+If any two of the cards match, the game is over and you win.
+Otherwise, you must look away, while the wizard arbitrarily permutes
+the $k$ chosen cards and then turns them back face-down. Then, it is your turn again.
+
+We say this game is \emph{winnable} if there exist some positive integer $m$ and
+some strategy that is guaranteed to win in at most $m$ moves,
+no matter how the wizard responds.
+For which values of $n$ and $k$ is the game winnable?
+\end{mdframed}
+The game is winnable if and only if $k < n$.
+
+First, suppose $2 \le k < n$. Query the cards in positions $\left\{ 1, \dots, k \right\}$,
+then $\left\{ 2, \dots, k+1 \right\}$, and so on, up to $\left\{ 2n-k+1, 2n \right\}$.
+Indeed, by taking the difference of the $i$th and $(i+1)$st query,
+we can deduce the value of the $i$th card, for $1 \le i \le 2n-k$.
+(This is possible because the cards are flipped face up before they are re-shuffled,
+so even if two adjacent queries return the same set,
+one can still determine the $i$th card.
+It is possible to solve the problem even without the flipped information, though.)
+If $k \le n$, this is more than $n$ cards, so we can find a matching pair.
+
+For $k = n$ we remark the following:
+at each turn after the first, assuming one has not won,
+there are $n$ cards representing each of the $n$ values exactly once,
+such that the player has no information about the order of those $n$ cards.
+We claim that consequently the player cannot guarantee victory.
+Indeed, let $S$ denote this set of $n$ cards, and $\ol{S}$ the other $n$ cards.
+The player will never win by picking only cards in $S$ or $\ol{S}$.
+Also, if the player selects some cards in $S$ and some cards in $\ol{S}$,
+then it is possible that the choice of cards in $S$ is exactly the complement
+of those selected from $\ol{S}$; the strategy cannot prevent this since
+the player has no information on $S$. This implies the result.
+\pagebreak
+
+
+\end{document}

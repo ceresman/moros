@@ -1,0 +1,543 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{JMO 2014 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2014 JMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $a$, $b$, $c$ be real numbers greater than or equal to $1$.
+Prove that
+\[ \min \left( \frac{10a^2-5a+1}{b^2-5b+10},
+  \frac{10b^2-5b+1}{c^2-5c+10},
+  \frac{10c^2-5c+1}{a^2-5a+10} \right) \le abc. \]
+
+\item %% Problem 2
+Let $\triangle ABC $ be a non-equilateral,
+acute triangle with $\angle A = 60\dg$,
+and let $O$ and $H$ denote the circumcenter and orthocenter
+of $\triangle{ABC}$, respectively.
+\begin{enumerate}[(a)]
+  \ii Prove that line $OH$ intersects both segments $AB$ and $AC$
+  at two points $P$ and $Q$, respectively.
+  \ii Denote by $s$ and $t$ the respective areas of triangle $APQ$
+  and quadrilateral $BPQC$.
+  Determine the range of possible values for $s/t$.
+\end{enumerate}
+
+\item %% Problem 3
+Find all $f :\ZZ \to \ZZ$ such that
+\[
+  xf\left( 2f(y)-x \right) + y^2f\left( 2x-f(y) \right)
+  = \frac{f(x)^2}{x} + f\left( yf(y) \right)
+\]
+for all $x,y \in \ZZ$ such that $x \neq 0$.
+
+\item %% Problem 4
+Let $b \ge 2$ be a fixed integer,
+and let $s_b(n)$ denote the sum of the base-$b$ digits of $n$.
+Show that there are infinitely many positive
+integers that cannot be represented in the from $n + s_b(n)$
+where $n$ is a positive integer.
+
+\item %% Problem 5
+Let $k$ be a positive integer.
+Two players $A$ and $B$ play a game on an infinite grid of regular hexagons.
+Initially all the grid cells are empty.
+Then the players alternately take turns with $A$ moving first.
+In her move, $A$ may choose two adjacent hexagons in the grid
+which are empty and place a counter in both of them.
+In his move, $B$ may choose any counter on the board and remove it.
+If at any time there are $k$ consecutive grid cells
+in a line all of which contain a counter, $A$ wins.
+Find the minimum value of $k$ for which $A$ cannot
+win in a finite number of moves, or prove that no such minimum value exists.
+
+\item %% Problem 6
+Let $ABC$ be a triangle with incenter $I$,
+incircle $\gamma$ and circumcircle $\Gamma$.
+Let $M$, $N$, $P$ be the midpoints of $\ol{BC}$, $\ol{CA}$, $\ol{AB}$
+and let $E$, $F$ be the tangency points of $\gamma$
+with $\ol{CA}$ and $\ol{AB}$, respectively.
+Let $U$, $V$ be the intersections of line $EF$
+with line $MN$ and line $MP$, respectively,
+and let $X$ be the midpoint of arc $BAC$ of $\Gamma$.
+\begin{enumerate}[(a)]
+  \ii Prove that $I$ lies on ray $CV$.
+  \ii Prove that line $XI$ bisects $\ol{UV}$.
+\end{enumerate}
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{JMO 2014/1, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p3477681}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$, $b$, $c$ be real numbers greater than or equal to $1$.
+Prove that
+\[ \min \left( \frac{10a^2-5a+1}{b^2-5b+10},
+  \frac{10b^2-5b+1}{c^2-5c+10},
+  \frac{10c^2-5c+1}{a^2-5a+10} \right) \le abc. \]
+\end{mdframed}
+Notice that
+\[ \frac{10a^2-5a+1}{a^2-5a+10} \le a^3 \]
+since it rearranges to $(a-1)^5 \ge 0$.
+Cyclically multiply to get
+\[
+  \prod_{\text{cyc}} \left( \frac{10a^2-5a+1}{b^2-5b+10} \right)
+  \le (abc)^3
+\]
+and the minimum is at most the geometric mean.
+\pagebreak
+
+\subsection{JMO 2014/2, proposed by Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p3477702}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $\triangle ABC $ be a non-equilateral,
+acute triangle with $\angle A = 60\dg$,
+and let $O$ and $H$ denote the circumcenter and orthocenter
+of $\triangle{ABC}$, respectively.
+\begin{enumerate}[(a)]
+  \ii Prove that line $OH$ intersects both segments $AB$ and $AC$
+  at two points $P$ and $Q$, respectively.
+  \ii Denote by $s$ and $t$ the respective areas of triangle $APQ$
+  and quadrilateral $BPQC$.
+  Determine the range of possible values for $s/t$.
+\end{enumerate}
+\end{mdframed}
+We begin with some synthetic work.
+Let $I$ denote the incenter, and recall (``fact 5'')
+that the arc midpoint $M$ is the center of $(BIC)$,
+which we denote by $\gamma$.
+
+Now we have that
+\[ \angle BOC = \angle BIC = \angle BHC = 120\dg. \]
+Since all three centers lie inside $ABC$ (as it was acute),
+and hence on the opposite side of $\ol{BC}$ as $M$,
+it follows that $O$, $I$, $H$ lie on minor arc $BC$ of $\gamma$.
+
+We note this implies (a) already,
+as line $OH$ meets line $BC$ outside of segment $BC$.
+
+\begin{center}
+\begin{asy}
+pair A = dir(50);
+pair B = dir(210);
+pair C = dir(330);
+
+pair M = dir(270);
+pair I = incenter(A, B, C);
+pair O = circumcenter(A, B, C);
+pair H = orthocenter(A, B, C);
+pair P = extension(O, H, A, B);
+pair Q = extension(O, H, A, C);
+
+filldraw(A--P--Q--cycle, opacity(0.2)+lightgreen, deepgreen);
+filldraw(B--P--Q--C--cycle, opacity(0.2)+lightcyan, deepgreen);
+filldraw(circumcircle(A, B, C), opacity(0.1)+yellow, red);
+filldraw(CP(M, I), opacity(0.1)+lightblue, dotted+blue);
+draw(A--M, red);
+
+filldraw(A--O--M--H--cycle, opacity(0.1)+orange, lightred);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$M$", M, dir(M));
+dot("$I$", I, dir(20));
+dot("$O$", O, dir(90));
+dot("$H$", H, dir(50));
+dot("$P$", P, dir(P));
+dot("$Q$", Q, dir(Q));
+
+/* TSQ Source:
+
+A = dir 50
+B = dir 210
+C = dir 330
+
+M = dir 270
+I = incenter A B C R20
+O = circumcenter A B C R90
+H = orthocenter A B C R50
+P = extension O H A B
+Q = extension O H A C
+
+A--P--Q--cycle 0.2 lightgreen / deepgreen
+B--P--Q--C--cycle 0.2 lightcyan / deepgreen
+circumcircle A B C 0.1 yellow / red
+CP M I 0.1 lightblue / dotted blue
+A--M red
+
+A--O--M--H--cycle 0.1 orange / lightred
+
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  Triangle $APQ$ is equilateral with side length $\frac{b+c}{3}$.
+\end{claim*}
+\begin{proof}
+  Let $R$ be the circumradius.
+  We have $R = OM = OA = MH$, and even $AH = 2R \cos A = R$,
+  so $AOMH$ is a rhombus.
+  Thus $\ol{OH} \perp \ol{AM}$ and in this way
+  we derive that $\triangle APQ$ is isosceles, hence equilateral.
+
+  Finally, since $\angle PBH = 30\dg$, and $\angle BPH = 120\dg$,
+  it follows that $\triangle BPH$ is isosceles and $BP = PH$.
+  Similarly, $CQ = QH$.
+  So $b+c = AP + BP + AQ + QC = AP + AQ + PQ$ as needed.
+\end{proof}
+
+Finally, we turn to the boring task of
+extracting the numerical answer.
+We have
+\[ \frac{s}{s+t} = \frac{[APQ]}{[ABC]}
+  = \frac{\frac{\sqrt3}4 \left( \frac{b+c}{3} \right)^2}%
+  {\frac{\sqrt3}4 bc}
+  = \frac{b^2+2bc+c^2}{9bc}
+  = \frac19 \left( 2 + \frac bc + \frac cb \right). \]
+
+So the problem is reduced to analyzing the behavior of $b/c$.
+For this, we imagine fixing $\Gamma$ the circumcircle of $ABC$,
+as well as the points $B$ and $C$.
+Then as we vary $A$ along the ``topmost'' arc of measure $120\dg$,
+we find $b/c$ is monotonic with values $1/2$ and $2$ at endpoints,
+and by continuity all values $b/c \in (1/2,2)$ can be achieved.
+
+So \[ \half < \frac bc < 2
+  \implies 4/9 < \frac{s}{s+t} < 1/2
+  \implies 4/5 < \frac st < 1 \]
+as needed.
+\pagebreak
+
+\subsection{JMO 2014/3, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p3477690}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all $f :\ZZ \to \ZZ$ such that
+\[
+  xf\left( 2f(y)-x \right) + y^2f\left( 2x-f(y) \right)
+  = \frac{f(x)^2}{x} + f\left( yf(y) \right)
+\]
+for all $x,y \in \ZZ$ such that $x \neq 0$.
+\end{mdframed}
+The answer is $f(x) \equiv 0$ and $f(x) \equiv x^2$. Check that these work.
+
+Now let's prove these are the only solutions.
+Put $y=0$ to obtain
+\[ x f\left( 2f(0)-x \right) = \frac{f(x)^2}{x} + f(0).  \]
+
+The nicest part of the problem is the following step:
+\begin{claim*}
+  We have $f(0)=0$
+\end{claim*}
+\begin{proof}
+  If not, select a prime $p \nmid f(0)$ and put $x=p \neq 0$.
+  In the above, we find that $p \mid f(p)^2$,
+  so $p \mid f(p)$ and hence $p \mid \tfrac{f(p)^2}{p}$.
+  From here we derive $p \mid f(0)$, contradiction.
+  Hence \[ f(0) = 0. \]
+\end{proof}
+
+\begin{claim*}
+  We have $f(x) \in \{0,x^2\}$ for each individual $x$.
+\end{claim*}
+\begin{proof}
+  The above then implies that
+  \[ x^2f(-x) = f(x)^2 \]
+  holds for all nonzero $x$, but also for $x=0$.
+  Let us now check that $f$ is an even function.
+  In the above, we may also derive $f(-x)^2 = x^2f(x)$.
+  If $f(x) \neq f(-x)$ (and hence $x \neq 0$),
+  then subtracting the above and factoring implies that
+  $f(x) + f(-x) = -x^2$;
+  we can then obtain by substituting the relation
+  \[ \left[ f(x) + \frac 12x^2 \right]^2 = -\frac 34 x^4 < 0 \]
+  which is impossible.
+  This means $f(x)^2 = x^2f(x)$, thus
+  \[ f(x) \in \{0, x^2\} \qquad \forall x. \]
+\end{proof}
+
+Now suppose there exists a nonzero integer $t$ with $f(t) = 0$.
+We will prove that $f(x) \equiv 0$.
+Put $y=t$ in the given to obtain that
+\[ t^2 f(2x) = 0 \]
+for any integer $x \neq 0$, and hence conclude that $f(2 \ZZ) \equiv 0$.
+Then selecting $x = 2k \neq 0$ in the given implies that
+\[ y^2 f(4k-f(y)) = f(yf(y)). \]
+
+Assume for contradiction that $f(m) = m^2$ now for some odd $m \neq 0$.
+Evidently \[ m^2 f(4k-m^2) = f(m^3). \]
+If $f(m^3) \neq 0$ this forces $f(4k-m^2) \neq 0$,
+and hence $m^2(4k-m^2)^2 = m^6$ for arbitrary $k \neq 0$, which is clearly absurd.
+That means \[ f(4k-m^2) = f(m^2-4k) = f(m^3) = 0 \] for each $k \neq 0$.
+Since $m$ is odd, $m^2 \equiv 1 \pmod 4$,
+and so $f(n) = 0$ for all $n$ other than $\pm m^2$
+(since we cannot select $k=0$).
+
+Now $f(m) = m^2$ means that $m = \pm 1$.
+Hence either $f(x) \equiv 0$ or
+\[ f(x) = \begin{cases} 1 & x = \pm 1 \\ 0 & \text{otherwise}. \end{cases} \]
+To show that the latter fails,
+we simply take $x=5$ and $y=1$ in the given.
+
+Hence, the only solutions are $f(x) \equiv 0$ and $f(x) \equiv x^2$.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{JMO 2014/4, proposed by Palmer Mebane}
+\textsl{Available online at \url{https://aops.com/community/p3478579}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $b \ge 2$ be a fixed integer,
+and let $s_b(n)$ denote the sum of the base-$b$ digits of $n$.
+Show that there are infinitely many positive
+integers that cannot be represented in the from $n + s_b(n)$
+where $n$ is a positive integer.
+\end{mdframed}
+For brevity let $f(n) = n + s_b(n)$.
+Select any integer $M$.
+Observe that $f(x) \ge b^{2M}$ for any $x \ge b^{2M}$,
+but also $f(b^{2M}-k) \ge b^{2M}$ for $k = 1, 2, \dots, M$,
+since the base-$b$ expansion of $b^{2M}-k$ will start out with
+at least $M$ digits $b-1$.
+
+Thus $f$ omits at least $M$ values in $[1, b^{2M}]$ for any $M$.
+\pagebreak
+
+\subsection{JMO 2014/5, proposed by Palmer Mebane}
+\textsl{Available online at \url{https://aops.com/community/p3478584}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $k$ be a positive integer.
+Two players $A$ and $B$ play a game on an infinite grid of regular hexagons.
+Initially all the grid cells are empty.
+Then the players alternately take turns with $A$ moving first.
+In her move, $A$ may choose two adjacent hexagons in the grid
+which are empty and place a counter in both of them.
+In his move, $B$ may choose any counter on the board and remove it.
+If at any time there are $k$ consecutive grid cells
+in a line all of which contain a counter, $A$ wins.
+Find the minimum value of $k$ for which $A$ cannot
+win in a finite number of moves, or prove that no such minimum value exists.
+\end{mdframed}
+The answer is $k = 6$.
+
+\medskip
+
+\textbf{Proof that $A$ cannot win if $k=6$}.
+We give a strategy for $B$ to prevent $A$'s victory.
+Shade in every third cell, as shown in the figure below.
+Then $A$ can never cover two shaded cells simultaneously on her turn.
+Now suppose $B$ always removes a counter on a shaded cell
+(and otherwise does whatever he wants).
+Then he can prevent $A$ from ever getting six consecutive counters,
+because any six consecutive cells contain two shaded cells.
+
+\begin{center}
+  \begin{asy}
+    path hexagon = scale(0.5)*(dir(30)--dir(90)--dir(150)--dir(210)--dir(270)--dir(330)--cycle);
+    unitsize(0.6cm);
+    void mark(int x, int y) {
+      pair P = dir(0)*x + dir(60)*y;
+      filldraw(shift(P)*hexagon, purple, black+1);
+    }
+    void spot(int x, int y) {
+      pair P = dir(0)*x + dir(60)*y;
+      draw(shift(P)*hexagon);
+    }
+    int N = 4;
+    for (int x=-N; x<=N; ++x) {
+      for (int y=-N; y<=N; ++y) {
+        if ( (abs(x+y)) > N ) continue;
+        if (
+          (x-y) % 3 == 0
+        ) mark(x,y);
+        else spot(x,y);
+      }
+    }
+  \end{asy}
+\end{center}
+
+\medskip
+
+\textbf{Example of a strategy for $A$ when $k=5$}.
+We describe a winning strategy for $A$ explicitly.
+Note that after $B$'s first turn there is one counter,
+so then $A$ may create an equilateral triangle,
+and hence after $B$'s second turn there are two consecutive counters.
+Then, on her third turn,
+$A$ places a pair of counters two spaces away on the same line.
+Label the two inner cells $x$ and $y$ as shown below.
+\begin{center}
+  \begin{asy}
+    path hexagon = scale(0.5)*(dir(30)--dir(90)--dir(150)--dir(210)--dir(270)--dir(330)--cycle);
+    unitsize(0.6cm);
+    void mark(int x, int y) {
+      pair P = dir(0)*x + dir(60)*y;
+      filldraw(shift(P)*hexagon, palecyan, black);
+      filldraw(CR(P, 0.3), paleblue, blue);
+    }
+    void spot(int x, int y) {
+      pair P = dir(0)*x + dir(60)*y;
+      draw(shift(P)*hexagon);
+    }
+    for (int x=-3; x<=4; ++x) {
+      for (int y=-2; y<=2; ++y) {
+        if ( x+y < -3 ) continue;
+        if ( x+y > 4 ) continue;
+        spot(x,y);
+      }
+    }
+    mark(-2, 0);
+    mark(-1, 0);
+    mark( 2, 0);
+    mark( 3, 0);
+    label("$x$", (-1)*dir(0), deepgreen);
+    label("$y$", (2)*dir(0), deepgreen);
+  \end{asy}
+\end{center}
+Now it is $B$'s turn to move;
+in order to avoid losing immediately,
+he must remove either $x$ or $y$.
+Then on any subsequent turn, $A$ can replace $x$ or $y$
+(whichever was removed)
+and add one more adjacent counter.
+This continues until either $x$ or $y$ has all its neighbors filled
+(we ask $A$ to do so in such a way that
+she avoids filling in the two central cells between $x$ and $y$
+as long as possible).
+
+So, let's say without loss of generality (by symmetry) that $x$
+is completely surrounded by tokens.
+Again, $B$ must choose to remove $x$ (or $A$ wins on her next turn).
+After $x$ is removed by $B$, consider the following figure.
+\begin{center}
+  \begin{asy}
+    path hexagon = scale(0.5)*(dir(30)--dir(90)--dir(150)--dir(210)--dir(270)--dir(330)--cycle);
+    unitsize(0.6cm);
+    void mark(int x, int y) {
+      pair P = dir(0)*x + dir(60)*y;
+      filldraw(shift(P)*hexagon, palecyan, black);
+      filldraw(CR(P, 0.3), paleblue, blue);
+    }
+    void spot(int x, int y) {
+      pair P = dir(0)*x + dir(60)*y;
+      draw(shift(P)*hexagon);
+    }
+    for (int x=-4; x<=5; ++x) {
+      for (int y=-3; y<=3; ++y) {
+        if ( x+y < -4 ) continue;
+        if ( x+y > 5 ) continue;
+        spot(x,y);
+      }
+    }
+    mark(-2, 0);
+    mark( 0, 0);
+    mark( 0, -1);
+    mark(-1, 1);
+    mark(-1, -1);
+    mark(-2, 1);
+
+    mark( 2, 0);
+    mark( 2, 1);
+    mark( 3, 0);
+    label("$x$", (-1)*dir(0), deepgreen);
+    label("$y$", (2)*dir(0), deepgreen);
+    void win(int x, int y, pen p1, pen p2) {
+      pair P = dir(0)*x + dir(60)*y;
+      filldraw(shift(P)*hexagon, p1, p2);
+    }
+    win(1,0, lightgreen, deepgreen);
+    win(0,1, lightgreen, deepgreen);
+    win(0,2, lightred, red);
+    win(0,3, lightred, red);
+    win(4,0, lightred, red);
+    win(5,0, lightred, red);
+  \end{asy}
+\end{center}
+We let $A$ play in the two marked green cells.
+Then, regardless of what move $B$ plays,
+one of the two choices of moves marked in red lets $A$ win.
+Thus, we have described a winning strategy when $k=5$ for $A$.
+\pagebreak
+
+\subsection{JMO 2014/6, proposed by Titu Andreescu, Cosmin Pohoata}
+\textsl{Available online at \url{https://aops.com/community/p3478583}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle with incenter $I$,
+incircle $\gamma$ and circumcircle $\Gamma$.
+Let $M$, $N$, $P$ be the midpoints of $\ol{BC}$, $\ol{CA}$, $\ol{AB}$
+and let $E$, $F$ be the tangency points of $\gamma$
+with $\ol{CA}$ and $\ol{AB}$, respectively.
+Let $U$, $V$ be the intersections of line $EF$
+with line $MN$ and line $MP$, respectively,
+and let $X$ be the midpoint of arc $BAC$ of $\Gamma$.
+\begin{enumerate}[(a)]
+  \ii Prove that $I$ lies on ray $CV$.
+  \ii Prove that line $XI$ bisects $\ol{UV}$.
+\end{enumerate}
+\end{mdframed}
+The fact that $I = \ol{BU} \cap \ol{CV}$ and is Lemma 1.45 from EGMO.
+
+As for (b), we note:
+\begin{claim*}
+  Line $IX$ is a symmedian of $\triangle IBC$.
+\end{claim*}
+\begin{proof}
+  Recall that $(BIC)$ has circumcenter
+  coinciding with the antipode of $X$ (by ``Fact 5'').
+  So this follows from the fact
+  that $\ol{XB}$ and $\ol{XC}$ are tangent.
+\end{proof}
+Since $BVUC$ is cyclic with diagonals intersecting at $I$,
+and $IX$ is symmedian of $\triangle IBC$,
+it is median of $\triangle IUV$, as needed.
+
+\begin{remark*}
+  [Alternate solution to (b) by Gunmay Handa]
+  It's well known that $X$ is the midpoint of $\ol{I_b I_c}$
+  (by considering the nine-point circle of the excentral triangle).
+  However, $\ol{UV} \parallel \ol{I_b I_c}$
+  and $I = \ol{I_b U} \cap \ol{I_c V}$, implying the result.
+\end{remark*}
+\pagebreak
+
+
+\end{document}

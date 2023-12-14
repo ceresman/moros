@@ -1,0 +1,796 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{TSTST 2013 Solution Notes}
+\subtitle{Lincoln, Nebraska}
+\date{\today}
+
+\maketitle
+\begin{abstract}
+This is a compilation of solutions
+for the 2013 TSTST.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $ABC$ be a triangle and $D$, $E$, $F$ be the midpoints of arcs $BC$, $CA$, $AB$ on the circumcircle.
+Line $\ell_a$ passes through the feet of the perpendiculars
+from $A$ to $\ol{DB}$ and $\ol{DC}$.
+Line $m_a$ passes through the feet of the perpendiculars from $D$ to $\ol{AB}$ and $\ol{AC}$.
+Let $A_1$ denote the intersection of lines $\ell_a$ and $m_a$.
+Define points $B_1$ and $C_1$ similarly.
+Prove that triangles $DEF$ and $A_1B_1C_1$ are similar to each other.
+
+\item %% Problem 2
+A finite sequence of integers $a_1, a_2, \dots, a_n$ is called
+\emph{regular} if there exists a real number $x$ satisfying
+\[ \left\lfloor kx \right\rfloor = a_k \quad \text{for } 1 \le k \le n. \]
+Given a regular sequence $a_1, a_2, \dots, a_n$, for $1 \le k \le n$ we say that
+the term $a_k$ is \emph{forced} if the following condition is satisfied:
+the sequence \[ a_1, \; a_2, \; \dots, \; a_{k-1}, \; b \]
+is regular if and only if $b = a_k$.
+
+Find the maximum possible number of forced terms
+in a regular sequence with $1000$ terms.
+
+\item %% Problem 3
+Divide the plane into an infinite square grid by drawing
+all the lines $x=m$ and $y=n$ for $m,n \in \ZZ$.
+Next, if a square's upper-right corner has both coordinates even, color it black;
+otherwise, color it white (in this way, exactly $1/4$ of the squares are black
+and no two black squares are adjacent).
+Let $r$ and $s$ be odd integers,
+and let $(x,y)$ be a point in the interior of any white square
+such that $rx-sy$ is irrational.
+Shoot a laser out of this point with slope $r/s$;
+lasers pass through white squares and reflect off black squares.
+Prove that the path of this laser will from a closed loop.
+
+\item %% Problem 4
+Circle $\omega$, centered at $X$, is internally tangent to circle $\Omega$,
+centered at $Y$, at $T$.
+Let $P$ and $S$ be variable points on $\Omega$ and $\omega$,
+respectively, such that line $PS$ is tangent to $\omega$ (at $S$).
+Determine the locus of $O$ -- the circumcenter of triangle $PST$.
+
+\item %% Problem 5
+Let $p$ be a prime.
+Prove that in a complete graph with $1000p$ vertices
+whose edges are labelled with integers,
+one can find a cycle whose sum of labels is divisible by $p$.
+
+\item %% Problem 6
+Let $\NN$ be the set of positive integers.
+Find all functions $f \colon \NN \to \NN$ that satisfy the equation
+\[ f^{abc-a}(abc) + f^{abc-b}(abc) + f^{abc-c}(abc) = a + b + c \]
+for all $a,b,c \ge 2$. (Here $f^k$ means $f$ applied $k$ times.)
+
+\item %% Problem 7
+A country has $n$ cities, labelled $1,2,3,\dots,n$.
+It wants to build exactly $n-1$ roads between certain pairs of cities
+so that every city is reachable from every other city via some sequence of roads.
+However, it is not permitted to put roads between pairs of cities
+that have labels differing by exactly $1$,
+and it is also not permitted to put a road between cities $1$ and $n$.
+Let $T_n$ be the total number of possible ways to build these roads.
+\begin{enumerate}[(a)]
+  \ii For all odd $n$, prove that $T_n$ is divisible by $n$.
+  \ii For all even $n$, prove that $T_n$ is divisible by $n/2$.
+\end{enumerate}
+
+\item %% Problem 8
+Define a function $f \colon \NN \to \NN$ by $f(1) = 1$,
+$f(n+1) = f(n) + 2^{f(n)}$ for every positive integer $n$.
+Prove that $f(1)$, $f(2)$, \dots, $f(3^{2013})$
+leave distinct remainders when divided by $3^{2013}$.
+
+\item %% Problem 9
+Let $r$ be a rational number in the interval $[-1,1]$
+and let $\theta = \cos^{-1} r$.
+Call a subset $S$ of the plane good if $S$ is unchanged
+upon rotation by $\theta$ around any point of $S$
+(in both clockwise and counterclockwise directions).
+Determine all values of $r$ satisfying the following property:
+The midpoint of any two points in a good set also lies in the set.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{TSTST 2013/1}
+\textsl{Available online at \url{https://aops.com/community/p3181479}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle and $D$, $E$, $F$ be the midpoints of arcs $BC$, $CA$, $AB$ on the circumcircle.
+Line $\ell_a$ passes through the feet of the perpendiculars
+from $A$ to $\ol{DB}$ and $\ol{DC}$.
+Line $m_a$ passes through the feet of the perpendiculars from $D$ to $\ol{AB}$ and $\ol{AC}$.
+Let $A_1$ denote the intersection of lines $\ell_a$ and $m_a$.
+Define points $B_1$ and $C_1$ similarly.
+Prove that triangles $DEF$ and $A_1B_1C_1$ are similar to each other.
+\end{mdframed}
+In fact, it is true for any points $D$, $E$, $F$ on the circumcircle.
+More strongly we contend:
+\begin{claim*}
+  Point $A_1$ is the midpoint of $\ol{HD}$.
+\end{claim*}
+\begin{proof}
+  Lines $m_a$ and $\ell_a$ are Simson lines,
+  so they both pass through the point $(a+b+c+d)/2$
+  in complex coordinates.
+\end{proof}
+
+\begin{center}
+  \begin{asy}
+    pair A = dir(130);
+    pair B = dir(200);
+    pair C = dir(-20);
+    pair D = dir(-90);
+    pair P1 = foot(A,B,D);
+    pair P2 = foot(A,C,D);
+    pair Q1 = foot(D,A,B);
+    pair Q2 = foot(D,A,C);
+    pair H = A+B+C;
+    draw(H--D, deepgreen);
+    draw(unitcircle);
+    filldraw(A--B--C--cycle, lightcyan + opacity(0.1), blue);
+    draw(B--D--C, blue);
+    draw(P1--A--P2, dashed+red);
+    draw(Q1--D--Q2, dashed+orange);
+    draw(P1--P2, red);
+    draw(Q1--Q2, orange);
+    draw(P1--B, blue);
+    draw(Q1--B, blue);
+    dot(Q1, orange);
+    dot(Q2, orange);
+    dot(P1, red);
+    dot(P2, red);
+    dot("$A_1$", (A+B+C+D)/2, dir(-90));
+    dot("$A$", A, A);
+    dot("$B$", B, B);
+    dot("$C$", C, C);
+    dot("$D$", D, D);
+    dot("$H$", H, dir(90));
+  \end{asy}
+\end{center}
+
+Hence $A_1 B_1 C_1$ is similar to $DEF$ through a homothety at $H$ with
+ratio $\half$.
+\pagebreak
+
+\subsection{TSTST 2013/2}
+\textsl{Available online at \url{https://aops.com/community/p3181480}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A finite sequence of integers $a_1, a_2, \dots, a_n$ is called
+\emph{regular} if there exists a real number $x$ satisfying
+\[ \left\lfloor kx \right\rfloor = a_k \quad \text{for } 1 \le k \le n. \]
+Given a regular sequence $a_1, a_2, \dots, a_n$, for $1 \le k \le n$ we say that
+the term $a_k$ is \emph{forced} if the following condition is satisfied:
+the sequence \[ a_1, \; a_2, \; \dots, \; a_{k-1}, \; b \]
+is regular if and only if $b = a_k$.
+
+Find the maximum possible number of forced terms
+in a regular sequence with $1000$ terms.
+\end{mdframed}
+The answer is $985$. WLOG, by shifting $a_1 = 0$ (clearly $a_1$ isn't forced).
+Now, we construct regular sequences inductively using the following procedure.
+Start with the inequality \[ \tfrac01 \le x < \tfrac11. \]
+Then for each $k = 2, 3, \dots, 1000$ we perform the following procedure.
+If there is no fraction of the form $F = \frac mk$ in the interval $A \le x < B$,
+then $a_k$ is forced,
+and the interval of possible $x$ values does not change.
+Otherwise, $a_k$ is not forced,
+and we pick a value of $a_k$ and update the interval accordingly.
+
+The theory of \href{https://en.wikipedia.org/wiki/Farey_sequence}{Farey sequences}
+tells us that when we have a stage $\tfrac ab \le x < \tfrac cd$
+then the next time we will find a fraction
+in that interval is exactly $\tfrac{a+c}{b+d}$ (at time $k=b+d$),
+and it will be the only such fraction.
+
+So essentially, starting with $\tfrac 01 \le x < \tfrac 11$
+we repeatedly replace one of the endpoints of the intervals with the mediant,
+until one of the denominators exceeds $1000$;
+we are trying to minimize the number of non-forced terms,
+which is the number of denominators that appear in this process.
+It is not hard to see that this optimum occurs by always replacing the smaller of the denominators,
+so that the sequence is
+\begin{align*}
+ \tfrac{0}{1} &\le x < \tfrac{1}{1} \\
+ \tfrac{0}{1} &\le x < \tfrac{1}{2} \\
+ \tfrac{1}{3} &\le x < \tfrac{1}{2} \\
+ \tfrac{1}{3} &\le x < \tfrac{2}{5} \\
+ \tfrac{3}{8} &\le x < \tfrac{2}{5} \\
+ \tfrac{3}{8} &\le x < \tfrac{5}{13}
+\end{align*}
+and so on; we see that the non-forced terms in this optimal configuration
+are exactly the Fibonacci numbers.
+There are $15$ Fibonacci numbers less than $1000$,
+hence the answer $1000 - 15 = 985$.
+\pagebreak
+
+\subsection{TSTST 2013/3}
+\textsl{Available online at \url{https://aops.com/community/p3181481}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Divide the plane into an infinite square grid by drawing
+all the lines $x=m$ and $y=n$ for $m,n \in \ZZ$.
+Next, if a square's upper-right corner has both coordinates even, color it black;
+otherwise, color it white (in this way, exactly $1/4$ of the squares are black
+and no two black squares are adjacent).
+Let $r$ and $s$ be odd integers,
+and let $(x,y)$ be a point in the interior of any white square
+such that $rx-sy$ is irrational.
+Shoot a laser out of this point with slope $r/s$;
+lasers pass through white squares and reflect off black squares.
+Prove that the path of this laser will from a closed loop.
+\end{mdframed}
+Here is Sammy Luo's solution.
+Fix the speed of light at $\sqrt{r^2+s^2}$ units per second.
+We prove periodicity every six seconds.
+
+We re-color the white squares as red, blue, or green
+according as to whether they have a black square directly
+to the left/right, above/below, or neither, as shown below.
+Finally, we fix time zero to be a moment just before the laser passes
+a horizontal (WLOG) lattice line (not necessarily a wall).
+Shown below is an example for $(r,s) = (3,5)$.
+
+\begin{center}
+\begin{asy}
+size(11cm);
+int Mx = 3;
+int My = 6;
+for (int i=0; i<=Mx; ++i) {
+for (int j=0; j<=My; ++j) {
+fill(shift(2*i, 2*j) * unitsquare, opacity(0.1)+lightgreen);
+if (i != Mx) { fill(shift(2*i+1, 2*j) * unitsquare, opacity(0.1)+lightred); }
+if (j != My) { fill(shift(2*i, 2*j+1) * unitsquare, opacity(0.1)+lightblue); }
+if ((i != Mx) && (j != My)) { fill(shift(2*i+1, 2*j+1) * unitsquare, black); }
+}
+}
+
+
+pair ne_until_y(pair O, real y) {
+  return extension(O, O+(3,5), (0,y), (1,y) );
+}
+pair ne_until_x(pair O, real x) {
+  return extension(O, O+(3,5), (x,0), (x,1) );
+}
+pair se_until_y(pair O, real y) {
+  return extension(O, O+(-3,5), (0,y), (1,y) );
+}
+pair se_until_x(pair O, real x) {
+  return extension(O, O+(-3,5), (x,0), (x,1) );
+}
+
+
+pair[] P = new pair[10];
+P[0] = (2.0, 0.84);
+P[1] = ne_until_y(P[0], 3);
+P[2] = se_until_y(P[1], 2);
+P[3] = ne_until_x(P[2], 5);
+P[4] = se_until_x(P[3], 4);
+P[5] = ne_until_x(P[4], 5);
+P[6] = se_until_y(P[5], 9);
+P[7] = ne_until_y(P[6], 8);
+P[8] = se_until_y(P[7], 11);
+P[9] = ne_until_x(P[8], 1);
+
+for (int i=0; i<=8; ++i) { draw(P[i]--P[i+1], orange); }
+
+transform t = yscale(-1)*rotate(-90);
+pair[] Q = new pair[8];
+Q[0] = t*P[0];
+Q[1] = t*ne_until_y(P[0], 1);
+Q[2] = t*ne_until_y(P[0], 2);
+Q[3] = t*ne_until_x(P[0], 3);
+Q[4] = t*ne_until_y(P[0], 3); // = P[1]
+Q[5] = t*se_until_y(P[1], 2);
+Q[6] = t*ne_until_x(P[2], 4);
+Q[7] = t*ne_until_y(P[2], 3);
+
+// for (int i=0; i<=7; ++i) { dot(Q[i], lightblue); }
+
+picture rotated = t*currentpicture;
+currentpicture.erase();
+add(rotated);
+
+dotfactor *= 0.5;
+defaultpen(fontsize(6pt));
+dot("$h$", Q[0], dir(-90), red);
+dot("$v$", Q[1], dir(90), orange);
+dot("$v$", Q[2], dir(-45), orange);
+dot("$h$", Q[3], dir(-45), orange);
+dot("$v$", Q[4], dir(180)*2, orange);
+dot("$v$", Q[5], dir(105)*2, orange);
+dot("$h$", Q[6], dir(90), orange);
+dot("$v$", Q[7], dir(90), orange);
+
+dot(t*P[3], red);
+dot(t*se_until_x(P[5], 4), red);
+dot(t*P[9], red);
+\end{asy}
+\end{center}
+
+The main idea is to keep track of every time the laser passes
+a lattice line (again, not necessarily a wall).
+There are four possible types of events:
+\begin{itemize}
+  \ii A horizontal $h$ event where the laser switches from red to green
+  (or vice-versa);
+  \ii A horizontal $h$ event where the laser rebounds off a wall,
+  remaining in a blue square,
+  but flips the $x$-component of its velocity;
+  \ii A vertical $v$ event where the laser switches from blue to green
+  (or vice-versa)
+  \ii A vertical $v$ event where the laser rebounds off a wall,
+  remaining in a red square,
+  but flips the $y$-component of its velocity.
+\end{itemize}
+
+The first key observation is that:
+\begin{claim*}
+  In the first second, the laser will encounter exactly
+  $r$ horizontal events and $s$ vertical events.
+  In every second after that,
+  the same sequence of $r+s$ events occurs.
+\end{claim*}
+\begin{proof}
+  Bouncing off a wall doesn't change this
+  as opposed to if the laser had passed through the wall.
+\end{proof}
+We let the \emph{key-word} be the sequence $w$ of $r+s$ letters
+corresponding to the sequence.
+For example, the picture above denotes an example
+with keyword $w = hvvhvvhv$;
+so no matter what, every second,
+the laser will encounter eight lattice lines,
+which are horizontal and vertical in that order.
+
+\begin{claim*}
+  Color is periodic every $3$ seconds.
+\end{claim*}
+\begin{proof}
+  The free group generated by $h$ and $v$
+  acts on the set $\{R,G,B\}$ of colors in an obvious way;
+  consider this right action.
+  First we consider the color of the square after each second.
+  Note that with respect to color,
+  each letter is an involution;
+  so as far as color changes are concerned,
+  it's enough to work with the reduced word $w'$
+  obtained by modding out by $h^2 = 1$ and $v^2 = 1$.
+  (For example, $w' = hv$ in our example.)
+  In general, $w' = (hv)^k$ or $w' = (vh)^k$,
+  for some odd integer $k$ (since $k \equiv r \equiv s \equiv 1 \pmod 2$).
+  Now we see that the action of $hv$
+  on the set of colors is
+  $\text{red} \mapsto \text{blue} \mapsto \text{green} \mapsto \text{red}$,
+  and similarly for $vh$ (being the inverse).
+  This implies that the color is periodic every three seconds.
+\end{proof}
+
+Now in a 3-second period,
+consider the $3r$ horizontal events
+and $3s$ vertical events (both are odd).
+In order for the color to remain the same
+(as the only color changes are $R \leftrightarrow G$ for $h$
+and $B \leftrightarrow G$ for $v$)
+there must have been an even number of color swaps for each orientation.
+Therefore there was an odd number of wall collisions of each orientation.
+So, the laser is pointing in the opposite direction at the end of 3 seconds.
+
+Finally, let $x_t$ be the fractional part of the $x$
+coordinate after $t$ seconds
+(the $y$-coordinate is always zero by our setup at these moments).
+Note that
+\[ x_{t+1} =
+  \begin{cases}
+    x_t & \text{even number of vertical wall collisions} \\
+    1 - x_t & \text{odd numbers of vertical wall collisions}
+  \end{cases}
+\]
+Since over the there seconds there were
+an odd number of vertical collisions;
+it follows $x_3 = 1 - x_0$.
+Thus at the end of three seconds,
+the laser is in a symmetric position
+from the start;
+and in $6$ seconds it will form a closed loop.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{TSTST 2013/4}
+\textsl{Available online at \url{https://aops.com/community/p3181482}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Circle $\omega$, centered at $X$, is internally tangent to circle $\Omega$,
+centered at $Y$, at $T$.
+Let $P$ and $S$ be variable points on $\Omega$ and $\omega$,
+respectively, such that line $PS$ is tangent to $\omega$ (at $S$).
+Determine the locus of $O$ -- the circumcenter of triangle $PST$.
+\end{mdframed}
+The answer is a circle centered at $Y$
+with radius $\sqrt{YX \cdot YT}$,
+minus the two points on line $XY$ itself.
+
+We let $PS$ meet $\Omega$ again at $P'$,
+and let $O'$ be the circumcenter of $\triangle TPS'$.
+Note that $O'$, $X$, $O$ are collinear on the perpendicular
+bisector of line $\ol{TS}$
+Finally, we let $M$ denote the arc midpoint of $PP'$
+which lies on line $TS$ (by homothety).
+
+\begin{center}
+\begin{asy}
+import graph; size(9cm);
+pen qqffff = rgb(0.,1.,1.); pen qqwuqq = rgb(0.,0.39215,0.); pen ffdxqq = rgb(1.,0.84313,0.); pen yqqqqq = rgb(0.50196,0.,0.);
+pair X = (-2.,0.), Y = (2.,0.), T = (-9.50185,0.), P = (7.49229,10.10580), O = (5.46686,-5.82994), M = (-0.78960,11.15843);
+pair S = (-3.81946,7.27786);
+pair Pp = (-7.60181,6.33228);
+pair Op = (-4.49671,1.94937);
+fill(T--S--P--cycle, palegreen);
+fill(T--Op--Y--cycle, palegreen);
+fill(T--S--Pp--cycle, palecyan);
+fill(T--O--Y--cycle, palecyan);
+draw(circle(X, 7.50185), linewidth(0.6) + red);
+draw(circle(Y, 11.50185), linewidth(0.6) + red);
+draw(circle(Y, 6.78287), linewidth(0.6) + qqwuqq);
+draw(T--Op--Y--O--T--Y, grey);
+draw(T--Pp--M--P--T--M, black);
+draw(Pp--P, black);
+draw(Op--O, grey);
+dot("$X$", X, dir((8.005, 21.422)));
+dot("$Y$", Y, dir((8.687, 21.422)));
+dot("$T$", T, dir(T-Y));
+dot("$S$", S, dir(135));
+dot("$P$", P, dir(P-Y));
+dot("$O$", O, dir(-45));
+dot("$P'$", Pp, dir(Pp-Y));
+dot("$O'$", Op, dir(40));
+dot("$M$", M, dir((8.912, 22.013)));
+\end{asy}
+\end{center}
+By three applications of Salmon theorem, we have the following spiral
+similarities all centered at $T$:
+\begin{align*}
+  \triangle TSP &\overset{+}{\sim} \triangle TO'Y \\
+  \triangle TP'S &\overset{+}{\sim} \triangle TYO \\
+  \triangle TP'P &\overset{+}{\sim} \triangle TO'O.
+\end{align*}
+However, the shooting lemma also gives us two similarities:
+\begin{align*}
+  \triangle TP'M &\overset{+}{\sim} \triangle TSP \\
+  \triangle TMP &\overset{+}{\sim} \triangle TP'S.
+\end{align*}
+Putting everything together, we find that
+\[ TP'MP \overset{+}{\sim} TO'YO. \]
+Then by shooting lemma, $YO'^2 = YX \cdot YT$, so $O$
+indeed lies on the claimed circle.
+
+As the line $\ol{O'O}$ may be any line through $X$ other than line $XY$
+(one takes $S$ to be the reflection of $T$ across this line)
+one concludes the only two non-achievable points are
+the diametrically opposite ones on line $XY$ of this circle
+(because this leads to the only degenerate situation where $S=T$).
+\pagebreak
+
+\subsection{TSTST 2013/5}
+\textsl{Available online at \url{https://aops.com/community/p3181483}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $p$ be a prime.
+Prove that in a complete graph with $1000p$ vertices
+whose edges are labelled with integers,
+one can find a cycle whose sum of labels is divisible by $p$.
+\end{mdframed}
+Select $p-1$ disjoint triangles arbitrarily.  If any of these triangles have $0$ sum modulo $p$ we are done.  Otherwise, we may label the vertices $u_i$, $x_i$, and $v_i$ (where $1 \le i \le p-1$) in such a way that $u_ix_i + x_iv_i \neq u_iv_i$.
+
+Let $A_i = \left\{ u_ix_i+x_iv_i, u_iv_i \right\}$.  We can show that $\left\lvert A_1 + A_2 + \dots + A_t \right\rvert \ge \min \left\{ p,t+1 \right\}$ for each $1 \le t \le p-1$, by using induction on $t$ alongside Cauchy-Davenport.  So, $A_1 + A_2 + \dots + A_{p-1}$ spans all of $\ZZ_p$.  All that's left to do is join the triangles together to form a cycle, and then delete either $u_ix_i,x_iv_i$ or $u_iv_i$ from each triangle in such a way that the final sum is $0$ mod $p$.
+\pagebreak
+
+\subsection{TSTST 2013/6}
+\textsl{Available online at \url{https://aops.com/community/p3181484}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $\NN$ be the set of positive integers.
+Find all functions $f \colon \NN \to \NN$ that satisfy the equation
+\[ f^{abc-a}(abc) + f^{abc-b}(abc) + f^{abc-c}(abc) = a + b + c \]
+for all $a,b,c \ge 2$. (Here $f^k$ means $f$ applied $k$ times.)
+\end{mdframed}
+The answer is $f(n) = n-1$ for $n \ge 3$ with $f(1)$ and $f(2)$ arbitrary;
+check these work.
+
+\begin{lemma*}
+ We have $f^{t^2-t}(t^2) = t$ for all $t$.
+\end{lemma*}
+\begin{proof}
+ We say $1 \le k \le 8$ is good if $f^{t^9-t^k}(t^9) = t^k$ for all $t$.
+ First, we observe that
+ \[ f^{t^9-t^3}(t^9) = t^3 \quad\text{and}\quad f^{t^3-t}(t^3) = t
+   \implies f^{t^9-t}(t^9) = t.  \]
+ so $k=1$ and $k=3$ are good.
+ Then taking $(a,b,c) = (t,t^4,t^4)$,
+ $(a,b,c) = (t^2, t^3, t^4)$
+ gives that $k = 4$ and $k = 2$ are good, respectively.
+ % $(a,b,c) = (t,t^3,t^5)$,  gives $5$ good
+% Similarly, $(a,b,c) = (t,t^2,t^6)$ and $(a,b,c) = (t,t,t^7)$
+% gives $6$ and $7$ are good.
+ The lemma follows from this $k=1$ and $k=2$ being good.
+\end{proof}
+
+Now, letting $t = abc$ we combine
+\begin{align*}
+ f^{t-a}(a) + f^{t-b}(b) + f^{t-c}(c) &= a+b+c \\
+ f^{t^2-ab} (t^2) + f^{t^2-t} (t^2) + f^{t^2-c} (t^2) &= ab + t + c \\
+ \implies \left[ f^{t-a}(t) - a \right]
+ + \left[ f^{t-b}(t) - b \right]
+ &=
+ \left[ f^{t-ab}(t) - ab \right]
+\end{align*}
+by subtracting and applying the lemma repeatedly.
+In other words, we have proven the second lemma:
+\begin{lemma*}
+  Let $t$ be fixed, and define $g_t(n) = f^{t-n}(t) - n$ for $n < t$.
+  If $a,b \ge 2$ and $ab \mid t$, $ab < t$,  then $g_t(a) + g_t(b) = g_t(ab)$.
+\end{lemma*}
+
+Now let $a,b \ge 2$ be arbitrary, and let $p > q > \max\{a,b\}$ be primes.
+Suppose $s = a^p b^q$ and $t = s^2$; then
+\[ p g_t(a) + q g_t(b)
+  = g_t\left( a^p b^q \right) = g_t(s)
+  = f^{s^2-s}(s) - s = 0.  \]
+Now \[ q \mid g_t(a) > -a
+  \quad\text{and}\quad p \mid g_t(b) > -b
+  \implies g_t(a) = g_t(b) = 0.  \]
+and so we conclude $f^{t-a}(t) = a$
+and $f^{t-b}(t) = b$ for $a,b \ge 2$.
+
+In particular, if $a = n$ and $b = n+1$
+then we deduce $f(n+1) = n$ for all $n \ge 2$, as desired.
+
+\begin{remark*}
+  If you let $c = (ab)^2$ after the first lemma,
+  you recover the $2$-variable version!
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 3}
+\subsection{TSTST 2013/7}
+\textsl{Available online at \url{https://aops.com/community/p3181485}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A country has $n$ cities, labelled $1,2,3,\dots,n$.
+It wants to build exactly $n-1$ roads between certain pairs of cities
+so that every city is reachable from every other city via some sequence of roads.
+However, it is not permitted to put roads between pairs of cities
+that have labels differing by exactly $1$,
+and it is also not permitted to put a road between cities $1$ and $n$.
+Let $T_n$ be the total number of possible ways to build these roads.
+\begin{enumerate}[(a)]
+  \ii For all odd $n$, prove that $T_n$ is divisible by $n$.
+  \ii For all even $n$, prove that $T_n$ is divisible by $n/2$.
+\end{enumerate}
+\end{mdframed}
+You can just spin the tree!
+
+Fixing $n$, the group $G = \ZZ/n\ZZ$ acts on the set of trees
+by rotation (where we imagine placing $1,2,\dots,n$ along a circle).
+
+\begin{claim*}
+  For odd $n$, all trees have trivial stabilizer.
+\end{claim*}
+\begin{proof}
+  One way to see this is to look at the degree sequence.
+  Suppose $g^e$ fixes a tree $T$.
+  Then so does $g^k$, for $k = \gcd(e,n)$.
+  Then it follows that $n/k$ divides $\sum_v \deg v = 2n-2$.
+  Since $\gcd(2n-2, n) = 1$ we must then have $k = n$.
+\end{proof}
+
+The proof for even $n$ is identical except that $\gcd(2n-2, n) = 2$
+and hence each tree either has stabilizer with size $\le 2$.
+
+There is also a proof using linear algebra,
+using Kirchoff's tree formula.  (Overkill.)
+\pagebreak
+
+\subsection{TSTST 2013/8}
+\textsl{Available online at \url{https://aops.com/community/p3181486}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Define a function $f \colon \NN \to \NN$ by $f(1) = 1$,
+$f(n+1) = f(n) + 2^{f(n)}$ for every positive integer $n$.
+Prove that $f(1)$, $f(2)$, \dots, $f(3^{2013})$
+leave distinct remainders when divided by $3^{2013}$.
+\end{mdframed}
+I'll prove by induction on $k \ge 1$ that any $3^k$
+consecutive values of $f$ produce distinct residues modulo $3^k$.
+The base case $k=1$ is easily checked
+($f$ is always odd, hence $f$ cycles $1$, $0$, $2$ mod $3$).
+
+For the inductive step, assume it's true up to $k$.
+Since $2^\bullet \pmod{3^{k+1}}$ cycles every $2 \cdot 3^k$,
+and $f$ is always odd, it follows that
+\begin{align*}
+  f(n+3^k) - f(n)
+  &= 2^{f(n)} + 2^{f(n+1)} + \dots + 2^{f(n+3^k-1)} \pmod{3^{k+1}} \\
+  &\equiv 2^1 + 2^3 + \dots + 2^{2 \cdot 3^k-1} \pmod{3^{k+1}} \\
+  &= 2 \cdot \frac{4^{3^k}-1}{4-1}.
+\end{align*}
+Hence
+\[
+  f(n+3^k)-f(n) \equiv C \pmod{3^{k+1}}
+  \qquad\text{where} \qquad C = 2 \cdot \frac{4^{3^k}-1}{4-1}
+\]
+noting that $C$ does not depend on $n$. Exponent lifting gives $\nu_3(C) = k$
+hence $f(n)$, $f(n+3^k)$, $f(n+2\cdot3^k)$ differ mod $3^{k+1}$ for all $n$,
+and the inductive hypothesis now solves the problem.
+\pagebreak
+
+\subsection{TSTST 2013/9}
+\textsl{Available online at \url{https://aops.com/community/p3181487}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $r$ be a rational number in the interval $[-1,1]$
+and let $\theta = \cos^{-1} r$.
+Call a subset $S$ of the plane good if $S$ is unchanged
+upon rotation by $\theta$ around any point of $S$
+(in both clockwise and counterclockwise directions).
+Determine all values of $r$ satisfying the following property:
+The midpoint of any two points in a good set also lies in the set.
+\end{mdframed}
+The answer is that $r$ has this property
+if and only if $r = \frac{4n-1}{4n}$ for some integer $n$.
+
+Throughout the solution, we will let $r = \frac ab$ with $b > 0$ and
+$\gcd(a,b) = 1$. We also let
+\[ \omega = e^{i\theta} = \frac ab \pm \frac{\sqrt{b^2-a^2}}{b} i. \]
+This means we may work with complex multiplication in the usual way;
+the rotation of $z$ through center $c$ is given by $z \mapsto \omega(z-c)+c$.
+
+For most of our proof, we start by constructing a good set as follows.
+\begin{itemize}
+  \ii Start by letting $S_0 = \{0, 1\}$.
+  \ii Let $S_i$ consist of $S_{i-1}$ plus
+  all points that can be obtained by rotating a point of $S_{i-1}$
+  through a different point of $S_{i-1}$ (with scale factor $\omega$).
+  \ii Let $S_\infty = \bigcup_{i \ge 0} S_i$.
+\end{itemize}
+The set $S_\infty$ is the (minimal, by inclusion) good set containing
+$0$ and $1$.
+We are going to show that for most values of $r$,
+we have $\half \notin S_\infty$.
+
+\begin{claim*}
+  If $b$ is odd, then $\half \notin S_\infty$.
+\end{claim*}
+\begin{proof}
+  Idea: denominators that appear are always odd.
+
+  Consider the ring
+  \[ A = \ZZ_{\{b\}} = \left\{ \frac{s}{t} \mid s,t \in \ZZ, t \mid b^\infty \right\} \]
+  which consists of all rational numbers
+  whose denominators divide $b^\infty$.
+  Then, $0, 1, \omega \in A[\sqrt{b^2-a^2}]$
+  and hence $S_\infty \subseteq A[\sqrt{b^2-a^2}]$ too.
+  (This works even if $\sqrt{b^2-a^2} \in \ZZ$,
+  in which case $S_\infty \subseteq A = A[\sqrt{b^2-a^2}]$.)
+
+  But $\half \notin A[\sqrt{b^2-a^2}]$.
+\end{proof}
+
+\begin{claim*}
+  If $b$ is even and $|b-a| \neq 1$, then $\half \notin S_\infty$.
+\end{claim*}
+\begin{proof}
+  Idea: take modulo a prime dividing $b-a$.
+
+  Let $D = b^2-a^2 \equiv 3 \pmod 4$.
+  Let $p$ be a prime divisor of $b-a$ with odd multiplicity.
+  Because $\gcd(a,b) = 1$, we have $p \neq 2$ and $p \nmid b$.
+
+  Consider the ring
+  \[ A = \ZZ_{(p)} = \left\{ \frac{s}{t} \mid s,t \in \ZZ, p \perp t \right\} \]
+  which consists of all rational numbers
+  whose denominators are coprime to $p$.
+  Then, $0, 1, \omega \in A[\sqrt{-D}]$
+  and hence $S_\infty \subseteq A[\sqrt{-D}]$ too.
+
+  Now, there is a well-defined ``mod-$p$'' ring homomorphism
+  \[ \Psi \colon A[\sqrt{-D}] \to \FF_p \quad\text{by}\quad
+    x+y\sqrt{-D} \mapsto x \bmod p \]
+  which commutes with addition and multiplication (as $p \mid D$).
+  Under this map,
+  \[ \omega \mapsto \frac ab \bmod p = 1. \]
+  Consequently, the rotation $z \mapsto \omega(z-c)+c$
+  is just the identity map modulo $p$.
+  In other words, the pre-image of any point in $S_\infty$
+  under $\Psi$ must be either $\Psi(0) = 0$ or $\Psi(1) = 1$.
+
+  However, $\Psi(1/2) = 1/2$ is neither of these.
+  So this point cannot be achieved.
+\end{proof}
+
+\begin{claim*}
+  Suppose $a = 2n-1$ and $b=2n$ for $n$ an odd integer.
+  Then $\half \notin S_\infty$
+\end{claim*}
+\begin{proof}
+  Idea: $\omega$ is ``algebraic integer'' sans odd denominators.
+
+  This time, we define the ring
+  \[ B = \ZZ_{(2)} = \left\{ \frac{s}{t} \mid s,t \in \ZZ, t \text{ odd} \right\} \]
+  of rational numbers with odd denominator.
+  We carefully consider the ring $B[\omega]$ where
+  \[ \omega = \frac{2n-1 \pm \sqrt{1-4n}}{2n}. \]
+  So $S_\infty \subseteq B[\omega]$ as $0, 1, \omega \in B[\omega]$.
+
+  I claim that $B[\omega]$ is an integral extension of $B$;
+  equivalently that $\omega$ is integral over $B$.
+  Indeed, $\omega$ is the root of the monic polynomial
+  \[  (T-1)^2 + \frac1n (T-1) - \frac 1n = 0 \]
+  where $\frac1n \in B$ makes sense as $n$ is odd.
+
+  On the other hand, $\half$ is not integral over $B$
+  so it is not an element of $B[\omega]$.
+\end{proof}
+
+It remains to show that if $r = \frac{4n-1}{4n}$, then goods sets
+satisfy the midpoint property.
+Again starting from the points $z_0 = 0$, $z_1 = 1$ construct the sequence
+\begin{align*}
+  z_2 &= \omega(z_1-z_0) + z_0 \\
+  z_3 &= \omega\inv(z_0-z_2) + z_2 \\
+  z_4 &= \omega\inv(z_2-z_3) + z_3 \\
+  z_5 &= \omega(z_3-z_4) + z_4
+\end{align*}
+as shown in the diagram below.
+\begin{center}
+\begin{asy}
+  size(8cm);
+  pair z0 = (0,0);
+  pair z1 = (1,0);
+  real theta = 28.96;
+  pair z2 = rotate(theta, z0) * z1;
+  pair z3 = rotate(-theta, z2) * z0;
+  pair z4 = rotate(-theta, z3) * z2;
+  pair z5 = rotate(theta, z4) * z3;
+  draw(arc(z0, z1, z2), lightgreen);
+  draw(arc(z3, z4, z2), lightgreen);
+  draw(arc(z2, z3, z0), lightgreen);
+  draw(arc(z4, z3, z5), lightgreen);
+  draw(z1--z0--z2--z3--z4--z5, deepcyan);
+  dot("$z_0=0$", z0, dir(-45), red);
+  dot("$z_1=1$", z1, dir(-45), red);
+  dot("$z_2$", z2, dir(90));
+  dot("$z_3$", z3, dir(90));
+  dot("$z_4=2r-1$", z4, dir(-90));
+  dot("$z_5=2r-2$", z5, dir(-90));
+\end{asy}
+\end{center}
+This construction shows that if we have the length-one segment
+$\{0,1\}$ then we can construct the length-one segment $\{2r-2, 2r-1\}$.
+In other words, we can shift the segment to the left by
+\[ 1-(2r-1) = 2(1-r) = \frac{1}{2n}. \]
+Repeating this construction $n$ times gives the desired midpoint $\half$.
+\pagebreak
+
+
+\end{document}

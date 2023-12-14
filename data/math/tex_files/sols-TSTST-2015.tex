@@ -1,0 +1,535 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{TSTST 2015 Solution Notes}
+\subtitle{Pittsburgh, PA}
+\date{\today}
+
+\maketitle
+\begin{abstract}
+This is a compilation of solutions
+for the 2015 TSTST.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $a_1$, $a_2$, \dots, $a_n$ be a sequence of real numbers,
+and let $m$ be a fixed positive integer less than $n$.
+We say an index $k$ with $1 \le k \le n$ is \textit{good} if there exists
+some $\ell$ with $1 \le \ell \le m$ such that
+\[ a_k + a_{k + 1} + \dotsb + a_{k + \ell - 1} \ge 0, \]
+where the indices are taken modulo $n$.
+Let $T$ be the set of all good indices. Prove that
+\[ \sum_{k \in T} a_k \ge 0. \]
+
+\item %% Problem 2
+Let $ABC$ be a scalene triangle. Let $K_a$, $L_a$, and
+$M_a$ be the respective intersections with $BC$ of the internal
+angle bisector, external angle bisector, and the median from
+$A$. The circumcircle of $AK_aL_a$ intersects $AM_a$ a second time
+at a point $X_a$ different from $A$. Define $X_b$ and $X_c$
+analogously. Prove that the circumcenter of $X_aX_bX_c$ lies on
+the Euler line of $ABC$.
+
+\item %% Problem 3
+Let $P$ be the set of all primes, and let $M$ be a
+non-empty subset of $P$. Suppose that for any non-empty subset
+$\{p_1, p_2, \dots, p_k\}$ of $M$, all prime factors of
+$p_1 p_2 \dots p_k + 1$ are also in $M$. Prove that $M = P$.
+
+\item %% Problem 4
+Let $x,y,z$ be real numbers (not necessarily positive)
+such that $x^4 + y^4 + z^4 + xyz = 4$.
+Prove that $x \le 2$ and \[ \sqrt{2-x} \ge \frac{y+z}{2}. \]
+
+\item %% Problem 5
+Let $\varphi(n)$ denote the number of positive integers
+less than $n$ that are relatively prime to $n$.
+Prove that there exists a positive integer $m$ for which the equation
+$\varphi(n) = m$ has at least $2015$ solutions in $n$.
+
+\item %% Problem 6
+A \emph{Nim-style game} is defined as follows. Two
+positive integers $k$ and $n$ are specified, along with a finite
+set $S$ of $k$-tuples of integers (not necessarily positive). At
+the start of the game, the $k$-tuple $(n,0,0,\dots,0)$ is written
+on the blackboard.
+
+A legal move consists of erasing the tuple $(a_1,a_2,\dots,a_k)$
+which is written on the blackboard and replacing it with
+$(a_1+b_1,a_2+b_2,\dots,a_k+b_k)$, where $(b_1,b_2,\dots,b_k)$
+is an element of the set $S$. Two players take turns making legal
+moves, and the first to write a negative integer loses. In the
+event that neither player is ever forced to write a negative
+integer, the game is a draw.
+
+Prove that there is a choice of $k$ and $S$ with the following
+property: the first player has a winning strategy if $n$ is a
+power of $2$, and otherwise the second player has a winning
+strategy.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{TSTST 2015/1, proposed by Mark Sellke}
+\textsl{Available online at \url{https://aops.com/community/p5017901}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a_1$, $a_2$, \dots, $a_n$ be a sequence of real numbers,
+and let $m$ be a fixed positive integer less than $n$.
+We say an index $k$ with $1 \le k \le n$ is \textit{good} if there exists
+some $\ell$ with $1 \le \ell \le m$ such that
+\[ a_k + a_{k + 1} + \dotsb + a_{k + \ell - 1} \ge 0, \]
+where the indices are taken modulo $n$.
+Let $T$ be the set of all good indices. Prove that
+\[ \sum_{k \in T} a_k \ge 0. \]
+\end{mdframed}
+First we prove the result if the indices are not taken modulo $n$.
+Call a number $\ell$-good if $\ell$ is the \emph{smallest} number
+such that $a_k + a_{k+1} + \dots + a_{k+\ell-1} \ge 0$, and $\ell \le m$.
+Then if $a_k$ is $\ell$-good,
+the numbers $a_{k+1}, \dots, a_{k+\ell-1}$ are good as well.
+
+Then by greedy from left to right,
+we can group all the good numbers into blocks with nonnegative sums.
+Repeatedly take the first good number,
+if $\ell$-good, group it with the next $\ell$ numbers.
+An example for $m = 3$:
+\[ \langle 4 \rangle
+  \quad \langle -1 \quad -2 \quad 6 \rangle
+  \quad -9
+  \quad -7
+  \quad \langle 3 \rangle
+  \quad \langle -2 \quad 4 \rangle
+  \quad \langle -1. \]
+
+We can now return to the original problem.
+Let $N$ be a large integer; applying the algorithm to
+$N$ copies of the sequence, we deduce that
+\[ N \sum_{k \in T} a_k + c_N \ge 0 \]
+where $c_N$ represents some ``error'' from left-over terms.
+As $|c_N| \le \sum |a_i|$, by taking $N$ large enough we deduce the problem.
+
+\begin{remark*}
+  This solution was motivated by looking at the case $m = 1$,
+  realizing how dumb it was, then looking at $m = 2$,
+  and realizing it was equally dumb.
+\end{remark*}
+\pagebreak
+
+\subsection{TSTST 2015/2, proposed by Ivan Borsenco}
+\textsl{Available online at \url{https://aops.com/community/p5017915}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a scalene triangle. Let $K_a$, $L_a$, and
+$M_a$ be the respective intersections with $BC$ of the internal
+angle bisector, external angle bisector, and the median from
+$A$. The circumcircle of $AK_aL_a$ intersects $AM_a$ a second time
+at a point $X_a$ different from $A$. Define $X_b$ and $X_c$
+analogously. Prove that the circumcenter of $X_aX_bX_c$ lies on
+the Euler line of $ABC$.
+\end{mdframed}
+The main content of the problem:
+\begin{claim*}
+  $\angle H X_a G = 90\dg$.
+\end{claim*}
+This implies the result,
+since then the desired circumcenter is the midpoint of $\ol{GH}$.
+(This is the main difficulty; the Euler line is a red herring.)
+
+In what follows, we abbreviate $K_a$ $L_a$, $M_a$, $X_a$
+to $K$, $L$, $M$, $X$.
+
+\begin{proof}
+  [First proof by Brokard]
+  To do this, it suffices to show that $M$ has the
+  same power with respect to the circle
+  with diameter $\ol{AH}$ and the circle with diameter $\ol{K L}$.
+  In fact I claim both circles are orthogonal
+  to the circle with diameter $\ol{BC}$!
+  The former follows from Brokard's theorem, noting that $A$
+  is on the polar of $H$,
+  and the latter follows from the harmonic bundle.
+
+  \begin{center}
+  \begin{asy}
+  size(11cm);
+  pair A = dir(150);
+  pair B = dir(200);
+  pair C = dir(340);
+  filldraw(A--B--C--cycle, opacity(0.1)+lightred, red);
+
+  pair M = midpoint(B--C);
+
+  pair H = orthocenter(A, B, C);
+  pair G = centroid(A, B, C);
+  pair X = foot(H, M, A);
+
+  pair K = extension(A, incenter(A, B, C), B, C);
+  pair L = extension(A, A+dir(90)*(K-A), B, C);
+
+  draw(K--A--L--B, red);
+  draw(circumcircle(A, K, L), orange+dashed);
+  draw(A--M, red);
+  draw(X--H, orange);
+
+  dot("$A$", A, dir(A));
+  dot("$B$", B, dir(270));
+  dot("$C$", C, dir(270));
+  dot("$M$", M, dir(M));
+  dot("$H$", H, dir(270));
+  dot("$G$", G, dir(10));
+  dot("$X$", X, dir(10));
+  dot("$K$", K, dir(K));
+  dot("$L$", L, dir(L));
+
+  /* TSQ Source:
+
+  !size(11cm);
+  A = dir 150
+  B = dir 200 R270
+  C = dir 340 R270
+  A--B--C--cycle 0.1 lightred / red
+
+  M = midpoint B--C
+
+  H = orthocenter A B C R270
+  G = centroid A B C R10
+  X = foot H M A R10
+
+  K = extension A incenter A B C B C
+  L = extension A A+dir(90)*(K-A) B C
+
+  K--A--L--B red
+  circumcircle A K L orange dashed
+  A--M red
+  X--H orange
+
+  */
+  \end{asy}
+  \end{center}
+  Then $\ol{AM}$ is the radical axis, so $X$ lies on both circles.
+\end{proof}
+
+\begin{proof}
+  [Second proof by orthocenter reflection, Bendit Chan]
+  As before, we know $MX \cdot MA = MK \cdot ML = MB \cdot MC$,
+  but $X$ lies inside segment $AM$.
+  Construct parallelogram $ABA'C$.
+  Then $MX \cdot MA' = MB \cdot MC$,
+  so $XBA'C$ is concyclic.
+
+  However, it is well-known the circumcircle of $\triangle BA'C$
+  (which is the reflection of $(ABC)$ across $\ol{BC}$)
+  passes through $H$ and in fact has diameter $\ol{A'H}$.
+  So this gives $\angle HXA' = 90\dg$ as needed.
+\end{proof}
+
+\begin{proof}
+  [Third proof by barycentric coordinates]
+  Alternatively we may just compute $X = (a^2:2S_A:2S_A)$.
+  Let $F = (0 : S_C : S_B)$ be the foot from $H$.
+  Then we check that $X H F M$ is cyclic,
+  which is power of a point from $A$.
+\end{proof}
+\pagebreak
+
+\subsection{TSTST 2015/3, proposed by Alex Zhai}
+\textsl{Available online at \url{https://aops.com/community/p5017928}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $P$ be the set of all primes, and let $M$ be a
+non-empty subset of $P$. Suppose that for any non-empty subset
+$\{p_1, p_2, \dots, p_k\}$ of $M$, all prime factors of
+$p_1 p_2 \dots p_k + 1$ are also in $M$. Prove that $M = P$.
+\end{mdframed}
+The following solution was found by user \texttt{Aiscrim} on AOPS.
+
+Obviously $|M| = \infty$.
+Assume for contradiction $p \notin M$.
+We say a prime $q \in M$ is \emph{sparse}
+if there are only finitely many elements of $M$
+which are $q \pmod p$
+(in particular there are finitely many sparse primes).
+
+Now let $C$ be the product of all sparse primes (note $p \nmid C$).
+First, set $a_0 = 1$.
+For $k \ge 0$, consider then the prime factorization of the number
+\[ Ca_k + 1. \]
+No prime in its factorization is sparse,
+so consider the number $a_{k+1}$ obtained by
+\textbf{replacing each prime in its factorization
+with some arbitrary representative of that prime's residue class}.
+In this way we select a number $a_{k+1}$ such that
+\begin{itemize}
+  \ii $a_{k+1} \equiv Ca_k + 1 \pmod p$, and
+  \ii $a_{k+1}$ is a product of distinct primes in $M$.
+\end{itemize}
+In particular, $a_k \equiv C^k + C^{k-1} + \dots + 1 \pmod p$
+
+But since $C \not\equiv 0 \pmod p$,
+we can find a $k$ such that $a_k \equiv 0 \pmod p$
+(namely, $k=p-1$ if $C \equiv 1$ and $k=p-2$ else)
+which is clearly impossible since $a_k$ is a product of primes in $M$!
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{TSTST 2015/4, proposed by Alyazeed Basyoni}
+\textsl{Available online at \url{https://aops.com/community/p5017801}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $x,y,z$ be real numbers (not necessarily positive)
+such that $x^4 + y^4 + z^4 + xyz = 4$.
+Prove that $x \le 2$ and \[ \sqrt{2-x} \ge \frac{y+z}{2}. \]
+\end{mdframed}
+We prove that the condition $x^4+y^4+z^4+xyz = 4$ implies
+\[ \sqrt{2-x} \geq \frac{y+z}{2}. \]
+
+We first prove the  easy part.
+\begin{claim*}
+  We have $x \le 2$.
+\end{claim*}
+\begin{proof}
+  Indeed, AM-GM gives that
+  \begin{align*}
+    5 =x^4+y^4+(z^4+1)+xyz
+      &= \frac{3x^4}{4}+\left(\frac{x^4}{4}+y^4\right)+(z^4+1)+xyz \\
+      &\geq \frac{3x^4}{4}+x^2y^2+2z^2+xyz.
+  \end{align*}
+  We evidently have that $x^2y^2+2z^2+xyz \geq 0$ because the
+  quadratic form $a^2+ab+2b^2$ is positive definite, so $x^4 \leq
+  \frac{20}{3} \implies x \leq 2$.
+\end{proof}
+Now, the desired statement is
+implied by its square, so it suffices to show that
+\[ 2-x \geq \left(\frac{y+z}{2}\right)^2 \]
+
+We are going to proceed by contradiction
+(it seems that many solutions do this)
+and assume that
+\[ 2-x < \left( \frac{y+z}{2} \right)^2
+  \iff 4x + y^2 + 2yz + z^2 > 8. \]
+By AM-GM,
+\begin{align*}
+  x^4 + 3 & \ge 4x \\
+  \tfrac{y^4+1}{2} &\ge y^2 \\
+  \tfrac{z^4+1}{2} &\ge z^2
+\end{align*}
+which yields that
+\[ x^4+\frac{y^4+z^4}{2}+2yz+4 > 8. \]
+If we replace $x^4 = 4 - (y^4+z^4+xyz)$ now,
+this gives
+\[ -\frac{y^4+z^4}{2}+(2-x)yz > 0 \implies (2-x)yz > \frac{y^4+z^4}{2}. \]
+Since $2-x$ and the right-hand side are positive,
+we have $yz \geq 0$.
+Now
+\[ \frac{y^4+z^4}{2yz} < 2-x < \left(\frac{y+z}{2}\right)^2
+  \implies 2y^4+2z^4 < yz(y+z)^2 = y^3z+2y^2z^2+yz^3. \]
+This is clearly false by AM-GM, so we have a contradiction.
+\pagebreak
+
+\subsection{TSTST 2015/5}
+\textsl{Available online at \url{https://aops.com/community/p5017821}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $\varphi(n)$ denote the number of positive integers
+less than $n$ that are relatively prime to $n$.
+Prove that there exists a positive integer $m$ for which the equation
+$\varphi(n) = m$ has at least $2015$ solutions in $n$.
+\end{mdframed}
+Here are two explicit solutions.
+
+\paragraph{First solution with ad-hoc subsets, by Evan Chen.}
+I consider the following eleven prime numbers:
+\[ S = \left\{ 11, 13, 17, 19, 29, 31, 37, 41, 43, 61, 71 \right\}. \]
+This has the property that for any $p \in S$,
+all prime factors of $p-1$ are one digit.
+
+Let $N = (210)^{\text{billion}}$,
+and consider $M = \varphi\left( N \right)$.
+For any subset $T \subset S$, we have
+\[ M = \varphi\left(
+  \frac{N}{\prod_{p\in T} (p-1)} \prod_{p \in T} p \right). \]
+Since $2^{\left\lvert S \right\rvert} > 2015$ we're done.
+\begin{remark*}
+This solution is motivated by the deep fact that
+$\varphi(11 \cdot 1000) = \varphi(10 \cdot 1000)$,
+for example.
+\end{remark*}
+
+\paragraph{Second solution with smallest primes, by Yang Liu.}
+Let $2 = p_1 < p_2 < \dots < p_{2015}$
+be the \emph{smallest} $2015$ primes.
+Then the $2015$ numbers
+\begin{align*}
+  n_1 &= (p_1-1) p_2 \dots p_{2015} \\
+  n_2 &= p_1 (p_2-1) \dots p_{2015} \\
+  &\vdotswithin= \\
+  n_{2015} &= p_1 p_2 \dots \left( p_{2015}-1 \right)
+\end{align*}
+all have the same phi value, namely
+\[ \varphi(p_1 p_2 \dots p_{2015}) = \prod_{i=1}^{2015} (p_i-1). \]
+\pagebreak
+
+\subsection{TSTST 2015/6, proposed by Linus Hamilton}
+\textsl{Available online at \url{https://aops.com/community/p5017871}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A \emph{Nim-style game} is defined as follows. Two
+positive integers $k$ and $n$ are specified, along with a finite
+set $S$ of $k$-tuples of integers (not necessarily positive). At
+the start of the game, the $k$-tuple $(n,0,0,\dots,0)$ is written
+on the blackboard.
+
+A legal move consists of erasing the tuple $(a_1,a_2,\dots,a_k)$
+which is written on the blackboard and replacing it with
+$(a_1+b_1,a_2+b_2,\dots,a_k+b_k)$, where $(b_1,b_2,\dots,b_k)$
+is an element of the set $S$. Two players take turns making legal
+moves, and the first to write a negative integer loses. In the
+event that neither player is ever forced to write a negative
+integer, the game is a draw.
+
+Prove that there is a choice of $k$ and $S$ with the following
+property: the first player has a winning strategy if $n$ is a
+power of $2$, and otherwise the second player has a winning
+strategy.
+\end{mdframed}
+Here we present a solution with $14$ registers and $22$ moves.
+Initially $X=n$ and all other variables are zero.
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{l|rr|r|rrr|rrr|r|rr|rr}
+&$X$&$Y$&Go&$S_X^0$&$S_X$&$S_X'$&$S_Y^0$&$S_Y$&$S_Y'$&Cl&$A$&$B$&Die&Die'\\\hline
+Init&-1&&1&&&&&&&&&1&1&1\\
+Begin&1&&-1&1&&&&&&&-1&1&&\\\hline
+Sleep&&&&&&&&&&&1&-1&&\\\hline
+StartX&&&&-1&1&&&&&&-1&1&&\\
+WorkX&-1&&&&-1&1&&&&&-1&1&&\\
+WorkX'&-1&1&&&1&-1&&&&&-1&1&&\\
+DoneX&&&&&-1&&1&&&&-1&1&&\\
+WrongX&-1&&&&&&-1&&&&&-1&&\\\hline
+StartY&&&&&&&-1&1&&&-1&1&&\\
+WorkY&&-1&&&&&&-1&1&&-1&1&&\\
+WorkY'&1&-1&&&&&&1&-1&&-1&1&&\\
+DoneY&&&&1&&&&-1&&&-1&1&&\\
+WrongY&&-1&&-1&&&&&&&&-1&&\\\hline
+ClaimX&-1&&&-1&&&&&&1&-1&1&&\\
+ClaimY&&-1&&&&&-1&&&1&-1&1&&\\
+FakeX&-1&&&&&&&&&-1&&-1&&\\
+FakeY&&-1&&&&&&&&-1&&-1&&\\
+Win&&&&&&&&&&-1&-1&&&\\\hline
+PunA&&&&&&&&&&&&-2&&\\
+PunB&&&&&&&&&&&-1&-1&&\\
+Kill&&&&&&&&&&&&-1&-2&1\\
+Kill'&&&&&&&&&&&&-1&1&-2
+\end{tabular}
+\end{center}
+
+Now, the ``game'' is played as follows.
+The mechanics are controlled by the \emph{turn counters} $A$ and $B$.
+
+Observe the game starts with Alice playing Init.
+Thereafter, we say that the game is
+\begin{itemize}
+  \ii In the \emph{main part} if $A+B = 1$,
+  and no one has played Init a second time.
+  \ii In the \emph{death part} otherwise.
+\end{itemize}
+Observe that in the main state,
+on Alice's turn we always have $(A,B) = (1,0)$
+and on Bob's turn we always have $(A,B) = (0,1)$.
+
+\begin{claim*}
+  A player who plays Init a second time must lose.
+  In particular, a player who makes a move when $A=B=0$ must lose.
+\end{claim*}
+\begin{proof}
+  Situations with $A+B \ge 2$ cannot occur during main part,
+  so there are only a few possibilities.
+  \begin{itemize}
+  \ii Suppose the offending player is in a situation where $A=B=0$.
+  Then he/she must play Init.
+  At this point, the opposing player can respond by playing Kill.
+  Then the offending player must play Init again.
+  The opposing player now responds with Kill'.
+  This iteration continues until $X$ reaches a negative number
+  and the offending player loses.
+  \ii Suppose Alice has $(A,B) = (1,0)$ but plays Init again anyways.
+  Then Bob responds with PunB to punish her; he then wins as in the first case.
+  \ii Suppose Bob has $(A,B) = (0,1)$ but plays Init again anyways.
+  Alice responds with PunA in the same way. \qedhere
+  \end{itemize}
+\end{proof}
+
+Thus we may assume that players avoid the death part at all costs.
+Hence the second moves consist of Bob playing Sleep,
+and then Alice playing Begin
+(thus restoring the value of $n$ in $X$), then Bob playing Sleep.
+
+Now we return to analysis of the main part.
+We say the game is in \emph{state} $S$ for
+$S \in \{S_X^0, S_X, S_X', S_Y^0, S_Y, S_Y', \text{Cl} \}$
+if $S = 1$ and all other variables are zero.
+By construction, this is always the case.
+From then on the main part is divided into several phases:
+\begin{itemize}
+  \ii An \emph{$X$-phase}: this begins with Alice at $S_X^0$, and
+  ends when the game is in a state other than $S_X$ and $S_X'$.
+  (She can never return to $S_X^0$ during an $X$-phase.)
+  \ii A \emph{$Y$-phase}: this begins with Alice at $S_Y^0$, and
+  ends when the game is in a state other than $S_Y$ and $S_Y'$.
+  (She can never return to $S_Y^0$ during a $Y$-phase.)
+\end{itemize}
+
+\begin{claim*}
+Consider an $X$-phase in which $(X,Y) = (x,0)$, $x > 1$.
+Then Alice can complete the phase without losing if and only if $x$ is even;
+if so she begins a $Y$-phase with $(X,Y) = (0,x/2)$.
+\end{claim*}
+\begin{proof}
+As $x >1$, Alice cannot play ClaimX since Bob will respond with FakeX and win.
+Now by alternating between WorkX and WorkX',
+Alice can repeatedly deduct $2$ from $X$ and add $1$ to $Y$,
+leading to $(x-2,y+1)$, $(x-4,y+2)$, and so on.
+(During this time, Bob can only play Sleep.)
+Eventually, she must stop this process by playing DoneX, which begins a $Y$-phase.
+
+Now note that unless $X=0$, Bob now has a winning move WrongX.
+Conversely he may only play Sleep if $X=0$.
+\end{proof}
+
+We have an analogous claim for $Y$-phases.
+Thus if $n$ is not a power of $2$, we see that Alice eventually loses.
+
+Now suppose $n = 2^k$;
+then Alice reaches $(X,Y) = (0,2^{k-1}), \; (2^{k-2}, 0), \; \dots$
+until either reaching $(1,0)$ or $(0,1)$.
+At this point she can play ClaimX or ClaimY, respectively;
+the game is now in state Cl.
+Bob cannot play either FakeX or FakeY, so he must play Sleep,
+and then Alice wins by playing Win.
+Thus Alice has a winning strategy when $n = 2^k$.
+\pagebreak
+
+
+\end{document}

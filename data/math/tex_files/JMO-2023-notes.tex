@@ -1,0 +1,1137 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{JMO 2023 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2023 JMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Find all triples of positive integers $(x,y,z)$ satisfying
+\[ 2(x+y+z+2xyz)^2 = (2xy+2yz+2zx+1)^2 + 2023. \]
+
+\item %% Problem 2
+In an acute triangle $ABC$, let $M$ be the midpoint of $\ol{BC}$.
+Let $P$ be the foot of the perpendicular from $C$ to $AM$.
+Suppose that the circumcircle of triangle $ABP$
+intersects line $BC$ at two distinct points $B$ and $Q$.
+Let $N$ be the midpoint of $\ol{AQ}$.
+Prove that $NB = NC$.
+
+\item %% Problem 3
+Consider an $n$-by-$n$ board of unit squares for some odd positive integer $n$.
+We say that a collection $C$ of identical dominoes is a
+maximal grid-aligned configuration on the board if $C$ consists of $(n^2-1)/2$
+dominoes where each domino covers exactly two neighboring squares
+and the dominoes don't overlap: $C$ then covers all but one square on the board.
+We are allowed to slide (but not rotate) a domino on the board to
+cover the uncovered square, resulting in a new maximal grid-aligned configuration
+with another square uncovered. Let $k(C)$ be the number of distinct maximal
+grid-aligned configurations obtainable from $C$ by repeatedly sliding dominoes.
+
+Find the maximum possible value of $k(C)$ as a function of $n$.
+
+\item %% Problem 4
+Two players, Blake and Ruby, play the following game
+on an infinite grid of unit squares, all initially colored white.
+The players take turns starting with Blake.
+On Blake's turn, Blake selects one white unit square and colors it blue.
+On Ruby's turn, Ruby selects two white unit squares and colors them red.
+The players alternate until Blake decides to end the game.
+At this point, Blake gets a score, given by the number of unit squares in the
+largest (in terms of area) simple polygon containing only blue unit squares.
+
+What is the largest score Blake can guarantee?
+
+\item %% Problem 5
+Positive integers $a$ and $N$ are fixed,
+and $N$ positive integers are written on a blackboard.
+Alice and Bob play the following game.
+On Alice's turn, she must replace some integer $n$ on the board with $n+a$,
+and on Bob's turn he must replace some even integer $n$ on the board with $n/2$.
+Alice goes first and they alternate turns.
+If on his turn Bob has no valid moves, the game ends.
+
+After analyzing the $N$ integers on the board, Bob realizes that,
+regardless of what moves Alice makes,
+he will be able to force the game to end eventually.
+Show that, in fact, for this value of $a$ and these $N$ integers on the board,
+the game is guaranteed to end regardless of Alice's or Bob's moves.
+
+\item %% Problem 6
+Isosceles triangle $ABC$, with $AB=AC$, is inscribed in circle $\omega$.
+Let $D$ be an arbitrary point inside $BC$ such that $BD \neq DC$.
+Ray $AD$ intersects $\omega$ again at $E$ (other than $A$).
+Point $F$ (other than $E$) is chosen on $\omega$ such that $\angle DFE = 90\dg$.
+Line $FE$ intersects rays $AB$ and $AC$ at points $X$ and $Y$, respectively.
+Prove that $\angle XDE = \angle EDY$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{JMO 2023/1, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p27349258}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all triples of positive integers $(x,y,z)$ satisfying
+\[ 2(x+y+z+2xyz)^2 = (2xy+2yz+2zx+1)^2 + 2023. \]
+\end{mdframed}
+Answer: $(3,3,2)$ and permutations.
+
+The solution hinges upon the following claim:
+\begin{claim*}
+   The identity
+   \[ 2(x+y+z+2xyz)^2 - (2xy+2yz+2zx+1)^2 = (2x^2-1)(2y^2-1)(2z^2-1) \]
+   is true.
+\end{claim*}
+\begin{proof}
+  This can be proved by manually expanding; we show where it ``came from''.
+  In algebraic number theory, there is a \emph{norm function}
+  $\opname{Norm} \colon \QQ(\sqrt2) \to \QQ$
+  defined by
+  \[ \opname{Norm}(a+b\sqrt2) = a^2-2b^2 \]
+  which is \emph{multiplicative}, meaning
+  \[ \opname{Norm}(u \cdot v) = \opname{Norm}(u) \cdot \opname{Norm}(v). \]
+
+  This means that for any rational numbers $x$, $y$, $z$, we should have
+  \begin{align*}
+    &\phantom{=} \opname{Norm}
+    \left( (1+\sqrt2x)(1+\sqrt2y)(1+\sqrt2z) \right) \\
+    &= \opname{Norm}(1+\sqrt2x)
+      \cdot \opname{Norm}(1+\sqrt2y)
+      \cdot \opname{Norm}(1+\sqrt2z).
+  \end{align*}
+  But $(1+\sqrt2x)(1+\sqrt2y)(1+\sqrt2z) = (2xy+2yz+2zx+1) + (x+y+z+2xyz)\sqrt2$
+  so the above equation is the negative of the desired identity.
+\end{proof}
+
+We are thus reduced to find positive integers $x$, $y$, $z$ satisfying
+\[ (2x^2-1)(2y^2-1)(2z^2-1) = 2023 = 7 \cdot 17^2. \]
+Each of the factors is a positive integer greater than $1$.
+The only divisors of $2023$ of the form $2t^2-1$ are $1$, $7$, $17$.
+This gives the answers claimed.
+\pagebreak
+
+\subsection{JMO 2023/2, proposed by Holden Mui}
+\textsl{Available online at \url{https://aops.com/community/p27349297}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+In an acute triangle $ABC$, let $M$ be the midpoint of $\ol{BC}$.
+Let $P$ be the foot of the perpendicular from $C$ to $AM$.
+Suppose that the circumcircle of triangle $ABP$
+intersects line $BC$ at two distinct points $B$ and $Q$.
+Let $N$ be the midpoint of $\ol{AQ}$.
+Prove that $NB = NC$.
+\end{mdframed}
+We show several different approaches.
+In all solutions, let $D$ denote the foot of the altitude from $A$.
+
+\begin{center}
+\begin{asy}
+size(10cm);
+
+pair A = dir(115);
+pair B = dir(210);
+pair C = dir(330);
+pair D = foot(A, B, C);
+pair M = midpoint(B--C);
+pair P = foot(C, A, M);
+pair Q = 2*M-D;
+
+filldraw(A--B--C--cycle, opacity(0.1)+cyan, blue);
+filldraw(circumcircle(A, B, P), opacity(0.1)+yellow, orange+dashed);
+draw(A--D, blue);
+draw(A--P--C, deepgreen);
+
+draw(A--Q, red+dashed);
+pair N = midpoint(A--Q);
+draw(B--N--C, red+dotted);
+
+pair R = foot(B, A, M);
+draw(B--R, dashed);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(D));
+dot("$M$", M, dir(45));
+dot("$P$", P, dir(P));
+dot("$Q$", Q, dir(315));
+dot("$N$", N, dir(45));
+dot("$R$", R, dir(30));
+
+/* -----------------------------------------------------------------+
+|                 TSQX: by CJ Quines and Evan Chen                  |
+| https://github.com/vEnhance/dotfiles/blob/main/py-scripts/tsqx.py |
++-------------------------------------------------------------------+
+!size(10cm);
+A = dir 115
+B = dir 210
+C = dir 330
+D = foot A B C
+M 45 = midpoint B--C
+P = foot C A M
+Q 315 = 2*M-D
+A--B--C--cycle / 0.1 cyan / blue
+circumcircle A B P / 0.1 yellow / orange dashed
+A--D blue
+A--P--C deepgreen
+A--Q / red dashed
+N 45 = midpoint A--Q
+B--N--C / red dotted
+R 30 = foot B A M
+B--R / dashed
+*/
+\end{asy}
+\end{center}
+
+\paragraph{Most common synthetic approach.}
+The solution hinges on the following claim:
+\begin{claim*}
+  $Q$ coincides with the reflection of $D$ across $M$.
+\end{claim*}
+\begin{proof}
+  Note that $\dang ADC = \dang APC = 90\dg$, so $ADPC$ is cyclic.
+  Then by power of a point (with the lengths directed),
+  \[ MB \cdot MQ = MA \cdot MP = MC \cdot MD. \]
+  Since $MB = MC$, the claim follows.
+\end{proof}
+It follows that $\ol{MN} \parallel \ol{AD}$,
+as $M$ and $N$ are respectively the midpoints of $\ol{AQ}$ and $\ol{DQ}$.
+Thus $\ol{MN} \perp \ol{BC}$,
+and so $N$ lies on the perpendicular bisector of $\ol{BC}$, as needed.
+\begin{remark*}
+  [David Lin]
+  One can prove the main claim without power of a point as well, as follows:
+  Let $R$ be the foot from $B$ to $\ol{AM}$, so $BRCP$ is a parallelogram.
+  Note that $ABDR$ is cyclic, and hence
+  \[ \dang DRM = \dang DBA = QBA = \dang QPA = \dang QPM. \]
+  Thus, $\ol{DR} \parallel \ol{PQ}$, so $DRQ$ is also a parallelogram.
+\end{remark*}
+
+\paragraph{Synthetic approach with no additional points at all.}
+\begin{claim*}
+  $\triangle BPC \sim \triangle ANM$ (oppositely oriented).
+\end{claim*}
+\begin{proof}
+  We have $\triangle BMP \sim \triangle AMQ$ from the given concyclicity of $ABPQ$.
+  Then
+  \[ \frac{BM}{BP} = \frac{AM}{AQ} \implies
+    \frac{2BM}{BP} = \frac{AM}{AQ/2} \implies
+    \frac{BC}{BP} = \frac{AM}{AN} \]
+  implying the similarity (since $\dang MAQ = \dang BPM$).
+\end{proof}
+This similarity gives us the equality of directed angles
+\[ \dang \left( BC, MN \right) = -\dang \left( PC, AM  \right) = 90\dg \]
+as desired.
+
+\paragraph{Synthetic approach using only the point $R$.}
+Again let $R$ be the foot from $B$ to $\ol{AM}$, so $BRCP$ is a parallelogram.
+\begin{claim*}
+  $ARQC$ is cyclic; equivalently, $\triangle MAQ \sim \triangle MCR$.
+\end{claim*}
+\begin{proof}
+  $MR \cdot MA = MP \cdot MA = MB \cdot MQ = MC \cdot MQ$.
+\end{proof}
+
+Note that in $\triangle MCR$, the $M$-median is parallel to $\ol{CP}$
+and hence perpendicular to $\ol{RM}$.
+The same should be true in $\triangle MAQ$ by the similarity,
+so $\ol{MN} \perp \ol{MQ}$ as needed.
+
+\paragraph{Cartesian coordinates approach with power of a point.}
+Suppose we set $B = (-1,0)$, $M = (0,0)$, $C = (1,0)$, and $A = (a,b)$.
+One may compute:
+\begin{align*}
+  \overleftrightarrow{AM} : 0 &= bx - ay \iff y = \frac ba x \\
+  \overleftrightarrow{CP} : 0 &= a(x-1) + by
+    \iff y = -\frac ab (x-1) = -\frac ab x + \frac ab. \\
+  P &= \left( \frac{a^2}{a^2+b^2}, \frac{ab}{a^2+b^2} \right) \\
+\end{align*}
+Now note that
+\[ AM = \sqrt{a^2+b^2}, \qquad PM = \frac{a}{\sqrt{a^2+b^2}} \]
+together with power of a point
+\[ AM \cdot PM = BM \cdot QM \]
+to immediately deduce that $Q = (a,0)$.
+Hence $N = (0, b/2)$ and we're done.
+
+\paragraph{Cartesian coordinates approach without power of a point (outline).}
+After computing $A$ and $P$ as above, one could also directly calculate
+\begin{align*}
+  \text{Perpendicular bisector of $\ol{AB}$}:
+    y &= -\frac{a+1}{b} x + \frac{a^2+b^2-1}{2b} \\
+  \text{Perpendicular bisector of $\ol{PB}$}:
+    y &= - \left( \frac{2a}{b} + \frac{b}{a} \right) x - \frac{b}{2a} \\
+  \text{Perpendicular bisector of $\ol{PA}$}:
+    y &= - \frac{a}{b} x + \frac{a+a^2+b^2}{2b}. \\
+  \text{Circumcenter of $\triangle PAB$}
+    &= \left( -\frac{a+1}{2}, \frac{2a^2+2a+b^2}{2b} \right).
+\end{align*}
+This is enough to extract the coordinates of $Q = (\bullet, 0)$,
+because $B = (-1,0)$ is given, and the $x$-coordinate
+of the circumcenter should be the average of the $x$-coordinates of $B$ and $Q$.
+In other words, $Q = (-a,0)$.
+Hence, $N = \left( 0, \frac b2 \right)$, as needed.
+
+\paragraph{Ill-advised barycentric approach (outline).}
+Use reference triangle $ABC$.
+The $A$-median is parametrized by $(t:1:1)$ for $t \in \RR$.
+So because of $\ol{CP} \perp \ol{AM}$, we are looking for $t$ such that
+\[
+  \left( \frac{t \vec A + \vec B + \vec C}{t+2} - \vec C \right)
+  \perp \left( A - \frac{\vec B + \vec C}{2} \right).
+\]
+This is equivalent to
+\[
+  \left( t \vec A + \vec B - (t+1) \vec C \right)
+  \perp \left( 2 \vec A - \vec B - \vec C \right).
+\]
+By the perpendicularity formula for barycentric coordinates (EGMO 7.16),
+this is equivalent to
+\begin{align*}
+  0 &= a^2t - b^2 \cdot (3t+2) + c^2 \cdot (2-t) \\
+  &= \left( a^2-3b^2-c^2 \right) t - 2(b^2-c^2) \\
+  \implies t &= \frac{2(b^2-c^2)}{a^2-3b^2-c^2}.
+\end{align*}
+In other words,
+\[ P = \left( 2(b^2-c^2) : a^2-3b^2-c^2 : a^2-3b^2-c^2 \right). \]
+A long calculation gives
+$a^2 y_P z_P + b^2 z_P x_P + c^2 x_P y_P
+= (a^2-3b^2-c^2)(a^2-b^2+c^2)(a^2-2b^2-2c^2)$.
+Together with $x_P+y_P+z_P=2a^2-4b^2-4c^2$,
+this makes the equation of $(ABP)$ as
+\[
+  0=-a^2yz-b^2zx-c^2xy
+  + \frac{a^2-b^2+c^2}{2} z(x+y+z).
+\]
+To solve for $Q$, set $x=0$ to get to get
+\[ a^2yz = \frac{a^2-b^2+c^2}{2} z(y+z)
+  \implies \frac yz = \frac{a^2-b^2+c^2}{a^2+b^2-c^2}. \]
+In other words,
+\[ Q = \left(  0 : a^2-b^2+c^2 : a^2+b^2-c^2 \right). \]
+Taking the average with $A = (1,0,0)$ then gives
+\[ N = \left(  2a^2 : a^2-b^2+c^2 : a^2+b^2-c^2 \right). \]
+The equation for the perpendicular bisector of $\ol{BC}$
+is given by (see EGMO 7.19)
+\[ 0 = a^2(z-y)+x(c^2-b^2) \]
+which contains $N$, as needed.
+
+\paragraph{Extremely ill-advised complex numbers approaches (outline).}
+Suppose we pick $a$, $b$, $c$ as the unit circle, and let $m = (b+c)/2$.
+Using the fully general ``foot'' formula, one can get
+\[
+  p = \frac{(a-m) \ol c + (\ol a - \ol m)c
+    + \ol a m - a \ol m}{2(\ol a - \ol m)}
+    = \frac{a^2 b - a^2 c - a b^2 - 2 a b c - a c^2 + b^2 c + 3 b c^2}
+    {4bc-2a(b+c)}
+\]
+Meanwhile, an extremely ugly calculation will eventually yield
+\[ q = \frac{\frac{bc}{a}+b+c-a}{2} \]
+so
+\[ n = \frac{a+q}{2} = \frac{a+b+c+\frac{bc}{a}}{4}
+  = \frac{(a+b)(a+c)}{2a}. \]
+There are a few ways to then verify $NB = NC$.
+The simplest seems to be to verify that
+\[ \frac{n - \frac{b+c}{2}}{b-c} = \frac{a-b-c+\frac{bc}{a}}{4(b-c)}
+  = \frac{(a-b)(a-c)}{2a(b-c)} \]
+is pure imaginary, which is clear.
+\pagebreak
+
+\subsection{JMO 2023/3, proposed by Holden Mui}
+\textsl{Available online at \url{https://aops.com/community/p27349423}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Consider an $n$-by-$n$ board of unit squares for some odd positive integer $n$.
+We say that a collection $C$ of identical dominoes is a
+maximal grid-aligned configuration on the board if $C$ consists of $(n^2-1)/2$
+dominoes where each domino covers exactly two neighboring squares
+and the dominoes don't overlap: $C$ then covers all but one square on the board.
+We are allowed to slide (but not rotate) a domino on the board to
+cover the uncovered square, resulting in a new maximal grid-aligned configuration
+with another square uncovered. Let $k(C)$ be the number of distinct maximal
+grid-aligned configurations obtainable from $C$ by repeatedly sliding dominoes.
+
+Find the maximum possible value of $k(C)$ as a function of $n$.
+\end{mdframed}
+The answer is that
+\[ k(C) \le \left( \frac{n+1}{2} \right)^2. \]
+\begin{remark*}
+  [Comparison with USAMO version]
+  In the USAMO version of the problem,
+  students instead are asked to find all possible values of $k(C)$.
+  The answer is
+  $k(C) \in \left\{ 1, 2, \dots, \left( \frac{n-1}{2} \right)^2 \right\}
+  \cup \left\{ \left( \frac{n+1}{2} \right)^2 \right\}$.
+\end{remark*}
+
+Index the squares by coordinates $(x,y) \in \{1,2,\dots,n\}^2$.
+We say a square is \emph{special} if it is empty or
+it has the same parity in both coordinates as the empty square.
+
+Construct a directed graph $G = G(C)$ whose vertices are special squares as follows:
+for each domino on a special square $s$, we draw a directed edge
+from $s$ to the special square that domino points to, if any.
+(If the special square has both odd coordinates,
+all special squares have an outgoing edge except the empty cell.
+In the even-even case, some arrows may point ``off the board''
+and not be drawn.)
+
+\begin{center}
+\begin{asy}
+size(6cm);
+
+pen border = grey+1.5;
+
+filldraw(box((0, 1), (1, 3)), lightgreen, border);
+filldraw(box((0, 3), (2, 4)), lightcyan, border);
+filldraw(box((0, 4), (2, 5)), lightgreen, border);
+filldraw(box((1, 0), (2, 3)), lightred, border);
+filldraw(box((1, 2), (3, 3)), lightblue, border);
+filldraw(box((2, 3), (3, 5)), palered, border);
+filldraw(box((2, 0), (4, 1)), lightcyan, border);
+filldraw(box((2, 1), (4, 2)), lightgreen, border);
+filldraw(box((4, 0), (5, 2)), lightred, border);
+filldraw(box((3, 3), (5, 4)), lightblue, border);
+filldraw(box((3, 2), (5, 3)), palered, border);
+filldraw(box((3, 4), (5, 5)), lightcyan, border);
+filldraw(box((0, 0), (1, 1)), grey, border);
+
+pair A = (0.5, 4.5);
+pair B = (2.5, 4.5);
+pair C = (4.5, 4.5);
+pair D = (0.5, 2.5);
+pair E = (2.5, 2.5);
+pair F = (4.5, 2.5);
+pair X = (0.5, 0.5);
+pair Y = (2.5, 0.5);
+pair Z = (4.5, 0.5);
+
+dotfactor *= 2;
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+
+draw(A--B, EndArrow, Margin(3,3));
+draw(C--B, EndArrow, Margin(3,3));
+draw(B--E, EndArrow, Margin(3,3));
+draw(E--D, EndArrow, Margin(3,3));
+draw(F--E, EndArrow, Margin(3,3));
+draw(Z--F, EndArrow, Margin(3,3));
+draw(Y--Z, EndArrow, Margin(3,3));
+draw(D--X, EndArrow, Margin(3,3));
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  Any undirected connected component of $G$ is acyclic unless the cycle
+  contains the empty square inside it.
+\end{claim*}
+\begin{proof}
+  Consider a cycle of $G$; we are going to prove
+  that the number of chessboard cells enclosed is always odd.
+
+  This can be proven directly by induction,
+  but for theatrical effect, we use Pick's theorem.
+  Mark the center of every chessboard cell on or inside the cycle
+  to get a lattice.
+  The dominoes of the cycle then enclose a polyominoe which
+  actually consists of $2 \times 2$ squares,
+  meaning its area is a multiple of $4$.
+  \begin{center}
+  \begin{asy}
+    unitsize(0.9cm);
+    filldraw(box((-0.5,1.5), (0.5,3.5)), paleyellow, grey+1.4);
+    filldraw(box((-0.5,3.5), (1.5,4.5)), paleyellow, grey+1.4);
+    filldraw(box((1.5,3.5), (3.5,4.5)), paleyellow, grey+1.4);
+    filldraw(box((3.5,2.5), (4.5,4.5)), paleyellow, grey+1.4);
+    filldraw(box((3.5,0.5), (4.5,2.5)), paleyellow, grey+1.4);
+    filldraw(box((2.5,-0.5), (4.5,0.5)), paleyellow, grey+1.4);
+    filldraw(box((1.5,-0.5), (2.5,1.5)), paleyellow, grey+1.4);
+    filldraw(box((0.5,1.5), (2.5,2.5)), paleyellow, grey+1.4);
+    draw((0,2)--(0,4), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((0,4)--(2,4), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((2,4)--(4,4), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((4,4)--(4,2), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((4,2)--(4,0), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((4,0)--(2,0), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((2,0)--(2,2), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((2,2)--(0,2), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((2,2)--(2,4), blue+dashed, Margins);
+    draw((2,2)--(4,2), blue+dashed, Margins);
+    dotfactor *= 1.8;
+    dot((2,0), blue);
+    dot((4,0), blue);
+    dot((0,2), blue);
+    dot((2,2), blue);
+    dot((4,2), blue);
+    dot((0,4), blue);
+    dot((2,4), blue);
+    dot((4,4), blue);
+    dot((0,3), black);
+    dot((1,4), black);
+    dot((3,4), black);
+    dot((4,3), black);
+    dot((4,1), black);
+    dot((3,0), black);
+    dot((2,1), black);
+    dot((1,2), black);
+    dot((1,3), red);
+    dot((2,3), red);
+    dot((3,3), red);
+    dot((3,2), red);
+    dot((3,1), red);
+  \end{asy}
+  \end{center}
+  Hence $B/2+I-1$ is a multiple of $4$, in the notation of Pick's theorem.
+  As $B$ is twice the number of dominoes,
+  and a parity argument on the special squares shows that number is even,
+  it follows that $B$ is also a multiple of $4$
+  (these correspond to blue and black in the figure above).
+  This means $I$ is odd (the red dots in the figure above), as desired.
+\end{proof}
+
+Consider the connected component $T$ of the graph containing the empty square;
+it's acyclic, so it's a tree.
+Notice that all the arrows along $T$ point towards the empty cell,
+and moving a domino corresponds to flipping an arrow.
+Therefore:
+\begin{claim*}
+$k(C)$ is exactly the number of vertices of $T$.
+\end{claim*}
+\begin{proof}
+Starting with the underlying tree,
+the set of possible graphs is described by picking one vertex to be the sink
+(the empty cell) and then directing all arrows towards it.
+\end{proof}
+
+This implies that $k(C) \le \left( \frac{n+1}{2} \right)^2$,
+the total number of vertices of $G$
+(this could only occur if the special squares are odd-odd, not even-even).
+Equality is achieved as long as $T$ is a spanning tree;
+one example of a way to achieve this is using the snake configuration below.
+
+\begin{center}
+\begin{asy}
+unitsize(0.9cm);
+dotfactor *= 2;
+pen border = grey+1.5;
+pair A = (0.5, 4.5);
+pair B = (2.5, 4.5);
+pair C = (4.5, 4.5);
+pair D = (0.5, 2.5);
+pair E = (2.5, 2.5);
+pair F = (4.5, 2.5);
+pair X = (0.5, 0.5);
+pair Y = (2.5, 0.5);
+pair Z = (4.5, 0.5);
+
+filldraw(box((3, 4), (5, 5)), palecyan, border);
+filldraw(box((1, 4), (3, 5)), palecyan, border);
+filldraw(box((0, 3), (1, 5)), palecyan, border);
+filldraw(box((0, 2), (2, 3)), palecyan, border);
+filldraw(box((2, 2), (4, 3)), palecyan, border);
+filldraw(box((4, 1), (5, 3)), palecyan, border);
+filldraw(box((3, 0), (5, 1)), palecyan, border);
+filldraw(box((1, 0), (3, 1)), palecyan, border);
+fill(unitsquare, mediumgrey);
+filldraw(box((3, 3), (5, 4)), lightred, border);
+filldraw(box((1, 3), (3, 4)), lightred, border);
+filldraw(box((0, 1), (2, 2)), lightred, border);
+filldraw(box((2, 1), (4, 2)), lightred, border);
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+
+draw(C--B, EndArrow, Margin(3,3));
+draw(B--A, EndArrow, Margin(3,3));
+draw(A--D, EndArrow, Margin(3,3));
+draw(D--E, EndArrow, Margin(3,3));
+draw(E--F, EndArrow, Margin(3,3));
+draw(F--Z, EndArrow, Margin(3,3));
+draw(Z--Y, EndArrow, Margin(3,3));
+draw(Y--X, EndArrow, Margin(3,3));
+\end{asy}
+\end{center}
+
+\begin{remark*}
+  In Russia 1997/11.8 it's shown that as long as the missing square is a corner,
+  we have $G = T$.
+  The proof is given implicitly from our work here:
+  when the empty cell is in a corner, it cannot be surrounded,
+  ergo $G$ has no cycles at all.
+  Since it has one fewer edge than vertex, it's a tree.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{JMO 2023/4, proposed by David Torres}
+\textsl{Available online at \url{https://aops.com/community/p27349414}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Two players, Blake and Ruby, play the following game
+on an infinite grid of unit squares, all initially colored white.
+The players take turns starting with Blake.
+On Blake's turn, Blake selects one white unit square and colors it blue.
+On Ruby's turn, Ruby selects two white unit squares and colors them red.
+The players alternate until Blake decides to end the game.
+At this point, Blake gets a score, given by the number of unit squares in the
+largest (in terms of area) simple polygon containing only blue unit squares.
+
+What is the largest score Blake can guarantee?
+\end{mdframed}
+The answer is $4$ squares.
+
+\paragraph{Algorithm for Blake to obtain at least $4$ squares.}
+We simply let Blake start with any cell blue,
+then always draw adjacent to a previously drawn blue cell
+until this is no longer possible.
+
+Note that for $n \le 3$, any connected region of $n$ blue cells
+has more than $2n$ liberties (non-blue cells adjacent to a blue cell);
+up to translation, rotation, and reflection,
+all the cases are shown in the figure below
+with liberties being denoted by circles.
+
+\begin{center}
+\begin{asy}
+  size(8cm);
+  path c = circle( (0.5,0.5), 0.4 );
+  defaultpen(linewidth(1.5));
+  filldraw(shift(0,5)*unitsquare, palecyan, blue);
+  draw(shift(-1,5)*c, deepgreen);
+  draw(shift(1,5)*c, deepgreen);
+  draw(shift(0,4)*c, deepgreen);
+  draw(shift(0,6)*c, deepgreen);
+
+  filldraw(shift(5,5)*unitsquare, palecyan, blue);
+  filldraw(shift(6,5)*unitsquare, palecyan, blue);
+  draw(shift(4,5)*c, deepgreen);
+  draw(shift(5,6)*c, deepgreen);
+  draw(shift(6,6)*c, deepgreen);
+  draw(shift(7,5)*c, deepgreen);
+  draw(shift(5,4)*c, deepgreen);
+  draw(shift(6,4)*c, deepgreen);
+
+  filldraw(shift(0,1)*unitsquare, palecyan, blue);
+  filldraw(shift(1,0)*unitsquare, palecyan, blue);
+  filldraw(shift(1,1)*unitsquare, palecyan, blue);
+  draw(shift(0,0)*c, deepgreen);
+  draw(shift(-1,1)*c, deepgreen);
+  draw(shift(1,-1)*c, deepgreen);
+  draw(shift(2,0)*c, deepgreen);
+  draw(shift(2,1)*c, deepgreen);
+  draw(shift(1,2)*c, deepgreen);
+  draw(shift(0,2)*c, deepgreen);
+
+  filldraw(shift(5,0)*unitsquare, palecyan, blue);
+  filldraw(shift(6,0)*unitsquare, palecyan, blue);
+  filldraw(shift(7,0)*unitsquare, palecyan, blue);
+
+  draw(shift(5,1)*c, deepgreen);
+  draw(shift(6,1)*c, deepgreen);
+  draw(shift(7,1)*c, deepgreen);
+  draw(shift(5,-1)*c, deepgreen);
+  draw(shift(6,-1)*c, deepgreen);
+  draw(shift(7,-1)*c, deepgreen);
+  draw(shift(4,0)*c, deepgreen);
+  draw(shift(8,0)*c, deepgreen);
+\end{asy}
+\end{center}
+
+So as long as $n \le 3$, it's impossible that Ruby has blocked every liberty,
+since Ruby has colored exactly $2n$ cells red.
+Therefore, this algorithm could only terminate once $n \ge 4$.
+
+\paragraph{Algorithm for Ruby to prevent more than $4$ squares.}
+Divide the entire grid into $2 \times 2$ squares, which we call \emph{windows}.
+Any time Blake makes a move in a cell $c$,
+let Ruby mark any orthogonal neighbors of $c$ in its window;
+then place any leftover red cells arbitrarily.
+
+\begin{claim*}
+  It's impossible for any window to
+  contain two orthogonally adjacent blue cells.
+\end{claim*}
+\begin{proof}
+  By construction:
+  if there were somehow two adjacent blue cells in the same window,
+  whichever one was played first should have caused red cells to be added.
+\end{proof}
+
+We show this gives the upper bound of $4$ squares.
+Consider a blue cell $w$, and assume WLOG it is in the southeast corner
+of a window. Label squares $x$, $y$, $z$ as shown below.
+\begin{center}
+\begin{asy}
+  size(5cm);
+  for (int i=0; i<3; ++i) {
+    draw((0,2*i+1)--(6,2*i+1), black+1.5 );
+    draw((2*i+1,0)--(2*i+1,6), black+1.5 );
+  }
+  for (int i=1; i<3; ++i) {
+    draw((0,2*i)--(6,2*i), grey+dashed );
+    draw((2*i,0)--(2*i,6), grey+dashed );
+  }
+  filldraw(box((2.1,3.1),(2.9,3.9)), palecyan, blue+1.5);
+  draw((1.2,3.2)--(1.8,3.8), red+2.5);
+  draw((1.8,3.2)--(1.2,3.8), red+2.5);
+  draw((2.2,4.2)--(2.8,4.8), red+2.5);
+  draw((2.8,4.2)--(2.2,4.8), red+2.5);
+  label("$w$", (2.5, 3.5));
+  label("$x$", (3.5, 3.5));
+  label("$y$", (2.5, 2.5));
+  label("$z$", (3.5, 2.5));
+\end{asy}
+\end{center}
+Note that by construction, the blue polygon cannot leave the square
+$\{w,x,y,z\}$, since whenever one of these four cells is blue,
+its neighbours outside that square are guaranteed to be red.
+This implies the bound.
+
+\begin{remark*}
+  [For Tetris fans]
+  Here is a comedic alternative finish after proving the claim.
+  Consider the possible tetrominoes
+  (using the notation of
+  \url{https://en.wikipedia.org/wiki/Tetromino#One-sided_tetrominoes}).
+  We claim that only the square (\texttt{O}) is obtainable; as
+  \begin{itemize}
+    \ii \texttt{T}, \texttt{J}/\texttt{L}, and \texttt{I}
+    all have three cells in a row, so they can't occur;
+    \ii \texttt{S} and \texttt{Z} can't occur either;
+    if the bottom row of an \texttt{S} crossed a window boundary,
+    then the top row doesn't for example.
+  \end{itemize}
+  Moreover, the only way a blue \texttt{O} could be obtained is if each
+  of it cells is in a different window. In that case,
+  no additional blue cells can be added: it's fully surrounded by red.
+
+  Finally, for any $k$-omino with $k > 4$,
+  one can find a tetromino as a subset.
+  (Proof: take the orthogonal adjacency graph of the $k$-omino,
+  choose a spanning tree, and delete leaves from the tree
+  until there are only four vertices left.)
+\end{remark*}
+
+
+\begin{remark*}
+  [Common wrong approach]
+  Suppose Ruby employs the following algorithm whenever Blake places a square $x$.
+  If either the north and west neighbors of $x$ are unoccupied,
+  place red squares on both of them.
+  With any leftover red squares, place them at other neighbors of $x$ if possible.
+  Finally, place any other red squares arbitrarily.
+  (Another variant, the one Evan originally came up with,
+  is to place east if possible when west is occupied,
+  place south if possible when north is occupied,
+  and then place any remaining red squares arbitrarily.)
+
+  As written, this strategy \emph{does not work}.
+  The reason is that one can end up in the following situation
+  (imagine the blue square in the center is played first;
+  moves for Ruby are drawn as red X's):
+  \begin{center}
+  \begin{asy}
+    size(4cm);
+    filldraw(unitsquare, palecyan, blue+1.5);
+    filldraw(shift(1,1)*unitsquare, palecyan, blue+1.5);
+    filldraw(shift(2,2)*unitsquare, palecyan, blue+1.5);
+    label("$1$", (1.5,1.5), blue);
+    label("$2$", (2.5,2.5), blue);
+    label("$3$", (0.5,0.5), blue);
+    picture redx;
+    real r = 0.2;
+    draw(redx, (r,r)--(1-r,1-r), red+2.5);
+    draw(redx, (r,1-r)--(1-r,r), red+2.5);
+    for (int i=0; i<=3; ++i) {
+      add(shift(i-1,i)*redx);
+    }
+    add(shift(3,2)*redx);
+    add(shift(0,-1)*redx);
+  \end{asy}
+  \end{center}
+  In order to prevent Blake from winning, Ruby would need to begin
+  playing moves not adjacent to Blake's most recent move.
+
+  Thus in order for this solution to be made correct,
+  one needs a careful algorithm for how Ruby should play
+  when the north and west neighbors are not available.
+  As far as I am aware, there are some specifications that work
+  (and some that don't), but every working algorithm I have seen
+  seems to involve some amount of casework.
+
+  It is even more difficult to come up with a solution involving
+  playing on just ``some'' two neighbors of recently added blue squares
+  without the ``prefer north and west'' idea.
+\end{remark*}
+\pagebreak
+
+\subsection{JMO 2023/5, proposed by Carl Schildkraut}
+\textsl{Available online at \url{https://aops.com/community/p27349336}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Positive integers $a$ and $N$ are fixed,
+and $N$ positive integers are written on a blackboard.
+Alice and Bob play the following game.
+On Alice's turn, she must replace some integer $n$ on the board with $n+a$,
+and on Bob's turn he must replace some even integer $n$ on the board with $n/2$.
+Alice goes first and they alternate turns.
+If on his turn Bob has no valid moves, the game ends.
+
+After analyzing the $N$ integers on the board, Bob realizes that,
+regardless of what moves Alice makes,
+he will be able to force the game to end eventually.
+Show that, in fact, for this value of $a$ and these $N$ integers on the board,
+the game is guaranteed to end regardless of Alice's or Bob's moves.
+\end{mdframed}
+For $N=1$, there is nothing to prove.
+We address $N \ge 2$ only henceforth.
+Let $S$ denote the numbers on the board.
+
+\begin{claim*}
+  When $N \ge 2$, if $\nu_2(x) < \nu_2(a)$ for all $x \in S$,
+  the game must terminate no matter what either player does.
+\end{claim*}
+\begin{proof}
+  The $\nu_2$ of a number is unchanged by Alice's move
+  and decreases by one on Bob's move.
+  The game ends when every $\nu_2$ is zero.
+
+  Hence, in fact the game will always terminate in exactly
+  $\sum_{x \in S} \nu_2(x)$ moves in this case,
+  regardless of what either player does.
+\end{proof}
+
+\begin{claim*}
+  When $N \ge 2$, if there exists a number $x$ on the board such that
+  $\nu_2(x) \ge \nu_2(a)$, then Alice can cause the game to go on forever.
+\end{claim*}
+\begin{proof}
+  Denote by $x$ the first entry of the board (its value changes over time).
+  Then Alice's strategy is to:
+  \begin{itemize}
+    \ii Operate on the first entry if $\nu_2(x) = \nu_2(a)$
+    (the new entry thus has $\nu_2(x+a) > \nu_2(a)$);
+    \ii Operate on any other entry besides the first one, otherwise.
+  \end{itemize}
+  A double induction then shows that
+  \begin{itemize}
+    \ii Just before each of Bob's turns, $\nu_2(x) > \nu_2(a)$ always holds; and
+    \ii After each of Bob's turns, $\nu_2(x) \ge \nu_2(a)$ always holds.
+  \end{itemize}
+  In particular Bob will never run out of legal moves,
+  since halving $x$ is always legal.
+\end{proof}
+\pagebreak
+
+\subsection{JMO 2023/6, proposed by Anton Trygub}
+\textsl{Available online at \url{https://aops.com/community/p27349508}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Isosceles triangle $ABC$, with $AB=AC$, is inscribed in circle $\omega$.
+Let $D$ be an arbitrary point inside $BC$ such that $BD \neq DC$.
+Ray $AD$ intersects $\omega$ again at $E$ (other than $A$).
+Point $F$ (other than $E$) is chosen on $\omega$ such that $\angle DFE = 90\dg$.
+Line $FE$ intersects rays $AB$ and $AC$ at points $X$ and $Y$, respectively.
+Prove that $\angle XDE = \angle EDY$.
+\end{mdframed}
+We present three solutions.
+
+\paragraph{Angle chasing solution.}
+Note that $(BDA)$ and $(CDA)$ are congruent,
+since $BA=CA$ and $\angle BDA + \angle CDA = 180\dg$.
+So these two circles are reflections around line $ED$.
+Moreover, $(DEF)$ is obviously also symmetric around line $ED$.
+\begin{center}
+\begin{asy}
+size(10cm);
+
+pair E = dir(100);
+pair B = dir(160);
+pair C = dir(0);
+pair A = dir(260);
+draw(unitcircle, grey);
+
+draw(E--B--C--cycle, dashed+grey);
+pair D = extension(E, A, B, C);
+pair W = -E;
+pair F = foot(E, W, D);
+pair X = extension(A, B, E, F);
+pair Y = extension(A, C, E, F);
+draw(E--A, blue);
+draw(X--Y--A--cycle, dashed+grey);
+draw(X--D--Y, red);
+
+pair X_prime = foot(E, D, X);
+pair Y_prime = foot(E, D, Y);
+filldraw(circumcircle(E, X_prime, Y_prime), opacity(0.1)+cyan, blue);
+filldraw(circumcircle(B, D, A), opacity(0.1)+cyan, blue);
+filldraw(circumcircle(C, D, A), opacity(0.1)+cyan, blue);
+
+dot("$E$", E, dir(E));
+dot("$B$", B, dir(160));
+dot("$C$", C, dir(340));
+dot("$A$", A, dir(A));
+dot("$D$", D, dir(315));
+dot("$F$", F, dir(F));
+dot("$X$", X, dir(X));
+dot("$Y$", Y, dir(Y));
+dot(X_prime);
+dot(Y_prime);
+
+clip(scale(1.7)*unitcircle);
+dot("$Y$", D+2*dir(Y-D), dir(Y-D));
+
+/* -----------------------------------------------------------------+
+|                 TSQX: by CJ Quines and Evan Chen                  |
+| https://github.com/vEnhance/dotfiles/blob/main/py-scripts/tsqx.py |
++-------------------------------------------------------------------+
+!size(14cm);
+E = dir 100
+B 160 = dir 160
+C 340 = dir 0
+A = dir 260
+unitcircle / grey
+E--B--C--cycle / dashed grey
+D 315 = extension E A B C
+W := -E
+F = foot E W D
+X = extension A B E F
+Y = extension A C E F
+E--A blue
+X--Y--A--cycle / dashed grey
+X--D--Y / red
+X' 70 .= foot E D X
+Y' 130 .= foot E D Y
+circumcircle E X' Y' / 0.1 cyan / blue
+circumcircle B D A / 0.1 cyan / blue
+circumcircle C D A / 0.1 cyan / blue
+*/
+\end{asy}
+\end{center}
+Hence, the radical axis of $(BDA)$ and $(DEF)$,
+and the radical axis of $(CDA)$ and $(DEF)$,
+should be symmetric about line $DE$.
+But these radical axii are exactly lines $XD$ and $YD$, so we're done.
+
+\begin{remark*}
+  [Motivation]
+  The main idea is that you can replace $DX$ and $DY$ with the radical axii,
+  letting $X'$ and $Y'$ be the second intersections of the blue circles.
+  Then for the problem to be true, you'd need $X'$ and $Y'$ to be reflections.
+  That's equivalent to $(BDA)$ and $(CDA)$ being congruent;
+  you check it and it's indeed true.
+\end{remark*}
+
+\paragraph{Harmonic solution (mine).}
+Let $T$ be the point on line $\ol{XFEY}$ such that $\angle EDT = 90\dg$,
+and let $\ol{AT}$ meet $\omega$ again at $K$.
+Then
+\[ TD^2 = TF \cdot TE = TK \cdot TA \implies \angle DKT = 90\dg \]
+so line $DK$ passes through the antipode $M$ of $A$.
+\begin{center}
+\begin{asy}
+size(14cm);
+
+pair E = dir(110);
+pair B = dir(160);
+pair C = dir(20);
+pair A = dir(270);
+filldraw(unitcircle, opacity(0.1)+lightcyan, blue);
+
+filldraw(E--B--C--cycle, opacity(0.1)+yellow, blue);
+pair D = extension(E, A, B, C);
+pair W = -E;
+pair F = foot(E, W, D);
+pair X = extension(A, B, E, F);
+pair Y = extension(A, C, E, F);
+draw(E--A, blue);
+draw(X--Y--A--cycle, blue);
+draw(X--D--Y, deepgreen);
+pair M = dir(90);
+pair T = extension(E, F, D, D+M-E);
+draw(X--T, blue);
+draw(D--T, red);
+draw(E--M, red);
+pair K = extension(D, M, T, A);
+draw(T--A, red);
+draw(K--M, red);
+
+dot("$E$", E, dir(E));
+dot("$B$", B, dir(200));
+dot("$C$", C, dir(340));
+dot("$A$", A, dir(A));
+dot("$D$", D, dir(315));
+dot("$F$", F, dir(F));
+dot("$X$", X, dir(X));
+dot("$Y$", Y, dir(Y));
+dot("$M$", M, dir(35));
+dot("$T$", T, dir(T));
+dot("$K$", K, dir(K));
+
+/* -----------------------------------------------------------------+
+|                 TSQX: by CJ Quines and Evan Chen                  |
+| https://github.com/vEnhance/dotfiles/blob/main/py-scripts/tsqx.py |
++-------------------------------------------------------------------+
+!size(14cm);
+E = dir 110
+B 200 = dir 160
+C 340 = dir 20
+A = dir 270
+unitcircle / 0.1 lightcyan / blue
+E--B--C--cycle / 0.1 yellow / blue
+D 315 = extension E A B C
+W := -E
+F = foot E W D
+X = extension A B E F
+Y = extension A C E F
+E--A blue
+X--Y--A--cycle / blue
+X--D--Y / deepgreen
+M 35 = dir 90
+T = extension E F D D+M-E
+X--T / blue
+D--T / red
+E--M / red
+K = extension D M T A
+T--A / red
+K--M / red
+*/
+\end{asy}
+\end{center}
+
+Thus,
+\[ -1 = (AM;CB)_\omega \overset{D}{=} (EK;BC)_\omega \overset{A}{=} (TE;XY) \]
+and since $\angle EDT = 90\dg$ we're done.
+
+\begin{remark*}
+  [Motivation]
+  The idea is to kill the points $X$ and $Y$
+  by reinterpreting the desired condition as $(TD;XY)=-1$
+  and then projecting through $A$ onto $\omega$.
+  This eliminates points $X$ and $Y$ altogether
+  and reduces the problem to showing that $\ol{TA}$ passes
+  through the harmonic conjugate of $E$ with respect to $BC$ on $\omega$.
+
+  The labels on the diagram are slightly misleading in that
+  $\triangle EBC$ should probably be thought of as the ``reference'' triangle.
+\end{remark*}
+
+\paragraph{Pascal solution (Zuming Feng).}
+Extend ray $FD$ to the antipode $T$ of $E$ on $\omega$. Then,
+\begin{itemize}
+\ii By Pascal's theorem on $EFTABC$,
+the points $X$, $D$, and $P \coloneqq \ol{EC} \cap \ol{AT}$ are collinear.
+\ii Similarly by Pascal's theorem on $EFTACB$, the points
+the points $Y$, $D$, and $Q \coloneqq \ol{EB} \cap \ol{AT}$ are collinear.
+\end{itemize}
+
+\begin{center}
+\begin{asy}
+size(14cm);
+pair E = dir(100);
+pair B = dir(160);
+pair C = dir(0);
+pair A = dir(260);
+filldraw(unitcircle, opacity(0.1)+yellow, blue);
+
+draw(E--B--C--cycle, dashed+grey);
+pair D = extension(E, A, B, C);
+pair W = -E;
+pair F = foot(E, W, D);
+pair X = extension(A, B, E, F);
+pair Y = extension(A, C, E, F);
+draw(E--A, blue);
+draw(X--Y--A--cycle, dashed+grey);
+draw(X--D--Y, red);
+
+pair T = -E;
+pair P = extension(C, E, T, A);
+pair Q = extension(B, E, T, A);
+
+draw(P--D--Q, red);
+draw(P--Q--E--cycle, deepgreen);
+draw(F--T, blue);
+filldraw(circumcircle(E, D, F), opacity(0.1)+cyan, blue);
+
+dot("$E$", E, dir(E));
+dot("$B$", B, dir(160));
+dot("$C$", C, dir(0));
+dot("$A$", A, dir(A));
+dot("$D$", D, dir(315));
+dot("$F$", F, dir(F));
+dot("$X$", X, dir(X));
+dot("$Y$", Y, dir(Y));
+dot("$T$", T, dir(T));
+dot("$P$", P, dir(P));
+dot("$Q$", Q, dir(Q));
+
+/* -----------------------------------------------------------------+
+|                 TSQX: by CJ Quines and Evan Chen                  |
+| https://github.com/vEnhance/dotfiles/blob/main/py-scripts/tsqx.py |
++-------------------------------------------------------------------+
+!size(14cm);
+E = dir 100
+B 160 = dir 160
+C 0 = dir 0
+A = dir 260
+unitcircle / 0.1 yellow / blue
+E--B--C--cycle / dashed grey
+D 315 = extension E A B C
+W := -E
+F = foot E W D
+X = extension A B E F
+Y = extension A C E F
+E--A blue
+X--Y--A--cycle / dashed grey
+X--D--Y / red
+T = -E
+P = extension C E T A
+Q = extension B E T A
+P--D--Q / red
+P--Q--E--cycle / deepgreen
+F--T / blue
+circumcircle E D F / 0.1 cyan / blue
+*/
+
+\end{asy}
+\end{center}
+
+Now it suffices to prove $\ol{ED}$ bisects $\angle QDP$.
+However, $\ol{ED}$ is the angle bisector of $\angle QEP = \angle BEC$,
+but also $\ol{EA} \perp \ol{QP}$.
+Thus triangle $QEP$ is isosceles with $QE=PE$, and $\ol{EA}$ cuts it in half.
+Since $D$ is on $\ol{EA}$, the result follows now.
+\pagebreak
+
+
+\end{document}

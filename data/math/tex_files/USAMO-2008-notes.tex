@@ -1,0 +1,693 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2008 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2008 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Prove that for each positive integer $n$,
+there are pairwise relatively prime integers $k_0$, \dots, $k_n$,
+all strictly greater than $1$, such that
+$k_0k_1 \dots k_n - 1$ is the product of two consecutive integers.
+
+\item %% Problem 2
+Let $ABC$ be an acute, scalene triangle,
+and let $M$, $N$, and $P$ be the midpoints of
+$\ol{BC}$, $\ol{CA}$, and $\ol{AB}$, respectively.
+Let the perpendicular bisectors of $\ol{AB}$ and $\ol{AC}$
+intersect ray $AM$ in points $D$ and $E$ respectively,
+and let lines $BD$ and $CE$ intersect in point $F$, inside triangle $ABC$.
+Prove that points $A$, $N$, $F$, and $P$ all lie on one circle.
+
+\item %% Problem 3
+Let $n$ be a positive integer.  Denote by $S_n$ the set of points $(x, y)$
+with integer coordinates such that
+\[ \left\lvert x\right\rvert + \left\lvert y + \half \right\rvert < n. \]
+A path is a sequence of distinct points
+$(x_1 , y_1), (x_2, y_2), \dots, (x_\ell, y_\ell)$ in $S_n$
+such that, for $i = 2, \dots, \ell$,
+the distance between $(x_i , y_i)$ and $(x_{i-1} , y_{i-1} )$ is $1$.
+
+Prove that the points in $S_n$ cannot be partitioned into fewer than $n$ paths.
+
+\item %% Problem 4
+For which integers $n \ge 3$ can one find a triangulation
+of regular $n$-gon consisting only of isosceles triangles?
+
+\item %% Problem 5
+Three nonnegative real numbers $r_1$, $r_2$, $r_3$
+are written on a blackboard.
+These numbers have the property
+that there exist integers $a_1$, $a_2$, $a_3$, not all zero,
+satisfying $a_1r_1 + a_2r_2 + a_3r_3 = 0$.
+We are permitted to perform the following operation:
+find two numbers $x$, $y$ on the blackboard with $x \le y$,
+then erase $y$ and write $y - x$ in its place.
+Prove that after a finite number of such operations,
+we can end up with at least one $0$ on the blackboard.
+
+\item %% Problem 6
+At a certain mathematical conference,
+every pair of mathematicians are either friends or strangers.
+At mealtime, every participant eats in one of two large dining rooms.
+Each mathematician insists upon eating in a room which
+contains an even number of his or her friends.
+Prove that the number of ways that the mathematicians
+may be split between the two rooms is a power of two
+(i.e.\ is of the form $2^k$ for some positive integer $k$).
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2008/1, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p1116186}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that for each positive integer $n$,
+there are pairwise relatively prime integers $k_0$, \dots, $k_n$,
+all strictly greater than $1$, such that
+$k_0k_1 \dots k_n - 1$ is the product of two consecutive integers.
+\end{mdframed}
+In other words, if we let
+\[ P(x) = x(x+1) + 1 \]
+then we would like there to be infinitely many primes
+dividing some $P(t)$ for some integer $t$.
+
+In fact, this result is true in much greater generality.
+We first state:
+\begin{theorem}
+  [Schur's theorem]
+  If $P(x) \in \ZZ[x]$ is nonconstant and $P(0) = 1$,
+  then there are infinitely many primes
+  which divide $P(t)$ for some integer $t$.
+\end{theorem}
+\begin{proof}
+  If $P(0) = 0$, this is clear.
+  So assume $P(0) = c \neq 0$.
+
+  Let $S$ be any finite set of prime numbers.
+  Consider then the value
+  \[ P\left(k \prod_{p \in S} p\right) \]
+  for some integer $k$.
+  It is $1 \pmod p$ for each prime $p$,
+  and if $k$ is large enough it should not be equal to $1$
+  (because $P$ is not constant).
+  Therefore, it has a prime divisor not in $S$.
+\end{proof}
+\begin{remark*}
+  In fact the result holds without the assumption $P(0) \neq 1$.
+  The proof requires only small modifications,
+  and a good exercise would be to write down a similar
+  proof that works first for $P(0) = 20$,
+  and then for any $P(0) \neq 0$.
+  (The $P(0) = 0$ case is vacuous,
+  since then $P(x)$ is divisible by $x$.)
+\end{remark*}
+
+To finish the proof, let $p_1$, \dots, $p_n$ be primes
+and $x_i$ be integers such that
+\begin{align*}
+  P(x_1) &\equiv 0 \pmod{p_1} \\
+  P(x_2) &\equiv 0 \pmod{p_2} \\
+  &\vdotswithin\equiv \\
+  P(x_n) &\equiv 0 \pmod{p_n}
+\end{align*}
+as promised by Schur's theorem.
+Then, by Chinese remainder theorem,
+we can find $x$ such that $x \equiv x_i \pmod{p_i}$
+for each $i$, whence $P(x)$ has at least $n$ prime factor.
+\pagebreak
+
+\subsection{USAMO 2008/2, proposed by Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p1116181}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be an acute, scalene triangle,
+and let $M$, $N$, and $P$ be the midpoints of
+$\ol{BC}$, $\ol{CA}$, and $\ol{AB}$, respectively.
+Let the perpendicular bisectors of $\ol{AB}$ and $\ol{AC}$
+intersect ray $AM$ in points $D$ and $E$ respectively,
+and let lines $BD$ and $CE$ intersect in point $F$, inside triangle $ABC$.
+Prove that points $A$, $N$, $F$, and $P$ all lie on one circle.
+\end{mdframed}
+We present four solutions.
+
+\paragraph{Barycentric solution.}
+First, we find the coordinates of $D$.
+As $D$ lies on $\ol{AM}$, we know $D=(t:1:1)$ for some $t$.
+Now by perpendicular bisector formula, we find
+\[ 0 = b^2(t-1) + (a^2-c^2) \implies t = \frac{c^2+b^2-a^2}{b^2}. \]
+Thus we obtain \[ D = \left( 2S_A : c^2 : c^2 \right). \]
+Analogously $E = (2S_A : b^2 : b^2)$,
+and it follows that \[ F = \left( 2S_A : b^2 : c^2 \right). \]
+
+The sum of the coordinates of $F$ is
+\[ (b^2+c^2-a^2)+b^2+c^2=  2b^2+2c^2-a^2. \]
+Hence the reflection of $A$ over $F$ is simply
+\[ 2F-A = \left( 2(b^2+c^2-a^2)-(2b^2+2c^2-a^2) : 2b^2 : 2c^2 \right)
+  = \left(-a^2 : 2b^2 : 2c^2 \right). \]
+It is evident that $F'$ lies on $(ABC) : -a^2yz - b^2zx - c^2xy = 0$,
+and we are done.
+
+\paragraph{Synthetic solution (harmonic).}
+Here is a synthetic solution.
+Let $X$ be the point so that $APXN$ is a cyclic harmonic quadrilateral.
+We contend that $X = F$.
+To see this it suffices to prove $B$, $X$, $D$ collinear
+(and hence $C$, $X$, $E$ collinear by symmetry).
+
+\begin{center}
+\begin{asy}
+pair A = dir(130);
+pair P = dir(210);
+pair N = dir(330);
+pair B = 2*P-A;
+pair C = 2*N-A;
+pair O = -A;
+pair T = midpoint(P--N);
+pair D = extension(A, T, P, O);
+pair E = extension(A, T, N, O);
+pair X = extension(B, D, E, C);
+pair M = extension(A, T, B, C);
+draw(N--T, heavygreen);
+draw(T--P, lightblue);
+draw(X--P, heavygreen);
+
+draw(B--C--N, lightblue);
+draw(P--O--N, lightblue);
+draw(N--E, lightblue);
+filldraw(unitcircle, opacity(0.1)+lightcyan, blue);
+
+draw(D--X--C, red+dashed);
+
+filldraw(A--B--X--cycle, opacity(0.1)+lightgreen, heavygreen);
+filldraw(A--M--N--cycle, opacity(0.1)+lightgreen, heavygreen);
+
+dot("$A$", A, dir(A));
+dot("$P$", P, dir(P));
+dot("$N$", N, dir(10));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$O$", O, dir(O));
+dot("$T$", T, dir(45));
+dot("$D$", D, dir(60));
+dot("$E$", E, dir(240));
+dot("$X$", X, dir(X));
+dot("$M$", M, dir(M));
+
+/* TSQ Source:
+
+A = dir 130
+P = dir 210
+N = dir 330 R10
+B = 2*P-A
+C = 2*N-A
+O = -A
+T = midpoint P--N R45
+D = extension A T P O R60
+E = extension A T N O R240
+X = extension B D E C
+M = extension A T B C
+N--T heavygreen
+T--P lightblue
+X--P heavygreen
+
+B--C--N lightblue
+P--O--N lightblue
+N--E lightblue
+unitcircle 0.1 lightcyan / blue
+
+D--X--C red dashed
+
+A--B--X--cycle 0.1 lightgreen / heavygreen
+A--M--N--cycle 0.1 lightgreen / heavygreen
+
+*/
+\end{asy}
+\end{center}
+
+Let $T$ be the midpoint of $\ol{PN}$,
+so $\triangle APX \sim \triangle ATN$.
+So $\triangle ABX \sim \triangle AMN$, ergo
+\[ \dang XBA = \dang NMA = \dang BAM = \dang BAD = \dang DBA \]
+as desired.
+\paragraph{Angle chasing solution (Mason Fang).}
+Obviously $ANOP$ is concyclic.
+\begin{claim*}
+  Quadrilateral $BFOC$ is cyclic.
+\end{claim*}
+\begin{proof}
+  Write
+  \begin{align*}
+  \dang BFC = \dang FBC+\dang BCF
+  &=\dang FBA +\dang ABC+\dang BCA+\dang ACF\\
+  &=\dang DBA +\dang ABC+\dang BCA+\dang ACE\\
+  &=\dang BAD +\dang ABC+\dang BCA+\dang EAC\\
+  &=2\angle BAC=\angle BOC. \qedhere
+  \end{align*}
+\end{proof}
+Define $Q = \ol{AA} \cap \ol{BC}$.
+\begin{claim*}
+  Point $Q$ lies on $\ol{FO}$.
+\end{claim*}
+\begin{proof}
+  Write
+  \begin{align*}
+     \dang BOQ = \dang BOA+\dang AOQ
+     &=2\dang BCA+90^{\dg}+\dang AQO\\
+     &=2\dang BCA+90^{\dg}+\dang AMO\\
+     &=2\dang BCA+90^{\dg}+\dang AMC+90^{\dg}\\
+     &=\dang BCA+\dang MAC =\dang BCA+\dang ACE \\
+     &=\dang BCE =\dang BOF. \qedhere
+  \end{align*}
+\end{proof}
+As $Q$ is the radical center of $(ANOP)$, $(ABC)$ and $(BFOC)$,
+this implies the result.
+\paragraph{Inversive solution (Kelin Zhu).}
+Invert about $A$ with radius $\sqrt{bc}$
+followed by a reflection over the angle bisector of $\angle A$,
+and denote the image of a point $X$ by $X'$.
+The inverted problem now states the following:
+
+\begin{quote}
+  In triangle $AP^{\ast}N^{\ast}$,
+  let $B^{\ast}$, $C^{\ast}$ be the midpoints of $AP^{\ast}$, $AN^{\ast}$
+  and $D^{\ast}$, $E^{\ast}$ be the intersection of the $A$ symmedian
+  with $(AP^{\ast})$, $(AN^{\ast})$, respectively.
+  $(AB^{\ast}D^{\ast})$, $(AC^{\ast}E^{\ast})$
+  intersect at a point $F^{\ast}$; prove that it lies on $P^{\ast}N^{\ast}$.
+\end{quote}
+
+I claim that, in fact, the midpoint of $P^{\ast}N^{\ast}$ is the desired intersection.
+Redefine that point as $F^{\ast}$ and I will prove that
+$(AB^{\ast}D^{\ast})$, $(AC^{\ast}E^{\ast})$ pass through it.
+
+Note that
+\[ \angle AD^{\ast}B^{\ast}=\angle D^{\ast}AB^{\ast}=\angle F^{\ast}AN^{\ast}=\angle AF^{\ast}B^{\ast}, \]
+where the first equality is due to $B^{\ast}$ being the circumcircle of $AD^{\ast}P^{\ast}$,
+the second equality is due to the definition of the symmedian,
+and the third equality is due to the parallelogram $AB^{\ast}F^{\ast}C^{\ast}$.
+A symmetric argument for $C$ finishes.
+\pagebreak
+
+\subsection{USAMO 2008/3, proposed by Gabriel Carroll}
+\textsl{Available online at \url{https://aops.com/community/p1116367}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n$ be a positive integer.  Denote by $S_n$ the set of points $(x, y)$
+with integer coordinates such that
+\[ \left\lvert x\right\rvert + \left\lvert y + \half \right\rvert < n. \]
+A path is a sequence of distinct points
+$(x_1 , y_1), (x_2, y_2), \dots, (x_\ell, y_\ell)$ in $S_n$
+such that, for $i = 2, \dots, \ell$,
+the distance between $(x_i , y_i)$ and $(x_{i-1} , y_{i-1} )$ is $1$.
+
+Prove that the points in $S_n$ cannot be partitioned into fewer than $n$ paths.
+\end{mdframed}
+\paragraph{First solution (local).}
+We proceed by induction on $n$.
+The base case $n=1$ is clear, so suppose $n > 1$.
+Let $S$ denote the set of points
+\[ S = \left\{ (x,y) : x + \left\lvert y+\frac12 \right\rvert \ge n - 2  \right\}. \]
+An example when $n=4$ is displayed below.
+\begin{center}
+\begin{asy}
+int n = 4;
+for (int a=-4; a<=4; ++a) {
+for (int b=-4; b<=4; ++b) {
+if (abs(a) + abs(b+0.5) < n) {
+if (a + abs(b+0.5) > n-2) dot( (a,b), red+4 );
+else dot( (a,b), black+3 );
+}
+}
+}
+draw((0,3)--(0,2)--(1,2)--(1,1)--(2,1)--(2,0)--(3,0)--(3,-1)--(2,-1)--(2,-2)--(1,-2)--(1,-3)--(0,-3)--(0,-4), red);
+draw(CR((3,0), 0.3), deepgreen);
+label("$a$", (3.3,0), dir(0), deepgreen);
+\end{asy}
+\end{center}
+For any minimal partition $\mathcal P$ of $S_n$,
+let $P$ denote the path passing through the point $a = (n-1,0)$.
+Then the intersection of $P$ with $S$ consists of several disconnected paths;
+let $N$ be the number of nodes in the component containing $a$, and
+pick $\mathcal P$ such that $N$ is maximal.
+We claim that in this case $P = S$.
+
+Assume not.
+First, note $a = (n-1,0)$ must be connected to $b = (n-1, -1)$
+(otherwise join them to decrease the number of paths).
+
+Now, starting from $a = (n-1,0)$ walk along $P$ away from $b$
+until one of the following three conditions is met:
+\begin{itemize}
+  \ii We reach a point $v$ not in $S$.
+  Let $w$ be the point before $v$,
+  and $x$ the point in $S$ adjacent to $w$.
+  Then delete $vw$ and add $wx$.
+  This increases $N$ while leaving the number of edges unchanged:
+  so this case can't happen.
+
+  \ii We reach an endpoint $v$ of $P$ (which may be $a$),
+  lying inside the set $S$, which is not the topmost point $(0,n-1)$.
+  Let $w$ be the next point of $S$.
+  Delete any edge touching $w$ and add edge $vw$.
+  This increases $N$ while leaving the number of edges unchanged:
+  so this case can't happen.
+
+  \ii We reach the topmost point $(0,n-1)$.
+\end{itemize}
+Thus we see that $P$ must follow $S$ until reaching the topmost point $(0,n-1)$.
+Similarly it must reach the bottom-most point $(0,-n)$.
+Hence $P=S$.
+
+The remainder of $S_n$ is just $S_{n-1}$,
+and hence this requires at least $n-1$ paths to
+cover by the inductive hypothesis.
+So $S_n$ requires at least $n$ paths, as desired.
+
+%A bit easy for a \#3, seeing that I got this during while trying to sleep on a train ride to visit my grandmother (and I normally suck at combo). This is more or less equivalent to MellowMelon's solution, but here's how I phrased it in my head.
+
+\begin{remark*}
+  [Motivational comments from Evan]
+  Basically the idea is that I wanted to peel away the
+  right path $S$ highlighted in red in the figure, so that one could induct.
+  But the problem is that the red path might not actually exist,
+  e.g.\ the set of paths might contain the mirror of $S$ instead.
+
+  Nonetheless, in those equality cases I found I could perturb some edges
+  (e.g.\ change from $(-1,n-2)$--$(0,n-2)$ to $(0,n-2)$--$(1,n-2)$).
+  So the idea then was to do little changes and try to convert
+  the given partition into one where the red path $S$ exists,
+  (and then peel it away for induction)
+  without decreasing the total number of paths.
+
+  To make this work, you actually want the incisions to begin
+  ear the points $a$ and $b$,
+  because that's the point of $S$ that is most constrained
+  (e.g.\ you get $a$--$b$ right away for free),
+  and assemble the path from there.
+  (If you try to do it from the top, it's much less clear what's happening.)
+  That's why the algorithm starts the mutations from around a.
+\end{remark*}
+
+\paragraph{Second solution (global).}
+Here is a much shorter official solution,
+which is much trickier to find, and ``global'' in nature.
+
+Color the upper half of the diagram with a blue/red checkerboard pattern
+such that the uppermost point $(n-1,0)$ is blue.
+Reflect it over to the bottom, as shown.
+\begin{center}
+\begin{asy}
+bool even(int x) {
+  return (x % 2 ==  0
+  );
+}
+int n = 4;
+for (int a=-4; a<=4; ++a) {
+for (int b=-4; b<=4; ++b) {
+if (abs(a) + abs(b+0.5) < n) {
+if ( (b >= 0) && even(a+b+n+1)) dot( (a,b), blue+4 );
+else if ( (b < 0) && even(a+b+n)) dot( (a,b), blue+4 );
+else dot( (a,b), red+3 );
+}
+}
+}
+\end{asy}
+\end{center}
+
+Assume there are $m$ paths.
+Cut in two any paths with two adjacent blue points;
+this occurs only along the horizontal symmetry axis.
+Thus:
+\begin{itemize}
+  \ii After cutting there are at most $m+n$ paths,
+  since at most $n$ cuts occur.
+  \ii On the other hand,
+  there are $2n$ more blue points than red points.
+  Hence after cutting there must be at least $2n$ paths
+  (since each path alternates colors, except possibly for double-red pairs).
+\end{itemize}
+So $m+n \ge 2n$, hence $m \ge n$.
+
+
+\begin{remark*}
+  This problem turned out to be known already.
+  It appears in this reference:
+  \begin{quote}
+  Nikolai Beluhov, Nyakolko Zadachi po Shahmatna
+  Kombinatorika, \emph{Matematika Plyus},
+  2006, issue 4, pages 61--64.
+  \end{quote}
+  Section 1 of 2 was reprinted with revisions as
+  Nikolai Beluhov, Dolgii Put Korolya, \emph{Kvant},
+  2010, issue 4, pages 39--41.
+  The reprint is available at
+  \url{http://kvant.ras.ru/pdf/2010/2010-04.pdf}.
+\end{remark*}
+
+\begin{remark*}
+  [Nikolai Beluhov]
+  As pointed out in the reference above,
+  this problem arises naturally when we try to
+  estimate the greatest possible length of a closed king tour
+  on the chessboard of size $n \times n$ with $n$ even,
+  a question posed by Igor Akulich in Progulki
+  Korolya, \emph{Kvant}, 2000, issue 3, pages 47--48.
+  Each one of the two references above contains a proof
+  that the answer is $n + \sqrt{2}(n^2 - n)$.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2008/4, proposed by Gregory Galperin}
+\textsl{Available online at \url{https://aops.com/community/p1116177}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For which integers $n \ge 3$ can one find a triangulation
+of regular $n$-gon consisting only of isosceles triangles?
+\end{mdframed}
+The answer is $n$ of the form $2^a(2^b+1)$
+where $a$ and $b$ are nonnegative integers not both zero.
+
+Call the polygon $A_1 \dots A_n$
+with indices taken modulo $n$.
+We refer to segments $A_1 A_2$, $A_2 A_3$, \dots, $A_n A_1$
+as \emph{short sides}.
+Each of these must be in the triangulation.
+Note that
+\begin{itemize}
+  \ii when $n$ is even,
+  the isosceles triangles triangle using a short side $A_1 A_2$
+  are $\triangle A_n A_1 A_2$ and $\triangle A_1 A_2 A_3$ only,
+  which we call \emph{small}.
+  \ii when $n$ is odd, in addition to the small triangles,
+  we have $\triangle A_{\half(n+3)} A_1 A_2$,
+  which we call \emph{big}.
+\end{itemize}
+
+This leads to the following two claims.
+\begin{claim*}
+  If $n > 4$ is even, then $n$ works iff $n/2$ does.
+\end{claim*}
+\begin{proof}
+  All short sides must be part of a small triangle;
+  after drawing these in, we obtain an $n/2$-gon.
+  \begin{center}
+  \begin{asy}
+    size(3cm);
+    draw(unitcircle, dotted);
+    picture p;
+    dot(p, dir(0));
+    dot(p, dir(30));
+    dot(p, dir(60));
+    fill(p, dir(0)--dir(30)--dir(60)--cycle, opacity(0.1)+lightred);
+    draw(p, dir(0)--dir(30)--dir(60), blue);
+    draw(p, dir(0)--dir(60), red);
+    for (int i=0; i<6; ++i) {
+      add(rotate(60*i)*p);
+    }
+  \end{asy}
+  \end{center}
+  Thus the sides of $\mathcal P$ must pair off,
+  and when we finish drawing we have an $n/2$-gon.
+\end{proof}
+Since $n = 4$ works, this implies all powers of $2$ work
+and it remains to study the case when $n$ is odd.
+
+\begin{claim*}
+  If $n > 1$ is odd, then $n$ works if and only if $n = 2^b+1$
+  for some positive integer $b$.
+\end{claim*}
+\begin{proof}
+  We cannot have all short sides part of small triangles
+  for parity reasons, so some side, must be part of a big triangle.
+  Since big triangles contain the center $O$,
+  there can be at most one big triangle too.
+
+  Then we get $\half(n-1)$ small triangles,
+  pairing up the remaining sides.
+  Now repeating the argument with the triangles on each half
+  shows that the number $n-1$ must be a power of $2$, as needed.
+\end{proof}
+\pagebreak
+
+\subsection{USAMO 2008/5, proposed by Kiran Kedlaya}
+\textsl{Available online at \url{https://aops.com/community/p1116189}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Three nonnegative real numbers $r_1$, $r_2$, $r_3$
+are written on a blackboard.
+These numbers have the property
+that there exist integers $a_1$, $a_2$, $a_3$, not all zero,
+satisfying $a_1r_1 + a_2r_2 + a_3r_3 = 0$.
+We are permitted to perform the following operation:
+find two numbers $x$, $y$ on the blackboard with $x \le y$,
+then erase $y$ and write $y - x$ in its place.
+Prove that after a finite number of such operations,
+we can end up with at least one $0$ on the blackboard.
+\end{mdframed}
+We first show we can decrease the quantity
+$\left\lvert a_1 \right\rvert + \left\lvert a_2 \right\rvert + \left\lvert a_3 \right\rvert$
+as long as $0 \notin \left\{ a_1,a_2,a_3 \right\}$.
+Assume $a_1 > 0$ and $r_1 > r_2 > r_3$
+without loss of generality and consider two cases.
+
+\begin{itemize}
+  \ii $r_2 > 0$ or $r_3 > 0$; these cases are identical.
+  If $r_2 > 0$ then $r_3 < 0$ and get
+  \[ 0 = a_1r_1 + a_2r_2 + a_3r_3 > a_1r_3 + a_3r_3 \implies a_1 + a_3 < 0 \]
+  so $\left\lvert a_1 + a_3 \right\rvert < \left\lvert a_3 \right\rvert$,
+  and hence we perform $(r_1,r_2,r_3) \mapsto (r_1-r_3,r_2,r_3)$.
+
+  \ii Both $r_2$ and $r_3$ are less than zero.
+  Assume for contradiction that
+  $\left\lvert a_1+a_2 \right\rvert \ge -a_2$
+  and $\left\lvert a_1+a_3 \right\rvert \ge -a_3$ both hold
+  (if either fails then we use $(r_1,r_2,r_3) \mapsto (r_1-r_2,r_2,r_3)$
+  and $(r_1,r_2,r_3) \mapsto (r_1-r_3,r_2,r_3)$, respectively).
+  Clearly $a_1+a_2$ and $a_1+a_3$ are both positive in this case,
+  so we get $a_1 + 2a_2$ and $a_1 + 2a_3 \ge 0$;
+  adding gives $a_1+a_2+a_3 \ge 0$.
+  But
+  \begin{align*}
+    0 &= a_1r_1 + a_2r_2 + a_3r_3 \\
+    &> a_1r_2 + a_2r_2 + a_3r_2 \\
+    &= r_2(a_1+a_2+a_3)  \\
+    \implies 0 &< a_1+a_2+a_3.
+  \end{align*}
+\end{itemize}
+
+Since this covers all cases,
+we see that we can always decrease
+$\left\lvert a_1 \right\rvert + \left\lvert a_2 \right\rvert + \left\lvert a_3 \right\rvert$
+whenever $0 \notin \left\{ a_1,a_2,a_3 \right\}$.
+Because the $a_i$ are integers this cannot occur indefinitely,
+so eventually one of the $a_i$'s is zero.
+At this point we can just apply the Euclidean Algorithm, so we're done.
+\pagebreak
+
+\subsection{USAMO 2008/6, proposed by Sam Vandervelde}
+\textsl{Available online at \url{https://aops.com/community/p1116182}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+At a certain mathematical conference,
+every pair of mathematicians are either friends or strangers.
+At mealtime, every participant eats in one of two large dining rooms.
+Each mathematician insists upon eating in a room which
+contains an even number of his or her friends.
+Prove that the number of ways that the mathematicians
+may be split between the two rooms is a power of two
+(i.e.\ is of the form $2^k$ for some positive integer $k$).
+\end{mdframed}
+Take the obvious graph interpretation
+where we are trying to $2$-color a graph.
+Let $A$ be the adjacency matrix of the graph over $\FF_2$,
+except the diagonal of $A$ has $\deg v \pmod 2$ instead of zero.
+Then let $\vec d$ be the main diagonal.
+Splittings then correspond to $A \vec v = \vec d$.
+It's then immediate that the number of ways is either zero
+or a power of two, since if it is nonempty it is a coset of $\ker A$.
+
+Thus we only need to show that:
+\begin{claim*}
+  At least one coloring exists.
+\end{claim*}
+\begin{proof}
+If not, consider a minimal counterexample $G$.
+Clearly there is at least one odd vertex $v$.
+Consider the graph with vertex set $G-v$,
+where all pairs of neighbors of $v$ have their edges complemented.
+By minimality, we have a good coloring here.
+One can check that this extends to a good coloring on $G$
+by simply coloring $v$ with the color matching an even number of its neighbors.
+This breaks minimality of $G$, and hence all graphs $G$ have a coloring.
+\end{proof}
+
+It's also possible to use linear algebra.
+We prove the following lemma:
+\begin{lemma*}[grobber]
+Let $V$ be a finite dimensional vector space,
+$T \colon V \to V$ and $w \in V$.
+Then $w$ is in the image of $T$ if and only if
+there are no $\xi \in V^\vee$ for which $\xi(w) \neq 0$
+and yet $\xi \circ T = 0$.
+\end{lemma*}
+
+\begin{proof}
+Clearly if $T(v) = w$, then no $\xi$ exists.
+Conversely, assume $w$ is not in the image of $T$.
+Then the image of $T$ is linearly independent from $w$.
+Take a basis $e_1$, \dots, $e_m$ for the image of $T$, add $w$,
+and then extend it to a basis for all of $V$.
+Then have $\xi$ kill all $e_i$ but not $w$.
+\end{proof}
+
+\begin{corollary*}
+  In a symmetric matrix $A$ mod $2$,
+  there exists a vector $v$ such that $Av$ is a copy of the diagonal of $A$.
+\end{corollary*}
+\begin{proof}
+  Let $\xi$ be such that $\xi \circ T = 0$.
+  Look at $\xi$ as a column vector $w^\top$, and let $d$ be the diagonal.
+  Then \[ 0 = w^\top \cdot T \cdot w = \xi(d) \]
+  because this extracts the sum of coefficients submatrix of $T$,
+  and all the symmetric entries cancel off.
+  Thus no $\xi$ as in the previous lemma exists.
+\end{proof}
+This corollary gives the desired proof.
+\pagebreak
+
+
+\end{document}

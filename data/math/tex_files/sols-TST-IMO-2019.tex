@@ -1,0 +1,1508 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{USA IMO TST 2019 Solutions}
+\subtitle{United States of America --- IMO Team Selection Tests}
+\date{60\ts{th} IMO 2019 United Kingdom}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $ABC$ be a triangle and let $M$ and $N$
+denote the midpoints of $\ol{AB}$ and $\ol{AC}$, respectively.
+Let $X$ be a point such that $\ol{AX}$
+is tangent to the circumcircle of triangle $ABC$.
+Denote by $\omega_B$ the circle through $M$ and $B$ tangent to $\ol{MX}$,
+and by $\omega_C$ the circle through $N$ and $C$ tangent to $\ol{NX}$.
+Show that $\omega_B$ and $\omega_C$ intersect on line $BC$.
+
+\item %% Problem 2
+Let $\ZZ/n\ZZ$ denote the set of integers considered modulo $n$
+(hence $\ZZ/n\ZZ$ has $n$ elements).
+Find all positive integers $n$ for which there exists a bijective function
+$g \colon \ZZ/n\ZZ \to \ZZ/n\ZZ$,
+such that the $101$ functions
+\[ g(x), \quad g(x)+x, \quad g(x)+2x, \quad \dots, \quad g(x)+100x \]
+are all bijections on $\ZZ/n\ZZ$.
+
+\item %% Problem 3
+A \emph{snake of length $k$} is an animal
+which occupies an ordered $k$-tuple
+$(s_1, \dots, s_k)$ of cells in an $n \times n$ grid of square unit cells.
+These cells must be pairwise distinct,
+and $s_i$ and $s_{i+1}$ must share a side for $i=1,\dots,k-1$.
+If the snake is currently occupying $(s_1, \dots, s_k)$
+and $s$ is an unoccupied cell sharing a side with $s_1$,
+the snake can \emph{move} to occupy $(s, s_1, \dots, s_{k-1})$ instead.
+The snake has \emph{turned around} if it occupied $(s_1, s_2, \dots, s_k)$
+at the beginning, but after a finite number of moves
+occupies $(s_k, s_{k-1}, \dots, s_1)$ instead.
+
+Determine whether there exists an integer $n > 1$
+such that one can place some snake of length at least
+$0.9n^2$ in an $n \times n$ grid which can turn around.
+
+\item %% Problem 4
+We say a function $f \colon \ZZ_{\ge 0} \times \ZZ_{\ge 0} \to \ZZ$
+is \emph{great} if for any nonnegative integers $m$ and $n$,
+\[ f(m+1, n+1) f(m,n) - f(m+1,n) f(m,n+1) = 1. \]
+If $A = (a_0, a_1, \dots)$ and $B = (b_0, b_1, \dots)$
+are two sequences of integers,
+we write $A \sim B$ if there exists a great function $f$
+satisfying $f(n,0) = a_n$ and $f(0,n) = b_n$
+for every nonnegative integer $n$ (in particular, $a_0=b_0$).
+
+Prove that if $A$, $B$, $C$, and $D$ are four sequences of integers
+satisfying $A \sim B$, $B \sim C$, and $C \sim D$, then $D \sim A$.
+
+\item %% Problem 5
+Let $n$ be a positive integer.
+Tasty and Stacy are given a circular necklace
+with $3n$ sapphire beads and $3n$ turquoise beads,
+such that no three consecutive beads have the same color.
+They play a cooperative game where they alternate turns
+removing three consecutive beads, subject to the following conditions:
+\begin{itemize}
+   \ii Tasty must remove three consecutive beads
+   which are turquoise, sapphire, and turquoise, in that order,
+   on each of his turns.
+   \ii Stacy must remove three consecutive beads
+   which are sapphire, turquoise, and sapphire, in that order,
+   on each of her turns.
+\end{itemize}
+They win if all the beads are removed in $2n$ turns.
+Prove that if they can win with Tasty going first,
+they can also win with Stacy going first.
+
+\item %% Problem 6
+Let $ABC$ be a triangle with incenter $I$,
+and let $D$ be a point on line $BC$ satisfying $\angle AID = 90\dg$.
+Let the excircle of triangle $ABC$ opposite the vertex $A$
+be tangent to $\ol{BC}$ at point $A_1$.
+Define points $B_1$ on $\ol{CA}$ and $C_1$ on $\ol{AB}$ analogously,
+using the excircles opposite $B$ and $C$, respectively.
+
+Prove that if quadrilateral $AB_1A_1C_1$ is cyclic,
+then $\ol{AD}$ is tangent to the circumcircle of $\triangle DB_1C_1$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USA TST 2019/1, proposed by Merlijn Staps}
+\textsl{Available online at \url{https://aops.com/community/p11419585}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle and let $M$ and $N$
+denote the midpoints of $\ol{AB}$ and $\ol{AC}$, respectively.
+Let $X$ be a point such that $\ol{AX}$
+is tangent to the circumcircle of triangle $ABC$.
+Denote by $\omega_B$ the circle through $M$ and $B$ tangent to $\ol{MX}$,
+and by $\omega_C$ the circle through $N$ and $C$ tangent to $\ol{NX}$.
+Show that $\omega_B$ and $\omega_C$ intersect on line $BC$.
+\end{mdframed}
+We present four solutions,
+the second of which shows that $M$ and $N$
+can be replaced by any two points on $AB$ and $AC$
+satisfying $AM/AB + AN/AC = 1$.
+
+\paragraph{First solution using symmedians (Merlijn Staps).}
+Let $\ol{XY}$ be the other tangent from $X$ to $(AMN)$.
+\begin{claim*}
+  Line $\ol{XM}$ is tangent to $(BMY)$;
+  hence $Y$ lies on $\omega_B$.
+\end{claim*}
+\begin{center}
+\begin{asy}
+size(11cm);
+
+pair A = dir(130); pair B = dir(220); pair C = dir(320);
+draw(B--A--C--B);
+
+pair M = 0.5*A + 0.5*B;
+pair N = 0.5*A + 0.5*C;
+pair O = circumcenter(A,M,N);
+pair Q = rotate(-90,A)*O;
+pair X = 3*Q - 2*A;
+pair Y = intersectionpoints(circle(X,abs(X-A)),circumcircle(A,M,N))[0];
+pair Z = 0.5*A + 0.5*Y;
+
+path anglemark(pair A, pair B, pair C, real t=8) {
+  pair M,N,P[],Q[];
+  path mark;
+  M=t*0.03*unit(A-B)+B;
+  N=t*0.03*unit(C-B)+B;
+  mark=arc(B,M,N);
+  mark=(mark--B--cycle);
+  return mark;
+}
+
+fill(anglemark(A,M,X,t=4),rgb(0,1,0.5)+opacity(0.7));
+fill(anglemark(Y,M,Z,t=4),rgb(0,1,0.5)+opacity(0.7));
+fill(anglemark(M,Y,B,t=4),rgb(0,1,0.5)+opacity(0.7));
+
+filldraw(circumcircle(B,Y,M),lightcyan+opacity(0.1), blue+opacity(0.5));
+filldraw(circumcircle(C,Y,N),lightcyan+opacity(0.1), blue+opacity(0.5));
+filldraw(circumcircle(A,M,N),lightred+opacity(0.1), red);
+
+draw(A--X,red);
+draw(A--Y,dashed);
+draw(X--Y,red);
+draw(X--M--Z,gray);
+draw(B--Y--M,gray);
+
+dot("$A$", A, dir(A)); dot("$B$", B, dir(B)); dot("$C$", C, dir(0));
+dot("$M$", M, dir(220)); dot("$N$", N, dir(10));
+dot("$X$", X, dir(X));
+dot("$Y$", Y, dir(-40));
+dot("$Z$", Z, dir(0));
+\end{asy}
+\end{center}
+
+\begin{proof}
+  Let $Z$ be the midpoint of $\ol{AY}$.
+  Then $\ol{MX}$ is the $M$-symmedian in triangle $AMY$.
+  Since $\ol{MZ} \parallel \ol{BY}$,
+  it follows that $\dang AMX = \dang ZMY = \dang BYM$.
+  We conclude that $\ol{XM}$ is tangent
+  to the circumcircle of triangle $BMY$.
+\end{proof}
+
+Similarly, $\omega_C$ is the circumcircle of triangle $CNY$.
+As $AMYN$ is cyclic too,
+it follows that $\omega_B$ and $\omega_C$ intersect on $\ol{BC}$,
+by Miquel's theorem.
+
+\begin{remark*}
+  The converse of Miquel's theorem is true,
+  which means the problem is equivalent
+  to showing that the second intersection
+  of the $\omega_B$ and $\omega_C$ moves along $(AMN)$.
+  Thus the construction of $Y$ above is not so unnatural.
+\end{remark*}
+
+\paragraph{Second solution (Jetze Zoethout).}
+Let $\omega_B$ intersect $\ol{BC}$ again at $S$
+and let $\ol{MS}$ intersect $\ol{AC}$ again at $Y$.
+Angle chasing gives
+$\dang XMY = \dang XMS = \dang MBS = \dang ABC = \dang XAC = \dang XAY$,
+so $Y$ is on the circumcircle of triangle $AMX$.
+Furthermore, from $\dang XMY = \dang ABC$ and
+$\dang ACB = \dang XAB = \dang XYM$ it follows that
+$\triangle ABC \sim \triangle XMY$ and from $\dang XAY = \dang MBS$
+and $\dang YXA = \dang YMA = \dang BMS$ it follows that
+$\triangle AXY \sim \triangle BMS$.
+
+\begin{center}
+\begin{asy}
+size(10cm);
+
+pair A = dir(130); pair B = dir(220); pair C = dir(320);
+draw(B--A--C--B);
+
+pair M = 0.5*A + 0.5*B;
+pair N = 0.5*A + 0.5*C;
+pair O = circumcenter(A,M,N);
+pair Q = rotate(-90,A)*O;
+pair X = 3*Q - 2*A;
+
+pair T = intersectionpoints(circle(X,abs(X-A)),circumcircle(A,M,N))[0];
+pair S = intersectionpoints(circumcircle(B,M,T),circumcircle(C,N,T))[0];
+pair Y = extension(M,S,A,C);
+fill(X--M--S--cycle,green+opacity(0.1));
+fill(X--A--N--cycle,green+opacity(0.1));
+
+draw(S--Y--A);
+draw(X--A,blue);
+draw(X--M,red);
+draw(X--N--S--X,gray);
+
+draw(circumcircle(B,M,S),red);
+draw(circumcircle(A,B,C),blue);
+draw(circumcircle(X,M,A),gray+dashed);
+draw(circumcircle(X,N,S),gray+dashed);
+
+dot("$A$", A, dir(70)); dot("$B$", B, dir(B)); dot("$C$", C, dir(0));
+dot("$M$", M, dir(50)); dot("$N$", N, dir(10));
+dot("$X$", X, dir(X));
+dot("$Y$", Y, dir(Y));
+dot("$S$", S, dir(-60));
+\end{asy}
+\end{center}
+
+We now find
+\[
+\frac{AN}{AX} = \frac{AN/BM}{AX/BM} = \frac{AC/AB}{MS/XY} = \frac{AB/AB}{MS/XM} = \frac{XM}{MS},
+\]
+which together with $\angle XMS = \angle XAN$ yields
+$\triangle XMS \sim \triangle XAN$.
+From $\dang XSY = \dang XSM = \dang XNA = \dang XNY$
+we now have that $S$ is on the circumcircle of triangle $XNY$.
+Finally, we have $\dang XNS = \dang XYS = \dang XYM = \dang ACB = \dang NCS$
+so $\ol{XN}$ is tangent to the circle through $C$, $N$, and $S$, as desired.
+
+\paragraph{Third solution by moving points method.}
+Fix triangle $ABC$ and animate $X$ along the tangent at $A$.
+We let $D$ denote the second intersection point of $\omega_C$
+with line $\ol{BC}$.
+
+\begin{claim*}
+  The composed map $X \mapsto D$ is a fractional linear transformation
+  (i.e.\ a projective map) in terms of
+  a real coordinate on line $\ol{AA}$, $\ol{BC}$.
+\end{claim*}
+\begin{proof}
+  Let $\ell$ denote the perpendicular bisector of $\ol{CN}$,
+  also equipped with a real coordinate.
+  We let $P$ denote the intersection of $\ol{XM}$ with $\ell$,
+  $S$ the circumcenter of $\triangle CMD$.
+  Let $T$ denote the midpoint of $\ol{BD}$.
+
+  We claim that the composed map
+  \begin{align*}
+    \ol{AA} &\to \ell \to \ell \to \ol{BC} \to \ol{BC} \\
+    \text{by} \quad
+      X &\mapsto P \mapsto S \mapsto T \mapsto D
+  \end{align*}
+  is projective, by showing each individual map is projective.
+  \begin{center}
+  \begin{asy}
+  size(8cm);
+
+  pair A = dir(129); pair B = dir(220); pair C = dir(320);
+  filldraw(A--B--C--cycle, opacity(0.1)+yellow, black);
+
+  pair M = 0.5*A + 0.5*B;
+  pair N = 0.5*A + 0.5*C;
+  pair O = circumcenter(A,M,N);
+  pair Q = rotate(-90,A)*O;
+  pair X = 4.2*Q - 3.2*A;
+  pair Y = intersectionpoints(circle(X,abs(X-A)),circumcircle(A,M,N))[0];
+  pair Z = 0.5*A + 0.5*Y;
+
+  // filldraw(circumcircle(B,Y,M),lightcyan+opacity(0.1), blue+opacity(0.5));
+  filldraw(circumcircle(C,Y,N),lightcyan+opacity(0.1), blue+opacity(0.5));
+  // filldraw(circumcircle(A,M,N),lightred+opacity(0.1), red);
+  draw(A--X,red);
+  pair S = circumcenter(C, N, Y);
+  pair T = foot(S, B, C);
+  pair D = 2*T - C;
+  pair P = extension(S, midpoint(N--C), X, N);
+  draw(P--S, deepgreen);
+  draw(X--P, lightblue);
+  draw(S--T, black);
+
+  dot("$A$", A, dir(A)); dot("$B$", B, dir(B)); dot("$C$", C, dir(0));
+  dot("$M$", M, dir(135)); dot("$N$", N, dir(80));
+  dot("$X$", X, dir(X));
+  dot("$S$", S, dir(135));
+  dot("$T$", T, dir(-90));
+  dot("$D$", D, dir(225));
+  dot("$P$", P, dir(45));
+  dot(extension(S,P,N,C));
+  \end{asy}
+  \end{center}
+  \begin{itemize}
+    \ii The map $X \mapsto P$ is projective since it is
+    a perspectivity through $N$ from $\ol{AA}$ to $\ell$.
+    \ii The map $P \mapsto S$ is projective
+    since it is equivalent to a negative inversion on $\ell$
+    at the midpoint of $\ol{NC}$ with radius $\half NC$.
+    (Note $\angle PNS = 90\dg$ is fixed.)
+    \ii The map $S \mapsto T$ is projective
+    since it is a perspectivity $\ell \to \ol{BC}$
+    through the point at infinity perpendicular to $\ol{BC}$
+    (in fact, it is linear).
+    \ii The map $T \mapsto D$ is projective (in fact, linear)
+    since it is a homothety through $C$ with fixed ratio $2$.
+  \end{itemize}
+  Thus the composed map is projective as well.
+\end{proof}
+
+Similarly, if we define $D'$ so that $\ol{XM}$
+is tangent to $(BMD')$, the map $X \mapsto D'$ is projective as well.
+We aim to show $D = D'$, and since the maps
+correspond to fractional linear transformations
+in projective coordinates,
+it suffices to verify it for three distinct choices of $X$.
+We do so:
+\begin{itemize}
+  \ii If $X = \ol{AA} \cap \ol{MN}$,
+  then $D$ and $D'$ satisfy $MB = MD'$, $NC = ND$.
+  This means they are the feet of the $A$-altitude on $\ol{BC}$.
+  \ii As $X$ approaches $A$ the points $D$ and $D'$
+  approach the infinity point along $\ol{BC}$.
+  \ii If $X$ is a point at infinity along $\ol{AA}$,
+  then $D$ and $D'$ coincide with the midpoint of $\ol{BC}$.
+\end{itemize}
+This completes the solution.
+
+\begin{remark*}
+  [Anant Mudgal]
+  An alternative (shorter) way to show $X \mapsto D$ is projective
+  is to notice $\dang XND$ is a constant angle.
+  I left the longer ``original'' proof for instructional reasons.
+\end{remark*}
+
+\paragraph{Fourth solution by isogonal conjugates (Anant Mudgal).}
+Let $Y$ be the isogonal conjugate of $X$ in $\triangle AMN$
+and $Z$ be the reflection of $Y$ in $\ol{MN}$.
+As $\ol{AX}$ is tangent to the circumcircle of $\triangle AMN$,
+it follows that $\ol{AY} \parallel \ol{MN}$.
+Thus $Z$ lies on $\ol{BC}$ since $\ol{MN}$
+bisects the strip made by $\ol{AY}$ and $\ol{BC}$.
+
+\begin{asy}
+size(11cm);
+
+pair A = dir(130); pair B = dir(220); pair C = dir(320);
+draw(B--A--C--B);
+
+pair M = 0.5*A + 0.5*B;
+pair N = 0.5*A + 0.5*C;
+pair O = circumcenter(A,M,N);
+pair Q = rotate(-90,A)*O;
+pair X = 3*Q - 2*A;
+pair V = intersectionpoints(circle(X,abs(X-A)),circumcircle(A,M,N))[0];
+pair Z = OP(circumcircle(B,V,M), circumcircle(C,V,N));
+pair Y = -Z+2*foot(Z,M,N);
+
+filldraw(circumcircle(B,V,M),lightcyan+opacity(0.1), blue+opacity(0.5));
+filldraw(circumcircle(C,V,N),lightcyan+opacity(0.1), blue+opacity(0.5));
+filldraw(circumcircle(A,M,N),lightred+opacity(0.1), red);
+
+// draw(A--X--P);
+// draw(X--B);
+draw(A--X,red);
+draw(B--V--M,gray);
+dot(B*C/A);
+
+filldraw(unitcircle, opacity(0.1)+yellow, black);
+draw(M--Z--N, blue);
+draw(N--X--M, lightblue);
+draw(M--N, red);
+draw(A--(B*C/A), red);
+
+dot("$A$", A, dir(A)); dot("$B$", B, dir(B)); dot("$C$", C, dir(0));
+dot("$M$", M, dir(220)); dot("$N$", N, dir(10));
+dot("$X$", X, dir(X));
+dot("$Y$", Y, dir(-45));
+dot("$Z$", Z, dir(Z));
+\end{asy}
+
+Finally, \[ \dang ZMX=\dang ZMN+\dang NMX=\dang NMY+\dang YMA
+  = \dang NMA=\dang ZBM \]
+so $\ol{XM}$ is tangent to the circumcircle of
+$\triangle ZMB$, hence $Z$ lies on $\omega_B$.
+Similarly, $Z$ lies on $\omega_C$ and we're done.
+\pagebreak
+
+\subsection{USA TST 2019/2, proposed by Ashwin Sah, Yang Liu}
+\textsl{Available online at \url{https://aops.com/community/p11419598}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $\ZZ/n\ZZ$ denote the set of integers considered modulo $n$
+(hence $\ZZ/n\ZZ$ has $n$ elements).
+Find all positive integers $n$ for which there exists a bijective function
+$g \colon \ZZ/n\ZZ \to \ZZ/n\ZZ$,
+such that the $101$ functions
+\[ g(x), \quad g(x)+x, \quad g(x)+2x, \quad \dots, \quad g(x)+100x \]
+are all bijections on $\ZZ/n\ZZ$.
+\end{mdframed}
+Call a function $g$ \emph{valiant} if it obeys this condition.
+We claim the answer is all numbers relatively prime to $101!$.
+
+The construction is to just let $g$ be the identity function.
+
+Before proceeding to the converse solution,
+we make a long motivational remark.
+\begin{remark*}
+  [Motivation for both parts]
+  The following solution is dense,
+  and it is easier to think about some small cases first,
+  to motivate the ideas.
+  We consider the result
+  where $101$ is replaced by $2$ or $3$.
+  \begin{itemize}
+    \ii If we replaced $101$ with $2$,
+    you can show $2 \nmid n$ easily: write
+    \[ \sum_x x \equiv \sum_x g(x) \equiv \sum_x (g(x) + x ) \pmod n \]
+    which implies
+    \[ 0 \equiv \sum_x x = \half n (n+1) \pmod n \]
+    which means $\half n(n+1) \equiv 0 \pmod n$, hence $n$ odd.
+    \ii If we replaced $101$ with $3$,
+    then you can try a similar approach using squares, since
+    \begin{align*}
+      0 &\equiv \sum_x \left[ \left( g(x)+2x \right)^2
+      - 2\left( g(x)+x \right)^2
+      + g(x)^2 \right] \pmod n\\
+      &= \sum_x 2x^2 = 2 \cdot \frac{n(n+1)(2n+1)}{6}
+    \end{align*}
+    which is enough to force $3 \nmid n$.
+  \end{itemize}
+\end{remark*}
+We now present several different proofs of the converse,
+all of which generalize the ideas contained here.
+In everything that follows we assume $n > 1$ for convenience.
+
+\paragraph{First solution (original one).}
+The proof is split into two essentially orthogonal claims,
+which we state as lemmas.
+\begin{lemma*}
+  [Lemma I: elimination of $g$]
+  Assume valiant $g \colon \ZZ/n\ZZ \to \ZZ/n\ZZ$ exists.
+  Then \[ k! \sum_{x \in \ZZ/n\ZZ} x^k \equiv 0 \pmod{n} \]
+  for $k = 0, 1, \dots, 100$.
+\end{lemma*}
+
+\begin{proof}
+  Define $g_x(T) = g(x) + Tx$ for any integer $T$.
+  If we view $g_x(T)^k$
+  as a polynomial in $\ZZ[T]$ of degree $k$
+  with leading coefficient $x^k$,
+  then taking the $k$th finite difference implies that,
+  for any $x$,
+  \[ k! x^k = \binom k0 g_x(k)^k
+    - \binom k1 g_x(k-1)^k  + \binom k2 g_x(k-2)^k - \dots
+    + (-1)^k \binom kk g_x(0)^k.  \]
+  On the other hand, for any $1 \le k \le 100$
+  we should have
+  \begin{align*}
+    \sum_x g_x(0)^k \equiv \sum_x g_x(1)^k
+    &\equiv \dots \equiv \sum_x g_x(k)^k \\
+    &\equiv S_k \coloneqq 0^k + \dots + (n-1)^k \pmod n
+  \end{align*}
+  by the hypothesis.
+  Thus we find
+  \[ k! \sum_x x^k
+    \equiv \left[ \binom k0 - \binom k1 + \binom k2 - \dotsb \right] S_k
+    \equiv 0 \pmod n \]
+  for any $1 \le k \le 100$, but also obviously for $k = 0$.
+\end{proof}
+
+We now prove the following self-contained lemma.
+\begin{lemma*}
+  [Lemma II: power sum calculation]
+  Let $p$ be a prime, and let $n$, $M$ be positive integers such that
+  \[ M \quad\text{ divides }\quad 1^k + 2^k + \dots + n^k \]
+  for $k = 0, 1, \dots, p-1$.
+  If $p \mid n$ then $\nu_p(M) < \nu_p(n)$.
+\end{lemma*}
+
+\begin{proof}
+  The hypothesis means that
+  that any polynomial $f(T) \in \ZZ[T]$
+  with $\deg f \le p-1$ will have $\sum_{x=1}^n f(x) \equiv 0 \pmod{M}$.
+  In particular, we have
+  \begin{align*}
+    0 &\equiv \sum_{x=1}^n (x-1)(x-2) \dotsm (x-(p-1)) \\
+    &= (p-1)! \sum_{x=1}^{n} \binom{x-1}{p-1}
+    = (p-1)! \binom np \pmod{M}.
+  \end{align*}
+  But now $\nu_p(M) \le \nu_p(\binom np) = \nu_p(n) - 1$.
+\end{proof}
+
+Now assume for contradiction that valiant
+$g \colon \ZZ/n\ZZ \to \ZZ/n\ZZ$ exists,
+and $p \le 101$ is the \emph{smallest} prime dividing $n$.
+Lemma I implies that $k! \sum_x x^k \equiv 0 \pmod n$
+for $k = 1, \dots, p-1$
+and hence $\sum_x x^k \equiv 0 \pmod n$ too.
+Thus $M = n$ holds in the previous lemma, impossible.
+
+\paragraph{A second solution.}
+Both lemmas above admit variations
+where we focus on working modulo $p^e$ rather than working modulo $n$.
+\begin{lemma*}
+  [Lemma I']
+  Assume valiant $g \colon \ZZ/n\ZZ \to \ZZ/n\ZZ$ exists.
+  Let $p \le 101$ be a prime, and $e = \nu_p(n)$.
+  Then \[ \sum_{x \in \ZZ/n\ZZ} x^k \equiv 0 \pmod{p^e} \]
+  for $k = 0, 1, \dots, p-1$.
+\end{lemma*}
+\begin{proof}
+  This is weaker than Lemma I,
+  but we give an independent specialized proof.
+  Begin by writing
+  \[ \sum_x \left( g(x) + Tx \right)^k \equiv \sum_x x^k \pmod{p^e}. \]
+  Both sides are integer polynomials in $T$,
+  which vanish at $T = 0, 1, \dots, p-1$ by hypothesis
+  (since $p-1 \le 100$).
+
+  We now prove the following more general fact:
+  if $f(T) \in \ZZ[T]$ is an integer polynomial with $\deg f \le p-1$,
+  such that $f(0) \equiv \dots \equiv f(p-1) \equiv 0 \pmod{p^e}$,
+  then all coefficients of $f$ are divisible by $p^e$.
+  The proof is by induction on $e \ge 1$.
+  When $e = 1$, this is just the assertion that
+  the polynomial has at most $\deg f$ roots modulo $p$.
+  When $e \ge 2$, we note that the previous result
+  implies all coefficients are divisible by $p$,
+  and then we divide all coefficients by $p$.
+
+  Applied here, we have that all coefficients of
+  \[ f(T) \coloneqq \sum_x \left( g(x) + Tx \right)^k - \sum_x x^k \]
+  are divisible by $p^e$.
+  The leading $T^k$ coefficient is $\sum_k x^k$ as desired.
+\end{proof}
+
+\begin{lemma*}
+  [Lemma II']
+  If $e \ge 1$ is an integer,
+  and $p$ is a prime, then
+  \[ \nu_p\left( 1^{p-1} + 2^{p-1} + \dots + (p^e-1)^{p-1}  \right)
+    = e-1. \]
+\end{lemma*}
+\begin{proof}
+  First, note that the cases where $p = 2$ or $e = 1$
+  are easy; since if $p = 2$ we have
+  $\sum_{x = 0}^{2^e - 1} x \equiv 2^{e - 1}(2^e - 1)
+    \equiv -2^{e - 1}\pmod{2^e}$,
+  while if $e = 1$ we have $1^{p-1} + \dots + (p-1)^{p-1} \equiv -1 \pmod p$.
+  Henceforth assume that $p > 2$, $e > 1$.
+
+  Let $g$ be an integer which is a primitive root modulo $p^e$.
+  Then, we can sum the terms which are relatively prime to $p$ as
+  \[ S_0 \coloneqq \sum_{\gcd(x,p) = 1} x^{p-1}
+    \equiv \sum_{i=1}^{\varphi(p^e)} g^{(p-1) \cdot i}
+    \equiv \frac{g^{p^{e-1}(p-1)^2} - 1}{g^{p-1}-1}
+    \pmod{p^e}
+  \]
+  which implies $\nu_p(S_0) = e-1$, by lifting the exponent.
+  More generally, for $r \ge 1$ we may set
+  \[ S_r \coloneqq \sum_{\nu_p(x) = r} x^{p-1}
+    \equiv (p^r)^{p-1} \sum_{i=1}^{\varphi(p^{e-r})}
+      g_r^{(p-1) \cdot i}
+    \pmod{p^e}
+  \]
+  where $g_r$ is a primitive root modulo $p^{e-r}$.
+  Repeating the exponent-lifting calculation
+  shows that $\nu_p(S_r) = r(p-1) + \left( (e-r)-1 \right) > e$,
+  as needed.
+\end{proof}
+
+Assume to the contrary that $p \le 101$ is a prime dividing
+$n$, and a valiant $g \colon \ZZ / n \ZZ \to \ZZ / n \ZZ$ exists.
+Take $k = p-1$ in Lemma I' to contradict Lemma II'
+
+\paragraph{A third remixed solution.}
+We use Lemma I and Lemma II' from before.
+As before, assume $g \colon \ZZ / n \ZZ \to \ZZ / n \ZZ$ is valiant,
+and $n$ has a prime divisor $p \le 101$.
+Also, let $e = \nu_p(n)$.
+
+Then $(p-1)! \sum_x x^{p-1} \equiv 0 \pmod{n}$ by Lemma I,
+and now
+\begin{align*}
+  0 & \equiv \sum_x x^{p-1} \pmod{p^e} \\
+  &\equiv \frac{n}{p^e} \sum_{x=1}^{p^e-1} x^{p-1} \not\equiv 0 \pmod{p^e}
+\end{align*}
+by Lemma II', contradiction.
+
+\paragraph{A fourth remixed solution.}
+We also can combine Lemma I' and Lemma II.
+As before, assume $g \colon \ZZ / n \ZZ \to \ZZ / n \ZZ$ is valiant,
+and let $p$ be the smallest prime divisor of $n$.
+
+Assume for contradiction $p \le 101$.
+By Lemma I' we have
+\[ \sum_x x^k \equiv 0 \pmod{p^e} \]
+for $k = 0, \dots, p-1$.
+This directly contradicts Lemma II with $M = p^e$.
+\pagebreak
+
+\subsection{USA TST 2019/3, proposed by Nikolai Beluhov}
+\textsl{Available online at \url{https://aops.com/community/p11419601}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A \emph{snake of length $k$} is an animal
+which occupies an ordered $k$-tuple
+$(s_1, \dots, s_k)$ of cells in an $n \times n$ grid of square unit cells.
+These cells must be pairwise distinct,
+and $s_i$ and $s_{i+1}$ must share a side for $i=1,\dots,k-1$.
+If the snake is currently occupying $(s_1, \dots, s_k)$
+and $s$ is an unoccupied cell sharing a side with $s_1$,
+the snake can \emph{move} to occupy $(s, s_1, \dots, s_{k-1})$ instead.
+The snake has \emph{turned around} if it occupied $(s_1, s_2, \dots, s_k)$
+at the beginning, but after a finite number of moves
+occupies $(s_k, s_{k-1}, \dots, s_1)$ instead.
+
+Determine whether there exists an integer $n > 1$
+such that one can place some snake of length at least
+$0.9n^2$ in an $n \times n$ grid which can turn around.
+\end{mdframed}
+The answer is yes (and $0.9$ is arbitrary).
+
+\paragraph{First grid-based solution.}
+The following solution is due to Brian Lawrence.
+For illustration reasons, we give below a figure
+of a snake of length $89$ turning around in an $11 \times 11$ square
+(which generalizes readily to odd $n$).
+We will see that a snake of length $(n-1)(n-2)-1$ can turn
+around in an $n \times n$ square,
+so this certainly implies the problem.
+\begin{center}
+\begin{asy}
+unitsize(0.20cm);
+defaultpen(fontsize(8pt));
+int n = 0;
+picture snake(path p) {
+  picture pic;
+  draw(pic, shift(-0.5,-0.5)*scale(11)*unitsquare, black+1);
+  for (int i=0; i<=10; ++i) {
+    for (int j=0; j<=10; ++j) {
+      if ( (i+j)#2 == (i+j)/2 )
+         fill(pic, shift(i-0.5,j-0.5)*unitsquare, opacity(0.3)+grey);
+    }
+  }
+  path q = subpath(p, arctime(p, arclength(p)-88), arctime(p, arclength(p)));
+  draw(pic, q, deepgreen+1.3, EndArrow(TeXHead,1.3));
+  ++n;
+  label(pic, "Figure " + (string) n, (5,0), 2*dir(-90));
+  return pic;
+}
+real M = 13;
+
+
+add(snake( (0,1)--(0,10)--
+  (8,10)--(8,9)--(1,9)--(1,8)--(8,8)--(8,7)--(1,7)--(1,6)--
+  (8,6)-- (8,5)--(1,5)--(1,4)--(8,4)--(8,3)--(1,3)--(1,2)--
+  (8,2)--(8,1)--(1,1)));
+add(shift(M,0)*snake((7,9)--
+  (1,9)--(1,8)--(8,8)--(8,7)--(1,7)--(1,6)--(8,6)--(8,5)--
+  (1,5)--(1,4)--(8,4)--(8,3)--(1,3)--(1,2)--(8,2)--(8,1)--
+  (1,1)--(1,0)--(10,0)--(10,9)));
+add(shift(2*M,0)*snake(shift(-1,1)*((7,9)--
+  (1,9)--(1,8)--(8,8)--(8,7)--(1,7)--(1,6)--(8,6)--(8,5)--
+  (1,5)--(1,4)--(8,4)--(8,3)--(1,3)--(1,2)--(8,2)--(8,1)--
+  (1,1)--(1,0)--(10,0)--(10,9))));
+add(shift(3*M,0)*snake(
+         (0,9)--(7,9)--(7,8)--(0,8)--(0,7)--(7,7)--(7,6)--
+  (0,6)--(0,5)--(7,5)--(7,4)--(0,4)--(0,3)--(7,3)--(7,2)--
+  (0,2)--(0,1)--(9,1)--(9,10)--(2,10)));
+
+add(shift(0,-M)*snake(
+         (0,9)--(7,9)--(7,8)--(0,8)--(0,7)--(7,7)--(7,6)--
+  (0,6)--(0,5)--(7,5)--(7,4)--(0,4)--(0,3)--(7,3)--(7,2)--
+  (0,2)--(0,1)--(9,1)--
+  (9,2)--(8,2)--(8,3)--(9,3)--
+  (9,10)--(4,10)));
+add(shift(M,-M)*snake(
+         (0,9)--(7,9)--(7,8)--(0,8)--(0,7)--(7,7)--(7,6)--
+  (0,6)--(0,5)--(7,5)--(7,4)--(0,4)--(0,3)--(6,3)--(6,2)--
+  (0,2)--(0,1)--(9,1)--
+  (9,2)--(8,2)--(8,3)--(9,3)--
+  (9,10)--(2,10)));
+add(shift(2*M,-M)*snake(
+         (0,9)--(5,9)--(5,8)--(0,8)--(0,7)--(3,7)--(3,6)--
+  (0,6)--(0,5)--(1,5)--(1,4)--(0,4)--(0,3)--(0,3)--(0,2)--
+  (0,2)--(0,1)--(9,1)--(9,2)--
+  (2,2)--(2,3)--(9,3)--(9,4)--(3,4)--(3,5)--(9,5)--(9,6)--
+  (5,6)--(5,7)--(9,7)--(9,8)--(7,8)--(7,9)--(9,9)--(9,10)--(2,10)
+));
+add(shift(3*M,-M)*snake((0,9)--
+  (0,2)--(0,1)--(9,1)--(9,2)--
+  (2,2)--(2,3)--(9,3)--(9,4)--(2,4)--(2,5)--(9,5)--(9,6)--
+  (2,6)--(2,7)--(9,7)--(9,8)--(2,8)--(2,9)--(9,9)--(9,10)--(2,10)
+));
+
+
+add(shift(0,-2*M)*snake((0,7)--
+  (0,2)--(0,1)--(9,1)--(9,2)--
+  (1,2)--(1,3)--(9,3)--(9,4)--(2,4)--(2,5)--(9,5)--(9,6)--
+  (2,6)--(2,7)--(9,7)--(9,8)--(2,8)--(2,9)--(9,9)--(9,10)--(2,10)
+));
+add(shift(M,-2*M)*snake(
+         (0,1)--(9,1)--(9,2)--
+  (1,2)--(1,3)--(9,3)--(9,4)--(1,4)--(1,5)--(9,5)--(9,6)--
+  (1,6)--(1,7)--(9,7)--(9,8)--(1,8)--(1,9)--(9,9)--(9,10)--(2,10)
+));
+add(shift(2*M,-2*M)*snake((0,1)--(8,1)--(8,2)--
+  (1,2)--(1,3)--(8,3)--(8,4)--(1,4)--(1,5)--(9,5)--(9,6)--
+  (1,6)--(1,7)--(9,7)--(9,8)--(1,8)--(1,9)--(9,9)--(9,10)--
+  (0,10)--(0,8)
+));
+add(shift(3*M,-2*M)*snake((0,1)--(8,1)--(8,2)--
+  (1,2)--(1,3)--(8,3)--(8,4)--(1,4)--(1,5)--(8,5)--(8,6)--
+  (1,6)--(1,7)--(8,7)--(8,8)--(1,8)--(1,9)--(8,9)--(8,10)--
+  (0,10)--(0,2)
+));
+\end{asy}
+\end{center}
+Use the obvious coordinate system with $(1,1)$ in the bottom left.
+Start with the snake as shown in Figure 1,
+then have it move to $(2,1)$, $(2,n)$, $(n,n-1)$
+as in Figure 2.
+Then, have the snake shift to the position in Figure 3;
+this is possible since the snake can just walk to $(n,n)$,
+then start walking to the left and then follow the route;
+by the time it reaches the $i$th row
+from the top its tail will have vacated by then.
+Once it achieves Figure 3, move the head of the snake
+to $(3,n)$ to achieve Figure 4.
+
+In Figure 5 and 6, the snake begins to ``deform'' its loop continuously.
+In general, this deformation by two squares
+is possible in the following way.
+The snake walks first to $(1,n)$ then retraces the steps
+left by its tail,
+except when it reaches $(n-1,3)$ it makes a brief detour to
+$(n-2,3)$, $(n-2,4)$, $(n-1,4)$ and continues along its way;
+this gives the position in Figure 5.
+Then it retraces the entire loop again,
+except that when it reaches $(n-4,4)$ it turns directly
+down, and continues retracing its path;
+thus at the end of this second revolution, we arrive at Figure 6.
+
+By repeatedly doing perturbations of two cells,
+we can move move all the ``bumps'' in the path gradually
+to protrude from the right; Figure 7 shows a partial application of the
+procedure, with the final state as shown in Figure 8.
+
+In Figure 9, we stretch the bottom-most bump by two more cells;
+this shortens the ``tail'' by two units, which is fine.
+Doing this for all $(n-3)/2$ bumps arrives at the situation in
+Figure 10, with the snake's head at $(3,n)$.
+We then begin deforming the turns on the bottom-right
+by two steps each as in Figure 11,
+which visually will increase the length of the head.
+Doing this arrives finally at the situation in Figure 12.
+Thus the snake has turned around.
+
+\paragraph{Second solution phrased using graph theory (Nikolai Beluhov).}
+Let $G$ be any undirected graph. Consider a snake of length $k$ lying within $G$, with each segment of the snake occupying one vertex, consecutive segments occupying adjacent vertices, and no two segments occupying the same vertex. One move of the snake consists of the snake's head advancing to an adjacent empty vertex and segment $i$ advancing to the vertex of segment $i - 1$ for $i = 2$, 3, \dots, $k$.
+
+The solution proceeds in two stages. First we construct a planar graph $G$ such that it is possible for a snake that occupies nearly all of $G$ to turn around inside $G$. Then we construct a subgraph $H$ of a grid adjacency graph such that $H$ is isomorphic to $G$ and $H$ occupies nearly all of the grid.
+
+For the first stage of the solution, we construct $G$ as follows.
+
+Let $r$ and $\ell$ be positive integers. Start with $r$ disjoint \emph{main} paths $p_1$, $p_2$, \dots, $p_r$, each of length at least $\ell$, with $p_i$ leading from $A_i$ to $B_i$ for $i = 1$, 2, \dots, $r$. Add to those $r$ \emph{linking} paths, one leading from $B_i$ to $A_{i + 1}$ for each $i = 1$, 2, \dots, $r - 1$, and one leading from $B_r$ to $A_1$. Finally, add to those two families of \emph{transit} paths, with one family containing one transit path joining $A_1$ to each of $A_2$, $A_3$, \dots, $A_r$ and the other containing one path joining $B_r$ to each of $B_1$, $B_2$, \dots, $B_{r - 1}$. We require that all paths specified in the construction have no interior vertices in common, with the exception of transit paths in the same family.
+
+We claim that a snake of length $(r - 1)\ell$ can turn around inside $G$.
+
+To this end, let the concatenation $A_1B_1A_2B_2\dots A_r B_r$ of all main and linking paths be the \emph{great cycle}. We refer to $A_1B_1A_2B_2\dots A_r B_r$ as the counterclockwise orientation of the great cycle, and to $B_r A_r B_{r - 1}A_{r - 1}\dots B_1A_1$ as its clockwise orientation.
+
+Place the snake so that its tail is at $A_1$ and its body extends counterclockwise along the great cycle. Then let the snake manoeuvre as follows. (We track only the snake's head, as its movement uniquely determines the movement of the complete body of the snake.)
+
+At phase 1, advance counterclockwise along the great cycle to $B_{r - 1}$, take a detour along a transit path to $B_r$, and advance clockwise along the great cycle to $A_r$.
+
+For $i = 2$, 3, \dots, $r - 1$, at phase $i$, take a detour along a transit path to $A_1$, advance counterclockwise along the great cycle to $B_{r - i}$, take a detour along a transit path to $B_r$, and advance clockwise along the great cycle to $A_{r - i + 1}$.
+
+At phase $r$, simply advance clockwise along the great cycle to $A_1$.
+
+For the second stage of the solution, let $n$ be a sufficiently large positive integer. Consider an $n \times n$ grid $S$. Number the columns of $S$ from 1 to $n$ from left to right, and its rows from 1 to $n$ from bottom to top.
+
+Let $a_1$, $a_2$, \dots, $a_{r + 1}$ be cells of $S$ such that all of $a_1$, $a_2$, \dots, $a_{r + 1}$ lie in column 2, $a_1$ lies in row 2, $a_{r + 1}$ lies in row $n - 1$, and $a_1$, $a_2$, \dots, $a_{r + 1}$ are approximately equally spaced. Let $b_1$, $b_2$, \dots, $b_r$ be cells of $S$ such that all of $b_1$, $b_2$, \dots, $b_r$ lie in column $n - 2$ and $b_i$ lies in the row of $a_{i + 1}$ for $i = 1$, 2, \dots, $r$.
+
+Construct $H$ as follows. For $i = 1$, 2, \dots, $r$, let the main path from $a_i$ to $b_i$ fill up the rectangle bounded by the rows and columns of $a_i$ and $b_i$ nearly completely. Then every main path is of length approximately $\frac{1}{r}n^2$.
+
+For $i = 1$, 2, \dots, $r - 1$, let the linking path that leads from $b_i$ to $a_{i + 1}$ lie inside the row of $b_i$ and $a_{i + 1}$ and let the linking path that leads from $b_r$ to $a_1$ lie inside row $n$, column $n$, and row $1$.
+
+Lastly, let the union of the first family of transit paths be column 1 and let the union of the second family of transit paths be column $n - 1$, with the exception of their bottommost and topmost squares.
+
+As in the first stage of the solution, by this construction a snake of length $k$ approximately equal to $\frac{r - 1}{r}n^2$ can turn around inside an $n \times n$ grid $S$. When $r$ is fixed and $n$ tends to infinity, $\frac{k}{n^2}$ tends to $\frac{r - 1}{r}$. Furthermore, when $r$ tends to infinity, $\frac{r - 1}{r}$ tends to $1$. This gives the answer.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USA TST 2019/4, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p11625808}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+We say a function $f \colon \ZZ_{\ge 0} \times \ZZ_{\ge 0} \to \ZZ$
+is \emph{great} if for any nonnegative integers $m$ and $n$,
+\[ f(m+1, n+1) f(m,n) - f(m+1,n) f(m,n+1) = 1. \]
+If $A = (a_0, a_1, \dots)$ and $B = (b_0, b_1, \dots)$
+are two sequences of integers,
+we write $A \sim B$ if there exists a great function $f$
+satisfying $f(n,0) = a_n$ and $f(0,n) = b_n$
+for every nonnegative integer $n$ (in particular, $a_0=b_0$).
+
+Prove that if $A$, $B$, $C$, and $D$ are four sequences of integers
+satisfying $A \sim B$, $B \sim C$, and $C \sim D$, then $D \sim A$.
+\end{mdframed}
+We present two solutions.
+In what follows, we say $(A, B)$ form a great pair
+if $A \sim B$.
+
+\paragraph{First solution (Nikolai Beluhov).}
+Let $k = a_0 = b_0 = c_0 = d_0$.
+We let $f$, $g$, $h$ be great functions for $(A,B)$, $(B,C)$, $(C,D)$
+and write the following infinite array:
+\[
+  \begin{bmatrix}
+    & \vdots & \vdots & {\color{blue} b_3} & \vdots & \vdots & \\[5pt]
+    \dotsb & g(2,2) & g(2,1) & {\color{blue}b_2} & f(1,2) & f(2,2) & \dotsb \\[5pt]
+    \dotsb & g(1,2) & g(1,1) & {\color{blue}b_1} & f(1,1) & f(2,1) & \dotsb \\[5pt]
+    {\color{blue}c_3} & {\color{blue}c_2} & {\color{blue}c_1} &
+      {\color{blue}k} &
+      {\color{blue}a_1} & {\color{blue}a_2} & {\color{blue}a_3} \\[5pt]
+    \dotsb & h(2,1) & h(1,1) & {\color{blue}d_1} & & & \\[5pt]
+    \dotsb & h(2,2) & h(1,2) & {\color{blue}d_2} & & & \\[5pt]
+    & \vdots & \vdots & {\color{blue}d_3} & & & \ddots \\[5pt]
+  \end{bmatrix}
+\]
+The greatness condition is then equivalent to saying
+that any $2 \times 2$ sub-grid has determinant $\pm1$
+(the sign is $+1$ in two quadrants and $-1$ in the other two),
+and we wish to fill in the lower-right quadrant.
+To this end, it suffices to prove the following.
+\begin{lemma*}
+  Suppose we have a $3 \times 3$ sub-grid
+  \[
+    \begin{bmatrix}
+      a & b & c \\
+      x & y & z \\
+      p & q &
+    \end{bmatrix}
+  \]
+  satisfying the determinant conditions.
+  Then we can fill in the ninth entry in the lower right
+  with an integer while retaining greatness.
+\end{lemma*}
+\begin{proof}
+  We consider only the case where the $3 \times 3$
+  is completely contained inside the bottom-right quadrant,
+  since the other cases are exactly the same
+  (or even by flipping the signs of the top row
+  or left column appropriately).
+
+  If $y = 0$ we have $-1 = bz = bx = xq$, hence $qz = -1$,
+  and we can fill in the entry arbitrarily.
+
+  Otherwise, we have $bx \equiv xq \equiv bz \equiv -1 \pmod{y}$.
+  This is enough to imply $qz \equiv -1 \pmod y$,
+  and so we can fill in the integer $\frac{qz+1}{y}$.
+\end{proof}
+
+\begin{remark*}
+  In this case (of all $+1$ determinants),
+  I think it turns out the bottom entry is
+  exactly equal to $qza - cyp - c - p$,
+  which is obviously an integer.
+\end{remark*}
+
+
+\paragraph{Second solution (Ankan Bhattacharya).}
+We will give an explicit classification of great sequences:
+\begin{lemma*}
+  The pair $(A,B)$ is great if and only if
+  $a_0 = b_0$, $a_0 \mid a_1b_1 + 1$, and
+  $a_n \mid a_{n-1} + a_{n+1}$ and $b_n \mid b_{n-1} + b_{n+1}$ for all $n$.
+\end{lemma*}
+\begin{proof}[Proof of necessity]
+  It is clear that $a_0 = b_0$.
+  Then $a_0f(1, 1) - a_1b_1 = 1$,
+  i.e. $a_0 \mid a_1b_1 + 1$.
+
+  Now, focus on six entries $f(x, y)$
+  with $x \in \{n-1, n, n+1\}$ and $y \in \{0, 1\}$.
+  Let $f(n-1, 1) = u$, $f(n, 1) = v$, and $f(n+1, 1) = w$, so
+  \begin{align*}
+    v a_{n-1} - u a_n & = 1,\\
+    w a_n - v a_{n+1} & = 1.
+  \end{align*}
+  Then
+  \[u + w = \frac{v(a_{n-1} + a_{n+1})}{a_n}\]
+  and from above $\gcd(v, a_n) = 1$,
+  so $a_n \mid a_{n-1} + a_{n+1}$;
+  similarly for $b_n$.
+  (If $a_n = 0$,
+  we have $va_{n-1} = 1$ and $va_{n+1} = -1$,
+  so this is OK.)
+\end{proof}
+
+\begin{proof}[Proof of sufficiency]
+  Now consider two sequences $a_0, a_1, \dots$
+  and $b_0, b_1, \dots$ satisfying our criteria.
+  We build a great function $f$ by induction on $(x, y)$.
+  More strongly, we will assume as part of the inductive hypothesis
+  that any two adjacent entries of $f$ are relatively prime
+  and that for any three consecutive entries horizontally or vertically,
+  the middle one divides the sum of the other two.
+
+  First we set $f(1, 1)$ so that $a_0 f(1, 1) = a_1 b_1 + 1$,
+  which is possible.
+
+  Consider an uninitialized $f(s, t)$;
+  without loss of generality suppose $s \ge 2$.
+  Then we know five values of $f$
+  and wish to set a sixth one $z$,
+  as in the matrix below:
+  \[
+    \begin{matrix}
+    u & x\\
+    v & y\\
+    w & {\color{gray} z} \\
+    \end{matrix}
+  \]
+  (We imagine $a$-indices to increase southwards and $b$-indices to increase eastwards.)
+  If $v \neq 0$,
+  then the choice $y \cdot \frac{u + w}{v} - x$ works
+  as $uy - vx = 1$.
+  If $v = 0$,
+  it easily follows that $\{u, w\} = \{1, -1\}$
+  and $y = w$ as $yw = 1$.
+  Then we set the uninitialized entry to anything.
+
+  Now we verify that this is compatible with the inductive hypothesis.
+  From the determinant 1 condition,
+  it easily follows that $\gcd(w, z) = \gcd(v, z) = 1$.
+  The proof that $y \mid x + z$
+  is almost identical to a step performed in the ``necessary'' part
+  of the lemma and we do not repeat it here.
+  By induction, a desired great function $f$ exists.
+\end{proof}
+
+We complete the solution.
+Let $A$, $B$, $C$, and $D$ be integer sequences
+for which $(A, B)$, $(B, C)$, and $(C, D)$ are great.
+Then $a_0 = b_0 = c_0 = d_0$,
+and each term in each sequence
+(after the zeroth term)
+divides the sum of its neighbors.
+Since $a_0$ divides all three of $a_1b_1 + 1$, $b_1c_1 + 1$, and $c_1d_1 + 1$,
+it follows $a_0$ divides $d_1a_1 + 1$,
+and thus $(D, A)$ is great as desired.
+
+\begin{remark*}
+To simplify the problem,
+we may restrict the codomain of great functions
+and elements in great pairs of sequences
+to $\ZZ_{> 0}$.
+This allows the parts of the solution dealing with zero entries to be ignored.
+\end{remark*}
+
+\begin{remark*}
+Of course, this solution also shows that any odd path
+(in the graph induced by the great relation on sequences)
+completes to an even cycle.
+If we stipulate that great functions must have $f(0, 0) = \pm 1$,
+then even paths complete to cycles as well.
+Alternatively, we could change the great functional equation to
+\[f(x + 1, y + 1) f(x, y) - f(x + 1, y) f(x, y + 1) = -1.\]
+
+A quick counterexample to transitivity of $\sim$ as is
+without the condition $f(0,0)=1$, for concreteness:
+let $a_n = c_n = 3+n$ and $b_n = 3+2n$ for $n \ge 0$.
+\end{remark*}
+\pagebreak
+
+\subsection{USA TST 2019/5, proposed by Yannick Yao}
+\textsl{Available online at \url{https://aops.com/community/p11625809}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n$ be a positive integer.
+Tasty and Stacy are given a circular necklace
+with $3n$ sapphire beads and $3n$ turquoise beads,
+such that no three consecutive beads have the same color.
+They play a cooperative game where they alternate turns
+removing three consecutive beads, subject to the following conditions:
+\begin{itemize}
+   \ii Tasty must remove three consecutive beads
+   which are turquoise, sapphire, and turquoise, in that order,
+   on each of his turns.
+   \ii Stacy must remove three consecutive beads
+   which are sapphire, turquoise, and sapphire, in that order,
+   on each of her turns.
+\end{itemize}
+They win if all the beads are removed in $2n$ turns.
+Prove that if they can win with Tasty going first,
+they can also win with Stacy going first.
+\end{mdframed}
+In the necklace, we draw a \emph{divider}
+between any two beads of the same color.
+Unless there are no dividers,
+this divides the necklace into several \emph{zigzags}
+in which the beads in each zigzag alternate.
+Each zigzag has two \emph{endpoints}
+(adjacent to dividers).
+
+Observe that the condition about not having
+three consecutive matching beads is equivalent
+to saying there are no zigzags of lengths $1$.
+
+\begin{center}
+\begin{asy}
+  size(7cm);
+  string[] s = {"T", "S", "S", "T", "T", "S", "T", "T", "S", "T", "T", "S", "S", "T", "S", "T", "S", "S", "T", "S", "S", "T", "S", "T"};
+  pen[] colors = {white, red, deepgreen, blue, heavygreen, grey,
+    purple, orange, deepcyan};
+  int j = 0;
+  for (int i=0; i<24; ++i) {
+    if ((i == 0) || (s[i] == s[i-1])) {
+      ++j;
+      draw(0.9*dir(187.5-15*i)--1.1*dir(187.5-15*i), black+1.5);
+    }
+    label(s[i], dir(180-15*i), dir(180-15*i), colors[j]);
+  }
+  draw(unitcircle);
+\end{asy}
+\end{center}
+
+The main claim is that
+the game is winnable (for either player going first)
+if and only if there are at most $2n$ dividers.
+We prove this in two parts,
+the first part not using the hypothesis about three consecutive letters.
+
+\begin{claim*}
+  The game cannot be won with Tasty going first
+  if there are more than $2n$ dividers.
+\end{claim*}
+\begin{proof}
+  We claim each move removes at most one divider,
+  which proves the result.
+
+  Consider removing a $TST$ in some zigzag
+  (necessarily of length at least $3$).
+  We illustrate the three possibilities in the following table,
+  with Tasty's move shown in red.
+  \begin{center}
+  \begin{tabular}{ccl}
+    Before & After & Change \\ \hline
+    % ------------
+    $\dots \mathtt{ST} \mid \mathtt{\color{red} TST}
+      \mid \mathtt{TS}\dots$
+      & $\dots \mathtt{ST} \mid \mathtt{TS} \dots$
+      & One less divider; two zigzags merge \\
+    $\dots \mathtt{ST} \mid \mathtt{\color{red} TST}
+      \mathtt{ST}\dots$
+      & $\dots \mathtt{STST} \dots$
+      & One less divider; two zigzags merge \\
+    $\dots \mathtt{S} \mathtt{\color{red} TST} \mathtt{S} \dots$
+      & $\dots \mathtt{S} \mid \mathtt{S} \dots$
+      & One more divider; a zigzag splits in two
+  \end{tabular}
+  \end{center}
+  The analysis for Stacy's move is identical.
+\end{proof}
+
+\begin{claim*}
+  If there are at most $2n$ dividers
+  and there are no zigzags of length $1$
+  then the game can be won (with either player going first).
+\end{claim*}
+\begin{proof}
+  By symmetry it is enough to prove Tasty wins going first.
+
+  At any point if there are no dividers at all,
+  then the necklace alternates $TSTST\dots$
+  and the game can be won.
+  So we will prove that on each of Tasty's turns,
+  if there exists at least one divider,
+  then Tasty and Stacy can each make a move
+  at an endpoint of some zigzag
+  (i.e.\ the first two cases above).
+  As we saw in the previous proof, such moves will
+  (a) decrease the number of dividers by exactly one,
+  (b) not introduce any singleton zigzags
+  (because the old zigzags merge, rather than split).
+  Since there are fewer than $2n$ dividers,
+  our duo can eliminate all dividers and then win.
+
+  Note that as the number of $S$ and $T$'s are equal,
+  there must be an equal number of
+  \begin{itemize}
+    \ii zigzags of odd length ($\ge 3$) with $T$ at the endpoints
+    (i.e.\ one more $T$ than $S$), and
+    \ii zigzags of odd length ($\ge 3$) with $S$ at the endpoints
+    (i.e.\ one more $S$ than $T$).
+  \end{itemize}
+  Now iff there is at least one of each,
+  then Tasty removes a $TST$ from the end of such a zigzag
+  while Stacy removes an $STS$ from the end of such a zigzag.
+
+  Otherwise suppose all zigzags have even size.
+  Then Tasty finds any zigzag of length $\ge 4$
+  (which must exist since the \emph{average} zigzag length is $3$)
+  and removes $TST$ from the end containing $T$.
+  The resulting merged zigzag is odd and hence $S$ endpoints,
+  hence Stacy can move as well.
+\end{proof}
+
+\begin{remark*}
+  There are many equivalent ways to phrase the solution.
+  For example, the number of dividers is equal to the
+  number of pairs of two consecutive letters
+  (rather than singleton letters).
+  So the win condition can also be phrased in terms
+  of the number of adjacent pairs of letters being at least $2n$,
+  or equivalently the number of differing pairs being at least $4n$.
+
+  If one thinks about the game as a process,
+  this is a natural ``monovariant'' to consider anyways,
+  so the solution is not so unmotivated.
+\end{remark*}
+
+\begin{remark*}
+  The constraint of no three consecutive identical beads is actually
+  needed: a counterexample without this constraint is
+  $\mathtt{TTSTSTSTTSSS}$.
+  (They win if Tasty goes first and lose if Stacy goes first.)
+\end{remark*}
+
+\begin{remark*}
+  [Why induction is unlikely to work]
+  Many contestants attempted induction.
+  However, in doing so they often implicitly proved
+  a different problem: ``prove that if they can win
+  with Tasty going first \emph{without ever creating a triplet},
+  they can also win in such a way with Stacy going first''.
+  This essentially means nearly all induction attempts fail.
+
+  Amusingly, even the modified problem
+  (which is much more amenable to induction)
+  sill seems difficult without \emph{some} sort of global argument.
+  Consider a position in which Tasty wins going first,
+  with the sequence of winning moves being Tasty's first move in red
+  below and Stacy's second move in blue below:
+  \[
+    \dots \mathtt{TTSSTT}
+    \underbrace{\mathtt{\color{blue}S}
+    \overbrace{\mathtt{\color{red}TST}}^{\text{Tasty}}
+    \mathtt{\color{blue}TS}}_{\text{Stacy}}
+    \mathtt{STTSST} \dots.
+  \]
+  There is no ``nearby'' $STS$ that Stacy can remove
+  instead on her first turn,
+  without introducing a triple-$T$ and also
+  preventing Tasty from taking a $TST$.
+  So it does not seem possible to easily change
+  a Tasty-first winning sequence to a Stacy-first one,
+  even in the modified version.
+\end{remark*}
+\pagebreak
+
+\subsection{USA TST 2019/6, proposed by Ankan Bhattachrya}
+\textsl{Available online at \url{https://aops.com/community/p11625814}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle with incenter $I$,
+and let $D$ be a point on line $BC$ satisfying $\angle AID = 90\dg$.
+Let the excircle of triangle $ABC$ opposite the vertex $A$
+be tangent to $\ol{BC}$ at point $A_1$.
+Define points $B_1$ on $\ol{CA}$ and $C_1$ on $\ol{AB}$ analogously,
+using the excircles opposite $B$ and $C$, respectively.
+
+Prove that if quadrilateral $AB_1A_1C_1$ is cyclic,
+then $\ol{AD}$ is tangent to the circumcircle of $\triangle DB_1C_1$.
+\end{mdframed}
+We present two solutions.
+\paragraph{First solution using spiral similarity (Ankan Bhattacharya).}
+First, we prove the part of the problem
+which does not depend on the condition $A B_1 A_1 C_1$ is cyclic.
+
+\begin{lemma*}
+  Let $ABC$ be a triangle and define $I$, $D$, $B_1$, $C_1$
+  as in the problem.
+  Moreover, let $M$ denote the midpoint of $\ol{AD}$.
+  Then $\ol{AD}$ is tangent to $(AB_1C_1)$,
+  and moreover $\ol{B_1 C_1} \parallel \ol{IM}$.
+\end{lemma*}
+\begin{proof}
+  Let $E$ and $F$ be the tangency points of the incircle.
+  Denote by $Z$ the Miquel point of $BFEC$,
+  i.e.\ the second intersection
+  of the circle with diameter $\ol{AI}$ and the circumcircle.
+
+  Note that $A$, $Z$, $D$ are collinear,
+  by radical axis on $(ABC)$, $(AFIE)$, $(BIC)$.
+
+  \begin{center}
+  \begin{asy}
+  size(11cm);
+  pair A = dir(130);
+  pair B = dir(210);
+  pair C = dir(330);
+  pair I = incenter(A, B, C);
+  pair E = foot(I, C, A);
+  pair B_1 = A+C-E;
+  pair F = foot(I, A, B);
+  pair C_1 = A+B-F;
+  pair T = foot(I, B, C);
+  pair Z = foot(A, I, foot(T, E, F));
+
+  filldraw(A--B--C--cycle, opacity(0.1)+lightcyan, blue);
+  draw(circumcircle(A, E, F), orange);
+  pair D = extension(A, Z, B, C);
+  draw(arc(dir(270), C, B), orange);
+  draw(D--B, blue);
+
+  filldraw(A--B_1--C_1--cycle, opacity(0.1)+deepgreen, blue);
+  pair M = midpoint(A--D);
+  filldraw(A--D--I--cycle, opacity(0.1)+lightred, red);
+  draw(I--M, red);
+  filldraw(Z--E--F--cycle, opacity(0.1)+deepgreen, deepgreen);
+  filldraw(unitcircle, opacity(0.1)+lightcyan, blue);
+  draw(incircle(A, B, C), dotted+blue);
+  draw(circumcircle(A, B_1, C_1), dashed+red);
+
+  dot("$A$", A, dir(A));
+  dot("$B$", B, dir(225));
+  dot("$C$", C, dir(315));
+  dot("$I$", I, dir(270));
+  dot("$E$", E, dir(30));
+  dot("$B_1$", B_1, dir(B_1));
+  dot("$F$", F, dir(F));
+  dot("$C_1$", C_1, dir(C_1));
+  dot("$Z$", Z, dir(Z));
+  dot("$D$", D, dir(D));
+  dot("$M$", M, dir(M));
+
+  /* TSQ Source:
+
+  !size(11cm);
+  A = dir 130
+  B = dir 210 R225
+  C = dir 330 R315
+  I = incenter A B C R270
+  E = foot I C A R30
+  B_1 = A+C-E
+  F = foot I A B
+  C_1 = A+B-F
+  T := foot I B C
+  Z = foot A I foot T E F
+
+  A--B--C--cycle 0.1 lightcyan / blue
+  circumcircle A E F orange
+  D = extension A Z B C
+  !draw(arc(dir(270), C, B), orange);
+  D--B blue
+
+  A--B_1--C_1--cycle 0.1 deepgreen / blue
+  M = midpoint A--D
+  A--D--I--cycle 0.1 lightred / red
+  I--M red
+  Z--E--F--cycle 0.1 deepgreen / deepgreen
+  unitcircle 0.1 lightcyan / blue
+  incircle A B C dotted blue
+  circumcircle A B_1 C_1 dashed red
+
+  */
+  \end{asy}
+  \end{center}
+
+  Then the spiral similarity gives us
+  \[ \frac{ZF}{ZE} = \frac{BF}{CE} = \frac{AC_1}{AB_1} \]
+  which together with $\dang FZE = \dang FAE = \dang BAC$
+  implies that $\triangle ZFE$
+  and $\triangle AC_1B_1$ are (directly) similar.
+  (See IMO Shortlist 2006 G9 for a similar application
+  of spiral similarity.)
+
+  Now the remainder of the proof is just angle chasing.
+  First, since
+  \[ \dang DAC_1 = \dang ZAF = \dang ZEF = \dang AB_1C_1 \]
+  we have $\ol{AD}$ is tangent to $(AB_1C_1)$.
+  Moreover, to see that $\ol{IM} \parallel \ol{B_1C_1}$, write
+  \begin{align*}
+    \dang (\ol{AI}, \ol{B_1C_1})
+    &= \dang IAC + \dang AB_1C_1 = \dang BAI + \dang ZEF
+    = \dang FAI + \dang ZAF \\
+    &= \dang ZAI = \dang MAI = \dang AIM
+  \end{align*}
+  the last step since $\triangle AID$ is right with hypotenuse
+  $\ol{AD}$, and median $\ol{IM}$.
+\end{proof}
+
+
+Now we return to the present problem
+with the additional condition.
+
+\begin{center}
+\begin{asy}
+unitsize(100);
+pair A, B, C, I, A1, B1, C1, D, E, F, J, K, Z, M;
+B = dir(193); C = reflect((0, 1), (0, -1)) * B;
+I = intersectionpoints(circle(dir(270), abs(dir(270)-B)),
+-B--(-C))[1];
+A = 2 * foot(origin, I, dir(270)) - dir(270);
+D = extension(B, C, I, rotate(90, I) * A);
+E = foot(I, C, A);
+F = foot(I, A, B);
+A1 = B + C - foot(I, B, C);
+B1 = C + A - E;
+C1 = A + B - F;
+M = (A + D)/2;
+Z = foot(I, A, D);
+K = 2 * foot(circumcenter(A, B1, C1), A, I) - A;
+
+//draw(unitcircle);
+filldraw(circumcircle(A, B1, C1), pink+opacity(0.5), red);
+filldraw(circumcircle(A, E, F), lightcyan+opacity(0.5), heavycyan+dashed);
+draw(incircle(A, B, C), heavycyan+dotted);
+filldraw(circumcircle(A, B, C), lightcyan+opacity(0.2), cyan);
+filldraw(circumcircle(B, I, C), lightcyan+opacity(0.3), heavycyan+dashed);
+draw(arc(circumcenter(D, B1, C1), B1, D), heavyred);
+draw(A--D, heavyred);
+draw(A--B--C--cycle, heavymagenta);
+draw(D--B, lightmagenta);
+draw(A--I--D, heavycyan);
+// draw(I--K, heavyred);
+draw(M--B1, dashed+heavyred);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(10));
+dot("$I$", I, dir(-I));
+dot("$A_1 = V$", A1, dir(A1));
+dot("$B_1$", B1, dir(10));
+dot("$C_1$", C1, dir(130));
+dot("$D$", D, dir(D));
+dot("$E$", E, dir(40));
+dot("$F$", F, dir(170));
+dot("$M$", M, dir(130));
+dot("$Z$", Z, dir(Z));
+// dot("$K$", K, dir(K-circumcenter(A, B1, C1)));
+
+clip(box((-3, -0.4), (1.2, 1.25)));
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  Given the condition, we actually have
+  $\angle AB_1A_1 = \angle AC_1A_1 = 90\dg$.
+\end{claim*}
+\begin{proof}
+  Let $I_A$, $I_B$ and $I_C$ be the excenters of $\triangle ABC$.
+  Then the perpendiculars to $\ol{BC}$, $\ol{CA}$, $\ol{AB}$
+  from $A_1$, $B_1$, $C_1$ respectively meet at
+  the so-called \emph{Bevan point} $V$
+  (which is the circumcenter of $\triangle I_A I_B I_C$).
+
+  Now $\triangle AB_1C_1$ has circumdiameter $\ol{AV}$.
+  We are given $A_1$ lies on this circle,
+  so if $V \neq A_1$ then $\ol{AA_1} \perp \ol{A_1V}$.
+  But $\ol{A_1V} \perp \ol{BC}$ by definition,
+  which would imply $\ol{AA_1} \parallel \ol{BC}$, which is absurd.
+\end{proof}
+
+\begin{claim*}
+  Given the condition the points $B_1$, $I$, $C_1$ are collinear
+  (hence with $M$).
+\end{claim*}
+\begin{proof}
+  By Pappus theorem on $\ol{I_B A I_C}$ and $\ol{BA_1C}$
+  after the previous claim.
+\end{proof}
+
+To finish, since $\ol{DMA}$ was tangent to the circumcircle of
+$\triangle AB_1C_1$, we have $MD^2 = MA^2 = MC_1 \cdot MB_1$,
+implying the required tangency.
+
+
+\begin{remark*}
+The triangles satisfying the problem hypothesis
+are exactly the ones satisfying $r_A = 2R$,
+where $R$ and $r_A$ denote the circumradius and $A$-exradius.
+\end{remark*}
+
+\begin{remark*}
+  If $P$ is the foot of the $A$-altitude
+  then this should also imply $AB_1PC_1$ is harmonic.
+\end{remark*}
+
+\paragraph{Second solution by inversion and mixtilinears (Anant Mudgal).}
+As in the end of the preceding solution, we have
+$\angle AB_1A_1=\angle AC_1A_1=90^{\circ}
+\quad\text{and}\quad I \in \ol{B_1 C_1}$.
+Let $M$ be the midpoint of minor arc $BC$
+and $N$ be the midpoint of arc $\widehat{BAC}$.
+Let $L$ be the intouch point on $\ol{BC}$.
+Let $O$ be the circumcenter of $\triangle ABC$.
+Let $K=\ol{AI} \cap \ol{BC}$.
+
+\begin{center}
+\begin{asy}
+ /* Geogebra to Asymptote conversion, documentation at aops.com/Wiki, go to User:Azjps/geogebra */
+import graph; size(12cm);
+real labelscalefactor = 0.5; /* changes label-to-point distance */
+pen dps = linewidth(0.7) + fontsize(10); defaultpen(dps); /* default pen style */
+pen dotstyle = black; /* point style */
+real xmin = -4., xmax = 6., ymin = -3., ymax = 4.;  /* image dimensions */
+
+ /* draw figures */
+draw(circle((2.7,0.6), 2.7658633371878665), linewidth(0.4));
+draw((1.892579421398536,1.2)--(3.5074205786014643,0.), linewidth(0.4) + dotted);
+draw((1.445226775603362,3.064861893765504)--(-3.109814760356735,0.), linewidth(0.4));
+draw((-3.109814760356735,0.)--(2.7,-2.1658633371878664), linewidth(0.4));
+draw((0.8894305730917524,2.690894150918487)--(3.9547732243966385,-1.864861893765504), linewidth(0.4) + linetype("2 2"));
+draw((1.445226775603362,3.064861893765504)--(0.,0.), linewidth(0.4));
+draw((1.445226775603362,3.064861893765504)--(5.4,0.), linewidth(0.4));
+draw((5.4,0.)--(-3.109814760356735,0.), linewidth(0.4));
+draw((-3.5571674061519136,1.864861893765503)--(2.7,3.3658633371878666), linewidth(0.4));
+draw((1.445226775603362,3.064861893765504)--(2.7,-2.1658633371878664), linewidth(0.4));
+draw((-3.5571674061519136,1.864861893765503)--(-3.109814760356735,0.), linewidth(0.4));
+draw((-3.109814760356735,0.)--(1.892579421398536,1.2), linewidth(0.4));
+draw((1.892579421398536,1.2)--(1.892579421398536,0.), linewidth(0.4) + dotted);
+draw((2.7,3.3658633371878666)--(2.7,-2.1658633371878664), linewidth(0.4));
+draw((0.8894305730917524,2.690894150918487)--(0.8894305730917507,-1.4908941509184854), linewidth(0.4) + linetype("2 2"));
+draw((2.7,3.3658633371878666)--(0.8894305730917507,-1.4908941509184854), linewidth(0.4) + linetype("2 2"));
+draw((-3.5571674061519136,1.864861893765503)--(4.217574445111032,0.9163536869921585), linewidth(0.4));
+draw((1.445226775603362,3.064861893765504)--(0.8894305730917507,-1.4908941509184854), linewidth(0.4) + linetype("2 2"));
+draw((3.5074205786014643,0.)--(4.217574445111032,0.9163536869921585), linewidth(0.4) + dotted);
+draw((0.6380284948350587,1.353053551156462)--(3.5074205786014643,0.), linewidth(0.4) + dotted);
+draw((0.8894305730917524,2.690894150918487)--(2.7,-2.1658633371878664), linewidth(0.4) + linetype("2 2"));
+ /* dots and labels */
+dot((0.,0.),linewidth(4.pt) + dotstyle);
+label("$B$", (-0.32,-0.42), NE * labelscalefactor);
+dot((2.7,0.6),linewidth(4.pt) + dotstyle);
+label("$O$", (2.78,0.76), NE * labelscalefactor);
+dot((2.7,-2.1658633371878664),linewidth(4.pt) + dotstyle);
+label("$M$", (2.78,-2.), NE * labelscalefactor);
+dot((1.892579421398536,1.2),linewidth(4.pt) + dotstyle);
+label("$I$", (1.5,1.32), NE * labelscalefactor);
+dot((1.445226775603362,3.064861893765504),linewidth(4.pt) + dotstyle);
+label("$A$", (1.52,3.22), NE * labelscalefactor);
+dot((-3.109814760356735,0.),linewidth(4.pt) + dotstyle);
+label("$D$", (-3.22,-0.46), NE * labelscalefactor);
+dot((1.892579421398536,0.),linewidth(4.pt) + dotstyle);
+label("$L$", (1.72,-0.42), NE * labelscalefactor);
+dot((4.217574445111032,0.9163536869921585),linewidth(4.pt) + dotstyle);
+label("$B_1$", (4.3,1.08), NE * labelscalefactor);
+dot((0.6380284948350587,1.353053551156462),linewidth(4.pt) + dotstyle);
+label("$C_1$", (0.2,1.02), NE * labelscalefactor);
+dot((-3.5571674061519136,1.864861893765503),linewidth(4.pt) + dotstyle);
+label("$G$", (-3.48,2.02), NE * labelscalefactor);
+dot((3.5074205786014643,0.),linewidth(4.pt) + dotstyle);
+label("$V$", (3.38,-0.4), NE * labelscalefactor);
+dot((2.7,3.3658633371878666),linewidth(4.pt) + dotstyle);
+label("$N$", (2.78,3.52), NE * labelscalefactor);
+dot((0.8894305730917524,2.690894150918487),linewidth(4.pt) + dotstyle);
+label("$Z$", (0.36,2.5), NE * labelscalefactor);
+dot((0.8894305730917507,-1.4908941509184854),linewidth(4.pt) + dotstyle);
+label("$T$", (0.46,-1.78), NE * labelscalefactor);
+dot((3.9547732243966385,-1.864861893765504),linewidth(4.pt) + dotstyle);
+label("$A'$", (4.04,-1.7), NE * labelscalefactor);
+dot((-0.8322939923766871,1.5324309468827513),linewidth(4.pt) + dotstyle);
+label("$X$", (-0.98,1.74), NE * labelscalefactor);
+dot((5.4,0.),linewidth(4.pt) + dotstyle);
+label("$C$", (5.38,-0.36), NE * labelscalefactor);
+dot((2.1804415825316923,0.),linewidth(4.pt) + dotstyle);
+label("$K$", (2.2,-0.4), NE * labelscalefactor);
+clip((xmin,ymin)--(xmin,ymax)--(xmax,ymax)--(xmax,ymin)--cycle);
+ /* end of picture */
+\end{asy}
+\end{center}
+
+\begin{claim*}
+We have $\angle (\ol{AI}, \ol{B_1C_1})=\angle IAD$.
+\end{claim*}
+
+\begin{proof} Let $Z$ lie on $(ABC)$ with $\angle AZI=90^{\circ}$. By radical axis theorem on $(AIZ), (BIC),$ and $(ABC)$, we conclude that $D$ lies on $\ol{AZ}$. Let $\ol{NI}$ meet $(ABC)$ again at $T \neq N$.
+
+Inversion in $(BIC)$ maps $\ol{AI}$ to $\ol{KI}$ and $(ABC)$ to $\ol{BC}$. Thus, $Z$ maps to $L$, so $Z, L, M$ are collinear. Since $BL=CV$ and $OI=OV$, we see that $MLIN$ is a trapezoid with $\ol{IL} \parallel \ol{MN}$. Thus, $\ol{ZT} \parallel \ol{MN}$.
+
+It is known that $\ol{AT}$ and $\ol{AA_1}$ are isogonal in angle $BAC$. Since $\ol{AV}$ is a circumdiameter in $(AB_1C_1)$, so  $\ol{AT} \perp \ol{B_1C_1}$. So $\dang ZAI=\dang NMT=90^{\circ}-\dang TAI=\dang (\ol{AI}, \ol{B_1C_1})$.
+\end{proof}
+
+Let $X$ be the midpoint of $\ol{AD}$ and $G$ be the reflection of $I$ in $X$. Since $AIDG$ is a rectangle, we have $\dang AIG=\dang ZAI=\dang (\ol{AI}, \ol{B_1C_1})$, by the previous claim. So $\ol{IG}$ coincides with $\ol{B_1C_1}$. Now $\ol{AI}$ bisects $\angle B_1AC_1$ and $\angle IAG=90^{\circ}$, so $(\ol{IG}; \ol{B_1C_1})=-1$.
+
+Since $\angle IDG=90^{\circ}$, we see that $\ol{DI}$ and $\ol{DG}$ are bisectors of angle $B_1DC_1$. Now $\angle XDI=\angle XID \implies \angle XDC_1=\angle XID-\angle IDB_1=\angle DB_1C_1$, so $\ol{XD}$ is tangent to $(DB_1C_1)$.
+\pagebreak
+
+
+\end{document}

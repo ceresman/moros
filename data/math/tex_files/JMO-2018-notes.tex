@@ -1,0 +1,495 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{JMO 2018 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2018 JMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+For each positive integer $n$,
+find the number of $n$-digit positive integers
+for which no two consecutive digits are equal, and
+the last digit is a prime.
+
+\item %% Problem 2
+Let $a$, $b$, $c$ be positive real numbers such that $a+b+c = 4\sqrt[3]{abc}$.
+Prove that
+\[ 2(ab+bc+ca) + 4 \min (a^2, b^2, c^2) \ge a^2 + b^2 + c^2. \]
+
+\item %% Problem 3
+Let $ABCD$ be a quadrilateral inscribed
+in circle $\omega$ with $\ol{AC} \perp \ol{BD}$.
+Let $E$ and $F$ be the reflections of $D$ over
+$\ol{BA}$ and $\ol{BC}$, respectively, and let $P$ be
+the intersection of $\ol{BD}$ and $\ol{EF}$.
+Suppose that the circumcircles of $EPD$ and $FPD$
+meet $\omega$ at $Q$ and $R$ different from $D$.
+Show that $EQ = FR$.
+
+\item %% Problem 4
+Find all real numbers $x$ for which
+there exists a triangle $ABC$ with circumradius $2$,
+such that $\angle ABC \ge 90\dg$, and
+\[ x^4 + ax^3 + bx^2 + cx + 1 = 0 \]
+where $a = BC$, $b = CA$, $c = AB$.
+
+\item %% Problem 5
+Let $p$ be a prime, and let $a_1$, \dots, $a_p$ be integers.
+Show that there exists an integer $k$ such that the numbers
+\[ a_1 + k, \; a_2 + 2k, \; \dots, \; a_p + pk \]
+produce at least $\half p$ distinct remainders upon division by $p$.
+
+\item %% Problem 6
+Karl starts with $n$ cards labeled $1$, $2$, \dots, $n$
+lined up in random order on his desk.
+He calls a pair $(a,b)$ of cards \emph{swapped} if $a > b$
+and the card labeled $a$ is to the left of the card labeled $b$.
+
+Karl picks up the card labeled $1$ and inserts it back into the sequence in
+the opposite position: if the card labeled $1$ had $i$ cards to its left,
+then it now has $i$ cards to its right.
+He then picks up the card labeled $2$ and reinserts it in the same manner,
+and so on, until he has picked up and put
+back each of the cards $1$, \dots, $n$ exactly once in that order.
+
+For example, if $n = 4$, then one example of a process is
+\[ 3142 \longrightarrow 3412 \longrightarrow 2341 \longrightarrow 2431 \longrightarrow 2341 \]
+which has three swapped pairs both before and after.
+
+Show that, no matter what lineup of cards Karl started with,
+his final lineup has the same number of swapped pairs as the starting lineup.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{JMO 2018/1, proposed by Zachary Franco, Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p10226138}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For each positive integer $n$,
+find the number of $n$-digit positive integers
+for which no two consecutive digits are equal, and
+the last digit is a prime.
+\end{mdframed}
+Almost trivial.
+Let $a_n$ be the desired answer.
+We have \[ a_n + a_{n-1} = 4 \cdot 9^{n-1} \]
+for all $n$, by padding the $(n-1)$ digit numbers with a leading zero.
+
+Since $a_0 = 0$, $a_1 = 4$, solving the recursion gives
+\[ a_n = \frac 25 \left( 9^n - (-1)^n \right). \]
+The end.
+
+\begin{remark*}
+  For concreteness,
+  the first few terms are
+  $0$, $4$, $32$, $292$, \dots.
+\end{remark*}
+\pagebreak
+
+\subsection{JMO 2018/2, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p10226140}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$, $b$, $c$ be positive real numbers such that $a+b+c = 4\sqrt[3]{abc}$.
+Prove that
+\[ 2(ab+bc+ca) + 4 \min (a^2, b^2, c^2) \ge a^2 + b^2 + c^2. \]
+\end{mdframed}
+WLOG let $c = \min(a,b,c) = 1$ by scaling.
+The given inequality becomes equivalent to
+\[ 4ab + 2a + 2b + 3 \ge (a+b)^2 \qquad \forall a+b = 4(ab)^{1/3}-1. \]
+Now, let $t = (ab)^{1/3}$ and eliminate $a+b$ using the condition, to get
+\[ 4t^3 + 2(4t-1) + 3 \ge (4t-1)^2
+  \iff 0 \le 4t^3 - 16t^2 + 16t = 4t(t-2)^2 \]
+which solves the problem.
+
+Equality occurs only if $t=2$,
+meaning $ab = 8$ and $a+b=7$, which gives
+\[ \{a,b\} = \left\{ \frac{7 \pm \sqrt{17}}{2} \right\} \]
+with the assumption $c = 1$.
+Scaling gives the curve of equality cases.
+\pagebreak
+
+\subsection{JMO 2018/3, proposed by Ray Li}
+\textsl{Available online at \url{https://aops.com/community/p10226149}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCD$ be a quadrilateral inscribed
+in circle $\omega$ with $\ol{AC} \perp \ol{BD}$.
+Let $E$ and $F$ be the reflections of $D$ over
+$\ol{BA}$ and $\ol{BC}$, respectively, and let $P$ be
+the intersection of $\ol{BD}$ and $\ol{EF}$.
+Suppose that the circumcircles of $EPD$ and $FPD$
+meet $\omega$ at $Q$ and $R$ different from $D$.
+Show that $EQ = FR$.
+\end{mdframed}
+Most of this problem is about realizing where
+the points $P$, $Q$, $R$ are.
+
+\paragraph{First solution (Evan Chen).}
+Let $X$, $Y$, be the feet from $D$ to $\ol{BA}$, $\ol{BC}$,
+and let $Z = \ol{BD} \cap \ol{AC}$.
+By Simson theorem, the points $X$, $Y$, $Z$ are collinear.
+Consequently, the point $P$ is the reflection of $D$ over $Z$,
+and so we conclude $P$ is the orthocenter of $\triangle ABC$.
+
+\begin{center}
+\begin{asy}
+size(10cm);
+pair B = dir(100);
+pair A = dir(210);
+pair C = dir(330);
+pair D = -A*C/B;
+pair X = foot(D, B, A);
+pair Y = foot(D, B, C);
+pair Z = extension(A, C, B, D);
+pair E = 2*X-D;
+pair F = 2*Y-D;
+pair P = A+B+C;
+pair Q = -A*B/C;
+pair R = -B*C/A;
+
+filldraw(unitcircle, opacity(0.1)+lightred, red);
+draw(A--B--C--D--cycle, red);
+draw(A--C, red);
+draw(B--P, red);
+draw(A--X, red);
+draw(X--Y, orange);
+draw(E--F, orange);
+draw(F--D--E, orange);
+
+filldraw(circumcircle(P, F, D), opacity(0.1)+yellow, orange);
+filldraw(circumcircle(P, E, D), opacity(0.1)+yellow, orange);
+draw(A--R, red+dotted);
+draw(C--Q, red+dotted);
+draw(R--F, lightcyan);
+draw(P--D, lightcyan);
+draw(Q--E, lightcyan);
+
+
+dot("$B$", B, dir(B));
+dot("$A$", A, dir(180));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(D));
+dot("$X$", X, dir(X));
+dot("$Y$", Y, dir(80));
+dot("$Z$", Z, dir(315));
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(F));
+dot("$P$", P, dir(135));
+dot("$Q$", Q, dir(110));
+dot("$R$", R, dir(80));
+
+/* TSQ Source:
+
+!size(10cm);
+B = dir 100
+A = dir 210 R180
+C = dir 330
+D = -A*C/B
+X = foot D B A
+Y = foot D B C R80
+Z = extension A C B D R315
+E = 2*X-D
+F = 2*Y-D
+P = A+B+C R135
+Q = -A*B/C R110
+R = -B*C/A R80
+
+unitcircle 0.1 lightred / red
+A--B--C--D--cycle red
+A--C red
+B--P red
+A--X red
+X--Y orange
+E--F orange
+F--D--E orange
+
+circumcircle P F D 0.1 yellow / orange
+circumcircle P E D 0.1 yellow / orange
+A--R red dotted
+C--Q red dotted
+R--F lightcyan
+P--D lightcyan
+Q--E lightcyan
+
+*/
+\end{asy}
+\end{center}
+
+Suppose now we extend ray $CP$ to meet $\omega$ again at $Q'$.
+Then $\ol{BA}$ is the perpendicular bisector
+of both $\ol{PQ'}$ and $\ol{DE}$;
+consequently, $PQ'ED$ is an isosceles trapezoid.
+In particular, it is cyclic, and so $Q' = Q$.
+In the same way $R$ is the second intersection
+of ray $\ol{AP}$ with $\omega$.
+
+Now, because of the two isosceles trapezoids we have found, we conclude
+\[ EQ = PD = FR \]
+as desired.
+
+\begin{remark*}
+  Alternatively, after identifying $P$,
+  one can note $\ol{BQE}$ and $\ol{BRF}$ are collinear.
+  Since $BE = BD = BF$,
+  upon noticing $BQ = BP = BR$ we are also done.
+\end{remark*}
+
+\paragraph{Second solution (Danielle Wang).}
+Here is a solution which does not identify the point $P$ at all.
+We know that $BE = BD = BF$, by construction.
+
+\begin{center}
+\begin{asy}
+size(12cm);
+pair B = dir(100);
+pair A = dir(210);
+pair C = dir(330);
+pair D = -A*C/B;
+pair X = foot(D, B, A);
+pair Y = foot(D, B, C);
+pair Z = extension(A, C, B, D);
+pair E = 2*X-D;
+pair F = 2*Y-D;
+pair P = A+B+C;
+pair Qp = -A*B/C;
+pair Rp = -B*C/A;
+
+filldraw(unitcircle, opacity(0.1)+lightred, red);
+draw(A--B--C--D--cycle, red);
+draw(A--C, red);
+draw(B--D, heavycyan);
+draw(A--X, red);
+draw(E--F, orange);
+draw(F--D--E, orange);
+
+filldraw(circumcircle(P, F, D), opacity(0.1)+yellow, dotted);
+filldraw(circumcircle(P, E, D), opacity(0.1)+yellow, dotted);
+draw(E--B--F, heavycyan);
+draw(Qp--D--Rp, orange);
+draw(arc(B,abs(B-D),190,350), heavycyan);
+
+dot("$B$", B, dir(B));
+dot("$A$", A, dir(180));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(D));
+dot(X);
+dot(Y);
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(F));
+dot("$P$", P, dir(135));
+dot("$Q'$", Qp, dir(110));
+dot("$R'$", Rp, dir(80));
+
+/* TSQ Source:
+
+!size(12cm);
+B = dir 100
+A = dir 210 R180
+C = dir 330
+D = -A*C/B
+X .= foot D B A
+Y .= foot D B C R80
+Z := extension A C B D R315
+E = 2*X-D
+F = 2*Y-D
+P = A+B+C R135
+Q' = -A*B/C R110
+R' = -B*C/A R80
+
+unitcircle 0.1 lightred / red
+A--B--C--D--cycle red
+A--C red
+B--D heavycyan
+A--X red
+E--F orange
+F--D--E orange
+
+circumcircle P F D 0.1 yellow / dotted
+circumcircle P E D 0.1 yellow / dotted
+E--B--F heavycyan
+Qp--D--Rp orange
+!draw(arc(B,abs(B-D),190,350), heavycyan);
+
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  The points $B$, $Q$, $E$ are collinear.
+  Similarly the points $B$, $R$, $F$ are collinear.
+\end{claim*}
+\begin{proof}
+  Work directed modulo $180\dg$.
+  Let $Q'$ be the intersection of $\ol{BE}$ with $(ABCD)$.
+  Let $\alpha = \dang DEB = \dang BDE$
+  and $\beta = \dang BFD = \dang FDB$.
+
+  Observe that $BE = BD = BF$, so $B$ is the circumcenter
+  of $\triangle DEF$. Thus, $\dang DEP = \dang DEF = 90\dg - \beta$.
+  Then
+  \begin{align*}
+    \dang DPE &= \dang DEP + \dang PDE = (90\dg-\beta) + \alpha \\
+    &= \alpha - \beta + 90\dg \\
+    \dang DQ'B &= \dang DCB = \dang DCA + \dang ACB \\
+    &= \dang DBA - (90\dg - \dang DBC) = -(90\dg-\alpha) - (90\dg - (90\dg - \beta)) \\
+    &= \alpha - \beta + 90\dg.
+  \end{align*}
+  Thus $Q'$ lies on the desired circle, so $Q' = Q$.
+\end{proof}
+
+Now, by power of a point we have $BQ \cdot BE = BP \cdot BD = BR \cdot BF$,
+so $BQ = BP = BR$. Hence $EQ = PD = FR$.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{JMO 2018/4, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p10232384}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all real numbers $x$ for which
+there exists a triangle $ABC$ with circumradius $2$,
+such that $\angle ABC \ge 90\dg$, and
+\[ x^4 + ax^3 + bx^2 + cx + 1 = 0 \]
+where $a = BC$, $b = CA$, $c = AB$.
+\end{mdframed}
+The answer is $x = -\half (\sqrt6 \pm \sqrt 2)$.
+
+We prove this the only possible answer.
+Evidently $x < 0$.
+Now, note that
+\[ a^2+c^2 \le b^2 \le 4b \]
+since $b \le 4$ (the diameter of its circumcircle).
+Then,
+\begin{align*}
+  0 &= x^4 + ax^3 + bx^2 + cx + 1 \\
+  &= x^2 \left[ \left( x + \half a \right)^2
+    + \left( \frac1x + \half c \right)^2
+    + \left( b - \frac{a^2+c^2}{4} \right) \right] \\
+  &\ge 0+0+0 = 0.
+\end{align*}
+In order for equality to hold,
+we must have $x = -\half a$, $1/x = -\half c$,
+and $a^2+c^2 = b^2 = 4b$.
+This gives us $b = 4$, $ac = 4$, $a^2+c^2=16$.
+Solving for $a,c > 0$ implies
+\[ \{a,c\} = \left\{ \sqrt6 \pm \sqrt 2 \right\}.  \]
+This gives the $x$ values claimed above;
+by taking $a$, $b$, $c$ as deduced here,
+we find they work too.
+
+\begin{remark*}
+  Note that by perturbing $\triangle ABC$ slightly,
+  we see \emph{a priori} that the set of possible $x$
+  should consist of unions of intervals (possibly trivial).
+  So it makes sense to try inequalities no matter what.
+\end{remark*}
+\pagebreak
+
+\subsection{JMO 2018/5, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p10232389}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $p$ be a prime, and let $a_1$, \dots, $a_p$ be integers.
+Show that there exists an integer $k$ such that the numbers
+\[ a_1 + k, \; a_2 + 2k, \; \dots, \; a_p + pk \]
+produce at least $\half p$ distinct remainders upon division by $p$.
+\end{mdframed}
+For each $k = 0, \dots, p-1$ let $G_k$ be the graph
+on $\{1, \dots, p\}$ where we join $\{i,j\}$ if and only if
+\[ a_i + ik \equiv a_j + jk \pmod p
+  \iff k \equiv - \frac{a_i - a_j}{i-j} \pmod p. \]
+So we want a graph $G_k$ with at least $\half p$ connected components.
+
+However, each $\{i,j\}$ appears in exactly one graph $G_k$,
+so some graph has at most $\frac 1p \binom p2 = \half(p-1)$ edges
+(by ``pigeonhole'').
+This graph has at least $\half(p+1)$ connected components, as desired.
+
+\begin{remark*}
+  Here is an example for $p=5$ showing equality can occur:
+  \[
+    \begin{bmatrix}
+      0 & 0 & 3 & 4 & 3 \\
+      0 & 1 & 0 & 2 & 2 \\
+      0 & 2 & 2 & 0 & 1 \\
+      0 & 3 & 4 & 3 & 0 \\
+      0 & 4 & 1 & 1 & 4
+    \end{bmatrix}.
+  \]
+  Ankan Bhattacharya points out more generally
+  that $a_i = i^2$ is sharp in general.
+\end{remark*}
+\pagebreak
+
+\subsection{JMO 2018/6, proposed by Maria Monks Gillespie}
+\textsl{Available online at \url{https://aops.com/community/p10232393}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Karl starts with $n$ cards labeled $1$, $2$, \dots, $n$
+lined up in random order on his desk.
+He calls a pair $(a,b)$ of cards \emph{swapped} if $a > b$
+and the card labeled $a$ is to the left of the card labeled $b$.
+
+Karl picks up the card labeled $1$ and inserts it back into the sequence in
+the opposite position: if the card labeled $1$ had $i$ cards to its left,
+then it now has $i$ cards to its right.
+He then picks up the card labeled $2$ and reinserts it in the same manner,
+and so on, until he has picked up and put
+back each of the cards $1$, \dots, $n$ exactly once in that order.
+
+For example, if $n = 4$, then one example of a process is
+\[ 3142 \longrightarrow 3412 \longrightarrow 2341 \longrightarrow 2431 \longrightarrow 2341 \]
+which has three swapped pairs both before and after.
+
+Show that, no matter what lineup of cards Karl started with,
+his final lineup has the same number of swapped pairs as the starting lineup.
+\end{mdframed}
+The official solution is really tricky.
+Call the process $P$.
+
+We define a new process $P'$ where, when re-inserting card $i$,
+we additionally change its label from $i$ to $n+i$.
+An example of $P'$ also starting with $3142$ is:
+\[ 3142 \longrightarrow 3452 \longrightarrow 6345
+  \longrightarrow 6475 \longrightarrow 6785. \]
+Note that now,
+each step of $P'$ preserves the number of inversions.
+Moreover, the final configuration of $P'$ is the same as
+the final configuration of $P$ with all cards incremented by $n$,
+and of course thus has the same number of inversions. Boom.
+\pagebreak
+
+
+\end{document}

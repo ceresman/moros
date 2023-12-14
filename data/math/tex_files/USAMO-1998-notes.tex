@@ -1,0 +1,390 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 1998 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 1998 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Suppose that the set $\{1,2,\dots, 1998\}$
+has been partitioned into disjoint pairs $\{a_i,b_i\}$ ($1\leq i\leq 999$)
+so that for all $i$, $|a_i-b_i|$ equals $1$ or $6$.
+Prove that the sum
+\[ |a_1-b_1|+|a_2-b_2|+\dotsb +|a_{999}-b_{999}|  \]
+ends in the digit $9$.
+
+\item %% Problem 2
+Let $\mathcal C_1$ and $\mathcal C_2$ be concentric circles, with
+$\mathcal C_2$ in the interior of $\mathcal C_1$.
+From a point $A$ on $\mathcal C_1$ one draws the tangent $AB$
+to $\mathcal C_2$ ($B\in \mathcal C_2$).
+Let $C$ be the second point of intersection of ray $AB$ and
+$\mathcal C_1$, and let $D$ be the midpoint of $\ol{AB}$.
+A line passing through $A$ intersects $\mathcal C_2$ at $E$ and $F$
+in such a way that the perpendicular bisectors of $\ol{DE}$ and $\ol{CF}$
+intersect at a point $M$ on line $AB$.
+Find, with proof, the ratio $AM/MC$.
+
+\item %% Problem 3
+Let $a_0,a_1,\dots ,a_n$ be numbers from the interval $(0,\pi/2)$
+such that $\tan (a_0-\frac{\pi}{4})+ \tan (a_1-\frac{\pi}{4})
+ + \dotsb +\tan (a_n-\frac{\pi}{4}) \ge  n-1$.
+Prove that
+\[ \tan a_0\tan a_1 \dotsm \tan a_n \ge n^{n+1}. \]
+
+\item %% Problem 4
+A computer screen shows a $98 \times 98$ chessboard, colored in the usual way.
+One can select with a mouse any rectangle with sides on the lines
+of the chessboard and click the mouse button:
+as a result, the colors in the selected rectangle switch
+(black becomes white, white becomes black).
+Find, with proof, the minimum number of mouse clicks
+needed to make the chessboard all one color.
+
+\item %% Problem 5
+Prove that for each $n\geq 2$,
+there is a set $S$ of $n$ integers
+such that $(a-b)^2$ divides $ab$ for every distinct $a,b\in S$.
+
+\item %% Problem 6
+Let $n \geq 5$ be an integer.
+Find the largest integer $k$ (as a function of $n$)
+such that there exists a convex $n$-gon $A_{1}A_{2}\dots A_{n}$
+for which exactly $k$ of the quadrilaterals
+$A_{i}A_{i+1}A_{i+2}A_{i+3}$ have an inscribed circle,
+where indices are taken modulo $n$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 1998/1}
+\textsl{Available online at \url{https://aops.com/community/p343865}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Suppose that the set $\{1,2,\dots, 1998\}$
+has been partitioned into disjoint pairs $\{a_i,b_i\}$ ($1\leq i\leq 999$)
+so that for all $i$, $|a_i-b_i|$ equals $1$ or $6$.
+Prove that the sum
+\[ |a_1-b_1|+|a_2-b_2|+\dotsb +|a_{999}-b_{999}|  \]
+ends in the digit $9$.
+\end{mdframed}
+Let $S$ be the sum.
+Modulo $2$,
+\[ S = \sum |a_i-b_i| \equiv \sum (a_i+b_i)
+  = 1 + 2 + \dots + 1998 \equiv 1 \pmod 2. \]
+Modulo $5$,
+\[ S = \sum |a_i-b_i| = 1 \cdot 999 \equiv 4 \pmod 5. \]
+So $S \equiv 9 \pmod{10}$.
+\pagebreak
+
+\subsection{USAMO 1998/2}
+\textsl{Available online at \url{https://aops.com/community/p343866}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $\mathcal C_1$ and $\mathcal C_2$ be concentric circles, with
+$\mathcal C_2$ in the interior of $\mathcal C_1$.
+From a point $A$ on $\mathcal C_1$ one draws the tangent $AB$
+to $\mathcal C_2$ ($B\in \mathcal C_2$).
+Let $C$ be the second point of intersection of ray $AB$ and
+$\mathcal C_1$, and let $D$ be the midpoint of $\ol{AB}$.
+A line passing through $A$ intersects $\mathcal C_2$ at $E$ and $F$
+in such a way that the perpendicular bisectors of $\ol{DE}$ and $\ol{CF}$
+intersect at a point $M$ on line $AB$.
+Find, with proof, the ratio $AM/MC$.
+\end{mdframed}
+By power of a point we have
+\[ AE \cdot AF = AB^2
+  = \left( \half AB \right) \cdot \left( 2AB \right)
+  = AD \cdot AC \]
+and hence $CDEF$ is cyclic.
+Then $M$ is the circumcenter of quadrilateral $CDEF$.
+
+\begin{center}
+\begin{asy}
+pair A = dir(170);
+pair C = dir(40);
+pair B = midpoint(A--C);
+pair D = midpoint(A--B);
+pair M = midpoint(C--D);
+pair O = origin;
+
+filldraw(unitcircle, opacity(0.1)+lightcyan, heavycyan);
+draw(CP(O, B), heavycyan);
+pair E = IP(CP(M, D), CP(O, B));
+pair F = OP(CP(M, D), CP(O, B));
+filldraw(CP(M, D), opacity(0.1)+lightred, red);
+draw(A--C, heavygreen);
+draw(A--F, heavygreen);
+draw(D--E, red);
+draw(C--F, red);
+pair U = midpoint(D--E);
+pair V = midpoint(C--F);
+draw(U--M--V, red+dotted);
+
+dot("$A$", A, dir(A));
+dot("$C$", C, dir(C));
+dot("$B$", B, dir(B));
+dot("$D$", D, dir(D));
+dot("$M$", M, dir(M));
+dot("$O$", O, dir(45));
+dot("$E$", E, dir(220));
+dot("$F$", F, dir(F));
+
+/* TSQ Source:
+
+A = dir 170
+C = dir 40
+B = midpoint A--C
+D = midpoint A--B
+M = midpoint C--D
+O = origin R45
+
+unitcircle 0.1 lightcyan / heavycyan
+CP O B heavycyan
+E = IP CP M D CP O B R220
+F = OP CP M D CP O B
+CP M D 0.1 lightred / red
+A--C heavygreen
+A--F heavygreen
+D--E red
+C--F red
+U := midpoint D--E
+V := midpoint C--F
+U--M--V red dotted
+
+*/
+\end{asy}
+\end{center}
+
+Thus $M$ is the midpoint of $\ol{CD}$
+(and we are given already that $B$ is the midpoint of $\ol{AC}$,
+$D$ is the midpoint of $\ol{AB}$).
+Thus a quick computation along $\ol{AC}$ gives $AM/MC = 5/3$.
+\pagebreak
+
+\subsection{USAMO 1998/3}
+\textsl{Available online at \url{https://aops.com/community/p343867}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a_0,a_1,\dots ,a_n$ be numbers from the interval $(0,\pi/2)$
+such that $\tan (a_0-\frac{\pi}{4})+ \tan (a_1-\frac{\pi}{4})
+ + \dotsb +\tan (a_n-\frac{\pi}{4}) \ge  n-1$.
+Prove that
+\[ \tan a_0\tan a_1 \dotsm \tan a_n \ge n^{n+1}. \]
+\end{mdframed}
+Let $x_i = \tan(a_i - \frac{\pi}{4})$.
+Then we have that
+\[ \tan a_i = \tan(a_i - 45\dg + 45\dg) = \frac{x_i + 1}{1 - x_i}. \]
+If we further substitute $y_i = \frac{1 - x_i}{2} \in (0,1)$,
+then we have to prove that the following statement:
+\begin{claim*}
+  If $\sum_0^n y_i \le 1$ and $y_i \ge 0$, we have
+  \[ \prod_{i=1}^n \left( \frac{1}{y_i}-1 \right) \ge n^{n+1}. \]
+\end{claim*}
+\begin{proof}
+  Homogenizing, we have to prove that
+  \[ \prod_{i=1}^n \left( \frac{y_0+y_1+y_2+\dots+y_n}{y_i}-1 \right) \ge n^{n+1}. \]
+  By AM-GM, we have
+  \[ \frac{y_1+y_2+y_3+\dots+y_n}{y_0}
+    \ge n \sqrt[n]{\frac{y_1y_2y_3\dots y_n}{y_1}}. \]
+    Cyclic product works.
+\end{proof}
+\begin{remark*}
+  Alternatively, the function $x \mapsto \log(1/x-1)$
+  is a convex function on $(0,1)$ so Jensen inequality should also work.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 1998/4}
+\textsl{Available online at \url{https://aops.com/community/p343869}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A computer screen shows a $98 \times 98$ chessboard, colored in the usual way.
+One can select with a mouse any rectangle with sides on the lines
+of the chessboard and click the mouse button:
+as a result, the colors in the selected rectangle switch
+(black becomes white, white becomes black).
+Find, with proof, the minimum number of mouse clicks
+needed to make the chessboard all one color.
+\end{mdframed}
+The answer is $98$.
+One of several possible constructions is to toggle
+all columns and rows with even indices.
+
+In the other direction, let $n = 98$ and
+suppose that $k$ rectangles are used,
+none of which are $n \times n$ (else we may delete it).
+Then, for any two orthogonally adjacent cells,
+the edge between them must be contained in the edge of
+one of the $k$ rectangles.
+
+We define a \emph{gridline} to be a line segment
+that runs in the interior of the board from
+one side of the board to the other.
+Hence there are $2n-2$ gridlines exactly.
+Moreover, we can classify these rectangles into two types:
+\begin{itemize}
+  \ii \emph{Full length rectangles}:
+  these span from one edge of the board to the other.
+  The two long sides completely cover two gridlines,
+  but the other two sides of the rectangle do not.
+  \ii \emph{Partial length rectangles}:
+  each of four sides can partially cover ``half a'' gridline.
+\end{itemize}
+See illustration below for $n = 6$.
+\begin{center}
+\begin{asy}
+  unitsize(0.5cm);
+  picture base;
+  for (int i=1; i<=5; ++i) {
+    draw(base, (0,i)--(6,i), black );
+    draw(base, (i,0)--(i,6), black );
+  }
+
+  picture full;
+  picture partial;
+
+  add(full, base);
+  add(partial, base);
+  label(full, "Full length", (3,0), dir(-90), red);
+  label(partial, "Partial length", (3,0), dir(-90), blue);
+
+  filldraw(full, box( (0,3), (6,1) ), lightred+opacity(0.3), red+1.4 );
+  filldraw(partial, box( (2,2), (4,5) ), lightcyan+opacity(0.3), blue+1.4 );
+  add(shift(0,0)*base);
+  add(shift(7,0)*full);
+  add(shift(14,0)*partial);
+\end{asy}
+\end{center}
+Since there are $2n-2$ gridlines;
+and each rectangle can cover at most two gridlines in total
+(where partial-length rectangles are ``worth $\half$''
+on each of the four sides),
+we immediately get the bound $2k \ge 2n-2$, or $k \ge n-1$.
+
+To finish, we prove that:
+\begin{claim*}
+  If equality holds and $k = n-1$, then $n$ is odd.
+\end{claim*}
+\begin{proof}
+  If equality holds, then look at the horizontal gridlines
+  and say two gridlines are \emph{related} if some rectangle
+  has horizontal edges along both gridlines.
+  (Hence, the graph has degree either $1$ or $2$ at each vertex,
+  for equality to hold.)
+  The reader may verify the resulting graph consists only of
+  even length cycles and single edges,
+  which would mean $n-1$ is even.
+\end{proof}
+Hence for $n = 98$ the answer is indeed $98$ as claimed.
+\pagebreak
+
+\subsection{USAMO 1998/5}
+\textsl{Available online at \url{https://aops.com/community/p343870}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that for each $n\geq 2$,
+there is a set $S$ of $n$ integers
+such that $(a-b)^2$ divides $ab$ for every distinct $a,b\in S$.
+\end{mdframed}
+This is a direct corollary of the more difficult
+USA TST 2015/2, reproduced below.
+\begin{quote}
+  Prove that for every positive integer $n$,
+  there exists a set $S$ of $n$ positive integers
+  such that for any two distinct $a,b \in S$,
+  $a-b$ divides $a$ and $b$
+  but none of the other elements of $S$.
+\end{quote}
+\pagebreak
+
+\subsection{USAMO 1998/6}
+\textsl{Available online at \url{https://aops.com/community/p150148}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n \geq 5$ be an integer.
+Find the largest integer $k$ (as a function of $n$)
+such that there exists a convex $n$-gon $A_{1}A_{2}\dots A_{n}$
+for which exactly $k$ of the quadrilaterals
+$A_{i}A_{i+1}A_{i+2}A_{i+3}$ have an inscribed circle,
+where indices are taken modulo $n$.
+\end{mdframed}
+The main claim is the following:
+\begin{claim*}
+  We can't have both $A_1 A_2 A_3 A_4$
+  and $A_2 A_3 A_4 A_5$ be circumscribed.
+\end{claim*}
+\begin{proof}
+  If not, then we have the following diagram,
+  where $a = A_1A_2$, $b = A-2 A_3$, $c = A_3 A_4$, $d = A_4 A_5$.
+  \begin{center}
+  \begin{asy}
+    size(9cm);
+    pair A1 = dir(10);
+    pair A2 = dir(40);
+    pair A3 = dir(90);
+    pair A4 = dir(130);
+    pair A5 = dir(200);
+    draw(A1--A2--A3--A4--A5, blue);
+    label("$a$", midpoint(A1--A2), dir(A1+A2), blue);
+    label("$b$", midpoint(A2--A3), dir(A2+A3), blue);
+    label("$c$", midpoint(A3--A4), dir(A3+A4), blue);
+    label("$d$", midpoint(A4--A5), dir(A4+A5), blue);
+    draw(A1--A4, red);
+    label(rotate(-20)*"$c+a-b$", 0.6*A4+0.4*A1, dir(A1+A4), red);
+    draw(A2--A5, orange);
+    label(rotate(30)*"$b+d-c$", 0.5*A5+0.5*A2, dir(A2+A5), orange);
+    dot("$A_1$", A1, dir(A1), blue);
+    dot("$A_2$", A2, dir(A2), blue);
+    dot("$A_3$", A3, dir(A3), blue);
+    dot("$A_4$", A4, dir(A4), blue);
+    dot("$A_5$", A5, dir(A5), blue);
+  \end{asy}
+  \end{center}
+  Then $A_1 A_4 = c+a-b$ and $A_5A_2 = b+d-c$.
+  But now
+  \[ A_1 A_4 + A_2 A_5 = (c+a-b) + (b+d-c) = a+d = A_1 A_2 + A_4 A_5 \]
+  but in the picture we have an obvious violation
+  of the triangle inequality.
+\end{proof}
+
+This immediately gives an upper bound of
+$\left\lfloor n/2 \right\rfloor$.
+
+For the construction, one can construct a suitable cyclic $n$-gon by
+using a continuity argument (details to be added).
+\pagebreak
+
+
+\end{document}

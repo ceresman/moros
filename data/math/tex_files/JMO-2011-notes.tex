@@ -1,0 +1,367 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{JMO 2011 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2011 JMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Find all positive integers $n$ such that $2^n+12^n+2011^n$ is a perfect square.
+
+\item %% Problem 2
+Let $a$, $b$, $c$ be positive real numbers
+such that $a^2+b^2+c^2+(a+b+c)^2 \le 4$. Prove that
+\[ \frac{ab+1}{(a+b)^2}
+  + \frac{bc+1}{(b+c)^2}
+  + \frac{ca+1}{(c+a)^2} \ge 3. \]
+
+\item %% Problem 3
+For a point $P = (a,a^2)$ in the coordinate plane,
+let $\ell(P)$ denote the line passing through $P$ with slope $2a$.
+Consider the set of triangles with vertices of the form
+$P_1 = (a_1, a_1^2)$, $P_2 = (a_2, a_2^2)$, $P_3 = (a_3, a_3^2)$,
+such that the intersection of the lines $\ell(P_1), \ell(P_2), \ell(P_3)$
+form an equilateral triangle $\Delta$.
+Find the locus of the center of $\Delta$ as $P_1P_2P_3$ ranges over all such triangles.
+
+\item %% Problem 4
+A \emph{word} is defined as any finite string of letters.
+A word is a \emph{palindrome} if it reads the same backwards and forwards.
+Let a sequence of words $W_0, W_1, W_2, \dots$ be defined as follows:
+$W_0 = a, W_1 = b$, and for $n \ge 2$,
+$W_n$ is the word formed by writing $W_{n-2}$ followed by $W_{n-1}$.
+Prove that for any $n \ge 1$, the word formed by writing
+$W_1, W_2, W_3, \dots, W_n$ in succession is a palindrome.
+
+\item %% Problem 5
+Points $A,B,C,D,E$ lie on a circle $\omega$
+and point $P$ lies outside the circle.
+The given points are such that
+(i) lines $PB$ and $PD$ are tangent to $\omega$,
+(ii) $P, A, C$ are collinear,
+and (iii) $\ol{DE} \parallel \ol{AC}$.
+Prove that $\ol{BE}$ bisects $\ol{AC}$.
+
+\item %% Problem 6
+Consider the assertion that for each positive integer $n\geq2$,
+the remainder upon dividing $2^{2^n}$ by $2^n-1$ is a power of $4$.
+Either prove the assertion or find (with proof) a counterexample.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{JMO 2011/1, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p2254778}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all positive integers $n$ such that $2^n+12^n+2011^n$ is a perfect square.
+\end{mdframed}
+The answer $n=1$ works, because $2^1+12^1+2011^1=45^2$.
+We prove it's the only one.
+\begin{itemize}
+  \ii If $n \ge 2$ is even, then modulo $3$ we have
+  $2^n+12^n+2011^n \equiv 1+0+1 \equiv 2 \pmod 3$
+  so it is not a square.
+
+  \ii If $n \ge 3$ is odd, then modulo $4$ we have
+  $2^n+12^n+2011^n \equiv 0+0+3 \equiv 3 \pmod 4$
+  so it is not a square.
+\end{itemize}
+This completes the proof.
+\pagebreak
+
+\subsection{JMO 2011/2, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p2254758}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$, $b$, $c$ be positive real numbers
+such that $a^2+b^2+c^2+(a+b+c)^2 \le 4$. Prove that
+\[ \frac{ab+1}{(a+b)^2}
+  + \frac{bc+1}{(b+c)^2}
+  + \frac{ca+1}{(c+a)^2} \ge 3. \]
+\end{mdframed}
+The condition becomes $2 \ge a^2+b^2+c^2 + ab+bc+ca$.
+Therefore,
+\begin{align*}
+  \sum_{\text{cyc}} \frac{2ab+2}{(a+b)^2}
+  &\ge \sum_{\text{cyc}} \frac{2ab+(a^2+b^2+c^2+ab+bc+ca)}{(a+b)^2} \\
+  &= \sum_{\text{cyc}} \frac{(a+b)^2+(c+a)(c+b)}{(a+b)^2} \\
+  &= 3 + \sum_{\text{cyc}} \frac{(c+a)(c+b)}{(a+b)^2} \\
+  &\ge 3 + 3\sqrt[3]{\prod_{\text{cyc}} \frac{(c+a)(c+b)}{(a+b)^2}}
+  = 3 + 3 = 6
+\end{align*}
+with the last line by AM-GM.
+This completes the proof.
+\pagebreak
+
+\subsection{JMO 2011/3, proposed by Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p2254823}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For a point $P = (a,a^2)$ in the coordinate plane,
+let $\ell(P)$ denote the line passing through $P$ with slope $2a$.
+Consider the set of triangles with vertices of the form
+$P_1 = (a_1, a_1^2)$, $P_2 = (a_2, a_2^2)$, $P_3 = (a_3, a_3^2)$,
+such that the intersection of the lines $\ell(P_1), \ell(P_2), \ell(P_3)$
+form an equilateral triangle $\Delta$.
+Find the locus of the center of $\Delta$ as $P_1P_2P_3$ ranges over all such triangles.
+\end{mdframed}
+The answer is the line $y = -1/4$.
+I did not find this problem inspiring,
+so I will not write out most of the boring calculations
+since most solutions are just going to be
+``use Cartesian coordinates and grind all the way through''.
+
+The ``nice'' form of the main claim is as follows
+(which is certainly overkill for the present task,
+but is too good to resist including):
+\begin{claim*}
+  [Naoki Sato]
+  In general, the orthocenter of $\Delta$ lies on
+  the directrix $y = -1/4$ of the parabola
+  (even if the triangle $\Delta$ is not equilateral).
+\end{claim*}
+\begin{proof}
+  By writing out the equation $y = 2a_i x - a_i^2$ for $\ell(P_i)$,
+  we find the vertices of the triangle are located at
+  \[
+    \left( \frac{a_1+a_2}{2}, a_1a_2 \right); \quad
+    \left( \frac{a_2+a_3}{2}, a_2a_3 \right); \quad
+    \left( \frac{a_3+a_1}{2}, a_3a_1 \right).
+  \]
+  The coordinates of the orthocenter can be checked explicitly to be
+  \[ H = \left( \frac{a_1 + a_2 + a_3 + 4 a_1 a_2 a_3}{2},
+      - \frac 14 \right). \]
+  An advanced synthetic proof of this fact is given at
+  \url{https://aops.com/community/p2255814}.
+\end{proof}
+
+This claim already shows that every point lies on $y = -1/4$.
+We now turn to showing that, even when restricted to equilateral triangles,
+we can achieve every point on $y = -1/4$.
+In what follows $a = a_1$, $b = a_2$, $c = a_3$ for legibility.
+
+\begin{claim*}
+  Lines $\ell(a)$, $\ell(b)$, $\ell(c)$
+  form an equilateral triangle if and only if
+  \begin{align*}
+    a+b+c &= -12abc \\
+    ab+bc+ca &= -\frac34.
+  \end{align*}
+  Moreover, the $x$-coordinate of the equilateral triangle is $\frac13(a+b+c)$.
+\end{claim*}
+\begin{proof}
+  The triangle is equilateral if and only if the centroid and orthocenter coincide, i.e.
+  \[ \left( \frac{a+b+c}{3}, \frac{ab+bc+ca}{3} \right) = G = H =
+    \left( \frac{a+b+c+4abc}{2}, -\frac14 \right). \]
+  Setting the $x$ and $y$ coordinates equal,
+  we derive the claimed equations.
+\end{proof}
+
+Let $\lambda$ be any real number.
+We are tasked to show that
+\[ P(X) = X^3 - 3\lambda \cdot X^2 - \frac34 X + \frac{\lambda}{4} \]
+has three real roots (with multiplicity);
+then taking those roots as $(a,b,c)$
+yields a valid equilateral-triangle triple
+whose $x$-coordinate is exactly $\lambda$, be the previous claim.
+
+To prove that, pick the values
+\begin{align*}
+  P(-\sqrt{3}/2) &= -2\lambda \\
+  P(0) &= \tfrac14 \lambda \\
+  P(\sqrt{3}/2) &= -2\lambda.
+\end{align*}
+The intermediate value theorem
+(at least for $\lambda \neq 0$) implies that $P$
+should have at least two real roots now,
+and since $P$ has degree $3$, it has all real roots.
+That's all.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{JMO 2011/4, proposed by Gabriel Carroll}
+\textsl{Available online at \url{https://aops.com/community/p2254808}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A \emph{word} is defined as any finite string of letters.
+A word is a \emph{palindrome} if it reads the same backwards and forwards.
+Let a sequence of words $W_0, W_1, W_2, \dots$ be defined as follows:
+$W_0 = a, W_1 = b$, and for $n \ge 2$,
+$W_n$ is the word formed by writing $W_{n-2}$ followed by $W_{n-1}$.
+Prove that for any $n \ge 1$, the word formed by writing
+$W_1, W_2, W_3, \dots, W_n$ in succession is a palindrome.
+\end{mdframed}
+To aid in following the solution, here are the first several words:
+\begin{align*}
+  W_0 &= a \\
+  W_1 &= b \\
+  W_2 &= ab \\
+  W_3 &= bab \\
+  W_4 &= abbab \\
+  W_5 &= bababbab \\
+  W_6 &= abbabbababbab \\
+  W_7 &= bababbababbabbababbab
+\end{align*}
+We prove that $W_1 W_2 \dots W_n$ is a palindrome by induction on $n$.
+The base cases $n=1,2,3,4$ can be verified by hand.
+
+For the inductive step, we let $\ol{X}$ denote the word $X$ written
+backwards. Then
+\begin{align*}
+  W_1 W_2 \dots W_{n-3} W_{n-2} W_{n-1} W_n
+  &\overset{\text{IH}}{=} (\ol{W_{n-1}} \ol{W_{n-2}} \ol{W_{n-3}}
+    \dots \ol{W_2} \ol{W_1}) W_n \\
+  &= (\ol{W_{n-1}} \ol{W_{n-2}} \ol{W_{n-3}}
+    \dots \ol{W_2} \ol{W_1}) W_{n-2} W_{n-1} \\
+  &= \ol{W_{n-1}} \ol{W_{n-2}} (\ol{W_{n-3}}
+    \dots \ol{W_2} \ol{W_1}) W_{n-2} W_{n-1}
+\end{align*}
+with the first equality being by the induction hypothesis.
+By induction hypothesis again the inner parenthesized term
+is also a palindrome, and so this completes the proof.
+\pagebreak
+
+\subsection{JMO 2011/5, proposed by Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p2254813}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Points $A,B,C,D,E$ lie on a circle $\omega$
+and point $P$ lies outside the circle.
+The given points are such that
+(i) lines $PB$ and $PD$ are tangent to $\omega$,
+(ii) $P, A, C$ are collinear,
+and (iii) $\ol{DE} \parallel \ol{AC}$.
+Prove that $\ol{BE}$ bisects $\ol{AC}$.
+\end{mdframed}
+We present two solutions.
+
+\paragraph{First solution using harmonic bundles.}
+Let $M = \ol{BE} \cap \ol{AC}$
+and let $\infty$ be the point at infinity
+along $\ol{DE} \parallel \ol{AC}$.
+\begin{center}
+\begin{asy}
+size(8cm);
+pair B = dir(100);
+pair D = dir(210);
+pair E = dir(330);
+pair P = 2*B*D/(B+D);
+pair A = OP(P--(P+8*(E-D)), unitcircle);
+pair M = extension(B, E, A, P);
+pair C = 2*M-A;
+
+filldraw(unitcircle, opacity(0.1)+lightblue, lightblue);
+draw(P--A, lightblue);
+draw(B--P--D, lightblue);
+draw(D--E, heavygreen);
+draw(B--E, heavygreen);
+draw(A--E--C, heavygreen);
+
+draw(B--A--D--C--cycle, heavycyan);
+
+dot("$B$", B, dir(B));
+dot("$D$", D, dir(D));
+dot("$E$", E, dir(E));
+dot("$P$", P, dir(P));
+dot("$A$", A, dir(A));
+dot("$M$", M, dir(45));
+dot("$C$", C, dir(100));
+
+/* TSQ Source:
+
+B = dir 100
+D = dir 210
+E = dir 330
+P = 2*B*D/(B+D)
+A = IP P--(P+8*(E-D)) unitcircle
+M = extension B E A P R45
+C = 2*M-A R100
+
+unitcircle 0.1 lightblue / lightblue
+P--A lightblue
+B--P--D lightblue
+D--E heavygreen
+B--E heavygreen
+A--E--C heavygreen
+
+B--A--D--C--cycle heavycyan
+
+*/
+\end{asy}
+\end{center}
+Note that $ABCD$ is harmonic, so
+\[ -1 = (AC;BD) \overset{E}{=} (AC;M\infty) \]
+implying $M$ is the midpoint of $\ol{AC}$.
+
+
+\paragraph{Second solution using complex numbers (Cynthia Du).}
+Suppose we let $b$, $d$, $e$ be free on unit circle,
+so $p = \frac{2bd}{b+d}$.
+Then $d/c = a/e$, and $a + c = p + ac \ol p$.
+Consequently,
+\begin{align*}
+  ac &= de \\
+  \half(a + c) &= \frac{bd}{b+d} + de \cdot \frac{1}{b+d}
+    = \frac{d(b+e)}{b+d}. \\
+  \frac{a+c}{2ac} &= \frac{(b+e)}{e(b+d)}.
+\end{align*}
+From here it's easy to see
+\[ \frac{a+c}{2} + \frac{a+c}{2ac} \cdot be = b + e \]
+which is what we wanted to prove.
+\pagebreak
+
+\subsection{JMO 2011/6, proposed by Sam Vandervelde}
+\textsl{Available online at \url{https://aops.com/community/p2254810}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Consider the assertion that for each positive integer $n\geq2$,
+the remainder upon dividing $2^{2^n}$ by $2^n-1$ is a power of $4$.
+Either prove the assertion or find (with proof) a counterexample.
+\end{mdframed}
+We claim $n = 25$ is a counterexample.
+Since $2^{25} \equiv 2^0 \pmod{2^{25}-1}$, we have
+\[ 2^{2^{25}} \equiv 2^{2^{25} \bmod{25}}
+  \equiv 2^7 \bmod{2^{25}-1} \]
+and the right-hand side is actually the remainder,
+since $0 < 2^7 < 2^{25}$.
+But $2^7$ is not a power of $4$.
+
+\begin{remark*}
+  Really, the problem is just equivalent
+  for asking $2^n$ to have odd remainder when divided by $n$.
+\end{remark*}
+\pagebreak
+
+
+\end{document}

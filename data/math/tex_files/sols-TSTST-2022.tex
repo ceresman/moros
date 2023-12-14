@@ -1,0 +1,1090 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{USA TSTST 2022 Solutions}
+\subtitle{United States of America --- TST Selection Test}
+\author{Andrew Gu and Evan Chen}
+\date{64\ts{th} IMO 2023 Japan and 12\ts{th} EGMO 2023 Slovenia}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $n$ be a positive integer. Find the smallest positive integer $k$ such
+that for any set $S$ of $n$ points in the interior of the unit square, there
+exists a set of $k$ rectangles such that the following hold:
+\begin{itemize}
+  \item The sides of each rectangle are parallel to the sides of the unit square.
+  \item Each point in $S$ is \emph{not} in the interior of any rectangle.
+  \item Each point in the interior of the unit square but \emph{not} in $S$
+    is in the interior of at least one of the $k$ rectangles.
+\end{itemize}
+(The interior of a polygon does not contain its boundary.)
+
+\item %% Problem 2
+Let $ABC$ be a triangle.
+Let $\theta$ be a fixed angle for which
+\[ \theta < \frac12 \min(\angle A, \angle B, \angle C). \]
+Points $S_A$ and $T_A$ lie on segment $BC$
+such that $\angle BAS_A = \angle T_AAC = \theta$.
+Let $P_A$ and $Q_A$ be the feet from $B$ and $C$
+to $\ol{AS_A}$ and $\ol{AT_A}$ respectively.
+Then $\ell_A$ is defined as the perpendicular bisector of $\ol{P_A Q_A}$.
+
+Define $\ell_B$ and $\ell_C$ analogously by repeating this construction
+two more times (using the same value of $\theta$).
+Prove that $\ell_A$, $\ell_B$, and $\ell_C$ are concurrent or all parallel.
+
+\item %% Problem 3
+Determine all positive integers $N$ for which there exists a strictly
+increasing sequence of positive integers $s_0 < s_1 < s_2 < \dotsb$
+satisfying the following properties:
+\begin{itemize}
+  \item the sequence $s_1-s_0$, $s_2-s_1$, $s_3-s_2$, \dots\ is periodic; and
+  \item $s_{s_n} - s_{s_{n-1}} \le N < s_{1+s_n} - s_{s_{n-1}}$ for all
+    positive integers $n$.
+\end{itemize}
+
+\item %% Problem 4
+A function $f \colon \NN \to \NN$ has the property that
+for all positive integers $m$ and $n$, exactly one of the $f(n)$ numbers
+\[ f(m+1), f(m+2), \dots, f(m+f(n)) \]
+is divisible by $n$.
+Prove that $f(n)=n$ for infinitely many positive integers $n$.
+
+\item %% Problem 5
+Let $A_1$, \dots, $A_{2022}$ be the vertices of a regular $2022$-gon in the plane.
+Alice and Bob play a game.
+Alice secretly chooses a line and colors all points in the plane
+on one side of the line blue, and all points on the other side of the line red.
+Points on the line are colored blue,
+so every point in the plane is either red or blue.
+(Bob cannot see the colors of the points.)
+
+In each round, Bob chooses a point in the
+plane (not necessarily among $A_1$, \dots, $A_{2022}$)
+and Alice responds truthfully with the color of that point.
+What is the smallest number $Q$ for which Bob has a strategy to
+always determine the colors of points $A_1$, \dots, $A_{2022}$ in $Q$ rounds?
+
+\item %% Problem 6
+Let $O$ and $H$ be the circumcenter and orthocenter,
+respectively, of an acute scalene triangle $ABC$.
+The perpendicular bisector of $\ol{AH}$ intersects
+$\ol{AB}$ and $\ol{AC}$ at $X_A$ and $Y_A$ respectively.
+Let $K_A$ denote the intersection of
+the circumcircles of triangles $OX_AY_A$ and $BOC$ other than $O$.
+
+Define $K_B$ and $K_C$ analogously by repeating this
+construction two more times.
+Prove that $K_A$, $K_B$, $K_C$, and $O$ are concyclic.
+
+\item %% Problem 7
+Let $ABCD$ be a parallelogram.
+Point $E$ lies on segment $CD$ such that
+\[ 2\angle AEB = \angle ADB+\angle ACB, \]
+and point $F$ lies on segment $BC$ such that
+\[ 2\angle DFA = \angle DCA + \angle DBA. \]
+Let $K$ be the circumcenter of triangle $ABD$. Prove that $KE=KF$.
+
+\item %% Problem 8
+Find all functions $f \colon \NN \to \ZZ$ such that
+\[ \left\lfloor \frac{f(mn)}{n} \right\rfloor = f(m) \]
+for all positive integers $m$, $n$.
+
+\item %% Problem 9
+Let $k > 1$ be a fixed positive integer.
+Prove that if $n$ is a sufficiently large positive integer,
+there exists a sequence of integers with the following properties:
+\begin{itemize}
+  \item Each element of the sequence is between $1$ and $n$, inclusive.
+  \item For any two different contiguous subsequences of the sequence with
+    length between $2$ and $k$ inclusive,
+    the multisets of values in those two subsequences is not the same.
+  \item The sequence has length at least $0.499n^2$.
+\end{itemize}
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{TSTST 2022/1, proposed by Holden Mui}
+\textsl{Available online at \url{https://aops.com/community/p25516960}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n$ be a positive integer. Find the smallest positive integer $k$ such
+that for any set $S$ of $n$ points in the interior of the unit square, there
+exists a set of $k$ rectangles such that the following hold:
+\begin{itemize}
+  \item The sides of each rectangle are parallel to the sides of the unit square.
+  \item Each point in $S$ is \emph{not} in the interior of any rectangle.
+  \item Each point in the interior of the unit square but \emph{not} in $S$
+    is in the interior of at least one of the $k$ rectangles.
+\end{itemize}
+(The interior of a polygon does not contain its boundary.)
+\end{mdframed}
+We give the author's solution.
+In terms of $n$, we wish find the smallest integer $k$ for which
+$(0, 1)^2 \setminus S$ is always a union of $k$ open rectangles
+for every set $S \subset (0, 1)^2$ of size $n$.
+
+We claim the answer is $k = \boxed{2n+2}$.
+
+The lower bound is given by picking
+\[ S = \{(s_1, s_1), (s_2, s_2), \dots, (s_n, s_n)\}\]
+for some real numbers $0 < s_1 < s_2 < \dots < s_n < 1$.
+Consider the $4n$ points
+\[S' = S + \{(\varepsilon, 0), (0, \varepsilon), (-\varepsilon, 0), (0, -\varepsilon)\} \subset (0, 1)^2\]
+for some sufficiently small $\varepsilon > 0$.
+The four rectangles covering each of
+\[(s_1 - \varepsilon, s_1), (s_1, s_1 - \varepsilon), (s_n + \varepsilon, s_n), (s_n, s_n + \varepsilon)\]
+cannot cover any other points in $S'$;
+all other rectangles can only cover at most 2 points in $S'$,
+giving a bound of
+\[ k \geq 4 + \frac{\lvert S' \rvert - 4}{2} = 2n+2.\]
+
+\begin{center}
+\begin{asy}
+draw(unitsquare);
+size(8cm);
+int n = 7;
+real eps = 0.05;
+for (int i = 1; i <= n; ++i) {
+dot((i/(n+1), i/(n+1)));
+dot((i/(n+1), i/(n+1)+eps), red);
+dot((i/(n+1)+eps, i/(n+1)), red);
+}
+dot((1/(n+1), 1/(n+1)-eps), red);
+dot((1/(n+1)-eps, 1/(n+1)), red);
+\end{asy}
+\end{center}
+
+To prove that $2n+2$ rectangles are sufficient,
+assume that the number of distinct $y$-coordinates
+is at least the number of distinct $x$-coordinates.
+Let
+\[ 0 = x_0 < x_1 < \dots < x_m < x_{m+1} = 1, \]
+where $x_1$, \dots, $x_m$ are the distinct $x$-coordinates of points in $S$,
+and let $Y_i$ be the set of $y$-coordinates of points with $x$-coordinate $x_i$.
+For each $1 \leq i \leq m$, include the $|Y_i| + 1$ rectangles
+\[ (x_{i-1}, x_{i+1}) \times ((0, 1) \setminus Y_i) \]
+in the union, and also include $(0, x_1) \times (0, 1)$ and $(x_m, 1) \times (0, 1)$;
+this uses $m+n+2$ rectangles.
+\begin{center}
+\begin{asy}
+size(8cm);
+draw(scale(5)*unitsquare);
+dot((1, 3));
+dot((1, 1));
+dot((2, 1));
+dot((3, 2));
+dot((3, 4));
+dot((4, 1));
+
+real eps = 0.1;
+void rect(real l, real r, real b, real t, pen p) {
+l += eps;
+r -= eps;
+b += eps;
+t -= eps;
+filldraw((l, b) -- (l, t) -- (r, t) -- (r, b) -- cycle, p + opacity(0.5));
+}
+void dottedrect(real l, real r, real b, real t) {
+l += eps;
+r -= eps;
+b += eps;
+t -= eps;
+draw((l, b) -- (l, t) -- (r, t) -- (r, b) -- cycle, dashed);
+}
+rect(0, 2, 0, 1-eps, red);
+rect(0, 2, 1, 3, red);
+rect(0, 2, 3, 5, red);
+rect(1, 3, eps, 1, green);
+rect(1, 3, 1+eps, 5-eps, green);
+rect(2, 4, 0, 2, orange);
+rect(2, 4, 2, 4, orange);
+rect(2, 4, 4, 5, orange);
+rect(3, 5, 0+eps, 1, cyan);
+rect(3, 5, 1, 5-eps, cyan);
+dottedrect(eps, 1, eps, 5-eps);
+dottedrect(4, 5-eps, 0, 5);
+\end{asy}
+\end{center}
+All remaining uncovered points are between pairs of points
+with the same $y$-coordinate and adjacent $x$-coordinates $\{x_i, x_{i+1}\}$.
+There are at most $n-m$ such pairs by the initial assumption,
+so covering the points between each pair with
+\[ (x_i, x_{i+1}) \times (y - \varepsilon, y + \varepsilon)\]
+for some sufficiently small $\varepsilon > 0$ gives a total of
+\[(m+n+2) + (n-m) = 2n+2\]
+rectangles.
+\pagebreak
+
+\subsection{TSTST 2022/2, proposed by Hongzhou Lin}
+\textsl{Available online at \url{https://aops.com/community/p25516988}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle.
+Let $\theta$ be a fixed angle for which
+\[ \theta < \frac12 \min(\angle A, \angle B, \angle C). \]
+Points $S_A$ and $T_A$ lie on segment $BC$
+such that $\angle BAS_A = \angle T_AAC = \theta$.
+Let $P_A$ and $Q_A$ be the feet from $B$ and $C$
+to $\ol{AS_A}$ and $\ol{AT_A}$ respectively.
+Then $\ell_A$ is defined as the perpendicular bisector of $\ol{P_A Q_A}$.
+
+Define $\ell_B$ and $\ell_C$ analogously by repeating this construction
+two more times (using the same value of $\theta$).
+Prove that $\ell_A$, $\ell_B$, and $\ell_C$ are concurrent or all parallel.
+\end{mdframed}
+We discard the points $S_A$ and $T_A$ since they are only there
+to direct the angles correctly in the problem statement.
+
+\paragraph{First solution, by author.}
+Let $X$ be the projection from $C$ to $AP_A$,
+$Y$ be the projection from $B$ to $AQ_A$.
+\begin{center}
+\begin{asy}
+pair A = dir(110);
+pair B = dir(200);
+pair C = dir(340);
+
+pair Z_1 = dir(215);
+pair Z_2 = B*C/Z_1;
+pair P_A = foot(B, A, Z_1);
+pair Q_A = foot(C, A, Z_2);
+filldraw(A--B--C--cycle, opacity(0.1)+lightcyan, blue);
+draw(A--P_A, red);
+draw(A--Q_A, red);
+pair X = foot(C, A, P_A);
+pair Y = foot(B, A, Q_A);
+
+draw(B--P_A, orange);
+draw(C--Q_A, orange);
+draw(B--Y, orange);
+draw(C--X, orange);
+
+pair M_A = midpoint(B--C);
+pair M_B = midpoint(C--A);
+pair M_C = midpoint(A--B);
+
+draw(M_B--M_A--M_C, blue);
+
+draw(P_A--Q_A, deepgreen);
+draw(P_A--M_A--Q_A, deepgreen);
+
+draw(circumcircle(P_A, X, Y), grey);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$P_A$", P_A, dir(P_A));
+dot("$Q_A$", Q_A, dir(Q_A));
+dot("$X$", X, dir(X));
+dot("$Y$", Y, dir(70));
+dot("$M_A$", M_A, dir(M_A));
+dot("$M_B$", M_B, dir(M_B));
+dot("$M_C$", M_C, dir(M_C));
+
+/* TSQ Source:
+
+A = dir 110
+B = dir 200
+C = dir 340
+
+Z_1 := dir 215
+Z_2 := B*C/Z_1
+P_A = foot B A Z_1
+Q_A = foot C A Z_2
+A--B--C--cycle 0.1 lightcyan / blue
+A--P_A red
+A--Q_A red
+X = foot C A P_A
+Y = foot B A Q_A R70
+
+B--P_A orange
+C--Q_A orange
+B--Y orange
+C--X orange
+
+M_A = midpoint B--C
+M_B = midpoint C--A
+M_C = midpoint A--B
+
+M_B--M_A--M_C blue
+
+P_A--Q_A deepgreen
+P_A--M_A--Q_A deepgreen
+
+circle P_A X Y grey
+
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  Line $\ell_A$ passes through $M_A$, the midpoint of $BC$.
+  Also, quadrilateral $P_AQ_AYX$ is cyclic with circumcenter $M_A$.
+\end{claim*}
+\begin{proof}
+  Since
+  \[ AP_A\cdot AX = AB\cdot AC\cdot\cos\theta\cos(\angle A - \theta)
+    = AQ_A\cdot AY,\]
+  it follows that $P_A$, $Q_A$, $Y$, $X$
+  are concyclic by power of a point.
+  Moreover, by projection,
+  the perpendicular bisector of $P_AX$ passes through $M_A$,
+  similar for $Q_AY$, implying that $M_A$ is the center of $P_AQ_AYX$.
+  Hence $\ell_A$ passes through $M_A$.
+\end{proof}
+
+\begin{claim*}
+  $\dang (M_AM_C, \ell_A) = \dang YP_AQ_A$.
+\end{claim*}
+\begin{proof}
+  Indeed, $\ell_A \perp P_AQ_A$, and $M_AM_C \perp P_AY$
+  (since $M_AP_A = M_AY$ from $(P_AQ_AY_AX)$
+  and $M_CP_A = M_CM_A = M_CY$ from the circle with diameter $AB$).
+  Hence $\dang (M_AM_C, \ell_A) = \dang (P_AY, P_AQ_A) = \dang YP_AQ_A$.
+\end{proof}
+Therefore,
+\[
+  \frac{\sin \angle (M_AM_C, \ell_A)}{\sin \angle (\ell_A, M_AM_B)}
+  = \frac{\sin \angle YP_AQ_A}{\sin \angle P_AQ_AX}
+  = \frac{YQ_A}{XP_A}
+  = \frac{BC \sin (\angle C+ \theta) }{BC \sin (\angle B+ \theta)}
+  = \frac{\sin (\angle C+ \theta)}{\sin (\angle B+ \theta)},
+\]
+and we conclude by trig Ceva theorem.
+
+\paragraph{Second solution via Jacobi, by Maxim Li.}
+Let $D$ be the foot of the $A$-altitude.
+Note that line $BC$ is the external angle bisector of $\angle P_ADQ_A$.
+\begin{claim*}
+  $(DP_AQ_A)$ passes through the midpoint $M_A$ of $BC$.
+\end{claim*}
+\begin{proof}
+  Perform $\sqrt{bc}$ inversion.
+  Then the intersection of $BC$ and $(DP_AQ_A)$
+  maps to the second intersection of $(ABC)$ and $(A'P_AQ_A)$,
+  where $A'$ is the antipode to $A$ on $(ABC)$,
+  i.e.\ the center of spiral similarity from $BC$ to $P_AQ_A$.
+  Since $BP_A:CQ_A = AB:AC$, we see the center of spiral similarity
+  is the intersection of the $A$-symmedian with $(ABC)$,
+  which is the image of $M_A$ in the inversion.
+\end{proof}
+
+It follows that $M_A$ lies on $\ell_A$;
+we need to identify a second point.
+We'll use the circumcenter $O_A$ of $(DP_AQ_A)$.
+The perpendicular bisector of $DP_A$ passes through $M_C$;
+indeed, we can easily show the angle it makes with $M_CM_A$
+is $90^\circ - \theta - C$, so $\angle O_AM_CM_A = 90 - \theta - C$,
+and then by analogous angle-chasing
+we can finish with Jacobi's theorem on $\triangle M_AM_BM_C$.
+\pagebreak
+
+\subsection{TSTST 2022/3}
+\textsl{Available online at \url{https://aops.com/community/p25517008}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Determine all positive integers $N$ for which there exists a strictly
+increasing sequence of positive integers $s_0 < s_1 < s_2 < \dotsb$
+satisfying the following properties:
+\begin{itemize}
+  \item the sequence $s_1-s_0$, $s_2-s_1$, $s_3-s_2$, \dots\ is periodic; and
+  \item $s_{s_n} - s_{s_{n-1}} \le N < s_{1+s_n} - s_{s_{n-1}}$ for all
+    positive integers $n$.
+\end{itemize}
+\end{mdframed}
+\paragraph{Answer.}
+All $N$ such that $t^2 \le N < t^2+t$ for some positive integer $t$.
+
+\paragraph{Solution 1 (local).}
+If $t^2\le N < t^2+t$ then the sequence $s_n = tn+1$
+satisfies both conditions.
+It remains to show that no other values of $N$ work.
+
+Define $a_n \coloneqq s_n - s_{n-1}$,
+and let $p$ be the minimal period of $\{a_n\}$.
+For each $k \in \ZZ_{\ge0}$,
+let $f(k)$ be the integer such that
+\[ s_{f(k)} - s_k \le N < s_{f(k)+1} - s_k. \]
+Note that $f(s_{n-1}) = s_{n}$ for all $n$.
+Since $\{a_n\}$ is periodic with period $p$, $f(k+p) = f(k) + p$ for all $k$,
+so $k\mapsto f(k)-k$ is periodic with period $p$.
+We also note that $f$ is nondecreasing:
+if $k < k'$ but $f(k') < f(k)$ then
+\[ N < s_{f(k')+1} - s_{k'} < s_{f(k)} - s_k \le N, \]
+which is absurd.
+We now claim that
+\[ \max_{k} (f(k)-k) < p + \min_{k} (f(k)-k). \]
+Indeed, if $f(k') - k' \ge p + f(k) - k$
+then we can shift $k$ and $k'$ so that $0 \le k-k' < p$,
+and it follows that $k \le k' \le f(k') < f(k)$,
+violating the fact that $f$ is nondecreasing.
+Therefore $\max_{k} (f(k)-k) < p + \min_{k} (f(k)-k)$,
+so $f(k)-k$ is uniquely determined by its value modulo $p$.
+In particular, since $a_n = f(s_{n-1}) - s_{n-1}$,
+$a_n$ is also uniquely determined by its value modulo $p$,
+so $\{a_n\bmod p\}$ also has minimal period $p$.
+
+Now work in $\ZZ/p\ZZ$ and consider the sequence
+$s_0, f(s_0), f(f(s_0)), \dots$.
+This sequence must be eventually periodic;
+suppose it has minimal period $p'$, which must be at most $p$.
+Then, since
+\[ f^{n}(s_0) - f^{n-1}(s_0) = s_{n} - s_{n-1} = a_n, \]
+and $\{a_n\bmod p\}$ has minimal period $p$, we must have $p' = p$.
+Therefore the directed graph $G$ on $\ZZ/p\ZZ$
+given by the edges $k\to f(k)$ is simply a $p$-cycle,
+which implies that the map $k\mapsto f(k)$ is a bijection on $\ZZ/p\ZZ$.
+Therefore, $f(k+1)\neq f(k)$ for all $k$
+(unless $p=1$, but in this case the following holds anyways), hence
+\[ f(k) < f(k+1) < \dotsb < f(k+p) = f(k) + p. \]
+This implies $f(k+1) = f(k)+1$ for all $k$, so $f(k)-k$ is constant,
+therefore $a_n = f(s_{n-1})-s_{n-1}$ is also constant.
+Let $a_n\equiv t$. It follows that $t^2\le N < t^2+t$ as we wanted.
+
+\paragraph{Solution 2 (global).}
+Define $\{a_n\}$ and $f$ as in the previous solution.
+We first show that $s_i \not\equiv s_j\pmod p$ for all $i < j < i+p$.
+Suppose the contrary, i.e.\ that $s_i \equiv s_j\pmod p$
+for some $i,j$ with $i < j < i+p$.
+Then $a_{s_i+k} = a_{s_j+k}$ for all $k \ge 0$,
+therefore $s_{s_i+k} - s_{s_i} = s_{s_j+k} - s_{s_j}$ for all $k\ge 0$,
+therefore
+\[ a_{i+1} = f(s_i) - s_i = f(s_j) - s_j = a_{j+1}
+  \quad\text{ and }\quad
+  s_{i+1} = f(s_i)\equiv f(s_j) = s_{j+1}\pmod p. \]
+Continuing this inductively, we obtain $a_{i+k} = a_{j+k}$ for all $k$,
+so $\{a_n\}$ has period $j-i < p$, which is a contradiction.
+Therefore $s_i \not\equiv s_j\pmod p$ for all $i < j < i+p$,
+and this implies that $\{s_i, \dots, s_{i+p-1}\}$ forms a
+complete residue system modulo $p$ for all $i$.
+Consequently we must have $s_{i+p} \equiv s_i\pmod p$ for all $i$.
+
+Let $T = s_p - s_0 = a_1 + \dotsb + a_p$.
+Since $\{a_n\}$ is periodic with period $p$, and $\{i+1,\dots,i+kp\}$
+contains exactly $k$ values of each residue class modulo $p$,
+\[ s_{i+kp} - s_i = a_{i+1} + \dotsb + a_{i+kp} = kT \] for all $i,k$.
+Since $p\mid T$, it follows that
+$s_{s_p} - s_{s_0} = \frac Tp\cdot T = \frac{T^2}{p}$.
+Summing up the inequalities
+\[ s_{s_n} - s_{s_{n-1}}
+  \le N < s_{s_n+1} - s_{s_{n-1}} = s_{s_n} - s_{s_{n-1}} + a_{s_n+1} \]
+for $n\in\{1,\dots,p\}$ then implies
+\[ \frac{T^2}{p} = s_{s_p} - s_{s_0} \le Np
+  < \frac{T^2}{p} + a_{s_1+1} + a_{s_2+1} + \dotsb + a_{s_p+1}
+  = \frac{T^2}{p} + T, \]
+where the last equality holds because $\{s_1+1,\dots,s_p+1\}$
+is a complete residue system modulo $p$.
+Dividing this by $p$ yields $t^2\le N < t^2+t$ for
+$t \coloneqq \frac Tp\in\ZZ^+$.
+
+\begin{remark*}
+  [Author comments]
+  There are some similarities between this problem and IMO 2009/3,
+  mainly that they both involve terms of the form $s_{s_n}$ and $s_{s_n+1}$
+  and the sequence $s_0, s_1,\dots$ turns out to be an arithmetic progression.
+  Other than this, I don't think knowing about IMO 2009/3 will
+  be that useful on this problem, since in this problem the fact
+  that $\{s_{n+1}-s_n\}$ is periodic is fundamentally important.
+
+  The motivation for this problem comes from the following scenario:
+  assume we have boxes that can hold some things of total size $\le N$,
+  and a sequence of things of size $a_1, a_2, \dots$
+  (where $a_i \coloneqq s_{i+1} - s_i$).
+  We then greedily pack the things in a sequence of boxes,
+  `closing' each box when it cannot fit the next thing.
+  The number of things we put in each box gives a sequence $b_1, b_2, \dots$.
+  This problem asks when we can have $\{a_n\} = \{b_n\}$,
+  assuming that we start with a sequence $\{a_n\}$ that is periodic.
+
+  (Extra motivation: I first thought about this scenario
+  when I was pasting some text repeatedly into the Notes app and noticed that
+  the word at the end of lines are also (eventually) periodic.)
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{TSTST 2022/4, proposed by Merlijn Staps}
+\textsl{Available online at \url{https://aops.com/community/p25517031}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A function $f \colon \NN \to \NN$ has the property that
+for all positive integers $m$ and $n$, exactly one of the $f(n)$ numbers
+\[ f(m+1), f(m+2), \dots, f(m+f(n)) \]
+is divisible by $n$.
+Prove that $f(n)=n$ for infinitely many positive integers $n$.
+\end{mdframed}
+We start with the following claim:
+
+\begin{claim*}
+  If $a \mid b$ then $f(a) \mid f(b)$.
+\end{claim*}
+\begin{proof}
+  From applying the condition with $n=a$,
+  we find that the set $S_a = \{n \ge 2: a \mid f(n)\}$
+  is an arithmetic progression with common difference $f(a)$.
+  Similarly, the set $S_b = \{n \ge 2: b \mid f(n)\}$
+  is an arithmetic progression with common difference $f(b)$.
+  From $a \mid b$ it follows that $S_b \subseteq S_a$.
+  Because an arithmetic progression with common difference $x$ can only be
+  contained in an arithmetic progression with common difference $y$
+  if $y \mid x$, we conclude $f(a) \mid f(b)$.
+\end{proof}
+
+In what follows, let $a \ge 2$ be any positive integer.
+Because $f(a)$ and $f(2a)$ are both divisible by $f(a)$,
+there are $a+1$ consecutive values of $f$ of which
+at least two divisible by $f(a)$. It follows that $f(f(a)) \le a$.
+
+However, we also know that exactly one of
+$f(2)$, $f(3)$, \dots, $f(1+f(a))$ is divisible by $a$; let this be $f(t)$.
+Then we have $S_a = \{t, t+f(a), t+2f(a), \dots\}$.
+Because $a \mid f(t) \mid f(2t)$,
+we know that $2t \in S_a$, so $t$ is a multiple of $f(a)$.
+Because $2 \le t \le 1+f(a)$, and $f(a) \ge 2$ for $a \ge 2$,
+we conclude that we must have $t=f(a)$,
+so $f(f(a))$ is a multiple of $a$.
+Together with $f(f(a)) \le a$, this yields $f(f(a)) = a$.
+Because $f(f(a)) = a$ also holds for $a=1$
+(from the given condition for $n=1$ it immediately follows that $f(1)=1$),
+we conclude that $f(f(a))=a$ for all $a$, and hence $f$ is a bijection.
+
+Moreover, we now have that $f(a) \mid f(b)$ implies $f(f(a)) \mid f(f(b))$,
+i.e.\ $a \mid b$, so $a \mid b$ if and only if $f(a) \mid f(b)$.
+Together with the fact that $f$ is a bijection,
+this implies that $f(n)$ has the same number of divisors of $n$.
+Let $p$ be a prime. Then $f(p)=q$ must be a prime as well.
+If $q \neq p$, then from $f(p) \mid f(pq)$
+and $f(q) \mid f(pq)$ it follows that $pq \mid f(pq)$, so $f(pq) = pq$
+because $f(pq)$ and $pq$ must have the same number of divisors.
+Therefore, for every prime number $p$ we either have that $f(p)=p$
+or $f(pf(p)) = pf(p)$.
+From here, it is easy to see that $f(n)=n$ for infinitely many $n$.
+\pagebreak
+
+\subsection{TSTST 2022/5, proposed by Ray Li}
+\textsl{Available online at \url{https://aops.com/community/p25517063}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $A_1$, \dots, $A_{2022}$ be the vertices of a regular $2022$-gon in the plane.
+Alice and Bob play a game.
+Alice secretly chooses a line and colors all points in the plane
+on one side of the line blue, and all points on the other side of the line red.
+Points on the line are colored blue,
+so every point in the plane is either red or blue.
+(Bob cannot see the colors of the points.)
+
+In each round, Bob chooses a point in the
+plane (not necessarily among $A_1$, \dots, $A_{2022}$)
+and Alice responds truthfully with the color of that point.
+What is the smallest number $Q$ for which Bob has a strategy to
+always determine the colors of points $A_1$, \dots, $A_{2022}$ in $Q$ rounds?
+\end{mdframed}
+The answer is $22$.
+To prove the lower bound, note that there are
+$2022\cdot 2021 + 2 > 2^{21}$ possible colorings.
+If Bob makes less than $22$ queries,
+then he can only output $2^{21}$ possible colorings,
+which means he is wrong on some coloring.
+
+Now we show Bob can always win in $22$ queries.
+A key observation is that the set of red points is convex,
+as is the set of blue points, so if a set of points is all the same color,
+then their convex hull is all the same color.
+\begin{lemma*}
+  Let $B_0$, \dots, $B_{k+1}$ be equally spaced points on a circular arc
+  such that colors of $B_0$ and $B_{k+1}$ differ and are known.
+  Then it is possible to determine the colors of $B_1$, \dots, $B_k$
+	in $\left\lceil \log_2k \right\rceil$ queries.
+\end{lemma*}
+\begin{proof}
+  There exists some $0\le i\le k$ such that $B_0$, \dots, $B_{i}$
+  are the same color and $B_{i+1}$, \dots, $B_{k+1}$ are the same color.
+  (If $i<j$ and $B_0$ and $B_j$ were red and $B_i$ and $B_{k+1}$ were blue,
+  then segment $B_0B_j$ is red and segment $B_iB_{k+1}$ is blue,
+  but they intersect).
+  Therefore we can binary search.
+\end{proof}
+\begin{lemma*}
+  Let $B_0$, \dots, $B_{k+1}$ be equally spaced points on a circular arc
+  such that colors of $B_0$, $B_{\left\lceil k/2 \right\rceil}$, $B_{k+1}$
+  are both red and are known.
+  Then at least one of the following holds:
+  all of $B_1$ ,\dots, $B_{\left\lceil k/2 \right\rceil}$ are red
+  or all of $B_{\left\lceil k/2 \right\rceil}$,\dots,$B_k$ are red.
+  Furthermore, in one query we can determine which one of the cases holds.
+\end{lemma*}
+\begin{proof}
+  The existence part holds for similar reason to previous lemma.
+  To figure out which case, choose a point $P$ such that
+  all of $B_0$, \dots, $B_{k+1}$
+  lie between rays $PB_0$ and $PB_{\left\lceil k/2 \right\rceil}$,
+  and such that $B_1$, \dots, $B_{\left\lceil k/2 \right\rceil-1}$ lie inside
+  triangle $PB_0B_{\left\lceil k/2 \right\rceil}$ and such that
+  $B_{\left\lceil k/2 \right\rceil+1}$, \dots, $B_{k+1}$ lie outside
+  (this point should always exist by looking around the intersections of lines $B_0B_1$ and
+  $B_{\left\lceil k/2 \right\rceil-1}B_{\left\lceil k/2 \right\rceil}$).
+  Then if $P$ is red, all the inside points are red
+	because they lie in the convex hull of red points $P$, $B_0$, $B_{\left\lceil k/2 \right\rceil}$.
+  If $P$ is blue, then all the outside points are red:
+  if $B_i$ were blue for $i > \left\lceil k/2 \right\rceil$,
+  then the segment $PB_i$ is blue and intersect the segment
+  $B_0B_{\left\lceil k/2 \right\rceil}$, which is red, contradiction.
+\end{proof}
+Now the strategy is: Bob picks $A_1$. WLOG it is red.
+Now suppose Bob does not know the colors of $\le 2^k-1$ points
+$A_i$, \dots, $A_j$ with $j-i+1\le 2^k-1$ and knows the rest are red.
+I claim Bob can win in $2k-1$ queries.
+First, if $k=1$, there is one point and he wins by querying the point,
+so the base case holds, so assume $k>1$.
+Bob queries $A_{i+\left\lceil (j-i+1)/2 \right\rceil}$.
+If it is blue, he finishes in $2\log_2{\left\lceil (j-i+1)/2 \right\rceil} \le 2(k-1)$
+queries by the first lemma, for a total of $2k-1$ queries.
+If it is red, he can query one more point and learn some half
+of $A_i$, \dots, $A_j$ that are red by the second lemma,
+and then he has reduced it to the case with $\le 2^{k-1}-1$ points
+in two queries, at which point we induct.
+\pagebreak
+
+\subsection{TSTST 2022/6, proposed by Hongzhou Lin}
+\textsl{Available online at \url{https://aops.com/community/p25516957}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $O$ and $H$ be the circumcenter and orthocenter,
+respectively, of an acute scalene triangle $ABC$.
+The perpendicular bisector of $\ol{AH}$ intersects
+$\ol{AB}$ and $\ol{AC}$ at $X_A$ and $Y_A$ respectively.
+Let $K_A$ denote the intersection of
+the circumcircles of triangles $OX_AY_A$ and $BOC$ other than $O$.
+
+Define $K_B$ and $K_C$ analogously by repeating this
+construction two more times.
+Prove that $K_A$, $K_B$, $K_C$, and $O$ are concyclic.
+\end{mdframed}
+We present several approaches.
+
+\paragraph{First solution, by author.}
+Let $\odot OX_AY_A$ intersects $AB$, $AC$ again at $U$, $V$.
+Then by Reim's theorem $UVCB$ are concyclic.
+Hence the radical axis of $\odot OX_AY_A$, $\odot OBC$ and $\odot (UVCB)$
+are concurrent, i.e.\ $OK_A$, $BC$,  $UV$ are concurrent,
+Denote the intersection as $K_A^\ast$,
+which is indeed the inversion of $K_A$ with respect to $\odot O$.
+(The inversion sends $\odot OBC$ to the line $BC$).
+
+Let $P_A$, $P_B$, $P_C$ be the circumcenters of $\triangle OBC$,
+$\triangle OCA$, $\triangle OAB$ respectively.
+
+\begin{claim*}
+  $K_A^\ast$ coincides with the intersection of $P_BP_C$ and $BC$.
+\end{claim*}
+\begin{proof}
+  Note that $d(O, BC) = 1/2 AH = d(A,X_AY_A)$.
+  This means the midpoint $M_C$ of $AB$ is equal distance
+  to $X_AY_A$ and the line through $O$ parallel to $BC$.
+  Together with $OM_C \perp AB$ implies that $\angle M_CX_AO = \angle B$.
+  Hence $\angle UVO = \angle B = \angle AVU$.
+  Similarly $\angle VUO = \angle AUV$,
+  hence $\triangle AUV \simeq \triangle OUV$.
+  In other words, $UV$ is the perpendicular bisector of $AO$,
+  which pass through $P_B$, $P_C$.
+  Hence $K_A^\ast$ is indeed $P_BP_C \cap BC$.
+\end{proof}
+
+Finally by Desargue's theorem,
+it suffices to show that $AP_A$, $BP_B$, $CP_C$ are concurrent.
+Note that
+\begin{align*}
+  d(P_A, AB) &= P_AB \sin (90\dg + \angle C - \angle A), \\
+  d(P_A, AC) &= P_AC \sin (90\dg + \angle B - \angle A).
+\end{align*}
+Hence the symmetric product and trig Ceva finishes the proof.
+
+\begin{center}
+\begin{asy}
+size(12cm);
+pair A = dir(50);
+pair B = dir(220);
+pair C = dir(320);
+filldraw(A--B--C--cycle, opacity(0.1)+lightcyan, blue);
+pair O = origin;
+draw(O--A, lightblue);
+draw(O--B, lightblue);
+draw(O--C, lightblue);
+
+pair P_A = circumcenter(O, B, C);
+pair P_B = circumcenter(O, C, A);
+pair P_C = circumcenter(O, A, B);
+pair H = orthocenter(A, B, C);
+pair M = midpoint(A--H);
+pair X_A = extension(A, B, M, B-C+M);
+pair Y_A = extension(A, C, M, B-C+M);
+pair X = X_A;
+pair Y = Y_A;
+
+draw(A--H, blue);
+pair K_A = -O+2*foot(O, circumcenter(O, B, C), circumcenter(O, X_A, Y_A));
+pair K_As = extension(P_B, P_C, B, C);
+draw(circumcircle(O, B, C), grey);
+draw(circumcircle(O, X_A, Y_A), grey);
+
+draw(O--K_As, deepgreen);
+draw(K_As--B, blue);
+
+pair U_1 = -X+2*foot(circumcenter(O, X_A, Y_A), A, B);
+pair U_2 = -Y+2*foot(circumcenter(O, X_A, Y_A), A, C);
+draw(U_1--K_As, deepgreen);
+pair M_C = midpoint(A--B);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$O$", O, 1.4*dir(250));
+dot("$P_A$", P_A, dir(P_A));
+dot("$H$", H, dir(225));
+dot(M);
+dot("$X_A$", X_A, dir(115));
+dot("$Y_A$", Y_A, dir(40));
+dot("$K_A$", K_A, 1.4*dir(90));
+dot("$K_A^\ast$", K_As, dir(K_As));
+dot("$U_1$", U_1, dir(130));
+dot("$U_2$", U_2, dir(0));
+dot("$M_C$", M_C, dir(M_C));
+
+/* TSQ Source:
+
+A = dir 50
+B = dir 220
+C = dir 320
+A--B--C--cycle 0.1 lightcyan / blue
+O = origin 1.4R250
+O--A lightblue
+O--B lightblue
+O--C lightblue
+
+P_A = circumcenter O B C
+P_B := circumcenter O C A
+P_C := circumcenter O A B
+H = orthocenter A B C R225
+M .= midpoint A--H
+X_A = extension A B M B-C+M R115
+Y_A = extension A C M B-C+M R40
+X := X_A
+Y := Y_A
+
+A--H blue
+K_A = -O+2*foot O circumcenter O B C circumcenter O X_A Y_A 1.4R90
+K_A* = extension P_B P_C B C
+circumcircle O B C grey
+circumcircle O X_A Y_A grey
+
+O--K_As deepgreen
+K_As--B blue
+
+U_1 = -X+2*foot circumcenter O X_A Y_A A B R130
+U_2 = -Y+2*foot circumcenter O X_A Y_A A C R0
+U_1--K_As deepgreen
+M_C = midpoint A--B
+
+*/
+\end{asy}
+\end{center}
+
+\paragraph{Second solution, from Jeffrey Kwan.}
+Let $O_A$ be the circumcenter of $\triangle AX_AY_A$.
+The key claim is that:
+
+\begin{claim*}
+$O_AX_AY_AO$ is cyclic.
+\end{claim*}
+
+\begin{proof}
+Let $DEF$ be the orthic triangle;
+we will show that $\triangle OX_AY_A\sim \triangle DEF$.
+Indeed, since $AO$ and $AD$ are isogonal, it suffices to note that
+\[ \frac{AX_A}{AB} = \frac{AH/2}{AD} = \frac{R\cos A}{AD}, \]
+and so
+\[ \frac{AO}{AD} = R\cdot \frac{AX_A}{AB\cdot R\cos A}
+  = \frac{AX_A}{AE} = \frac{AY_A}{AF}. \]
+Hence $\angle X_AOY_A = 180\dg - 2\angle A = 180\dg - \angle X_AO_AY_A$,
+which proves the claim.
+\end{proof}
+
+Let $P_A$ be the circumcenter of $\triangle OBC$,
+and define $P_B$, $P_C$ similarly.
+By the claim, $A$ is the exsimilicenter of $(OX_AY_A)$ and $(OBC)$,
+so $AP_A$ is the line between their two centers.
+In particular, $AP_A$ is the perpendicular bisector of $OK_A$.
+
+
+\begin{center}
+\begin{asy}
+defaultpen(fontsize(10pt));
+size(13cm);
+pair A, B, C, O, H, N, D, OA, PA, PB, PC, X1, X2, KA;
+A = dir(110);
+B = dir(220);
+C = dir(320);
+O = (0,0);
+H = orthocenter(A, B, C);
+N = (A+H)/2;
+X1 = extension(N, rotate(90, N)*A, A, B);
+X2 = extension(N, rotate(90, N)*A, A, C);
+KA = -O+2*foot(O, circumcenter(O, X1, X2), circumcenter(B, O, C));
+OA = circumcenter(A, X1, X2);
+PA = circumcenter(O, B, C);
+PB = circumcenter(O, C, A);
+PC = circumcenter(O, A, B);
+draw(A--B--C--cycle, orange);
+draw(circumcircle(A, B, C), red);
+draw(A--foot(A, B, C)^^B--foot(B, C, A)^^C--foot(C, A, B), heavygreen+dotted);
+draw(X1--X2, dashed+lightblue);
+draw(circumcircle(O, B, C), heavycyan);
+draw(circumcircle(O, X1, X2), lightblue);
+draw(A--PA, magenta);
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$O$", O, dir(270));
+dot("$H$", H, dir(300));
+dot("$X_A$", X1, dir(160));
+dot("$Y_A$", X2, dir(45));
+dot("$K_A$", KA, dir(270));
+dot("$O_A$", OA, dir(90));
+dot("$P_A$", PA, dir(270));
+\end{asy}
+\end{center}
+
+\begin{claim*}
+$AP_A$, $BP_B$, $CP_C$ concur at $T$.
+\end{claim*}
+
+\begin{proof}
+The key observation is that $O$ is the incenter of $\triangle P_AP_BP_C$,
+and that $A$, $B$, $C$ are the reflections of $O$ across the sides of $\triangle P_AP_BP_C$.
+Hence $P_AA$, $P_BB$, $P_CC$ concur by Jacobi.
+\end{proof}
+
+Now $T$ lies on the perpendicular bisectors of $OK_A$, $OK_B$, and $OK_C$.
+Hence $OK_AK_BK_C$ is cyclic with center $T$, as desired.
+\pagebreak
+
+\section{Solutions to Day 3}
+\subsection{TSTST 2022/7, proposed by Merlijn Staps}
+\textsl{Available online at \url{https://aops.com/community/p25516961}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCD$ be a parallelogram.
+Point $E$ lies on segment $CD$ such that
+\[ 2\angle AEB = \angle ADB+\angle ACB, \]
+and point $F$ lies on segment $BC$ such that
+\[ 2\angle DFA = \angle DCA + \angle DBA. \]
+Let $K$ be the circumcenter of triangle $ABD$. Prove that $KE=KF$.
+\end{mdframed}
+Let the circle through $A$, $B$, and $E$ intersect $CD$ again at $E'$,
+and let the circle through $D$, $A$, and $F$ intersect $BC$ again at $F'$.
+Now $ABEE'$ and $DAF'F$ are cyclic quadrilaterals with two parallel sides,
+so they are isosceles trapezoids.
+From $KA=KB$, it now follows that $KE=KE'$,
+whereas from $KA=KD$ it follows that $KF=KF'$.
+
+Next, let the circle through $A$, $B$, and $E$ intersect $AC$ again at $S$.
+Then
+\[ \angle ASB = \angle AEB = \frac12(\angle ADB + \angle ACB)
+  = \frac12(\angle ADB + \angle DAC) = \frac12 \angle AMB, \]
+where $M$ is the intersection of $AC$ and $BD$.
+From $\angle ASB = \frac12 \angle AMB$, it follows that $MS=MB$,
+so $S$ is the point on $MC$ such that $MS=MB=MD$.
+By symmetry, the circle through $A$, $D$, and $F$ also passes through $S$,
+and it follows that the line $AS$ is the radical axis
+of the circles $(ABE)$ and $(ADF)$.
+
+By power of a point, we now obtain
+\[ CE \cdot CE' = CS \cdot CA = CF \cdot CF', \]
+from which it follows that $E$, $F$, $E'$, and $F'$ are concyclic.
+The segments $EE'$ and $FF'$ are not parallel, so their
+perpendicular bisectors only meet at one point, which is $K$.
+Hence $KE=KF$.
+\pagebreak
+
+\subsection{TSTST 2022/8, proposed by Merlijn Staps}
+\textsl{Available online at \url{https://aops.com/community/p25516968}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all functions $f \colon \NN \to \ZZ$ such that
+\[ \left\lfloor \frac{f(mn)}{n} \right\rfloor = f(m) \]
+for all positive integers $m$, $n$.
+\end{mdframed}
+There are two families of functions that work:
+for each $\alpha \in \RR$ the function $f(n) = \lfloor \alpha n \rfloor$,
+and for each $\alpha \in \RR$ the function
+$f(n) = \lceil \alpha n \rceil - 1$.
+(For irrational $\alpha$ these two functions coincide.)
+It is straightforward to check that these functions indeed work;
+essentially, this follows from the identity
+\[ \left\lfloor \frac{\lfloor xn \rfloor}{n} \right\rfloor
+  = \lfloor x \rfloor \]
+which holds for all positive integers $n$ and real numbers $x$.
+
+We now show that every function that works must be of one of the above forms.
+Let $f$ be a function that works,
+and define the sequence $a_1$, $a_2$, \dots\ by $a_n = f(n!)/n!$.
+Applying the give condition with $(n!, n+1)$ yields
+$a_{n+1} \in [a_n, a_n + \frac{1}{n!})$. %chktex 9
+It follows that the sequence $a_1$, $a_2$, \dots\ is
+non-decreasing and bounded from above by $a_1 + e$,
+so this sequence must converge to some limit $\alpha$.
+
+If there exists a $k$ such that $a_k = \alpha$,
+then we have $a_\ell = \alpha$ for all $\ell > k$.
+For each positive integer $m$,
+there exists $\ell > k$ such that $m \mid \ell!$.
+Plugging in $mn=\ell!$, it then follows that
+\[ f(m) = \left\lfloor \frac{f(\ell!)}{\ell! / m} \right \rfloor
+  = \left \lfloor \alpha m \right \rfloor \]
+for all $m$, so $f$ is of the desired form.
+
+If there does not exist a $k$ such that $a_k = \alpha$,
+we must have $a_k < \alpha$ for all $k$.
+For each positive integer $m$, we can now pick an $\ell$
+such that $m \mid \ell!$ and $a_{\ell} = \alpha - x$
+with $x$ arbitrarily small.
+It then follows from plugging in $mn=\ell!$ that
+\[ f(m) = \left\lfloor \frac{f(\ell!)}{\ell! / m} \right \rfloor
+  = \left\lfloor \frac{\ell!(\alpha - x)}{\ell!/m} \right\rfloor
+  = \left\lfloor \alpha m - mx \right \rfloor. \]
+If $\alpha m$ is an integer we can choose $\ell$ such that $mx < 1$,
+and it follows that $f(m) = \lceil \alpha m \rceil - 1$.
+If $\alpha m$ is not an integer we can choose $\ell$
+such that $mx < \{\alpha m \}$,
+and it also follows that $f(m) = \lceil \alpha m \rceil - 1$.
+We conclude that in this case $f$ is again of the desired form.
+\pagebreak
+
+\subsection{TSTST 2022/9, proposed by Vincent Huang}
+\textsl{Available online at \url{https://aops.com/community/p25517112}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $k > 1$ be a fixed positive integer.
+Prove that if $n$ is a sufficiently large positive integer,
+there exists a sequence of integers with the following properties:
+\begin{itemize}
+  \item Each element of the sequence is between $1$ and $n$, inclusive.
+  \item For any two different contiguous subsequences of the sequence with
+    length between $2$ and $k$ inclusive,
+    the multisets of values in those two subsequences is not the same.
+  \item The sequence has length at least $0.499n^2$.
+\end{itemize}
+\end{mdframed}
+For any positive integer $n$,
+define an $(n,k)$-good sequence to be a finite sequence of integers
+each between $1$ and $n$ inclusive satisfying the
+second property in the problem statement.
+The problems asks to show that,
+for all sufficiently large integers $n$,
+there is an $(n,k)$-good sequence of length at least $0.499n^2$.
+
+Fix $k\ge 2$ and consider some prime power $n=p^m$ with $p>k+1$. Consider some $0 < g < \frac{n}{k}-1$ with $\gcd (g, n)=1$ and let $a$ be the smallest positive integer with $g^a \equiv \pm 1\pmod n$.
+
+\begin{claim*}
+  [Main claim]
+  For $k,n,g,a$ defined as above,
+  there is an $(n,k)$-good sequence of length $a(n+2)+2$.
+\end{claim*}
+
+To prove the main claim,
+we need some results about the structure of $\mathbb Z / n\mathbb Z$.
+Specifically, we'll first show that any nontrivial arithmetic sequence
+is uniquely recoverable.
+
+\begin{lemma*}
+  Consider any arithmetic progression of length $i\le k$ whose common difference is relatively prime to $n$, and let $S$ be the set of residues it takes modulo $n$. Then there exists a unique integer $0 < d \le \frac{n}{2}$ and a unique integer $0 \le a < n$ such that \[S = \{ a, a+d, \dots, a+(i-1)d\}.\]
+\end{lemma*}
+
+\begin{proof}
+  [Proof of lemma]
+  We'll split into cases, based on if $i$ is odd or not.
+  \begin{itemize}
+    \ii \textit{Case 1:} $i$ is odd, so $i=2j+1$ for some $j$. Then the middle term of the arithmetic progression is the average of all residues in $S$, which we can uniquely identify as some $u$ (and we know $n$ is coprime to $i$, so it is possible to average the residues). We need to show that there is only one choice of $d$, up to $\pm$, so that $S = \{ u-jd, u-(j-1)d, \dots, u+jd\}$.
+
+    Let $X$ be the sum of squares of the residues in $S$, so we have \[X\equiv (u-jd)^2 + (u-(j-1)d)^2 + \dots + (u+jd)^2 = (2j+1)u^2 + d^2\frac{j(j+1)(2j+1)}{3},\] which therefore implies \[3(X - (2j+1)u^2)(j(j+1)(2j+1))^{-1} \equiv d^2,\] thus identifying $d$ uniquely up to sign as desired.
+
+    \ii \textit{Case 2:} $i$ is even, so $i=2j$ for some $j$. Once again we can compute the average $u$ of the residues in $S$, and we need to show that there is only one choice of $d$, up to $\pm$, so that $S = \{ u-(2j-1)d, u-(2j-3)d, \dots, u+(2j-1)d \}$. Once again we compute the sum of squares $X$ of the residues in $S$, so that \[X \equiv (u-(2j-1)d)^2 + (u-(2j-3)d)^2 + \dots + (u + (2j-1)d)^2 = 2ju^2 + \frac{(2j-1)2j(2j+1)}{3}\] which therefore implies \[3(X-2ju^2) ((2j-1)2j(2j+1))^{-1} \equiv d^2,\] again identifying $d$ uniquely up to sign as desired.
+  \end{itemize}
+
+  Thus we have shown that given the set of residues an arithmetic progression takes on modulo $n$, we can recover that progression up to sign. Here we have used the fact that given $d^2 \pmod n$, it is possible to recover $d$ up to sign provided that $n$ is of the form $p^m$ with $p\neq 2$ and $\gcd (d,n)=1$.
+\end{proof}
+
+Now, we will proceed by chaining many arithmetic sequences together.
+
+\begin{definition*}
+For any integer $l$ between $0$ and $a-1$, inclusive, define $C_l$ to be the sequence $0, g^l, g^l, 2g^l, 3g^l, \dots, (n-1)g^l, (n-1)g^l$ taken $\pmod n$. (This is just a sequence where the $i$th term is $(i-1)g^l$, except the terms $g^l, (n-1)g^l$ is repeated once.)
+\end{definition*}
+
+\begin{definition*}
+Consider the sequence $S_n$ of residues mod $n$ defined as follows:
+\begin{itemize}
+  \item The first term of $S_n$ is $0$.
+  \item For each $0\le l < a$, the next $n+2$ terms of $S_n$ are the terms of $C_l$ in order.
+  \item The next and final term of $S_n$ is $0$.
+\end{itemize}
+\end{definition*}
+
+ We claim that $S_n$ constitutes a $k$-good string with respect to the alphabet of residues modulo $n$. We first make some initial observations about $S_n$.
+
+\begin{lemma*}
+  $S_n$ has the following properties:
+  \begin{itemize}
+    \item $S_n$ has length $a(n+2)+2$.
+    \item If a contiguous subsequence of $S_n$ of length $\le k$ contains two of the same residue $\pmod n$, those two residues occur consecutively in the subsequence.
+  \end{itemize}
+\end{lemma*}
+\begin{proof}
+  [Proof of lemma]
+  The first property is clear since each $C_l$ has length $n+2$, and there are $a$ of them, along with the $0$s at beginning and end.
+
+  To prove the second property, consider any contiguous subsequence $S_n[i:i+k-1]$ of length $k$ which contains two of the same residue modulo $n$. If $S_n [i:i+k-1]$ is wholly contained within some $C_l$, it's clear that the only way $S_n[i:i+k-1]$ could repeat residues if it repeats one of the two consecutive values $g^l,g^l$ or $(n-1)g^l, (n-1)g^l$, so assume that is not the case.
+
+  Now, it must be true that $S_n[i:i+k-1]$ consists of one contiguous subsequence of the form \[(n-k_1)g^{l-1}, (n-(k_1-1))g^{l-1}, \dots, (n-1)g^{l-1}, (n-1)g^{l-1},\] which are the portions of $S_n[i:i+k-1]$ contained in $C_{l-1}$, and then a second contiguous subsequence of the form \[0, g^l, g^l, 2g^l, \dots, k_2g^l,\] which are the portions of $S_n[i:i+k-1]$ contained in $C_l$, and we obviously have $k_2+k_1=k-3$. For $S_n[i:i+k-1]$ to contain two of the same residue in non-consecutive positions, there would have to exist some $0<u \le k_1, 0<v\le k_2$ with $(n-u)g^{l-1} \equiv vg^l \pmod n$, meaning that $u + gv \equiv 0\pmod n$. But we know since $k_1 + k_2 < k$ that $ 0 < u +gv < k+kg < n$, so this is impossible, as desired.
+\end{proof}
+Now we can prove the main claim.
+
+\begin{proof}
+  [Proof of main claim]
+Consider any multiset $M$ of $2\le i\le k$ residues $\pmod n$ which corresponds to some unknown contiguous subsequence of $S_n$. We will show that it is possible to uniquely identify which contiguous subsequence $M$ corresponds to, thereby showing that $S_n$ has no twins of length $i$ for each $2\le i\le k$, and then the result will follow.
+
+First suppose $M$ contains some residue twice. By the last lemma there are only a few possible cases: \begin{itemize}
+    \item $M$ contains multiple copies of the residue $0$. In this case we know $M$ contains the beginning of $S_n$, so the corresponding contiguous subsequence is just the first $i$ terms of $S_n$.
+    \item $M$ contains multiple copies of multiple residues. By the last lemma and the structure of $S_n$, we can easily see that $M$ must contain two copies of $-g^{i-1}$ and two copies of $g^i$ for some $0 \le i < a$ that can be identified uniquely, and $M$ must contain portions of both $C_{i-1}, C_i$. It follows $M$'s terms can be partitioned into two portions, the first one being  \[-i_1g^{i-1}, -(i_1-1)g^{i-1}, \dots, -g^{i-1}, -g^{i-1},\] and the second one being \[0, g^i, g^i, 2g^i, \dots, i_2 g^i\] for some $i_1,i_2$ with $i_1+i_2 = i-3$, and we just need to uniquely identify $i_1, i_2$. Luckily, by dividing the residues in $M$ by $g^{i-1}$, we know we can partition $M$'s terms into \[-i_1, -(i_1-1), \dots, -1, -1\] as well as \[0, g, g, 2g, \dots, i_2g. \] Now since $i_2g \le kg < n-k$ and $-i_1 \equiv n - i_1 \ge n-k$ it is easy to see that $i_1,i_2$ can be identified uniquely, as desired.
+    \item $M$ contains multiple copies of only one residue $g^i$, for some $0\le i < a$ that can be identified uniquely. Then by the last lemma $M$ must be located at the beginning of $C_i$ and possibly contain the last few terms of $C_{i-1}$, so $M$ must be of the form $g^i, g^i, 2g^i, \dots, i_1g^i$, along with possibly the term $0$ or the terms $0, -g^{i-1}$. So when we divide $M$ by $g^{i-1}$ we should be left with terms of the form $g, g, 2g, \dots, i_1g$ along with possibly $0$ or $0,-1$. Since $i_1g \le kg < n-k$, we can easily disambiguate these cases and uniquely identify the contiguous subsequence corresponding to $M$.
+    \item $M$ contains multiple copies of only one residue $-g^i$, for some $0 \le i < a$ that can be identified uniquely. Then by the last lemma $M$ must be located at the end of $C_i$ and possibly the first terms of $C_{i + 1}$, so $M$ must be of the form $-g^i, -g^i, -2g^i, \dots, -i_1g^i$, along with possibly the term $0$ or the terms $0, g^{i+1}$. So when we divide $M$ by $g^{i-1}$ we should be left with terms of the form $-1,-1,-2, \dots, -i_1$, along with possibly $0$ or $0, g$. Since $-i_1\equiv n-i_1 \ge \frac{n}{2}$ and $g < \frac{n}{2}$, we can disambiguate these cases and uniquely identify the contiguous subsequence corresponding to $M$.
+\end{itemize}
+Thus in all cases where $M$ contains a repeated residue, we can identify the unique contiguous subsequence of $S_n$ corresponding to $M$.
+
+When $M$ does not contain a repeated residue, it follows that $M$ cannot contain both of the $g^i$ terms or $(n-1)g^i$ terms at the beginning or end of each $C_i$. It follows that $M$ is either entirely contained in some $C_i$ or contained in the union of the end of some $C_i$ with the beginning of some $C_{i+1}$, meaning $M$ corresponds to a contiguous subsequence of $(-g^i, 0, g^{i+1})$. In the first case, since each $C_i$ is an arithmetic progression when the repeated terms are ignored, Lemma 1 implies that we can uniquely determine the location of $M$, and in the second case, it is easy to tell which contiguous subsequence of $(-g^i, 0, g^{i+1})$ corresponds to $M$.
+
+Therefore, in all cases, for any multiset $M$ corresponding to some contiguous subsequence of $S_n$ of length $i\le k$, we can uniquely identify the contiguous subsequence, meaning $S_n$ is $k$-good with respect to the alphabet of residues modulo $n$, as desired.
+\end{proof}
+
+Now we will finish the problem. We observe the following.
+
+\begin{claim*}
+Fix $k$ and let $p>k+1$ be a prime. Then for $n=p^2$ we can find a $(n,k)$-good sequence of length $\frac{p(p-1)(p^2+2)}{2}$.
+\end{claim*}
+\begin{proof}
+  [Proof of last claim]
+Let $g$ be the smallest primitive root modulo $n=p^2$, so that $a = \frac{p(p-1)}{2}$. As long as we can show that $g < \frac{n}{k}-1$, we can apply the previous claim to get the desired bound.
+
+We will prove a stronger statement that $g<p$. Indeed, consider any primitive root $g_0 \pmod p$. Then $g_0+ap$ has order $p-1$ modulo $p$, so its order modulo $p^2$ is divisible by $p-1$, hence $g_0+ap$ is a primitive root modulo $p^2$ as long as $(g_0+ap)^{p-1}\not\equiv 1\pmod {p^2}$. Now \[(g_0 + ap)^{p-1} = \sum_i g_0^{p-1-i}(ap)^i \binom{p-1}{i} \equiv g_0^{p-1} + g_0^{p-2}(ap) \pmod {p^2}.\] In particular, of the values $g_0, g_0+p, \dots, g_0+p(p-1)$, only one has order $p-1$ and the rest are primitive roots.
+
+So for each $0<g_0<p$ which is a primitive root modulo $p$, either $g_0$ is a primitive root modulo $p^2$ or $g_0$ has order $p-1$ but $g_0+p, g_0+2p, \dots, g_0+p(p-1)$ are all primitive roots. By considering all choices of $g_0$, we either find a primitive root $\pmod {p^2}$ which is between $0$ and $p$, or we find that all residues $\pmod {p^2}$ of order $p-1$ are between $0$ and $p$. But if $\text{ord}_{p^2} (a) = p-1$ then $\text{ord}_{p^2} (a^{-1}) = p-1$, and two residues between $0,p$ cannot be inverses modulo $p^2$ (because with the exception of $1$, they cannot multiply to something $\ge p^2+1$), so there is always a primitive root between $0,p$ as desired.
+\end{proof}
+
+Now for arbitrarily large $n$ we can choose $p<\sqrt{n}$ with $\frac{p}{\sqrt{n}}$ arbitrarily close to $1$; by the previous claim, we can get an $(n,k)$-good sequence of length at least $\frac{p-1}{p} \cdot \frac{p^4}{2}$ for any constant, so for sufficiently large $n,p$ we get $(n,k)$-good sequences of length $0.499n^2$.
+\pagebreak
+
+
+\end{document}

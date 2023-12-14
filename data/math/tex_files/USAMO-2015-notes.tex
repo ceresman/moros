@@ -1,0 +1,757 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2015 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2015 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Solve in integers the equation
+\[ x^2+xy+y^2 = \left(\frac{x+y}{3}+1\right)^3. \]
+
+\item %% Problem 2
+Quadrilateral $APBQ$ is inscribed in circle $\omega$ with
+$\angle P = \angle Q = 90^{\circ}$ and $AP = AQ < BP$.
+Let $X$ be a variable point on segment $\ol{PQ}$.
+Line $AX$ meets $\omega$ again at $S$ (other than $A$).
+Point $T$ lies on arc $AQB$ of $\omega$ such that $\ol{XT}$
+is perpendicular to $\ol{AX}$.
+Let $M$ denote the midpoint of chord $\ol{ST}$.
+
+As $X$ varies on segment $\ol{PQ}$, show that $M$ moves along a circle.
+
+\item %% Problem 3
+Let $S = \left\{ 1,2,\dots,n \right\}$, where $n \ge 1$.
+Each of the $2^n$ subsets of $S$ is to be colored red or blue.
+(The subset itself is assigned a color and not its individual elements.)
+For any set $T \subseteq S$,
+we then write $f(T)$ for the number of subsets of $T$ that are blue.
+
+Determine the number of colorings that satisfy the following condition:
+for any subsets $T_1$ and $T_2$ of $S$,
+\[ f(T_1)f(T_2) = f(T_1 \cup T_2)f(T_1 \cap T_2). \]
+
+\item %% Problem 4
+Steve is piling $m\geq 1$ indistinguishable stones
+on the squares of an $n\times n$ grid.
+Each square can have an arbitrarily high pile of stones.
+After he finished piling his stones in some manner,
+he can then perform \emph{stone moves}, defined as follows.
+Consider any four grid squares, which are corners of a rectangle,
+i.e.\ in positions $(i, k)$, $(i, l)$, $(j, k)$, $(j, l)$
+for some $1\leq i, j, k, l\leq n$, such that $i<j$ and $k<l$.
+A stone move consists of either removing one stone from each of
+$(i, k)$ and $(j, l)$ and moving them to $(i, l)$ and $(j, k)$ respectively,
+or removing one stone from each of $(i, l)$ and $(j, k)$
+and moving them to $(i, k)$ and $(j, l)$ respectively.
+
+Two ways of piling the stones are equivalent if they can be obtained
+from one another by a sequence of stone moves.
+How many different non-equivalent ways can Steve pile the stones on the grid?
+
+\item %% Problem 5
+Let $a$, $b$, $c$, $d$, $e$ be distinct positive integers
+such that $a^4+b^4=c^4+d^4=e^5$.
+Show that $ac+bd$ is a composite number.
+
+\item %% Problem 6
+Consider $0<\lambda<1$, and let $A$ be a multiset of positive integers.
+Let $A_n=\{a\in A: a\leq n\}$.
+Assume that for every $n\in\NN$,
+the multiset $A_n$ contains at most $n\lambda$ numbers.
+Show that there are infinitely many $n\in\NN$ for
+which the sum of the elements in $A_n$ is
+at most $\frac{n(n+1)}{2}\lambda$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2015/1, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p4769940}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Solve in integers the equation
+\[ x^2+xy+y^2 = \left(\frac{x+y}{3}+1\right)^3. \]
+\end{mdframed}
+We do the trick of setting $a=x+y$ and $b=x-y$.
+This rewrites the equation as
+\[ \frac14\left( (a+b)^2+(a+b)(a-b)+(a-b)^2 \right)
+  = \left( \frac a3 + 1 \right)^3 \]
+where $a,b \in \ZZ$ have the same parity.
+This becomes
+\[ 3a^2+b^2 = 4\left( \frac a3 + 1 \right)^3 \]
+which is enough to imply $3 \mid a$, so let $a = 3c$.
+Miraculously, this becomes \[ b^2 = (c-2)^2 (4c+1). \]
+
+So a solution must have $4c+1=m^2$, with $m$ odd.
+This gives
+\[ x = \frac 18 \left( 3 (m^2-1) \pm (m^3-9m)  \right)
+  \quad\text{and}\quad
+  y = \frac 18 \left( 3 (m^2-1) \mp (m^3-9m) \right).  \]
+For mod $8$ reasons,
+this always generates a valid integer solution,
+so this is the complete curve of solutions.
+Actually, putting $m=2n+1$ gives the much nicer curve
+\[
+ \boxed{x = n^3+3n^2-1
+ \quad\text{and}\quad
+ y = -n^3+3n+1}
+\] and permutations.
+
+For $n=0,1,2,3$ this gives the first few solutions
+are $(-1,1)$, $(3,3)$, $(19,-1)$, $(53, -17)$, (and permutations).
+% http://aops.com/community/c5h1083093p4769984
+\pagebreak
+
+\subsection{USAMO 2015/2, proposed by Zuming Feng, Jacek Fabrykowski}
+\textsl{Available online at \url{https://aops.com/community/p4769957}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Quadrilateral $APBQ$ is inscribed in circle $\omega$ with
+$\angle P = \angle Q = 90^{\circ}$ and $AP = AQ < BP$.
+Let $X$ be a variable point on segment $\ol{PQ}$.
+Line $AX$ meets $\omega$ again at $S$ (other than $A$).
+Point $T$ lies on arc $AQB$ of $\omega$ such that $\ol{XT}$
+is perpendicular to $\ol{AX}$.
+Let $M$ denote the midpoint of chord $\ol{ST}$.
+
+As $X$ varies on segment $\ol{PQ}$, show that $M$ moves along a circle.
+\end{mdframed}
+We present three solutions,
+one by complex numbers, two more synthetic.
+(A fourth solution using median formulas is also possible.)
+Most solutions will prove that the center of the fixed circle
+is the midpoint of $\ol{AO}$
+(with $O$ the center of $\omega$);
+this can be recovered empirically by letting
+\begin{itemize}
+  \ii $X$ approach $P$ (giving the midpoint of $\ol{BP}$)
+  \ii $X$ approach $Q$ (giving the point $Q$), and
+  \ii $X$ at the midpoint of $\ol{PQ}$ (giving the midpoint of $\ol{BQ}$)
+\end{itemize}
+which determines the circle;
+this circle then passes through $P$ by symmetry
+and we can find the center by taking the intersection
+of two perpendicular bisectors (which two?).
+
+\paragraph{Complex solution (Evan Chen).}
+Toss on the complex unit circle with $a = -1$, $b=1$, $z = -\tfrac12$.
+Let $s$ and $t$ be on the unit circle. We claim $Z$ is the center.
+
+It follows from standard formulas that
+\[ x = \frac 12 \left( s + t - 1 + s/t \right) \]
+thus \[ 4\operatorname{Re} x + 2
+  = s + t + \frac 1s + \frac 1t + \frac st + \frac ts \]
+which depends only on $P$ and $Q$, and not on $X$.
+Thus \[ 4\left\lvert z-\frac{s+t}{2} \right\rvert^2
+  = \left\lvert s+t+1 \right\rvert^2 = 3 + (4\operatorname{Re}x+2) \]
+does not depend on $X$, done.
+
+\paragraph{Homothety solution (Alex Whatley).}
+Let $G$, $N$, $O$ denote the centroid, nine-point center,
+and circumcenter of triangle $AST$, respectively.
+Let $Y$ denote the midpoint of $\ol{AS}$.
+Then the three points $X$, $Y$, $M$
+lie on the nine-point circle of triangle $AST$,
+which is centered at $N$ and has radius $\frac 12 AO$.
+
+\begin{center}
+\begin{asy}
+size(9cm);
+
+pair A = dir(90);
+pair B = dir(-90);
+pair S = dir(-50);
+pair T = dir(170);
+pair O = midpoint(A--B);
+pair X = foot(T, A, S);
+pair E = dir(0);
+
+pair P = IP(unitcircle, X--(X-2*E));
+pair Q = IP(unitcircle, X--(X+2*E));
+
+filldraw(unitcircle, opacity(0.2)+mediumcyan, mediumblue);
+
+pair M = midpoint(S--T);
+pair G = centroid(A, S, T);
+pair N = 3/2*G;
+
+filldraw(A--P--B--Q--cycle, opacity(0.1)+lightblue, mediumblue);
+draw(A--B, mediumblue+dotted);
+draw(P--Q, mediumblue+dotted);
+
+filldraw(A--S--T--cycle, opacity(0.4)+mediumgreen, heavygreen);
+filldraw(CP(N, M), opacity(0.6)+lightred, red);
+
+draw(T--X, heavygreen);
+draw(A--M, heavygreen);
+pair Y = midpoint(A--S);
+
+draw(O--N, red);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$S$", S, dir(S));
+dot("$T$", T, dir(T));
+dot("$O$", O, dir(-45));
+dot("$X$", X, dir(45));
+dot("$P$", P, dir(P));
+dot("$Q$", Q, dir(Q));
+dot("$M$", M, dir(M));
+dot("$G$", G, dir(30));
+dot("$N$", N, dir(N));
+dot("$Y$", Y, dir(Y));
+
+/* Source generated by TSQ
+
+!size(9cm);
+
+A = dir 90
+B = dir -90
+S = dir -50
+T = dir 170
+O = midpoint A--B R-45
+X = foot T A S R45
+E := dir 0
+
+P = IP unitcircle X--(X-2*E)
+Q = IP unitcircle X--(X+2*E)
+
+unitcircle 0.2 mediumcyan / mediumblue
+
+M = midpoint S--T
+G = centroid A S T R30
+N = 3/2*G
+
+A--P--B--Q--cycle 0.1 lightblue / mediumblue
+A--B mediumblue dotted
+P--Q mediumblue dotted
+
+A--S--T--cycle 0.4 mediumgreen / heavygreen
+CP N M 0.6 lightred / red
+
+T--X heavygreen
+A--M heavygreen
+Y = midpoint A--S
+
+O--N red
+
+*/
+\end{asy}
+\end{center}
+
+Let $R$ denote the radius of $\omega$.
+Note that the nine-point circle of $\triangle AST$
+has radius equal to $\half R$, and hence is independent of $S$ and $T$.
+Then the power of $A$ with respect to the nine-point circle equals
+\[ AN^2 - \left( \half R \right)^2 = AX \cdot AY
+  = \frac 12 AX \cdot AS = \frac 12 AQ^2 \]
+and hence
+\[ AN^2 = \left( \half R \right)^2 + \frac 12 AQ^2 \]
+which does not depend on the choice of $X$.
+So $N$ moves along a circle centered at $A$.
+
+Since the points $O$, $G$, $N$ are collinear on the Euler line of $\triangle AST$
+with \[ GO = \frac 23 NO \] it follows by homothety
+that $G$ moves along a circle as well,
+whose center is situated one-third of the way from $A$ to $O$.
+Finally, since $A$, $G$, $M$ are collinear with \[ AM = \frac 32 AG \]
+it follows that $M$ moves along a circle
+centered at the midpoint of $\ol{AO}$.
+
+\paragraph{Power of a point solution (Zuming Feng, official solution).}
+We complete the picture by letting $\triangle KYX$ be the orthic
+triangle of $\triangle AST$;
+in that case line $XY$ meets the $\omega$ again at $P$ and $Q$.
+
+\begin{center}
+\begin{asy}
+size(9cm);
+
+pair A = dir(125);
+pair B = -A;
+pair S = dir(210);
+pair T = dir(330);
+pair O = midpoint(A--B);
+pair X = foot(T, A, S);
+pair E = dir(0);
+
+filldraw(unitcircle, opacity(0.2)+mediumcyan, mediumblue);
+pair M = midpoint(S--T);
+
+filldraw(A--S--T--cycle, opacity(0.4)+mediumgreen, heavygreen);
+
+draw(T--X, heavygreen);
+draw(A--M, heavygreen);
+
+pair Y = foot(S, A, T);
+pair K = foot(A, S, T);
+filldraw(circumcircle(X, Y, M), opacity(0.1)+yellow, red);
+draw(S--Y, heavygreen);
+draw(A--K, heavygreen);
+
+pair P = IP(unitcircle, X--(3*Y-2*X));
+pair Q = IP(unitcircle, Y--(3*X-2*Y));
+
+pair V = extension(P, Q, S, T);
+draw(P--Q, blue);
+draw(A--B, blue);
+draw(Q--V, blue);
+draw(V--S, heavygreen);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$S$", S, dir(S));
+dot("$T$", T, dir(T));
+dot("$O$", O, dir(45));
+dot("$X$", X, dir(135));
+dot("$M$", M, dir(M));
+dot("$Y$", Y, dir(70));
+dot("$K$", K, dir(K));
+dot("$P$", P, dir(P));
+dot("$Q$", Q, dir(150));
+dot("$V$", V, dir(V));
+
+/* TSQ Source:
+
+!size(9cm);
+
+A = dir 125
+B = -A
+S = dir 210
+T = dir 330
+O = midpoint A--B R45
+X = foot T A S R135
+E := dir 0
+
+unitcircle 0.2 mediumcyan / mediumblue
+M = midpoint S--T
+
+A--S--T--cycle 0.4 mediumgreen / heavygreen
+
+T--X heavygreen
+A--M heavygreen
+
+Y = foot S A T R70
+K = foot A S T
+circumcircle X Y M 0.1 yellow / red
+S--Y heavygreen
+A--K heavygreen
+
+P = IP unitcircle X--(3*Y-2*X)
+Q = IP unitcircle Y--(3*X-2*Y) R150
+
+V = extension P Q S T
+P--Q blue
+A--B blue
+Q--V blue
+V--S heavygreen
+
+*/
+\end{asy}
+\end{center}
+
+The main claim is:
+\begin{claim*}
+  Quadrilateral $PQKM$ is cyclic.
+\end{claim*}
+\begin{proof}
+  To see this, we use power of a point: let $V = \ol{QXYP} \cap \ol{SKMT}$.
+  One approach is that since $(VK;ST) = -1$
+  we have $VQ \cdot VP = VS \cdot VT = VK \cdot VM$.
+  A longer approach is more elementary:
+  \[ VQ \cdot VP = VS \cdot VT = VX \cdot VY = VK \cdot VM \]
+  using the nine-point circle, and the circle with diameter $\ol{ST}$.
+\end{proof}
+But the circumcenter of $PQKM$,
+is the midpoint of $\ol{AO}$,
+since it lies on the perpendicular bisectors of $\ol{KM}$ and $\ol{PQ}$.
+So it is fixed, the end.
+\pagebreak
+
+\subsection{USAMO 2015/3, proposed by Gabriel Carroll}
+\textsl{Available online at \url{https://aops.com/community/p4769949}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $S = \left\{ 1,2,\dots,n \right\}$, where $n \ge 1$.
+Each of the $2^n$ subsets of $S$ is to be colored red or blue.
+(The subset itself is assigned a color and not its individual elements.)
+For any set $T \subseteq S$,
+we then write $f(T)$ for the number of subsets of $T$ that are blue.
+
+Determine the number of colorings that satisfy the following condition:
+for any subsets $T_1$ and $T_2$ of $S$,
+\[ f(T_1)f(T_2) = f(T_1 \cup T_2)f(T_1 \cap T_2). \]
+\end{mdframed}
+For an $n$-coloring $\mathcal C$ (by which we mean a coloring of
+the subsets of $\{1,\dots,n\}$),
+define the \textbf{support} of $\mathcal C$ as
+\[ \opname{supp}(\mathcal C) =
+  \left\{ T \mid f(T) \neq 0 \right\}. \]
+Call a coloring \textbf{nontrivial}
+if $\opname{supp}(\mathcal C) \neq \varnothing$ (equivalently, the coloring is not all red).
+In that case, notice that
+\begin{itemize}
+  \ii the support is
+  \emph{closed under unions and intersections}:
+  since if $f(T_1) f(T_2) \neq 0$ then necessarily
+  both $f(T_1 \cap T_2)$ and $f(T_1 \cup T_2)$ are nonzero; and
+  \ii the support is obviously \emph{upwards closed}.
+\end{itemize}
+Thus, the support must take the form
+\[ \opname{supp}(\mathcal C)
+  = [X,S]
+  \overset{\text{def}}{=} \left\{ T \mid X \subseteq T \subseteq S \right\} \]
+for some set $X$
+(for example by letting $X$ be the minimal (by size) element of the support).
+
+Say $\mathcal C$ has \textbf{full support}
+if $X = \varnothing$ (equivalently, $\varnothing$ is blue).
+
+\begin{lemma*}
+For a given $n$ and $B \subseteq \{1,\dots,n\}$,
+there is exactly one $n$-coloring with full support
+in which the singletons colored blue are exactly those in $B$.
+Therefore there are exactly $2^n$ $n$-colorings with full support.
+\end{lemma*}
+\begin{proof}
+To see there is at least one coloring, color only the subsets of $B$ blue.
+In that case \[ f(T) = 2^{\left\lvert T \cap B \right\rvert} \]
+which satisfies the condition by Inclusion-Exclusion.
+To see this extension is unique,
+note that $f(\{b\})$ is determined for each $b$ and we can then determine $f(T)$
+inductively on $\left\lvert T \right\rvert$;
+hence there is \emph{at most} one way to complete a coloring of the singletons,
+which completes the proof.
+\end{proof}
+
+For a general nontrivial $n$-coloring $\mathcal C$,
+note that if $\opname{supp}(\mathcal C) = [X,S]$,
+then we can think of it as an
+$(n-\left\lvert X \right\rvert)$-coloring with full support.
+For $\left\lvert X \right\rvert = k$, there are $\binom nk$ possible choices of $X \subseteq S$.
+Adding back in the trivial coloring, the final answer is
+\[ 1 + \sum_{k=0}^n \binom nk 2^k = \boxed{1 + 3^n}. \]
+
+\begin{remark*}
+  To be more explicit,
+  the possible nontrivial colorings are exactly described
+  by specifying two sets $X$ and $Y$ with $X \subseteq Y$,
+  and coloring blue only the sets $T$
+  with $X \subseteq T \subseteq Y$.
+
+  In particular, one deduces that in a working coloring,
+  $f(T)$ is always either zero or a power of two.
+  If one manages to notice this while working on the problem,
+  it is quite helpful for motivating the solution,
+  as it leads one to suspect that the working colorings
+  have good structure.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2015/4, proposed by Maria Monks Gillespie}
+\textsl{Available online at \url{https://aops.com/community/p4774079}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Steve is piling $m\geq 1$ indistinguishable stones
+on the squares of an $n\times n$ grid.
+Each square can have an arbitrarily high pile of stones.
+After he finished piling his stones in some manner,
+he can then perform \emph{stone moves}, defined as follows.
+Consider any four grid squares, which are corners of a rectangle,
+i.e.\ in positions $(i, k)$, $(i, l)$, $(j, k)$, $(j, l)$
+for some $1\leq i, j, k, l\leq n$, such that $i<j$ and $k<l$.
+A stone move consists of either removing one stone from each of
+$(i, k)$ and $(j, l)$ and moving them to $(i, l)$ and $(j, k)$ respectively,
+or removing one stone from each of $(i, l)$ and $(j, k)$
+and moving them to $(i, k)$ and $(j, l)$ respectively.
+
+Two ways of piling the stones are equivalent if they can be obtained
+from one another by a sequence of stone moves.
+How many different non-equivalent ways can Steve pile the stones on the grid?
+\end{mdframed}
+The answer is $\binom{m+n-1}{n-1}^2$.
+The main observation is that the ordered sequence of column counts
+(i.e.\ the number of stones in the first, second, etc.\ column)
+is invariant under stone moves, as does the analogous sequence of row counts.
+
+\paragraph{Definitions.}
+Call these numbers $(c_1, c_2, \dots, c_n)$
+and $(r_1, r_2, \dots, r_n)$ respectively,
+with $\sum c_i = \sum r_i = m$.
+We say that the sequence $(c_1, \dots, c_n, r_1, \dots, r_n)$
+is the \emph{signature} of the configuration.
+These are the $2m$ blue and red numbers shown in the example below
+(in this example we have $m=8$ and $n=3$).
+\begin{center}
+\begin{asy}
+  unitsize(1.5cm);
+  for (int i=0; i<=3; ++i) {
+    draw( (0,i)--(3,i), grey );
+    draw( (i,0)--(i,3), grey );
+  }
+  label("$c_1=\boxed{5}$", (0.5,3), dir(90), blue);
+  label("$c_2=\boxed{2}$", (1.5,3), dir(90), blue);
+  label("$c_3=\boxed{1}$", (2.5,3), dir(90), blue);
+
+  label("$r_1=\boxed{3}$", (0,2.5), dir(180), red);
+  label("$r_2=\boxed{3}$", (0,1.5), dir(180), red);
+  label("$r_3=\boxed{2}$", (0,0.5), dir(180), red);
+
+  real r = 0.1;
+  filldraw(circle((0.3,2.7), r), grey, black);
+  filldraw(circle((0.6,2.4), r), grey, black);
+  filldraw(circle((1.4,2.3), r), grey, black);
+  filldraw(circle((0.6,1.7), r), grey, black);
+  filldraw(circle((0.4,1.4), r), grey, black);
+  filldraw(circle((0.7,0.5), r), grey, black);
+  filldraw(circle((2.4,1.6), r), grey, black);
+  filldraw(circle((1.6,0.4), r), grey, black);
+  label("Signature: $(5,2,1;3,3,2)$", (1.5,0), dir(-90));
+\end{asy}
+\end{center}
+By stars-and-bars, the number of possible values $(c_1, \dots, c_n)$
+is $\binom{m+n-1}{n-1}$.
+The same is true for $(r_1, \dots, r_m)$.
+So if we're just counting \emph{signatures},
+the total number of possible signatures is $\binom{m+n-1}{n-1}^2$.
+
+\paragraph{Outline and setup.}
+We are far from done.
+To show that the number of non-equivalent ways is also this number,
+we need to show that signatures correspond to pilings.
+In other words, we need to prove:
+\begin{enumerate}
+  \ii Check that signatures are invariant around moves
+  (trivial; we did this already);
+  \ii Check conversely that two configurations
+  are equivalent if they have the same signatures
+  (the hard part of the problem); and
+  \ii Show that each signature is realized by at least
+  one configuration (not immediate, but pretty easy).
+\end{enumerate}
+
+Most procedures to the second step are algorithmic in nature,
+but Ankan Bhattacharya gives the following far cleaner approach.
+Rather than having a grid of stones,
+we simply consider the multiset of ordered pairs $(x,y)$
+corresponding to the stones.
+Then:
+\begin{itemize}
+  \ii a stone move corresponds to switching two $y$-coordinates
+  in two different pairs.
+  \ii we \emph{redefine} the signature to be the multiset $(X,Y)$
+  of $x$ and $y$ coordinates which appear.
+  Explicitly, $X$ is the multiset that contains $c_i$ copies
+  of the number $i$ for each $i$.
+\end{itemize}
+For example, consider the earlier example which had
+\begin{itemize}
+  \ii Two stones each at $(1,1)$, $(1,2)$.
+  \ii One stone each at $(1,3)$, $(2,1)$, $(2,3)$, $(3,2)$.
+\end{itemize}
+Its signature can then be reinterpreted as
+\[
+  (5,2,1; 3,3,2)
+  \longleftrightarrow
+  \begin{cases}
+    X = \{1,1,1,1,1,2,2,3\} \\
+    Y = \{1,1,1,2,2,2,3,3\}.
+  \end{cases}
+\]
+In that sense, the entire grid is quite misleading!
+
+\paragraph{Proof that two configurations with the same signature are equivalent.}
+The second part is completed just because
+transpositions generate any permutation.
+To be explicit, given two sets of stones,
+we can permute the labels so that the first set is
+$(x_1, y_1)$, \dots, $(x_m, y_m)$ and
+the second set of stones is
+$(x_1, y_1')$, \dots, $(x_m, y_m')$.
+Then we just induce the correct permutation on $(y_i)$ to get $(y_i')$.
+
+\paragraph{Proof that any signature has at least one configuration.}
+Sort the elements of $X$ and $Y$ arbitrarily (say, in non-decreasing order).
+Put a stone whose $x$-coordinate is the $i$th element of $X$,
+and whose $y$-coordinate is the $i$th element of $Y$,
+for each $i = 1, 2, \dots, m$.
+Then this gives a stone placement of $m$ stones with signature $(X,Y)$.
+
+For example, if
+\begin{align*}
+  X &= \{1,1,1,1,1,2,2,3\} \\
+  Y &= \{1,1,1,2,2,2,3,3\}
+\end{align*}
+then placing stones at
+$(1,1)$, $(1,1)$, $(1,1)$, $(1,2)$, $(1,2)$, $(2,2)$, $(2,3)$, $(3,3)$
+gives a valid piling with this signature.
+\pagebreak
+
+\subsection{USAMO 2015/5, proposed by Mohsen Jamaali}
+\textsl{Available online at \url{https://aops.com/community/p4774020}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$, $b$, $c$, $d$, $e$ be distinct positive integers
+such that $a^4+b^4=c^4+d^4=e^5$.
+Show that $ac+bd$ is a composite number.
+\end{mdframed}
+Assume to the contrary that $p = ac+bd$, so that
+\begin{align*}
+  ac &\equiv -bd \pmod p \\
+  \implies a^4c^4 &\equiv b^4d^4 \pmod p \\
+  \implies a^4 (e^5 - d^4) &\equiv (e^5 - a^4) d^4 \pmod p \\
+  \implies a^4 e^5 &\equiv d^4 e^5 \pmod p \\
+  \implies e^5(a^4-d^4) &\equiv 0 \pmod p
+\end{align*}
+and hence \[ p \mid e^5(a-d)(a+d)(a^2+d^2). \]
+
+\begin{claim*}
+  We should have $p > e$.
+\end{claim*}
+\begin{proof}
+  We have $e^5 = a^4 + b^4 \le a^5 + b^5 < (ac+bd)^5 = p^5$.
+\end{proof}
+Thus the above equation implies $p \le \max(a-d, a+d, a^2+d^2) = a^2+d^2$.
+Similarly, $p \le b^2+c^2$.
+So \[ ac+bd = p \le \min \left\{ a^2+d^2, b^2+c^2 \right\} \]
+or by subtraction
+\[ 0 \le \min \left\{ a(a-c) + d(d-b),
+  b(b-d) + c(c-a) \right\}. \]
+But since $a^4+b^4 = c^4+d^4$ the numbers $a-c$ and $d-b$
+should have the same sign, and so this is an obvious contradiction.
+\pagebreak
+
+\subsection{USAMO 2015/6, proposed by Iurie Boreico}
+\textsl{Available online at \url{https://aops.com/community/p4774023}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Consider $0<\lambda<1$, and let $A$ be a multiset of positive integers.
+Let $A_n=\{a\in A: a\leq n\}$.
+Assume that for every $n\in\NN$,
+the multiset $A_n$ contains at most $n\lambda$ numbers.
+Show that there are infinitely many $n\in\NN$ for
+which the sum of the elements in $A_n$ is
+at most $\frac{n(n+1)}{2}\lambda$.
+\end{mdframed}
+For brevity, $\#S$ denotes $|S|$.
+Let $x_n = n\lambda - \#A_n \ge 0$.
+We now proceed by contradiction by assuming
+the conclusion fails for $n$ large enough; that is,
+\begin{align*}
+  \frac{n(n+1)}{2}\lambda
+  &< \sum_{a \in A_n} a \\
+  &= 1(\#A_1-\#A_0)
+  + 2(\#A_2 - \#A_1)
+  + \dots + n(\#A_n - \#A_{n-1}) \\
+  &= n \# A_n - (\# A_1 + \dots + \# A_{n-1}) \\
+  &= n(n \lambda - x_n) - \left[ (\lambda - x_1)
+    + (2\lambda - x_2) + \dots + ((n-1)\lambda - x_{n-1}) \right] \\
+  &= \frac{n(n+1)}{2} \lambda - n x_n
+  + (x_1 + \dots + x_{n-1}).
+\end{align*}
+This means that for all sufficiently large $n$, say $n \ge N_0$, we have
+\[ x_{n} < \frac{x_1 + \dots + x_{n-1}}{n}
+  \qquad \forall n \ge N_0. \]
+In particular, each $x_n$ is the less
+than the average of all preceding terms.
+Intuitively this means $x_n$ should become close to each other,
+since they are also nonnegative.
+
+However, we have a second condition we haven't used yet:
+the ``integer'' condition implies
+\[
+  \left\lvert x_{n+1} - x_n \right\rvert
+  = \left\lvert \lambda - \#\{n \in A \} \right\rvert
+  > \eps
+\]
+for some fixed $\eps > 0$,
+namely $\eps = \min \left\{ \lambda, 1 - \lambda \right\}$.
+Using the fact that consecutive terms differ by some fixed $\eps$,
+we will derive a contradiction.
+
+If we let $M$ be the average of $x_1$, \dots, $x_{N_0}$,
+then we ought to have
+\[ x_n < M \qquad \forall n > N_0. \]
+Hence for $n > N_0$ we have $x_n + x_{n+1} < 2M - \eps$,
+and so for large enough $n$ the average
+must drop to just above $M - \half \eps$.
+Thus for some large $N_1 > N_0$, we will have
+\[ x_n < M - \frac13 \eps \qquad \forall n > N_1. \]
+If we repeat this argument then with a large $N_2 > N_1$, we obtain
+\[ x_n < M - \frac23 \eps \qquad \forall n > N_2 \]
+and so on and so forth.
+This is a clear contradiction.
+
+\begin{remark*}
+Note that if $A = \{2,2,3,4,5,\dots\}$ and $\lambda = 1$ then contradiction.
+So the condition that $0 < \lambda < 1$ cannot be dropped,
+and (by scaling) neither can the condition that $A \subseteq \ZZ$.
+\end{remark*}
+
+\begin{remark*}
+  [Suggested by Zhao Ting-wei]
+  Despite the relation
+  \[ x_{n} < \frac{x_1 + \dots + x_{n-1}}{n}
+    \qquad \forall n \ge N_0 \]
+  implying that $x_n$ is bounded,
+  it does not alone imply that $x_n$ converges,
+  not even to some nonzero value.
+  Zhao Ting-Wei showed me that one can have a sequence which is zero
+  ``every so often'' yet where the average is nonzero.
+
+  A counterexample is given explicitly by
+  \[
+    x_n
+    = \begin{cases}
+      1000 & n = 1 \\
+      0 & n \text{ is a power of $10$} \\
+      1 + \frac 1n & \text{otherwise}
+    \end{cases}
+  \]
+  which does not have a limit.
+  For completeness, let's check this ---
+  let $H_n$ denote the $n$'th harmonic number, and compute
+  \begin{align*}
+    \sum_1^{n-1} x_n
+    &= 1000 + (n-1) + H_{n-1} - \sum_{k=1}^{\left\lfloor \log_{10} n \right\rfloor} \left( 1 + \frac{1}{10^k} \right) \\
+    &> n + 999 + H_{n-1} - \log_{10} n - \left( 1 + \frac{1}{10} + \dots \right) \\
+    &> n + 997 + H_{n-1} - \log_{10} n > n + 1
+  \end{align*}
+  so $1 + \frac 1n < \frac 1n \sum_1^{n-1} x_n$ as needed.
+\end{remark*}
+\pagebreak
+
+
+\end{document}

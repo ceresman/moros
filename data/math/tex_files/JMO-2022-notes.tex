@@ -1,0 +1,699 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{JMO 2022 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2022 JMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+For which positive integers $m$ does there exist an infinite sequence in $\ZZ/m\ZZ$
+which is both an arithmetic progression and a geometric progression,
+but is nonconstant?
+
+\item %% Problem 2
+Let $a$ and $b$ be positive integers.
+Every cell of an $(a+b+1)\times (a+b+1)$ grid is colored either amber or bronze
+such that there are at least $a^2+ab-b$ amber cells
+and at least $b^2+ab-a$ bronze cells.
+Prove that it is possible to choose $a$ amber cells and $b$ bronze cells
+such that no two of the $a+b$ chosen cells lie in the same row or column.
+
+\item %% Problem 3
+Let $b\geq 2$ and $w\geq 2$ be fixed integers, and $n=b+w$.
+Given are $2b$ identical black rods and $2w$ identical white rods,
+each of side length $1$.
+
+We assemble a regular $2n$-gon using these rods
+so that parallel sides are the same color.
+Then, a convex $2b$-gon $B$ is formed by translating the black rods,
+and a convex $2w$-gon $W$ is formed by translating the white rods.
+An example of one way of doing the assembly when $b=3$ and $w=2$ is shown below,
+as well as the resulting polygons $B$ and $W$.
+\begin{center}
+\begin{asy}
+size(10cm);
+real w = 2*Sin(18);
+real h = 0.10 * w;
+real d = 0.33 * h;
+picture wht;
+picture blk;
+
+draw(wht, (0,0)--(w,0)--(w+d,h)--(-d,h)--cycle);
+fill(blk, (0,0)--(w,0)--(w+d,h)--(-d,h)--cycle, black);
+
+// draw(unitcircle, blue+dotted);
+
+// Original polygon
+add(shift(dir(108))*blk);
+add(shift(dir(72))*rotate(324)*blk);
+add(shift(dir(36))*rotate(288)*wht);
+add(shift(dir(0))*rotate(252)*blk);
+add(shift(dir(324))*rotate(216)*wht);
+
+add(shift(dir(288))*rotate(180)*blk);
+add(shift(dir(252))*rotate(144)*blk);
+add(shift(dir(216))*rotate(108)*wht);
+add(shift(dir(180))*rotate(72)*blk);
+add(shift(dir(144))*rotate(36)*wht);
+
+// White shifted
+real Wk = 1.2;
+pair W1 = (1.8,0.1);
+pair W2 = W1 + w*dir(36);
+pair W3 = W2 + w*dir(108);
+pair W4 = W3 + w*dir(216);
+path Wgon = W1--W2--W3--W4--cycle;
+draw(Wgon);
+pair WO = (W1+W3)/2;
+transform Wt = shift(WO)*scale(Wk)*shift(-WO);
+draw(Wt * Wgon);
+label("$W$", WO);
+/*
+draw(W1--Wt*W1);
+draw(W2--Wt*W2);
+draw(W3--Wt*W3);
+draw(W4--Wt*W4);
+*/
+
+// Black shifted
+real Bk = 1.10;
+pair B1 = (1.5,-0.1);
+pair B2 = B1 + w*dir(0);
+pair B3 = B2 + w*dir(324);
+pair B4 = B3 + w*dir(252);
+pair B5 = B4 + w*dir(180);
+pair B6 = B5 + w*dir(144);
+path Bgon = B1--B2--B3--B4--B5--B6--cycle;
+pair BO = (B1+B4)/2;
+transform Bt = shift(BO)*scale(Bk)*shift(-BO);
+fill(Bt * Bgon, black);
+fill(Bgon, white);
+label("$B$", BO);
+\end{asy}
+\end{center}
+Prove that the difference of the areas of $B$ and $W$
+depends only on the numbers $b$ and $w$,
+and not on how the $2n$-gon was assembled.
+
+\item %% Problem 4
+Let $ABCD$ be a rhombus, and let $K$ and $L$ be points
+such that $K$ lies inside the rhombus, $L$ lies outside the rhombus,
+and $KA = KB = LC = LD$.
+Prove that there exist points $X$ and $Y$ on lines $AC$ and $BD$
+such that $KXLY$ is also a rhombus.
+
+\item %% Problem 5
+Find all pairs of primes $(p, q)$ for which $p-q$ and $pq-q$ are both perfect squares.
+
+\item %% Problem 6
+Let $a_0$, $b_0$, $c_0$ be complex numbers, and define
+\begin{align*}
+  a_{n+1} &= a_n^2 + 2b_nc_n \\
+  b_{n+1} &= b_n^2 + 2c_na_n \\
+  c_{n+1} &= c_n^2 + 2a_nb_n
+\end{align*}
+for all nonnegative integers $n$.
+Suppose that $\max{\{|a_n|, |b_n|, |c_n|\}} \leq 2022$ for all $n \ge 0$.
+Prove that \[ |a_0|^2 + |b_0|^2 + |c_0|^2 \leq 1. \]
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{JMO 2022/1, proposed by Holden Mui}
+\textsl{Available online at \url{https://aops.com/community/p24774800}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For which positive integers $m$ does there exist an infinite sequence in $\ZZ/m\ZZ$
+which is both an arithmetic progression and a geometric progression,
+but is nonconstant?
+\end{mdframed}
+Answer: $m$ must \emph{not} be squarefree.
+
+The problem is essentially asking when there exists
+a nonconstant arithmetic progression in $\ZZ/m\ZZ$
+which is also a geometric progression.
+Now,
+\begin{itemize}
+  \ii If $m$ is squarefree, then consider three $(s-d, d, s+d)$ in arithmetic progression.
+  It's geometric if and only if $d^2 = (s-d)(s+d) \pmod m$, meaning $d^2 \equiv 0 \pmod m$.
+  Then $d \equiv 0 \pmod m$.
+  So any arithmetic progression which is also geometric is constant in this case.
+
+  \ii Conversely if $p^2 \mid m$ for some prime $p$,
+  then any arithmetic progression with common difference $m/p$ is geometric
+  by the same calculation.
+\end{itemize}
+\pagebreak
+
+\subsection{JMO 2022/2, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p24774812}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$ and $b$ be positive integers.
+Every cell of an $(a+b+1)\times (a+b+1)$ grid is colored either amber or bronze
+such that there are at least $a^2+ab-b$ amber cells
+and at least $b^2+ab-a$ bronze cells.
+Prove that it is possible to choose $a$ amber cells and $b$ bronze cells
+such that no two of the $a+b$ chosen cells lie in the same row or column.
+\end{mdframed}
+\begin{claim*}
+  There exists a transversal $T_a$ with at least $a$ amber cells.
+  Analogously, there exists a transversal $T_b$ with at least $b$ bronze cells.
+\end{claim*}
+\begin{proof}
+  If one picks a random transversal, the expected value
+  of the number of amber cells is at least
+  \[ \frac{a^2+ab-b^2}{a+b+1} = (a-1) + \frac{1}{a+b+1} > a-1. \qedhere \]
+\end{proof}
+
+Now imagine we transform $T_a$ to $T_b$ in some number of steps,
+by repeatedly choosing cells $c$ and $c'$ and swapping them
+with the two other corners of the rectangle formed by their row/column,
+as shown in the figure.
+\begin{center}
+\begin{asy}
+  filldraw(shift(0,0)*unitsquare, lightcyan, blue);
+  filldraw(shift(3,2)*unitsquare, lightcyan, blue);
+  draw(shift(3,0)*unitsquare, dotted+blue);
+  draw(shift(0,2)*unitsquare, dotted+blue);
+  label("$c$", (0.5,0.5));
+  label("$c'$", (3.5,2.5));
+
+  label(scale(2.5)*"$\implies$", (5.5, 1.5));
+  filldraw(shift(7,2)*unitsquare, lightcyan, blue);
+  filldraw(shift(10,0)*unitsquare, lightcyan, blue);
+  draw(shift(7,0)*unitsquare, dotted+blue);
+  draw(shift(10,2)*unitsquare, dotted+blue);
+\end{asy}
+\end{center}
+By ``discrete intermediate value theorem'',
+the number of amber cells will be either $a$ or $a+1$
+at some point during this transformation.
+This completes the proof.
+\pagebreak
+
+\subsection{JMO 2022/3, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p24775345}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $b\geq 2$ and $w\geq 2$ be fixed integers, and $n=b+w$.
+Given are $2b$ identical black rods and $2w$ identical white rods,
+each of side length $1$.
+
+We assemble a regular $2n$-gon using these rods
+so that parallel sides are the same color.
+Then, a convex $2b$-gon $B$ is formed by translating the black rods,
+and a convex $2w$-gon $W$ is formed by translating the white rods.
+An example of one way of doing the assembly when $b=3$ and $w=2$ is shown below,
+as well as the resulting polygons $B$ and $W$.
+\begin{center}
+\begin{asy}
+size(10cm);
+real w = 2*Sin(18);
+real h = 0.10 * w;
+real d = 0.33 * h;
+picture wht;
+picture blk;
+
+draw(wht, (0,0)--(w,0)--(w+d,h)--(-d,h)--cycle);
+fill(blk, (0,0)--(w,0)--(w+d,h)--(-d,h)--cycle, black);
+
+// draw(unitcircle, blue+dotted);
+
+// Original polygon
+add(shift(dir(108))*blk);
+add(shift(dir(72))*rotate(324)*blk);
+add(shift(dir(36))*rotate(288)*wht);
+add(shift(dir(0))*rotate(252)*blk);
+add(shift(dir(324))*rotate(216)*wht);
+
+add(shift(dir(288))*rotate(180)*blk);
+add(shift(dir(252))*rotate(144)*blk);
+add(shift(dir(216))*rotate(108)*wht);
+add(shift(dir(180))*rotate(72)*blk);
+add(shift(dir(144))*rotate(36)*wht);
+
+// White shifted
+real Wk = 1.2;
+pair W1 = (1.8,0.1);
+pair W2 = W1 + w*dir(36);
+pair W3 = W2 + w*dir(108);
+pair W4 = W3 + w*dir(216);
+path Wgon = W1--W2--W3--W4--cycle;
+draw(Wgon);
+pair WO = (W1+W3)/2;
+transform Wt = shift(WO)*scale(Wk)*shift(-WO);
+draw(Wt * Wgon);
+label("$W$", WO);
+/*
+draw(W1--Wt*W1);
+draw(W2--Wt*W2);
+draw(W3--Wt*W3);
+draw(W4--Wt*W4);
+*/
+
+// Black shifted
+real Bk = 1.10;
+pair B1 = (1.5,-0.1);
+pair B2 = B1 + w*dir(0);
+pair B3 = B2 + w*dir(324);
+pair B4 = B3 + w*dir(252);
+pair B5 = B4 + w*dir(180);
+pair B6 = B5 + w*dir(144);
+path Bgon = B1--B2--B3--B4--B5--B6--cycle;
+pair BO = (B1+B4)/2;
+transform Bt = shift(BO)*scale(Bk)*shift(-BO);
+fill(Bt * Bgon, black);
+fill(Bgon, white);
+label("$B$", BO);
+\end{asy}
+\end{center}
+Prove that the difference of the areas of $B$ and $W$
+depends only on the numbers $b$ and $w$,
+and not on how the $2n$-gon was assembled.
+\end{mdframed}
+We are going to prove that one may swap a black rod with an adjacent white rod
+(as well as the rods parallel to them)
+without affecting the difference in the areas of $B-W$.
+Let $\vec u$ and $\vec v$ denote the originally black and white vectors
+that were adjacent on the $2n$-gon and are now going to be swapped.
+Let $\vec x$ denote the sum of all the other black vectors between
+$\vec u$ and $-\vec u$, and define $\vec y$ similarly.
+See the diagram below,
+where $B_0$ and $W_0$ are the polygons before the swap,
+and $B_1$ and $W_1$ are the resulting changed polygons.
+
+\begin{center}
+\begin{asy}
+size(12cm);
+picture B0;
+picture W0;
+picture B1;
+picture W1;
+
+pen br = black + 2;
+pen bp = black + dashed;
+path barc = (0,0)..(1,1)..(6,1)..(7,0);
+
+draw(B0, (3,-1)--(4,1), br);
+draw(B0, (-4,-1)--(-3,1), br);
+draw(B0, shift(-3,1)*barc, bp);
+draw(B0, shift(3,-1)*rotate(180)*barc, bp);
+label(B0, "$B_0$", (0,0));
+
+draw(B0, (-3,1)--(4,1), red, EndArrow(TeXHead), Margins);
+draw(B0, (3,-1)--(-4,-1), red, EndArrow(TeXHead), Margins);
+label(B0, "$\vec x$", (-3,1)--(4,1), dir(90), red);
+label(B0, "$-\vec x$", (3,-1)--(-4,-1), dir(-90), red);
+label(B0, "$\vec u$", (-3.5,0), dir(160));
+draw(B0, (-4,-1)--(-3,1), black+1, EndArrow(TeXHead));
+
+draw(B1, (4,-1)--(3,1), br);
+draw(B1, (-3,-1)--(-4,1), br);
+label(B1, "$B_1$", (0,0));
+draw(B1, shift(-4,1)*barc, bp);
+draw(B1, shift(4,-1)*rotate(180)*barc, bp);
+draw(B1, (-4,1)--(3,1), red, EndArrow(TeXHead), Margins);
+draw(B1, (4,-1)--(-3,-1), red, EndArrow(TeXHead), Margins);
+label(B1, "$\vec x$", (-4,1)--(3,1), dir(90), red);
+label(B1, "$-\vec x$", (4,-1)--(-3,-1), dir(180), red);
+label(B1, "$\vec v$", (-3.5,0), dir(210));
+draw(B1, (-3,-1)--(-4,1), black+1, EndArrow(TeXHead));
+
+path warc = (0,0)..(4,1)..(9,-2);
+draw(W0, shift(-5,1)*warc, bp);
+draw(W0, shift(5,-3)*rotate(180)*warc, bp);
+draw(W0, (5,-3)--(4,-1), br);
+draw(W0, (-4,-1)--(-5,1), br);
+draw(W0, (-5,1)--(4,-1), red, EndArrow(TeXHead), Margins);
+draw(W0, (5,-3)--(-4,-1), red, EndArrow(TeXHead), Margins);
+draw(W0, (5,-3)--(4,-1), white+1.2);
+draw(W0, (-4,-1)--(-5,1), white+1.2);
+label(W0, "$W_0$", (0,-1));
+label(W0, "$\vec v$", (-4.5,0), dir(200));
+label(W0, "$\vec y$", (-5,1)--(4,-1), dir(70), red);
+label(W0, "$-\vec y$", (5,-3)--(-4,-1), dir(250), red);
+
+draw(W1, shift(-4,1)*warc, bp);
+draw(W1, shift(4,-3)*rotate(180)*warc, bp);
+draw(W1, (4,-3)--(5,-1), br);
+draw(W1, (-5,-1)--(-4,1), br);
+draw(W1, (4,-3)--(5,-1), white+1.2);
+draw(W1, (-5,-1)--(-4,1), white+1.2);
+draw(W1, (-4,1)--(5,-1), red, EndArrow(TeXHead), Margins);
+draw(W1, (4,-3)--(-5,-1), red, EndArrow(TeXHead), Margins);
+label(W1, "$W_1$", (0,-1));
+label(W1, "$\vec u$", (-4.5,0), dir(140));
+label(W1, "$\vec y$", (0.5,0), dir(70), red);
+label(W1, "$-\vec y$", (-0.5,-2), dir(250), red);
+
+add(B0);
+add(shift(12,0)*B1);
+add(shift(0,-6)*W0);
+add(shift(12,-6)*W1);
+\end{asy}
+\end{center}
+
+Observe that the only change in $B$ and $W$
+is in the parallelograms shown above in each diagram.
+Letting $\wedge$ denote the wedge product,
+we need to show that
+\[ \vec u \wedge \vec x - \vec v \wedge \vec y
+  = \vec v \wedge \vec x - \vec u \wedge \vec y \]
+which can be rewritten as
+\[ (\vec u - \vec v) \wedge (\vec x + \vec y) = 0. \]
+In other words, it would suffice to show
+$\vec u - \vec v$ and $\vec x + \vec y$ are parallel.
+(Students not familiar with wedge products can replace
+every $\wedge$ with the cross product $\times$ instead.)
+\begin{claim*}
+  Both $\vec u - \vec v$ and $\vec x + \vec y$
+  are perpendicular to vector $\vec u + \vec v$.
+\end{claim*}
+\begin{proof}
+  We have $(\vec u - \vec v) \perp (\vec u + \vec v)$
+  because $\vec u$ and $\vec v$ are the same length.
+
+  For the other perpendicularity, note that
+  $\vec u + \vec v + \vec x + \vec y$
+  traces out a diameter of the circumcircle of the original $2n$-gon;
+  call this diameter $AB$, so
+  \[ A + \vec u + \vec v + \vec x + \vec y = B. \]
+  Now point $A + \vec u + \vec v$ is a point on this semicircle,
+  which means (by the inscribed angle theorem)
+  the angle between $\vec u + \vec v$ and $\vec x + \vec y$ is $90^\circ$.
+\end{proof}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{JMO 2022/4, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p24774800}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCD$ be a rhombus, and let $K$ and $L$ be points
+such that $K$ lies inside the rhombus, $L$ lies outside the rhombus,
+and $KA = KB = LC = LD$.
+Prove that there exist points $X$ and $Y$ on lines $AC$ and $BD$
+such that $KXLY$ is also a rhombus.
+\end{mdframed}
+To start, notice that $\triangle AKB \cong \triangle DLC$ by SSS.
+Then by the condition $K$ lies inside the rhombus while $L$ lies outside it,
+we find that the two congruent triangles are just translations of each other
+(i.e.\ they have the same orientation).
+
+\paragraph{First solution.}
+Let $M$ be the midpoint of $\ol{KL}$ and is $O$ the center of the rhombus.
+\begin{claim*}
+  $\ol{MO} \perp \ol{AB}$.
+\end{claim*}
+\begin{proof}
+  Let $U$ and $V$ denote the midpoint of $\ol{AB}$ and $\ol{CD}$ respectively.
+  Then $\ol{KU}$ and $\ol{LV}$ are obviously translates,
+  and perpendicular to $\ol{AB} \parallel \ol{CD}$.
+  Since $M$ is the midpoint of $\ol{KL}$ and $O$ is the midpoint of $\ol{UV}$,
+  the result follows.
+\end{proof}
+
+We choose $X$ and $Y$ to be the intersections of
+the perpendicular bisector of $\ol{KL}$ with $\ol{AC}$ and $\ol{BD}$.
+
+\begin{center}
+\begin{asy}
+  pair A = (-4,0);
+  pair B = (0,-3);
+  pair C = -A;
+  pair D = -B;
+  pair K = midpoint(A--B) + dir(90)*(B-A)*0.2;
+  pair L = D+K-A;
+  pair X = -A+2*foot(K,A,C);
+  pair Y = -D+2*foot(L,B,D);
+  pair O = origin;
+  pair M = midpoint(K--L);
+  pair U = midpoint(A--B);
+  pair V = midpoint(C--D);
+
+  filldraw(A--B--C--D--cycle, opacity(0.1)+lightred, red);
+  draw(A--C, red);
+  draw(B--D, red);
+  filldraw(A--K--B--cycle, opacity(0.1)+cyan, blue);
+  filldraw(C--L--D--cycle, opacity(0.1)+cyan, blue);
+  draw(X--Y, deepgreen);
+  draw(L--K, deepgreen);
+  draw(K--U, black+1.5);
+  draw(L--V, black+1.5);
+  draw(M--O, black+1.5);
+
+  dot("$A$", A, dir(210));
+  dot("$B$", B, dir(340));
+  dot("$C$", C, dir(-30));
+  dot("$D$", D, dir(160));
+  dot("$K$", K, dir(100));
+  dot("$L$", L, dir(90));
+  dot("$X$", X, dir(305));
+  dot("$Y$", Y, dir(200));
+  dot("$M$", M, dir(-5));
+  dot("$O$", O, dir(225));
+  dot("$U$", U, dir(250));
+  dot("$V$", V, dir(250));
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  The midpoint of $\ol{XY}$ coincides with the midpoint of $\ol{KL}$.
+\end{claim*}
+\begin{proof}
+  Because
+  \begin{align*}
+    \ol{XY} &\perp \ol{KL} \parallel \ol{BC} \\
+    \ol{MO} &\perp \ol{AB} \\
+    \ol{BD} &\perp \ol{AC}
+  \end{align*}
+  it follows that $\triangle MOY$,
+  which was determined by the three lines $\ol{XY}$, $\ol{MO}$, $\ol{BD}$,
+  is similar to $\triangle ABC$.
+  In particular, it is isosceles with $MY = MO$.
+  Analogously, $MX = MO$.
+\end{proof}
+
+\begin{remark*}
+  It is also possible to simply use coordinates to prove both claims.
+\end{remark*}
+
+\paragraph{Second solution (author's solution).}
+In this solution, we instead define
+$X$ and $Y$ as the intersections of the circles
+centered at $K$ and $L$ of equal radii $KA$,
+which will be denoted $\omega_K$ and $\omega_L$.
+It is clear that $KXLY$ is a rhombus under this construction,
+so it suffices to show that $X$ and $Y$ lie on $AC$ and $BD$ (in some order).
+
+\begin{center}
+\begin{asy}
+  pair A = (-4,0);
+  pair B = (0,-3);
+  pair C = -A;
+  pair D = -B;
+  pair K = midpoint(A--B) + dir(90)*(B-A)*0.2;
+  pair L = D+K-A;
+  pair X = -A+2*foot(K,A,C);
+  pair Y = -D+2*foot(L,B,D);
+
+  filldraw(A--B--C--D--cycle, opacity(0.1)+lightred, red);
+  draw(A--C, red);
+  draw(B--D, red);
+  filldraw(A--K--B--cycle, opacity(0.1)+cyan, blue);
+  filldraw(C--L--D--cycle, opacity(0.1)+cyan, blue);
+  draw(X--L--Y--K--cycle, deepgreen);
+  draw(circle(K,abs(K-A)), grey);
+  draw(circle(L,abs(L-C)), grey);
+
+  dot("$A$", A, dir(210));
+  dot("$B$", B, dir(340));
+  dot("$C$", C, dir(-30));
+  dot("$D$", D, dir(160));
+  dot("$K$", K, dir(250));
+  dot("$L$", L, dir(90));
+  dot("$X$", X, dir(305));
+  dot("$Y$", Y, dir(200));
+  label("$\omega_L$", L + abs(L-C)*dir(40), dir(40));
+  label("$\omega_K$", K + abs(K-B)*dir(220), dir(220));
+\end{asy}
+\end{center}
+
+To see this, let $\ol{AC}$ meet $\omega_K$ again at $X'$.
+We have
+\[ \dang CX'D = \dang BX'C = \dang BX'A = \half \opname{m} \arc{AB} = \opname{m} \arc{CD} \]
+where the arcs are directed modulo $360\dg$;
+here $\arc{AB}$ is the arc of $\omega_K$ cut out by $\dang AXB$,
+and $\arc{DC}$ is the analogous arc of $\omega_L$.
+This implies $X'$ lies on $\omega_L$ by the inscribed angle theorem.
+Hence $X = X'$, and it follows $X$ lies on $\ol{AC}$.
+
+Analogously $Y$ lies on $BD$.
+\begin{remark*}
+  The angle calculation above can also be replaced with a length calculation, as follows.
+
+  Let $M$ and $N$ be the projections of $K$ and $L$ onto $\ol{AC}$, respectively.
+  Then $X'$ is the reflection of $A$ across $M$;
+  analogously, the second intersection $X''$ with $\ol{AC}$
+  should be the reflection of $C$ across $N$.
+  So to get $X = X' = X''$, we would need to show $AC = 2MN$.
+
+  However, note that $AKLD$ is a parallelogram.
+  As $MN$ was the projection of $\ol{KL}$ onto $\ol{AC}$,
+  its length should be the same as the projection of $\ol{AD}$ onto $\ol{AC}$,
+  which is obviously $\half AC$ because the projection of $D$ onto $\ol{AC}$ is
+  exactly the midpoint of $\ol{AC}$ (i.e.\ the center of the rhombus).
+\end{remark*}
+\pagebreak
+
+\subsection{JMO 2022/5, proposed by Holden Mui}
+\textsl{Available online at \url{https://aops.com/community/p24774670}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all pairs of primes $(p, q)$ for which $p-q$ and $pq-q$ are both perfect squares.
+\end{mdframed}
+The answer is $(3,2)$ only.
+This obviously works so we focus on showing it is the only one.
+
+\paragraph{Approach using difference of squares (from author).}
+Set
+\begin{align*}
+  a^2 &= p-q \\
+  b^2 &= pq-q.
+\end{align*}
+Note that $0 < a < p$, and $0 < b < p$ (because $q \le p$).
+Now subtracting gives
+\[ \underbrace{(b-a)}_{<p} \underbrace{(b+a)}_{<2p} = b^2-a^2 = p(q-1) \]
+The inequalities above now force $b+a = p$.
+Hence $q-1 = b-a$.
+
+This means $p$ and $q-1$ have the same parity,
+which can only occur if $q = 2$.
+Finally, taking mod $3$ shows $p \equiv 0 \pmod 3$.
+So $(3,2)$ is the only possibility (and it does work).
+
+\paragraph{Divisibility approach (Aharshi Roy).}
+Since $pq-q = q(p-1)$ is a square, it follows that $q$ divides $p-1$
+and that $\frac{p-1}{q}$ is a perfect square too.
+Hence the number
+\[ s^2 \coloneqq (p-q) \cdot \frac{p-1}{q} = \frac{p^2-qp-p+q}{q} \]
+is also a perfect square.
+Rewriting this equation gives
+\[ q = \frac{p^2-p}{s^2 + (p-1)}. \]
+In particular, $s^2 + (p-1)$ divides $p^2-p$, and in particular $s \leq p$.
+We consider two cases:
+\begin{itemize}
+  \ii If $s^2+(p-1)$ is not divisible by $p$, then it must divide $p-1$,
+  which can only happen if $s^2 = 0$, or $p = q$.
+  However, it's easy to check there are no solutions in this case.
+
+  \ii Otherwise, we should have $s^2 \equiv 1 \pmod p$,
+  so either $s = 1$ or $s = p-1$.
+  If $s = p-1$ we get $q=1$ which is absurd.
+  On the other hand, if $s=1$ we conclude $q = p-1$ and hence $q=2$, $p=3$.
+\end{itemize}
+\pagebreak
+
+\subsection{JMO 2022/6, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p24775314}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a_0$, $b_0$, $c_0$ be complex numbers, and define
+\begin{align*}
+  a_{n+1} &= a_n^2 + 2b_nc_n \\
+  b_{n+1} &= b_n^2 + 2c_na_n \\
+  c_{n+1} &= c_n^2 + 2a_nb_n
+\end{align*}
+for all nonnegative integers $n$.
+Suppose that $\max{\{|a_n|, |b_n|, |c_n|\}} \leq 2022$ for all $n \ge 0$.
+Prove that \[ |a_0|^2 + |b_0|^2 + |c_0|^2 \leq 1. \]
+\end{mdframed}
+For brevity, set $s_n \coloneqq |a_n|^2 + |b_n|^2 + |c_n|^2$.
+Note that the $s_n$ are real numbers.
+\begin{claim*}
+  [Key miraculous identity]
+  We have
+  \[ s_{n+1} - s_n^2 = 2 |a_n \ol{b_n} + b_n \ol{c_n} + c_n \ol{a_n}|^2. \]
+\end{claim*}
+\begin{proof}
+  We prove this by mechanical calculation. First,
+  \begin{align*}
+    s_{n+1} &= \left\lvert a_n^2+2b_nc_n \right\rvert^2 +
+    \left\lvert b_n^2+2c_na_n \right\rvert^2 +
+    \left\lvert c_n^2+2a_nb_n \right\rvert^2 \\
+    &= \sum_{\text{cyc}} \left\lvert a_n^2+2b_nc_n \right\rvert^2 \\
+    &= \sum_{\text{cyc}} (a_n^2+2b_nc_n)(\ol{a_n}^2 + 2\ol{b_n}\ol{c_n}) \\
+    &= \sum_{\text{cyc}} \left( |a_n|^4 + 2 \ol{a_n}^2 b_nc_n
+      + 2a_n^2 \ol{b_n} \ol{c_n}  + 4 |b_n|^2 |c_n|^2 \right) \\
+      &= s_n^2 + 2 \sum_{\text{cyc}}
+      \left( \ol{a_n}^2 b_nc_n
+      + a_n^2 \ol{b_n} \ol{c_n} + |b_n|^2 |c_n|^2 \right).
+  \end{align*}
+  Meanwhile,
+	\begin{align*}
+		|a_n \ol{b_n} + b_n \ol{c_n} + c_n \ol{a_n}|^2
+		&= \left( a_n \ol{b_n} + b_n \ol{c_n} + c_n \ol{a_n} \right)
+		\left( \ol{a_n} b_n + \ol{b_n} c_n + \ol{c_n} a_n \right) \\
+		&= |a_n|^2 |b_n^2| + a_n \ol{b_n}^2 c_n + a_n^2 \ol{b_n} \ol{c_n} \\
+		&\qquad + \ol{a_n} b_n^2 \ol{c_n} + |b_n|^2 |c_n|^2 + a_n b_n \ol{c_n}^2 \\
+		&\qquad + \ol{a_n}^2 b_n c_n + \ol{a_n} \ol{b_n} c_n^2 + |a_n|^2 |c_n|^2
+	\end{align*}
+	which exactly matches the earlier sum, term for term.
+\end{proof}
+
+In particular, $s_{n+1} \ge s_n^2$, so applying repeatedly,
+\[ s_n \ge s_0^{2^n}. \]
+Hence if $s_0 > 1$, it follows $s_n$ is unbounded, contradicting
+$\max{\{|a_n|, |b_n|, |c_n|\}} \leq 2022$.
+
+\begin{remark*}
+The originally intended solution was to capture all three
+recursions in the following way.
+First, change the recursion to
+\begin{align*}
+  a_{n+1} &= a_n^2 + 2b_nc_n \\
+  c_{n+1} &= b_n^2 + 2c_na_n \\
+  b_{n+1} &= c_n^2 + 2a_nb_n
+\end{align*}
+which is OK because we are just rearranging the terms in each triple.
+Then if $\omega$ is any complex number with $\omega^3 = 1$, and we define
+\[ z_n \coloneqq a_n + b_n \omega + c_n \omega^2, \]
+the recursion amounts to saying that $z_{n+1} = z_n^2$.
+This allows us to analyze $|z_n|$ in a similar way as above,
+as now $|z_n| = |z_0|^{2^n}$.
+\end{remark*}
+\pagebreak
+
+
+\end{document}

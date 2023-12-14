@@ -1,0 +1,332 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2002 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2002 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $S$ be a set with $2002$ elements,
+and let $N$ be an integer with $0 \leq N \leq 2^{2002}$.
+Prove that it is possible to color every subset of $S$
+either black or white so that the following conditions hold:
+\begin{enumerate}
+  \ii[(a)] the union of any two white subsets is white;
+  \ii[(b)] the union of any two black subsets is black;
+  \ii[(c)] there are exactly $N$ white subsets.
+\end{enumerate}
+
+\item %% Problem 2
+Let $ABC$ be a triangle such that
+\[
+  \left( \cot \frac{A}{2} \right)^2
+  + \left( 2\cot \frac{B}{2} \right)^2
+  + \left( 3\cot \frac{C}{2} \right)^2
+  = \left( \frac{6s}{7r} \right)^2,
+\]
+where $s$ and $r$ denote its semiperimeter and its inradius, respectively.
+Prove that triangle $ABC$ is similar to a triangle $T$ whose
+side lengths are all positive integers
+with no common divisors and determine these integers.
+
+\item %% Problem 3
+Prove that any monic polynomial (a polynomial with leading coefficient $1$)
+of degree $n$ with real coefficients is the average
+of two monic polynomials of degree $n$ with $n$ real roots.
+
+\item %% Problem 4
+Determine all functions $f \colon \RR \to \RR$ such that
+\[ f(x^2 - y^2) = x f(x) - y f(y) \]
+for all pairs of real numbers $x$ and $y$.
+
+\item %% Problem 5
+Let $a$, $b$ be integers greater than $2$.
+Prove that there exists a positive integer $k$
+and a finite sequence $n_1, n_2, \dots, n_k$ of
+positive integers such that $n_1 = a$, $n_k = b$,
+and $n_i n_{i+1}$ is divisible by $n_i + n_{i+1}$
+for each $i$ ($1 \leq i < k$).
+
+\item %% Problem 6
+I have an $n \times n$ sheet of stamps, from which I've been asked
+to tear out blocks of three adjacent stamps in a single row or column.
+(I can only tear along the perforations separating adjacent stamps,
+and each block must come out of the sheet in one piece.)
+Let $b(n)$ be the smallest number of blocks I can tear out
+and make it impossible to tear out any more blocks.
+Prove that there are real constants $c$ and $d$ such that
+\[ \frac{1}{7} n^2 - cn \leq b(n) \leq \frac{1}{5} n^2 + dn  \]
+for all $n > 0$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2002/1, proposed by Gabriel Carroll}
+\textsl{Available online at \url{https://aops.com/community/p337845}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $S$ be a set with $2002$ elements,
+and let $N$ be an integer with $0 \leq N \leq 2^{2002}$.
+Prove that it is possible to color every subset of $S$
+either black or white so that the following conditions hold:
+\begin{enumerate}
+  \ii[(a)] the union of any two white subsets is white;
+  \ii[(b)] the union of any two black subsets is black;
+  \ii[(c)] there are exactly $N$ white subsets.
+\end{enumerate}
+\end{mdframed}
+We will solve the problem with $2002$
+replaced by an arbitrary integer $n \ge 0$.
+In other words, we prove:
+\begin{claim*}
+  For any nonnegative integers $n$ and $N$ with $0 \le N \le 2^n$,
+  it is possible to color the $2^n$ subsets
+  of $\{1, \dots, n\}$ black and white
+  satisfying the conditions of the problem.
+\end{claim*}
+The proof is by induction on $n$.
+When $n = 1$ the problem is easy to do by hand,
+so this gives us a base case.
+
+For the inductive step, we divide into two cases:
+\begin{itemize}
+  \ii If $N \le 2^{n-1}$,
+  then we take a coloring of subsets of $\{1, \dots, n-1\}$
+  with $N$ white sets;
+  then we color the remaining $2^{n-1}$ sets
+  (which contain $n$) black.
+
+  \ii If $N > 2^{n-1}$,
+  then we take a coloring of subsets of $\{1, \dots, n-1\}$
+  with $N - 2^{n-1}$ white sets;
+  then we color the remaining $2^{n-1}$ sets
+  (which contain $n$) white.
+\end{itemize}
+\pagebreak
+
+\subsection{USAMO 2002/2}
+\textsl{Available online at \url{https://aops.com/community/p337847}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle such that
+\[
+  \left( \cot \frac{A}{2} \right)^2
+  + \left( 2\cot \frac{B}{2} \right)^2
+  + \left( 3\cot \frac{C}{2} \right)^2
+  = \left( \frac{6s}{7r} \right)^2,
+\]
+where $s$ and $r$ denote its semiperimeter and its inradius, respectively.
+Prove that triangle $ABC$ is similar to a triangle $T$ whose
+side lengths are all positive integers
+with no common divisors and determine these integers.
+\end{mdframed}
+Let $x = s-a$, $y = s-b$, $z = s-c$ in the usual fashion, then the equation reads
+\[ x^2 + 4y^2 + 9z^2 = \left( \frac67(x+y+z) \right)^2. \]
+However, by Cauchy-Schwarz, we have
+\[ \left( 1 + \tfrac14 + \tfrac19 \right)\left( x^2 + 4y^2 + 9z^2 \right) \ge \left( x+y+z \right)^2  \]
+with equality if and only if $1 : \tfrac12 : \tfrac13 = x : 2y : 3z$,
+id est $x : y : z = 1 : \tfrac14 : \tfrac19 = 36 : 9 : 4$.
+This is equivalent to $y+z : z+x : x+y = 13 : 40 : 45$.
+
+%Wow.
+%I was laughing at how un-geometric this problem looked,
+%as it was the only geometry problem on the USAMO 2002.
+%Then I actually tried it and realized it was not geometry.
+
+\begin{remark*}
+You can tell this is not a geometry problem
+because you eliminate the cotangents right away to get an algebra problem\dots
+and then you realize the problem claims that one equation
+can determine three variables up to scaling,
+at which point you realize it has to be an inequality
+(otherwise degrees of freedom don't work).
+So of course, Cauchy-Schwarz\dots
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2002/3}
+\textsl{Available online at \url{https://aops.com/community/p337849}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that any monic polynomial (a polynomial with leading coefficient $1$)
+of degree $n$ with real coefficients is the average
+of two monic polynomials of degree $n$ with $n$ real roots.
+\end{mdframed}
+First,
+\begin{lemma*}
+  If $p$ is a monic polynomial of degree $n$,
+  and $p(1)p(2) < 0$, $p(2)p(3) < 0$, \dots, $p(n-1)p(n) < 0$
+  then $p$ has $n$ real roots.
+\end{lemma*}
+\begin{proof}
+  The intermediate value theorem already guarantees
+  the existence of $n-1$ real roots.
+
+  The last root is obtained by considering cases on $n \pmod 2$.
+  \begin{itemize}
+  \ii If $n$ is even, then $p(1)$ and $p(n)$ have opposite sign,
+  while we must have either
+  \[ \lim_{x \to -\infty} p(x) = \lim_{x \to \infty} p(x) = \pm \infty \]
+  so we get one more root.
+  \ii The $n$ odd case is similar,
+  with $p(1)$ and $p(n)$ now having the same sign,
+  but $\lim_{x \to -\infty} p(x) = -\lim_{x \to \infty} p(x)$ instead. \qedhere
+ \end{itemize}
+\end{proof}
+
+Let $f(n)$ be the monic polynomial and let
+$M > 1000\max_{t=1, \dots, n} |f(t)|+1000$.
+Then we may select reals $a_1, \dots, a_n$ and $b_1, \dots, b_n$
+such that for each $k = 1, \dots, n$, we have
+\begin{align*}
+  a_k + b_k &= 2f(k) \\
+  (-1)^k a_k & > M \\
+  (-1)^{k+1} b_k & > M.
+\end{align*}
+We may interpolate monic polynomials $g$ and $h$ through the $a_k$ and $b_k$
+(if the $a_k$, $b_k$ are selected ``generically'' from each other).
+Then one can easily check $f = \tfrac12(g+h)$ works.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2002/4}
+\textsl{Available online at \url{https://aops.com/community/p337857}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Determine all functions $f \colon \RR \to \RR$ such that
+\[ f(x^2 - y^2) = x f(x) - y f(y) \]
+for all pairs of real numbers $x$ and $y$.
+\end{mdframed}
+The answer is $f(x) = cx$, $c \in \RR$ (these obviously work).
+
+First, by putting $x=0$ and $y=0$ respectively
+we have \[ f(x^2) = xf(x) \quad\text{and}\quad f(-y^2) = -yf(y). \]
+From this we deduce that $f$ is odd, in particular $f(0) = 0$.
+Then, we can rewrite the given as $f(x^2-y^2) + f(y^2) = f(x^2)$.
+Combined with the fact that $f$ is odd, we deduce that $f$ is additive
+(i.e. $f(a+b)=f(a)+f(b)$).
+
+\begin{remark*}
+  [Philosophy]
+  At this point we have $f(x^2) \equiv xf(x)$ and $f$ additive,
+  and everything we have including the given equation
+  is a direct corollary of these two.
+  So it makes sense to only focus on these two conditions.
+\end{remark*}
+
+Then
+\begin{align*}
+  f( (x+1)^2 ) &= (x+1)f(x+1) \\
+  \implies f(x^2) + 2f(x) + f(1)
+  &= (x+1)f(x) + (x+1)f(1)
+\end{align*}
+which readily gives $f(x) = f(1)x$.
+\pagebreak
+
+\subsection{USAMO 2002/5, proposed by Gabriel Carroll}
+\textsl{Available online at \url{https://aops.com/community/p337862}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$, $b$ be integers greater than $2$.
+Prove that there exists a positive integer $k$
+and a finite sequence $n_1, n_2, \dots, n_k$ of
+positive integers such that $n_1 = a$, $n_k = b$,
+and $n_i n_{i+1}$ is divisible by $n_i + n_{i+1}$
+for each $i$ ($1 \leq i < k$).
+\end{mdframed}
+Consider a graph $G$ on the vertex set $\{3, 4, \dots\}$
+and with edges between $v$, $w$ if $v + w \mid vw$;
+the problem is equivalent to showing that $G$ is connected.
+
+First, note that $n$ is connected to $n(n-1)$, $n(n-1)(n-2)$, etc.\
+up to $n!$.
+But for $n > 2$, $n!$ is connected to $(n+1)!$ too:
+\begin{itemize}
+  \ii $n! \to (n+1)!$ if $n$ is even
+  \ii $n! \to 2n! \to (n+1)!$ if $n$ is odd.
+\end{itemize}
+This concludes the problem.
+\pagebreak
+
+\subsection{USAMO 2002/6}
+\textsl{Available online at \url{https://aops.com/community/p337852}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+I have an $n \times n$ sheet of stamps, from which I've been asked
+to tear out blocks of three adjacent stamps in a single row or column.
+(I can only tear along the perforations separating adjacent stamps,
+and each block must come out of the sheet in one piece.)
+Let $b(n)$ be the smallest number of blocks I can tear out
+and make it impossible to tear out any more blocks.
+Prove that there are real constants $c$ and $d$ such that
+\[ \frac{1}{7} n^2 - cn \leq b(n) \leq \frac{1}{5} n^2 + dn  \]
+for all $n > 0$.
+\end{mdframed}
+For the lower bound: there are $2n(n-2)$ places one could put a block.
+Note that each block eliminates at most $14$ such places.
+
+For the upper bound, the construction of $\frac15$ is easy to build.
+Here is an illustration of one possible construction
+for $n=9$ which generalizes readily,
+using only vertical blocks.
+\[
+\begin{bmatrix}
+  A &   & E &   & I & L &   & P &   \\
+  A &   & E & G &   & L &   & P & R \\
+  A & C &   & G &   & L & N &   & R \\
+    & C &   & G & J &   & N &   & R \\
+    & C & F &   & J &   & N & Q &   \\
+  B &   & F &   & J & M &   & Q &   \\
+  B &   & F & H &   & M &   & Q & S \\
+  B & D &   & H &   & M & O &   & S \\
+    & D &   & H & K &   & O &   & S \\
+\end{bmatrix}
+\]
+
+Actually, for the lower bound,
+one may improve $1/7$ to $1/6$.
+Count the number $A$ of pairs of adjacent squares
+one of which is torn out and the other which is not:
+\begin{itemize}
+  \ii For every deleted block, there are eight neighboring squares,
+  at least two on each long edge which have been deleted too.
+  Hence $N \le 6b(n)$.
+  \ii For every block still alive and not on the border, there are
+  four neighboring squares, and clearly at least two are deleted.
+  Hence $N \ge 2\left( (n-2)^2 - 3b(n) \right)$.
+\end{itemize}
+Collating these solves the problem.
+\pagebreak
+
+
+\end{document}

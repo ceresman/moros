@@ -1,0 +1,1343 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{USA IMO TST 2020 Solutions}
+\subtitle{United States of America --- IMO Team Selection Tests}
+\author{Ankan Bhattacharya and Evan Chen}
+\date{61\ts{th} IMO 2020 Russia}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Choose positive integers $b_1$, $b_2$, \dots\ satisfying
+\[ 1 = \frac{b_1}{1^2} > \frac{b_2}{2^2}
+  > \frac{b_3}{3^2} > \frac{b_4}{4^2} > \dotsb \]
+and let $r$ denote the largest real number
+satisfying $\frac{b_n}{n^2} \ge r$ for all positive integers $n$.
+What are the possible values of $r$ across all
+possible choices of the sequence $(b_n)$?
+
+\item %% Problem 2
+Two circles $\Gamma_1$ and $\Gamma_2$
+have common external tangents $\ell_1$ and $\ell_2$ meeting at $T$.
+Suppose $\ell_1$ touches $\Gamma_1$ at $A$ and $\ell_2$ touches $\Gamma_2$ at $B$.
+A circle $\Omega$ through $A$ and $B$ intersects $\Gamma_1$
+again at $C$ and $\Gamma_2$ again at $D$, such that quadrilateral $ABCD$ is convex.
+
+Suppose lines $AC$ and $BD$ meet at point $X$,
+while lines $AD$ and $BC$ meet at point $Y$.
+Show that $T$, $X$, $Y$ are collinear.
+
+\item %% Problem 3
+Let $\alpha \ge 1$ be a real number.
+Hephaestus and Poseidon play a turn-based game
+on an infinite grid of unit squares.
+Before the game starts, Poseidon chooses a finite
+number of cells to be \emph{flooded}.
+Hephaestus is building a \emph{levee},
+which is a subset of unit edges of the grid, called \emph{walls},
+forming a connected, non-self-intersecting path or loop.
+
+The game then begins with Hephaestus moving first.
+On each of Hephaestus's turns, he adds one or more walls
+to the levee, as long as the total length of the levee
+is at most $\alpha n$ after his $n$th turn.
+On each of Poseidon's turns,
+every cell which is adjacent to an already flooded cell
+and with no wall between them becomes flooded as well.
+
+Hephaestus wins if the levee forms a closed loop
+such that all flooded cells are
+contained in the interior of the loop ---
+hence stopping the flood and saving the world.
+For which $\alpha$ can Hephaestus guarantee victory
+in a finite number of turns
+no matter how Poseidon chooses the initial cells to flood?
+
+\item %% Problem 4
+For a finite simple graph $G$, we define $G'$ to be the graph
+on the same vertex set as $G$, where for any two vertices $u \neq v$,
+the pair $\{u,v\}$ is an edge of $G'$ if and only if
+$u$ and $v$ have a common neighbor in $G$.
+Prove that if $G$ is a finite simple graph which is isomorphic to $(G')'$,
+then $G$ is also isomorphic to $G'$.
+
+\item %% Problem 5
+Find all integers $n \ge 2$ for which there exists an integer $m$ and
+a polynomial $P(x)$ with integer coefficients satisfying the following three conditions:
+\begin{itemize}
+  \item $m > 1$ and $\gcd(m,n) = 1$;
+  \item the numbers $P(0)$, $P^2(0)$, \dots, $P^{m-1}(0)$ are not divisible by $n$; and
+  \item $P^m(0)$ is divisible by $n$.
+\end{itemize}
+Here $P^k$ means $P$ applied $k$ times, so $P^1(0) = P(0)$, $P^2(0) = P(P(0))$, etc.
+
+\item %% Problem 6
+Let $P_1P_2 \dots P_{100}$ be a cyclic $100$-gon,
+and let $P_i = P_{i+100}$ for all $i$.
+Define $Q_i$ as the intersection of diagonals
+$\ol{P_{i-2}P_{i+1}}$ and $\ol{P_{i-1}P_{i+2}}$ for all integers $i$.
+
+Suppose there exists a point $P$
+satisfying $\ol{PP_i} \perp \ol{P_{i-1}P_{i+1}}$
+for all integers $i$.
+Prove that the points $Q_1$, $Q_2$, \dots, $Q_{100}$
+are concyclic.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USA TST 2020/1, proposed by Carl Schildkraut, Milan Haiman}
+\textsl{Available online at \url{https://aops.com/community/p13654466}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Choose positive integers $b_1$, $b_2$, \dots\ satisfying
+\[ 1 = \frac{b_1}{1^2} > \frac{b_2}{2^2}
+  > \frac{b_3}{3^2} > \frac{b_4}{4^2} > \dotsb \]
+and let $r$ denote the largest real number
+satisfying $\frac{b_n}{n^2} \ge r$ for all positive integers $n$.
+What are the possible values of $r$ across all
+possible choices of the sequence $(b_n)$?
+\end{mdframed}
+The answer is $0 \le r \le 1/2$.
+Obviously $r \ge 0$.
+
+In one direction, we show that
+\begin{claim*}
+  [Greedy bound]
+  For all integers $n$, we have
+  \[ \frac{b_n}{n^2} \le \half + \frac{1}{2n}. \]
+\end{claim*}
+\begin{proof}
+  This is by induction on $n$. For $n=1$ it is given.
+  For the inductive step we have
+  \begin{align*}
+    b_n &< n^2 \frac{b_{n-1}}{(n-1)^2}
+    \le n^2 \left( \frac12 + \frac{1}{2(n-1)}  \right)
+    = \frac{n^3}{2(n-1)} \\
+    &= \half \left[ n^2+n+1 + \frac{1}{n-1} \right] \\
+    &= \frac{n(n+1)}{2} + \half \left[ 1 + \frac{1}{n-1} \right] \\
+    &\le \frac{n(n+1)}{2} + 1
+  \end{align*}
+  So $b_n < \frac{n(n+1)}{2} + 1$
+  and since $b_n$ is an integer, $b_n \le \frac{n(n+1)}{2}$.
+  This implies the result.
+\end{proof}
+
+We now give a construction.
+For $r=1/2$ we take $b_n = \half n(n+1)$
+for $r=0$ we take $b_n = 1$.
+
+\begin{claim*}
+[Explicit construction, given by Nikolai Beluhov]
+Fix $0 < r < 1/2$.
+Let $N$ be large enough that
+$\left\lceil rn^2+n \right\rceil < \half n(n+1)$ for all $n \ge N$.
+Then the following sequence works:
+\[ b_n = \begin{cases}
+    \left\lceil rn^2 + n \right\rceil & n \ge N \\
+    \frac{n^2+n}{2} & n < N.
+  \end{cases} \]
+\end{claim*}
+\begin{proof}
+  We certainly have
+  \[ \frac{b_n}{n^2}
+    = \frac{rn^2 + n + O(1)}{n^2}
+    \xrightarrow{n \to \infty} r.
+  \]
+  Mainly, we contend $b_n n^{-2}$ is strictly decreasing.
+  We need only check this for $n \ge N$; in fact
+  \[ \frac{b_n}{n^2} \ge \frac{rn^2+n}{n^2}
+    > \frac{[r(n+1)^2+(n+1)]+1}{(n+1)^2}
+    > \frac{b_{n+1}}{(n+1)^2} \]
+  where the middle inequality is true
+  since it rearranges to $\frac1n > \frac{n+2}{(n+1)^2}$.
+\end{proof}
+
+%% TODO: recursive solution
+\pagebreak
+
+\subsection{USA TST 2020/2, proposed by Merlijn Staps}
+\textsl{Available online at \url{https://aops.com/community/p13654481}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Two circles $\Gamma_1$ and $\Gamma_2$
+have common external tangents $\ell_1$ and $\ell_2$ meeting at $T$.
+Suppose $\ell_1$ touches $\Gamma_1$ at $A$ and $\ell_2$ touches $\Gamma_2$ at $B$.
+A circle $\Omega$ through $A$ and $B$ intersects $\Gamma_1$
+again at $C$ and $\Gamma_2$ again at $D$, such that quadrilateral $ABCD$ is convex.
+
+Suppose lines $AC$ and $BD$ meet at point $X$,
+while lines $AD$ and $BC$ meet at point $Y$.
+Show that $T$, $X$, $Y$ are collinear.
+\end{mdframed}
+We present four solutions.
+
+\paragraph{First solution, elementary (original).}
+We have $\triangle YAC \sim \triangle YBD$, from which it follows
+\[ \frac{d(Y,AC)}{d(Y,BD)} = \frac{AC}{BD}. \]
+Moreover, if we denote by $r_1$ and $r_2$ the radii of $\Gamma_1$ and $\Gamma_2$, then
+\[
+  \frac{d(T,AC)}{d(T,BD)}
+  = \frac{TA \sin \angle(AC,\ell_1)}{TB \sin \angle (BD,\ell_2)}
+  = \frac{2r_1 \sin \angle(AC,\ell_1)}{2r_2 \sin \angle(BD,\ell_2)}
+  = \frac{AC}{BD}
+\]
+the last step by the law of sines.
+
+\begin{center}
+\begin{asy}
+size(12.5cm);
+
+pair A,E,O_A,O_B,T;
+T = (0,0);
+A = (14.4,-6);
+O_A = (16.9,0);
+E = 1.6 * A;
+O_B = 1.6 * O_A;
+
+draw(circle(O_A,abs(O_A-A)),gray);
+draw(circle(O_B,abs(O_B-E)),gray);
+pair B = intersectionpoint(circumcircle(T,E,O_B),circle(O_B,abs(O_B-E)));
+draw(T--1.2*E);
+draw(T--1.2*B);
+
+pair G = (17,-3);
+// draw(circumcircle(A,B,G),red);
+
+pair C = intersectionpoints(circle(O_A,abs(O_A-A)),circumcircle(A,B,G))[0];
+pair D = intersectionpoints(circle(O_B,abs(O_B-B)),circumcircle(A,B,G))[1];
+
+pair X = extension(A,C,B,D);
+pair Y = extension(A,D,B,C);
+
+draw(A--C,red);
+draw(B--D,red);
+draw(-0.2*X--1.6*X,dashed);
+draw(A--Y--B, orange);
+dot("$A$", A, dir(-90));
+dot("$B$",B,dir(150));
+dot("$C$",C,dir(-20));
+dot("$D$",D,dir(D));
+dot("$X$",X,dir(135));
+dot("$Y$",Y,dir(-45));
+dot("$T$",T,dir(-90));
+label("$\ell_1$",8*dir(A),dir(-90));
+label("$\ell_2$",8*dir(B),dir(90));
+label("$\Gamma_1$",O_A+dir(170)*abs(O_A-A),dir(170),gray);
+label("$\Gamma_2$",O_B+dir(70)*abs(O_B-B),dir(70),gray);
+\end{asy}
+\end{center}
+
+This solves the problem up to configuration issues:
+we claim that $Y$ and $T$ both lie
+inside $\angle AXB \equiv \angle CXD$.
+WLOG $TA < TB$.
+\begin{itemize}
+  \ii The former is since $Y$ lies outside segments $BC$ and $AD$,
+  since we assumed $ABCD$ was convex.
+  \ii For the latter, we note that $X$ lies inside both $\Gamma_1$ and $\Gamma_2$
+  in fact on the radical axis of the two circles
+  (since $X$ was an interior point of both chords $AC$ and $BD$).
+  In particular, $X$ is contained inside $\angle ATB$, and moreover $\angle ATB < 90\dg$,
+  and this is enough to imply the result.
+\end{itemize}
+
+\paragraph{Second solution, inversive.}
+This is based on the solution posted by \texttt{kapilpavase} on AoPS.
+Consider the inversion at $T$ swapping $\Gamma_1$ and $\Gamma_2$;
+we let it send $A$ to $E$, $B$ to $F$, $C$ to $V$, $D$ to $W$, as shown.
+Draw circles $ADWE$ and $BCVF$.
+\begin{center}
+\begin{asy}
+size(12.5cm);
+
+pair A,E,O_A,O_B,T;
+T = (0,0);
+A = (14.4,-6);
+O_A = (16.9,0);
+E = 1.6 * A;
+O_B = 1.6 * O_A;
+
+draw(circle(O_A,abs(O_A-A)),gray);
+draw(circle(O_B,abs(O_B-E)),gray);
+pair B = intersectionpoint(circumcircle(T,E,O_B),circle(O_B,abs(O_B-E)));
+draw(T--1.2*E);
+draw(T--1.2*B);
+
+pair G = (17,-3);
+// draw(circumcircle(A,B,G),red);
+
+pair C = intersectionpoints(circle(O_A,abs(O_A-A)),circumcircle(A,B,G))[0];
+pair D = intersectionpoints(circle(O_B,abs(O_B-B)),circumcircle(A,B,G))[1];
+
+pair X = extension(A,C,B,D);
+pair Y = extension(A,D,B,C);
+
+pair F = extension(T,B,A,A+B-E);
+filldraw(circumcircle(A,D,E), opacity(0.1)+yellow, red);
+filldraw(circumcircle(B,C,F), opacity(0.1)+yellow, red);
+pair V = extension(T,C,X,E);
+pair W = extension(T,D,X,F);
+
+draw(A--C,red);
+draw(B--D,red);
+// draw(-0.2*X--1.6*X,dashed);
+draw(A--Y--B, grey+dotted);
+draw(W--T--C, lightblue);
+
+draw(V--E, lightblue+dashed);
+draw(W--F, lightblue+dashed);
+
+dot("$A$", A, dir(225));
+dot("$B$",B,dir(80));
+dot("$C$",C,dir(-10));
+dot("$D$",D,dir(-45));
+dot("$X$",X,dir(175));
+dot("$Y$",Y,dir(-45));
+dot("$T$",T,dir(-90));
+label("$\ell_1$",8*dir(A),dir(-90));
+label("$\ell_2$",8*dir(B),dir(90));
+label("$\Gamma_1$",O_A+dir(170)*abs(O_A-A),dir(170),gray);
+label("$\Gamma_2$",O_B+dir(70)*abs(O_B-B),dir(70),gray);
+
+dot("$E$", E, dir(-90));
+dot("$F$", F, dir(160));
+dot("$V$", V, dir(110));
+dot("$W$", W, dir(-10));
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  Points $T$ and $Y$ lie on the radical axis of $(ADE)$ and $(BCF)$.
+\end{claim*}
+\begin{proof}
+  Because $TF \cdot TB = TA \cdot TE$ and $YA \cdot YD = YC \cdot YB$.
+\end{proof}
+
+\begin{claim*}
+  Point $X$ has equal power to $(ADE)$ and $(BCF)$.
+\end{claim*}
+\begin{proof}
+  Since $TV \cdot TC = TA \cdot TE$, quadrilateral $VCEA$ is cyclic too,
+  so by radical axis with $\Gamma_1$ and $\Gamma_2$ we find $X$ lies on $VE$.
+  Similarly, $X$ lies on $FW$.
+  Thus, $X$ is the center of negative inversion between $(ADE)$ and $(BCF)$.
+
+  But since $AE = BF$ and moreover
+  \begin{align*}
+    \dang BCF + \dang ADE
+    &= (\dang BCA + \dang ACF) + (\dang ADB + \dang BDE) \\
+    &= (\dang BCA + \dang ADB) + (\dang ACF + \dang BDE) = 0 + 0 = 0
+  \end{align*}
+  we conclude that $(ADE)$ and $(BCF)$ are \emph{congruent}.
+  As $X$ was the center of negative inversion between them, we're done.
+\end{proof}
+
+\paragraph{Third solution, projective (Nikolai Beluhov).}
+We start with some definitions.
+Let $\ell_1$ touch $\Gamma_2$ at $E$, $\ell_2$ touch $\Gamma_1$ at $F$,
+$K = \ell_1 \cap \ol{BD}$, $L = \ell_2 \cap \ol{AC}$,
+line $FX$ meet $\Gamma_1$ again at $M$,
+line $EX$ meet $\Gamma_2$ again at $N$,
+and lines $AB$, $AD$, and $BC$ meet line $TX$ at $Z$, $Y_1$, and $Y_2$.
+Thus the desired statement is equivalent to $Y_1 = Y_2$.
+
+\begin{claim*}
+  $(EB; ND)_{\Gamma_2} = (FA; MC)_{\Gamma_1}$.
+\end{claim*}
+
+\begin{proof}
+  Note that $AX \cdot XC = BX \cdot XD = EX \cdot XN$, so $AECN$ is cyclic.
+  Likewise $BFDM$ is cyclic.
+
+  Consider the inversion with center $T$ which swaps $\Gamma_1$ and $\Gamma_2$;
+  it also swaps the pairs $\{A, E\}$ and $\{B, F\}$.
+  Since $AECN$ is cyclic, $C$ is on $\Gamma_1$, and $N$ is on $\Gamma_2$,
+  it also swaps $\{C, N\}$; similarly it swaps $\{D, M\}$.
+
+  Thus $(EB; ND)_{\Gamma_2} = (AF; CM)_{\Gamma_1} = (FA; MC)_{\Gamma_1}$ as desired.
+\end{proof}
+With this claim, the remainder of the proof is chasing cross-ratios:
+\[
+  (TZ; XY_1)
+  \stackrel{A}{=} (KB; XD)
+  \stackrel{E}{=} (EB; ND)_{\Gamma_2}
+  = (FA; MC)_{\Gamma_1}
+  \stackrel{F}{=} (LA; XC)
+  \stackrel{B}{=} (TZ; XY_2)
+\]
+implies $Y_1 = Y_2$ as desired.
+
+\paragraph{Fourth solution by untethered moving points.}
+Fix $\ell_1$, $\ell_2$, $T$, $\Gamma_1$ and $\Gamma_2$,
+and let $\Gamma_1$ and $\Gamma_2$ meet at $U$ and $V$.
+By the radical axis theorem, $X$ lies on $UV$.
+
+Thus we instead treat $X$ as a variable point on line $UV$
+and let $C = AX \cap \Gamma_1$, $D = BX \cap \Gamma_2$.
+By definition, $X$ has degree $1$ and $T$ has degree $0$.
+
+We apply \textbf{Zack's lemma} to untethered point $Y$.
+Note that $C$ and $D$ move projectively on conics,
+and therefore have degree $2$.
+Then, lines $AD$ and $BC$ each have degree at most $\deg(A)+\deg(D)=0+2=2$,
+and so their intersection $Y$ has degree at most $2+2=4$.
+But when $X \in AB$, the lines $AD$ and $BC$ are the same,
+so Zack's lemma implies that
+\[ \deg Y \le 4 - 1 = 3. \]
+
+Thus the assertion that $T$, $X$, $Y$ are collinear
+(which for example can be seen as a certain vanishing determinant)
+is a statement of degree at most $0+1+3=4$.
+Thus it suffices to find $5$ values of $X$
+(other than $X \in \ol{AB}$, which we used already).
+This is remarkably easy:
+\begin{enumerate}
+    \item When $X=U$ or $X=V$, then $X=C=D=Y$ and the statement is obvious.
+    \item When $X \in \ell_1$, say, then $A=C$ and so $Y$ lies on $AC=\ell_1$ as well.
+    The case $X \in \ell_2$ is symmetric.
+    \item Finally, take $X$ at infinity along $UV$.
+    Then $C$ and $D$ are the other tangency points
+    of the circles with $\ell_1$, $\ell_2$, and so $AC=\ell_1$, $BD=\ell_2$, so $Y=T$.
+\end{enumerate}
+This finishes the problem.
+\pagebreak
+
+\subsection{USA TST 2020/3, proposed by Nikolai Beluhov}
+\textsl{Available online at \url{https://aops.com/community/p13654498}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $\alpha \ge 1$ be a real number.
+Hephaestus and Poseidon play a turn-based game
+on an infinite grid of unit squares.
+Before the game starts, Poseidon chooses a finite
+number of cells to be \emph{flooded}.
+Hephaestus is building a \emph{levee},
+which is a subset of unit edges of the grid, called \emph{walls},
+forming a connected, non-self-intersecting path or loop.
+
+The game then begins with Hephaestus moving first.
+On each of Hephaestus's turns, he adds one or more walls
+to the levee, as long as the total length of the levee
+is at most $\alpha n$ after his $n$th turn.
+On each of Poseidon's turns,
+every cell which is adjacent to an already flooded cell
+and with no wall between them becomes flooded as well.
+
+Hephaestus wins if the levee forms a closed loop
+such that all flooded cells are
+contained in the interior of the loop ---
+hence stopping the flood and saving the world.
+For which $\alpha$ can Hephaestus guarantee victory
+in a finite number of turns
+no matter how Poseidon chooses the initial cells to flood?
+\end{mdframed}
+We show that if $\alpha > 2$
+then Hephaestus wins,
+but when $\alpha = 2$ (and hence $\alpha \le 2$)
+Hephaestus cannot contain even a single-cell flood initially.
+
+\bigskip
+
+\textbf{Strategy for $\alpha > 2$}:
+Impose $\ZZ^2$ coordinates on the cells.
+Adding more flooded cells does not make our task easier,
+so let us assume that initially
+the cells $(x,y)$ with $|x|+|y| \le d$ are flooded
+for some $d \ge 2$;
+thus on Hephaestus's $k$th turn,
+the water is contained in $|x|+|y| \le d+k-1$.
+Our goal is to contain the flood with a large rectangle.
+
+We pick large integers $N_1$ and $N_2$ such that
+\begin{align*}
+  \alpha N_1 &> 2N_1 + (2d + 3) \\
+  \alpha (N_1+N_2) &> 2N_2 + (6N_1 + 8d + 4).
+\end{align*}
+Mark the points $X_i$, $Y_i$ as shown
+in the figure for $1 \le i \le 6$.
+The red figures indicate the distance
+between the marked points on the rectangle.
+\begin{center}
+\begin{asy}
+size(10cm);
+transform t = shift(-0.5,-0.5);
+path c(real x, real y) {
+  return t * shift(x,y) * unitsquare ;
+}
+for (int x=-7; x<=7; ++x) {
+  for (int y=-16; y<=2; ++y) {
+    if (abs(x)+abs(y) <= 2) {
+      filldraw(c(x,y), blue, grey);
+    }
+    else if (abs(x)+abs(y) <= 7) {
+      filldraw(c(x,y), mediumcyan, grey);
+    }
+    else if (abs(x)+abs(y) <= 16) {
+      filldraw(c(x,y), paleblue, grey);
+    }
+    else {
+      filldraw(c(x,y), white, grey);
+    }
+  }
+}
+dotfactor *= 1.5;
+dot("$X_1$", (-0.5, 2.5), dir(115));
+dot("$Y_1$", ( 0.5, 2.5), dir(65));
+dot("$X_2$", (-5.5, 2.5), dir(90));
+dot("$Y_2$", ( 5.5, 2.5), dir(90));
+dot("$X_3$", (-7.5, 2.5), dir(135));
+dot("$Y_3$", ( 7.5, 2.5), dir(45));
+dot("$X_4$", (-7.5,-0.5), dir(180));
+dot("$Y_4$", ( 7.5,-0.5), dir(0));
+dot("$X_5$", (-7.5, -9.5), dir(180));
+dot("$Y_5$", ( 7.5, -9.5), dir(0));
+dot("$X_6$", (-7.5,-16.5), dir(180));
+dot("$Y_6$", ( 7.5,-16.5), dir(0));
+draw(box( (-7.5,-16.5), (7.5,2.5) ), black+1.4 );
+
+label("$1$", (0, 2.5), dir(90), red);
+label("$N_1$", (-3, 2.5), dir(90), red);
+label("$N_1$", ( 3, 2.5), dir(90), red);
+label("$d$", (-6.5, 2.5), dir(90), red);
+label("$d$", ( 6.5, 2.5), dir(90), red);
+label("$d+1$", (-7.5, 1), dir(180), red);
+label("$d+1$", ( 7.5, 1), dir(  0), red);
+label("$N_2$", (-7.5, -5), dir(180), red);
+label("$N_2$", ( 7.5, -5), dir(  0), red);
+label("$N_1+d$", (-7.5, -13), dir(180), red);
+label("$N_1+d$", ( 7.5, -13), dir(  0), red);
+\end{asy}
+\end{center}
+We follow the following plan.
+\begin{itemize}
+  \ii Turn $1$: place wall $X_1 Y_1$.
+  This cuts off the flood to the north.
+  \ii Turns $2$ through $N_1+1$: extend
+  the levee to segment $X_2 Y_2$.
+  This prevents further flooding to the north.
+  \ii Turn $N_1+2$:
+  add in broken lines $X_4 X_3 X_2$ and $Y_4 Y_3 Y_2$ all at once.
+  This cuts off the flood west and east.
+  \ii Turns $N_1+2$ to $N_1+N_2+1$:
+  extend the levee along segments $X_4 X_5$ and $Y_4 Y_5$.
+  This prevents further flooding west and east.
+  \ii Turn $N_1 + N_2 + 2$:
+  add in the broken line $X_5 X_6 Y_6 Y_5$ all at once and win.
+\end{itemize}
+
+\bigskip
+
+\textbf{Proof for $\alpha = 2$}:
+Suppose Hephaestus contains the flood
+on his $(n+1)$st turn.
+We prove that $\alpha > 2$ by showing
+that in fact at least $2n+4$ walls have been constructed.
+
+Let $c_0$, $c_1$, \dots, $c_n$ be a path of cells such that
+$c_0$ is the initial cell flooded,
+and in general $c_i$ is flooded on
+Poseidon's $i$th turn from $c_{i-1}$.
+The levee now forms a closed loop enclosing all $c_i$.
+
+\begin{claim*}
+  If $c_i$ and $c_j$ are adjacent
+  then $|i-j|=1$.
+\end{claim*}
+\begin{proof}
+  Assume $c_i$ and $c_j$ are adjacent but $|i-j|>1$.
+  Then the two cells must be separated by a wall.
+  But the levee forms a closed loop,
+  and now $c_i$ and $c_j$ are on opposite sides.
+\end{proof}
+
+Thus the $c_i$ actually form a path.
+We color \emph{green} any edge of the unit grid (wall or not)
+which is an edge of exactly one $c_i$
+(i.e.\ the boundary of the polyomino).
+It is easy to see there are exactly $2n+4$ green edges.
+
+Now, from the center of each cell $c_i$,
+shine a laser towards each green edge of $c_i$
+(hence a total of $2n+4$ lasers are emitted).
+An example below is shown for $n = 6$,
+with the levee marked in brown.
+
+\begin{center}
+\begin{asy}
+  for (int i=0; i<=4; ++i) {
+    for (int j=0; j<=4; ++j) {
+      draw(shift(i,j)*unitsquare, lightgrey);
+    }
+  }
+  draw( (0,0)--(0,2)--(2,2)--(2,3)--(0,3)--(0,5)
+    --(5,5)--(5,2)--(3,2)--(3,0)--cycle, brown+1.5 );
+  filldraw( (0.1,1.1)--(2.9,1.1)--(2.9,4.9)--(1.1,4.9)
+    --(1.1,4.1)--(2.1,4.1)--(2.1,1.9)--(0.1,1.9)--cycle,
+    palecyan, green+1.5);
+  label("$c_0$", (1.5,4.5));
+  label("$c_1$", (2.5,4.5));
+  label("$c_2$", (2.5,3.5));
+  label("$c_3$", (2.5,2.5));
+  label("$c_4$", (2.5,1.5));
+  label("$c_5$", (1.5,1.5));
+  label("$c_6$", (0.5,1.5));
+
+  // Lasers from c_6
+  draw( (0.5,1.5)--(0,1.5), red, EndArrow(TeXHead), Margin(2,1) );
+  draw( (0.5,1.5)--(0.5,2), red, EndArrow(TeXHead), Margin(2,1) );
+  draw( (0.5,1.5)--(0.5,0), red, EndArrow(TeXHead), Margin(2,1) );
+  // Lasers from c_5
+  draw( (1.5,1.5)--(1.5,2), red, EndArrow(TeXHead), Margin(2,1) );
+  draw( (1.5,1.5)--(1.5,0), red, EndArrow(TeXHead), Margin(2,1) );
+  // Lasers from c_4
+  draw( (2.5,1.5)--(3,1.5), red, EndArrow(TeXHead), Margin(2,1) );
+  draw( (2.5,1.5)--(2.5,0), red, EndArrow(TeXHead), Margin(2,1) );
+  // Lasers from c_3
+  draw( (2.5,2.5)--(2,2.5), red, EndArrow(TeXHead), Margin(2,1) );
+  draw( (2.5,2.5)--(5,2.5), red, EndArrow(TeXHead), Margin(2,1) );
+  // Lasers from c_2
+  draw( (2.5,3.5)--(0,3.5), red, EndArrow(TeXHead), Margin(2,1) );
+  draw( (2.5,3.5)--(5,3.5), red, EndArrow(TeXHead), Margin(2,1) );
+  // Lasers from c_1
+  draw( (2.5,4.5)--(2.5,5), red, EndArrow(TeXHead), Margin(2,1) );
+  draw( (2.5,4.5)--(5,4.5), red, EndArrow(TeXHead), Margin(2,1) );
+  // Lasers from c_0
+  draw( (1.5,4.5)--(1.5,5), red, EndArrow(TeXHead), Margin(2,1) );
+  draw( (1.5,4.5)--(0,4.5), red, EndArrow(TeXHead), Margin(2,1) );
+  draw( (1.5,4.5)--(1.5,3), red, EndArrow(TeXHead), Margin(2,1) );
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  No wall is hit by more than one laser.
+\end{claim*}
+\begin{proof}
+  Assume for contradiction that a wall $w$ is hit
+  by lasers from $c_i$ and $c_j$.
+  WLOG that laser is vertical, so
+  $c_i$ and $c_j$ are in the same column
+  (e.g.\ $(i,j) = (0,5)$ in figure).
+
+  We consider two cases on the position of $w$.
+  \begin{itemize}
+    \ii If $w$ is between $c_i$ and $c_j$,
+    then we have found a segment intersecting
+    the levee exactly once.
+    But the endpoints of the segment lie inside the levee.
+    This contradicts the assumption that the levee is a closed loop.
+
+    \ii Suppose $w$ lies above both $c_i$ and $c_j$
+    and assume WLOG $i < j$.
+    Then we have found that there is no levee at all
+    between $c_i$ and $c_j$.
+
+    Let $\rho \ge 1$ be the distance between
+    the centers of $c_i$ and $c_j$.
+    Then $c_j$ is flooded in a straight line from $c_i$
+    within $\rho$ turns, and this is the unique
+    shortest possible path.
+    So this situation can only occur if $j = i+\rho$
+    and $c_i$, \dots, $c_j$ form a column.
+    But then no vertical lasers from $c_i$ and $c_j$
+    may point in the same direction, contradiction.
+  \end{itemize}
+  Since neither case is possible, the proof ends here.
+\end{proof}
+
+This implies the levee has at least $2n+4$ walls
+(the number of lasers) on Hephaestus's $(n+1)$st turn.
+So $\alpha \ge \frac{2n+4}{n+1} > 2$.
+
+\begin{remark*}
+  [Author comments]
+  The author provides the following remarks.
+  \begin{itemize}
+  \item Even though the flood can be stopped when $\alpha = 2 + \eps$, it takes a very long time to do that. Starting from a single flooded cell, the strategy I have outlined requires $\Theta(1 / \eps^2)$ days. Starting from several flooded cells contained within an area of diameter $D$, it takes $\Theta( D / \eps^2)$ days. I do not know any strategies that require fewer days than that.
+  \item There is a gaping chasm between $\alpha \le 2$ and $\alpha > 2$. Since $\alpha \le 2$ does not suffice even when only one cell is flooded in the beginning, there are in fact no initial configurations at all for which it is sufficient. On the other hand, $\alpha > 2$ works for all initial configurations.
+  \item The second half of the solution essentially estimates the perimeter of a polyomino in terms of its diameter (where diameter is measured entirely within the polyomino).
+
+  It appears that this has not been done before, or at least I was unable to find any reference for it. I did find tons of references where the perimeter of a polyomino is estimated in terms of its area, but nothing concerning the diameter.
+
+  My argument is a formalisation of the intuition that if $P$ is any shortest path within some weirdly-shaped polyomino, then the boundary of that polyomino must hug $P$ rather closely so that $P$ cannot be shortened.
+  \end{itemize}
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USA TST 2020/4, proposed by Zack Chroman, Mehtaab Sawhney}
+\textsl{Available online at \url{https://aops.com/community/p13913804}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For a finite simple graph $G$, we define $G'$ to be the graph
+on the same vertex set as $G$, where for any two vertices $u \neq v$,
+the pair $\{u,v\}$ is an edge of $G'$ if and only if
+$u$ and $v$ have a common neighbor in $G$.
+Prove that if $G$ is a finite simple graph which is isomorphic to $(G')'$,
+then $G$ is also isomorphic to $G'$.
+\end{mdframed}
+We say a vertex of a graph is \emph{fatal}
+if it has degree at least $3$,
+and some two of its neighbors are not adjacent.
+
+\begin{claim*}
+  The graph $G'$ has at least as many triangles as $G$,
+  and has strictly more if $G$ has any fatal vertices.
+\end{claim*}
+\begin{proof}
+  Obviously any triangle in $G$ persists in $G'$.
+  Moreover, suppose $v$ is a fatal vertex of $G$.
+  Then the neighbors of $G$ will form a clique in $G'$
+  which was not there already,
+  so there are more triangles.
+\end{proof}
+
+Thus we only need to consider graphs $G$ with no fatal vertices.
+Looking at the connected components,
+the only possibilities are cliques
+(including single vertices), cycles, and paths.
+So in what follows we restrict our attention to graphs $G$
+only consisting of such components.
+
+\begin{remark*}
+  [Warning]
+  Beware: assuming $G$ is connected loses generality.
+  For example, it could be that $G = G_1 \sqcup G_2$,
+  where $G_1' \cong G_2$ and $G_2' \cong G_1$.
+\end{remark*}
+
+First, note that the following are stable under the operation:
+\begin{itemize}
+  \ii an isolated vertex,
+  \ii a cycle of odd length, or
+  \ii a clique with at least three vertices.
+\end{itemize}
+In particular, $G \cong G''$ holds for such graphs.
+
+On the other hand, cycles of even length or paths of nonzero
+length will break into more connected components.
+For this reason, a graph $G$ with any of these components
+will not satisfy $G \cong G''$
+because $G'$ will have strictly more connected components than $G$,
+and $G''$ will have at least as many as $G'$.
+
+Therefore $G \cong G''$ if and only if $G$
+is a disjoint union of the three types of connected components named earlier.
+Since $G \cong G'$ holds for such graphs as well,
+the problem statement follows right away.
+
+\begin{remark*}
+  Note that the same proof works equally well
+  for an arbitrary number of iterations $G^{''\dots''} \cong G$,
+  rather than just $G'' \cong G$.
+\end{remark*}
+
+\begin{remark*}
+  The proposers included a variant of the problem where given any graph $G$,
+  the operation stabilized after at most $O(\log n)$ operations,
+  where $n$ was the number of vertices of $G$.
+\end{remark*}
+\pagebreak
+
+\subsection{USA TST 2020/5, proposed by Carl Schildkraut}
+\textsl{Available online at \url{https://aops.com/community/p13913769}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all integers $n \ge 2$ for which there exists an integer $m$ and
+a polynomial $P(x)$ with integer coefficients satisfying the following three conditions:
+\begin{itemize}
+  \item $m > 1$ and $\gcd(m,n) = 1$;
+  \item the numbers $P(0)$, $P^2(0)$, \dots, $P^{m-1}(0)$ are not divisible by $n$; and
+  \item $P^m(0)$ is divisible by $n$.
+\end{itemize}
+Here $P^k$ means $P$ applied $k$ times, so $P^1(0) = P(0)$, $P^2(0) = P(P(0))$, etc.
+\end{mdframed}
+The answer is that this is possible if and only if
+there exists primes $p' < p$ such that $p \mid n$ and $p' \nmid n$.
+(Equivalently, the radical $\opname{rad}(n)$
+must not be the product of the first several primes.)
+
+For a polynomial $P$, and an integer $N$, we introduce the notation
+\[ \mathbf{zord}(P \bmod N)
+  \coloneqq \min \left\{ e > 0 \mid P^e(0) \equiv 0 \bmod N \right\} \]
+where we set $\min\varnothing=0$ by convention.
+Note that in general we have
+\[ \mathbf{zord}(P \bmod N) = \opname*{lcm}_{q \mid N}
+  \left( \mathbf{zord}(P \bmod q)  \right) \qquad (\dagger) \]
+where the index runs over all prime powers
+$q \mid N$ (by Chinese remainder theorem).
+This will be used in both directions.
+
+\textbf{Construction}:
+First, we begin by giving a construction.
+The idea is to first use the following prime power case.
+\begin{claim*}
+  Let $p^e$ be a prime power, and $1 \le k < p$.
+  Then
+  \[ f(X) = X+1 - k \cdot \frac{X(X-1)(X-2) \dots (X-(k-2))}{(k-1)!} \]
+  viewed as a polynomial in $(\ZZ/p^e)[X]$ satisfies $\mathbf{zord}(f \bmod{p^e}) = k$.
+\end{claim*}
+\begin{proof}
+  Note $f(0) = 1$, $f(1) = 2$, \dots, $f(k-2) = k-1$, $f(k-1) = 0$ as needed.
+\end{proof}
+This gives us a way to do the construction now.
+For the prime power $p^e \mid n$, we choose $1 \le p' < p$ and require
+$\mathbf{zord}(P \bmod{p^e}) = p'$ and
+$\mathbf{zord}(P \bmod{q}) = 1$ for every other prime power $q$ dividing $n$.
+Then by $(\dagger)$ we are done.
+\begin{remark*}
+  The claim can be viewed as a special case of Lagrange interpolation
+  adapted to work over $\ZZ/p^e$ rather than $\ZZ/p$.
+  Thus the construction of the polynomial $f$ above is quite natural.
+\end{remark*}
+
+\textbf{Necessity}: by $(\dagger)$ again,
+it will be sufficient to prove the following claim.
+\begin{claim*}
+  For any prime power $q = p^e$, and any polynomial $f(x) \in \ZZ[x]$,
+  if the quantity $\mathbf{zord}(f \bmod q)$ is nonzero
+  then it has all prime factors at most $p$.
+\end{claim*}
+\begin{proof}
+  This is by induction on $e \ge 1$.
+  For $e=1$, the pigeonhole principle immediately
+  implies that $\mathbf{zord}(P \bmod p) \le p$.
+
+  Now assume $e \ge 2$.
+  Let us define
+  \[ k \coloneqq \mathbf{zord}(P \bmod{p^{e-1}}),
+    \qquad Q \coloneqq P^k. \]
+  Since being periodic modulo $p^e$ requires periodic modulo $p^{e-1}$,
+  it follows that
+  \[ \mathbf{zord}(P \bmod{p^e}) = k \cdot \mathbf{zord}(Q \bmod{p^e}). \]
+  However since $Q(0) \equiv 0\bmod p^{e-1}$, it follows $\{Q(0), Q^2(0), \dots\}$
+  are actually all multiples of $p^{e-1}$.
+  There are only $p$ residues modulo $p^e$ which are also multiples of $p^{e-1}$,
+  so $\mathbf{zord}(Q \bmod{p^e}) \le p$, as needed.
+\end{proof}
+
+\begin{remark*}
+  One reviewer submitted the following test-solving comments:
+
+  This is one of these problems where you can make many useful natural observations,
+  and if you make enough of them eventually they cohere into a solution.
+  For example, here are some things I noticed while solving:
+  \begin{itemize}
+  \ii The polynomial $1-x$ shows that $m=2$ works for any odd $n$.
+  \ii In general, if $\zeta$ is a primitive $m$th root of unity
+  modulo $n$, then $\zeta(x+1)-1$ has the desired property (assuming $\gcd(m,n) = 1$).
+  We can extend this using the Chinese remainder theorem
+  to find that if $p \mid n$, $m \mid p-1$, and $\gcd(m,n)=1$, then $n$ works.
+  So by this point I already have something
+  about the prime factors of $n$ being sort-of closed downwards.
+  \ii By iterating $P$ we see it is enough to consider $m$ prime.
+  \ii In the case where $n=2^k$,
+  it is not too difficult to show that no odd prime $m$ works.
+  \end{itemize}
+\end{remark*}
+\pagebreak
+
+\subsection{USA TST 2020/6, proposed by Michael Ren}
+\textsl{Available online at \url{https://aops.com/community/p13913742}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $P_1P_2 \dots P_{100}$ be a cyclic $100$-gon,
+and let $P_i = P_{i+100}$ for all $i$.
+Define $Q_i$ as the intersection of diagonals
+$\ol{P_{i-2}P_{i+1}}$ and $\ol{P_{i-1}P_{i+2}}$ for all integers $i$.
+
+Suppose there exists a point $P$
+satisfying $\ol{PP_i} \perp \ol{P_{i-1}P_{i+1}}$
+for all integers $i$.
+Prove that the points $Q_1$, $Q_2$, \dots, $Q_{100}$
+are concyclic.
+\end{mdframed}
+We show two solutions.
+In addition, Luke Robitaille has a reasonable complex numbers solution
+posted at \url{https://aops.com/community/p26795631}.
+
+\paragraph{Solution to proposed problem.}
+We let $\ol{PP_2}$ and $\ol{P_1P_3}$
+intersect (perpendicularly) at point $K_2$,
+and define $K_\bullet$ cyclically.
+
+\begin{center}
+\begin{asy}
+size(16cm);
+
+pair P_1 = dir(178);
+pair P_2 = dir(136);
+pair P_3 = dir(82);
+pair P_4 = dir(32);
+
+pair K_2 = foot(P_2, P_1, P_3);
+pair K_3 = foot(P_3, P_2, P_4);
+pair P = extension(P_2, K_2, P_3, K_3);
+pair K_4 = foot(P_3, P, P_4);
+pair P_5 = -P_3+2*foot(origin, P_3, K_4);
+pair K_5 = foot(P_4, P, P_5);
+pair P_6 = -P_4+2*foot(origin, P_4, K_5);
+pair K_1 = foot(P_2, P, P_1);
+pair P_0 = -P_2+2*foot(origin, P_2, K_1);
+
+fill(P--P_1--P_2--cycle, opacity(0.1)+paleblue);
+fill(P--P_2--P_3--cycle, opacity(0.1)+lightgreen);
+fill(P--P_3--P_4--cycle, opacity(0.1)+paleblue);
+fill(P--P_4--P_5--cycle, opacity(0.1)+lightgreen);
+
+draw(unitcircle, blue);
+draw(P_0--P_1--P_2--P_3--P_4--P_5--P_6, blue);
+
+draw(P--P_1, red);
+draw(P--P_2, red);
+draw(P--P_3, red);
+draw(P--P_4, red);
+draw(P--P_5, red);
+draw(P_1--P_3--P_5, deepgreen);
+draw(P_0--P_2--P_4--P_6, deepgreen);
+
+draw(P_0--P_3, orange);
+draw(P_1--P_4, orange);
+draw(P_2--P_5, orange);
+draw(P_3--P_6, orange);
+
+pair H_1 = orthocenter(P, P_1, P_2);
+pair H_2 = orthocenter(P, P_2, P_3);
+pair H_3 = orthocenter(P, P_3, P_4);
+pair H_4 = orthocenter(P, P_4, P_5);
+pair Q_2 = extension(P_0, P_3, P_1, P_4);
+pair Q_3 = extension(P_1, P_4, P_2, P_5);
+pair Q_4 = extension(P_2, P_5, P_3, P_6);
+
+pair N = circumcenter(K_1, K_2, K_3);
+draw(CP(N, K_1), deepgreen);
+pair E = 2*N-P;
+pair E_2 = foot(E, P_1, P_3);
+pair E_3 = foot(E, P_2, P_4);
+pair E_4 = foot(E, P_3, P_5);
+
+draw(E_2--E_3--E_4, lightblue+1.5);
+draw(K_2--K_3--K_4, orange+1.5);
+
+draw(P--H_1--E, deepcyan);
+draw(P--H_2--E, deepcyan);
+draw(P--H_3--E, deepcyan);
+draw(P--E);
+draw(E_2--E, brown);
+draw(E_3--E, brown);
+draw(E_4--E, brown);
+pair F_1 = extension(E, H_1, P_0, P_3);
+pair F_2 = extension(E, H_2, P_1, P_4);
+pair F_3 = extension(E, H_3, P_2, P_5);
+
+draw(E_2--E_4, deepgreen+1.5);
+
+dot("$P_1$", P_1, dir(P_1));
+dot("$P_2$", P_2, dir(P_2));
+dot("$P_3$", P_3, dir(P_3));
+dot("$P_4$", P_4, dir(P_4));
+dot("$K_2$", K_2, dir(K_2));
+dot("$K_3$", K_3, dir(K_3));
+dot("$P$", P, dir(P));
+dot("$K_4$", K_4, dir(K_4));
+dot("$P_5$", P_5, dir(P_5));
+dot("$K_5$", K_5, dir(K_5));
+dot(P_6);
+dot("$K_1$", K_1, dir(K_1));
+dot(P_0);
+dot("$H_1$", H_1, dir(H_1));
+dot("$H_2$", H_2, dir(H_2));
+dot("$H_3$", H_3, dir(H_3));
+dot("$H_4$", H_4, dir(H_4));
+dot("$Q_2$", Q_2, dir(Q_2));
+dot("$Q_3$", Q_3, dir(Q_3));
+dot("$Q_4$", Q_4, dir(Q_4));
+dot(N);
+dot("$E$", E, dir(E));
+dot("$E_2$", E_2, dir(E_2));
+dot("$E_3$", E_3, dir(E_3));
+dot("$E_4$", E_4, dir(E_4));
+dot(F_1);
+dot(F_2);
+dot(F_3);
+
+/* TSQ Source:
+
+!size(16cm);
+
+P_1 = dir 178
+P_2 = dir 136
+P_3 = dir 82
+P_4 = dir 32
+
+K_2 = foot P_2 P_1 P_3
+K_3 = foot P_3 P_2 P_4
+P = extension P_2 K_2 P_3 K_3
+K_4 = foot P_3 P P_4
+P_5 = -P_3+2*foot(origin, P_3, K_4)
+K_5 = foot P_4 P P_5
+P_6 .= -P_4+2*foot(origin, P_4, K_5)
+K_1 = foot P_2 P P_1
+P_0 .= -P_2+2*foot(origin, P_2, K_1)
+
+!fill(P--P_1--P_2--cycle, opacity(0.1)+paleblue);
+!fill(P--P_2--P_3--cycle, opacity(0.1)+lightgreen);
+!fill(P--P_3--P_4--cycle, opacity(0.1)+paleblue);
+!fill(P--P_4--P_5--cycle, opacity(0.1)+lightgreen);
+
+unitcircle blue
+P_0--P_1--P_2--P_3--P_4--P_5--P_6 blue
+
+P--P_1 red
+P--P_2 red
+P--P_3 red
+P--P_4 red
+P--P_5 red
+P_1--P_3--P_5 deepgreen
+P_0--P_2--P_4--P_6 deepgreen
+
+P_0--P_3 orange
+P_1--P_4 orange
+P_2--P_5 orange
+P_3--P_6 orange
+
+H_1 = orthocenter P P_1 P_2
+H_2 = orthocenter P P_2 P_3
+H_3 = orthocenter P P_3 P_4
+H_4 = orthocenter P P_4 P_5
+Q_2 = extension P_0 P_3 P_1 P_4
+Q_3 = extension P_1 P_4 P_2 P_5
+Q_4 = extension P_2 P_5 P_3 P_6
+
+N .= circumcenter K_1 K_2 K_3
+CP N K_1 deepgreen
+E = 2*N-P
+E_2 = foot E P_1 P_3
+E_3 = foot E P_2 P_4
+E_4 = foot E P_3 P_5
+
+E_2--E_3--E_4 lightblue+1.5
+K_2--K_3--K_4 orange+1.5
+
+P--H_1--E deepcyan
+P--H_2--E deepcyan
+P--H_3--E deepcyan
+P--E
+E_2--E brown
+E_3--E brown
+E_4--E brown
+F_1 .= extension E H_1 P_0 P_3
+F_2 .= extension E H_2 P_1 P_4
+F_3 .= extension E H_3 P_2 P_5
+
+E_2--E_4 deepgreen+1.5
+
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  The points $K_\bullet$ are concyclic
+  say with circumcircle $\gamma$.
+\end{claim*}
+\begin{proof}
+  Note that $PP_1 \times PK_1 = PP_2 \times PK_2 = \dots$
+  so the result follows by inversion at $P$.
+\end{proof}
+Let $E_i$ be the second intersection
+of line $\ol{P_{i-1} K_i P_{i+1}}$ with $\gamma$;
+then it follows that the perpendiculars to $\ol{P_{i-1} P_{i+1}}$
+at $E_i$ all concur at a point $E$,
+which is the reflection of $P$ across the center of $\gamma$.
+
+We let $H_2 = \ol{P_1P_3} \cap \ol{P_2P_4}$
+denote the orthocenter of $\triangle PP_2P_3$
+and define $H_\bullet$ cyclically.
+\begin{claim*}
+  We have
+  \[ \ol{EH_2} \perp \ol{P_1 P_4} \parallel \ol{K_2 K_3}
+    \quad\text{and}\quad
+    \ol{PH_2} \perp \ol{E_2 E_3} \parallel \ol{P_2 P_3}.  \]
+\end{claim*}
+\begin{proof}
+  Both parallelisms follow by Reim's theorem through
+  $\angle E_2 H_2 E_3 = \angle K_2 H_2 K_3$,
+  So we need to show the perpendicularities.
+
+  Note that $\ol{H_2 P}$ and $\ol{H_2 E}$
+  are respectively circum-diameters of
+  $\triangle H_2K_2K_3$ and $\triangle H_2E_2E_3$.
+  As $\ol{K_2 K_3}$ and $\ol{E_2 E_3}$ are anti-parallel,
+  it follows $\ol{H_2P}$ and $\ol{H_2E}$ are isogonal
+  and we derive both perpendicularities.
+\end{proof}
+
+\begin{claim*}
+  The points $E$, $Q_3$, $E_3$ are collinear.
+\end{claim*}
+\begin{proof}
+  We use the previous claim.
+  The parallelisms imply that
+  \[ \frac{E_3H_2}{E_3P_2} = \frac{E_2H_2}{E_2P_3}
+    = \frac{E_4H_3}{E_4P_3} = \frac{E_3H_3}{E_3P_4}. \]
+  Now consider a homothety centered at $E_3$ sending $H_2$ to $P_2$
+  and $H_3$ to $P_4$.
+  Then it should send the orthocenter of $\triangle EH_2H_3$ to $Q_3$,
+  proving the result.
+\end{proof}
+
+From all this it follows that $\triangle EQ_2Q_3 \sim \triangle PK_2K_3$
+as the opposite sides are all parallel.
+Repeating this we actually find a homothety of $100$-gons
+\[ Q_1 Q_2 Q_3 \dots \sim K_1 K_2 K_3 \dots \]
+and that concludes the proof.
+
+\begin{remark*}
+  The proposer remarks that in fact,
+  if one lets $s$ be an integer
+  and instead defines $R_i = P_i P_{i+s} \cap P_{i+1} P_{i+s+1}$,
+  then the $R_\bullet$ are concyclic.
+  The present problem is the case $s=3$.
+  We comment on a few special cases:
+  \begin{itemize}
+    \ii There is nothing to prove for $s=1$.
+    \ii If $s=0$, this amounts to proving
+    that poles of $\ol{P_i P_{i+1}}$ are concyclic;
+    by inversion this is equivalent to showing the
+    midpoints of the sides are concyclic.
+    This is an interesting problem but not as difficult.
+    \ii The problem for $s=2$ is to show that our $H_\bullet$
+    are concyclic, which uses the $s=0$ case as a lemma.
+  \end{itemize}
+\end{remark*}
+
+\paragraph{Solution to generalization (Nikolai Beluhov).}
+We are going to need some well-known lemmas.
+
+\begin{lemma*}
+Suppose that $ABCD$ is inscribed in a circle $\Gamma$.
+Let the tangents to $\Gamma$ at $A$ and $B$ meet at $E$,
+let the tangents to $\Gamma$ at $C$ and $D$ meet at $F$,
+and let diagonals $AC$ and $BD$ meet at $P$.
+Then points $E$, $F$, and $P$ are collinear.
+\end{lemma*}
+
+\begin{proof}
+Let the circle of center $E$ and radius $EA = EB$
+meet lines $AC$ and $BD$ for the second time at points $U$ and $V$.
+By a simple angle chase, triangles $EUV$ and $FCD$ are homothetic.
+\end{proof}
+
+\begin{lemma*}
+Suppose that points $X$ and $Y$ are isogonal conjugates
+in polygon $\mathcal{A} = A_1A_2 \dots A_n$.
+(This means that lines $A_iX$ and $A_iY$
+are symmetric with respect to the interior angle bisector of
+$\angle A_{i - 1}A_iA_{i + 1}$ for all $i$,
+where $A_{n + j} \equiv A_j$ for all $j$.)
+Then the $2n$ projections of $X$ and $Y$ on the sides of $\mathcal{A}$ are concyclic.
+\end{lemma*}
+
+\begin{proof}
+By a simple angle chase, for all $i$ we have that
+the four projections on sides
+$A_{i - 1}A_i$ and $A_iA_{i + 1}$ are concyclic.
+Say that they lie on circle $\Gamma_i$.
+Consider the midpoint $M$ of segment $XY$.
+For every side $s$ of $\mathcal{A}$,
+we have that $M$ is equidistant from the projections of $X$ and $Y$ on $s$.
+Therefore, $M$ is the center of $\Gamma_i$ for all $i$,
+and thus all of the $\Gamma_i$ coincide.
+\end{proof}
+
+\begin{lemma*}
+Let $\Gamma'$ and $\Gamma''$ be two circles
+and let $r$ be some fixed real number.
+Then the locus of points $X$ satisfying
+$\opname{Pow}(X, \Gamma') \colon \opname{Pow}(X, \Gamma'') = r$
+is a circle.
+\end{lemma*}
+
+\begin{proof}
+This is a classical result in circle geometry.
+A full proof is given, for example,
+in item 115 of Roger Johnson's \emph{Advanced Euclidean Geometry}.
+\end{proof}
+
+
+We are ready to solve the problem.
+Let $\mathcal{P}$ be our polygon,
+let $O$ be its the circumcenter,
+and let $\Gamma$ be its circumcircle.
+
+Fix any index $i$. In triangle $P_{i - 1}P_iP_{i + 1}$,
+we have that line $P_iP$ contains the altitude through $P_i$
+and line $P_iO$ contains the circumradius through $P_i$.
+Therefore, these two lines are symmetric with respect
+to the interior angle bisector of $\angle P_{i - 1}P_iP_{i + 1}$.
+
+Thus points $P$ and $O$ are isogonal conjugates in $\mathcal{P}$.
+By Lemma 2, it follows that the projections of $O$
+onto the sides of $\mathcal{P}$ are concyclic.
+In other words, the midpoints of the sides of
+$\mathcal{P}$ lie on some circle $\omega$.
+
+Let $M_i$ be the midpoint of segment $P_iP_{i + 1}$
+and let the tangents to $\Gamma$ at points $P_i$ and $P_{i + 1}$ meet at $T_i$.
+Since inversion with respect to $\Gamma$ swaps $M_i$ and $T_i$ for all $i$,
+and also since all of the $M_i$ lie on the same circle $\omega$,
+we obtain that all of the $T_i$ lie on the same circle $\Omega$.
+
+\begin{center}
+\begin{asy}
+import geometry;
+
+pair O = (0, 0);
+real R = 135;
+circle Gamma = circle((point) O, R);
+pair P = (15, 10);
+
+pair[] PP;
+
+PP.push(rotate(95, O)*(R, 0));
+PP.push(rotate(125, O)*(R, 0));
+
+int n = 6;
+
+pair get_next(pair A, pair B) {
+  pair F = projection(line(P, B))*A;
+  pair C = 2*(projection(line(A, F))*O) - A;
+  return C;
+}
+
+for (int i = 2; i <= n - 1; i = i + 1) {
+  PP.push(get_next(PP[i - 2], PP[i - 1]));
+}
+
+pair[] QQ;
+
+QQ.push((0, 0));
+QQ.push((0, 0));
+
+for (int i = 2; i <= n - 3; i = i + 1) {
+  QQ.push(extension(PP[i - 2], PP[i + 1], PP[i - 1], PP[i + 2]));
+}
+
+pair[] TT;
+
+for (int i = 0; i <= n - 2; i = i + 1) {
+  TT.push(extension(PP[i], rotate(90, PP[i])*O, PP[i + 1], rotate(90, PP[i + 1])*O));
+}
+
+circle Omega = circle(TT[2], TT[3], TT[4]);
+draw(arc(Omega.C, Omega.r, 85, 330), 1 + green);
+draw(arc(O, R, 85, 330), 1 + blue);
+
+for (int i = 0; i <= n - 2; i = i + 1) {
+  draw(PP[i]--PP[i + 1], 1 + blue);
+  draw(PP[i]--TT[i]--PP[i + 1], 1 + green);
+}
+
+for (int i = 0; i <= n - 4; i = i + 1) {
+  draw(PP[i]--PP[i + 3], 1 + red);
+}
+
+for (int i = 0; i <= n - 5; i = i + 1) {
+  draw(TT[i]--TT[i + 3], 1 + yellow);
+}
+
+for (int i = 0; i <= n - 1; i = i + 1) {
+  dot(PP[i], UnFill);
+}
+
+for (int i = 2; i <= n - 3; i = i + 1) {
+  dot(QQ[i], UnFill);
+}
+
+for (int i = 0; i <= n - 2; i = i + 1) {
+  dot(TT[i], UnFill);
+}
+
+label("$P_{i - 2}$", PP[0], unit((1, -1)));
+label("$P_{i - 1}$", PP[1], unit((1, -0.5)));
+label("$P_i$", PP[2], unit((1, 0.2)));
+label("$P_{i + 1}$", PP[3], unit((1, 0.5)));
+label("$P_{i + 2}$", PP[4], 2*unit((0.2, 1)));
+label("$P_{i + 3}$", PP[5], 2*unit((-0.2, 1)));
+
+label("$Q_i$", QQ[2], unit(-QQ[2]));
+label("$Q_{i + 1}$", QQ[3], unit(-QQ[3]));
+
+label("$T_{i - 2}$", TT[0], unit(TT[0]));
+label("$T_{i - 1}$", TT[1], unit(TT[1]));
+label("$T_i$", TT[2], unit(TT[2]));
+label("$T_{i + 1}$", TT[3], unit(TT[3]));
+label("$T_{i + 2}$", TT[4], unit(TT[4]));
+\end{asy}
+\end{center}
+
+Again, fix any index $i$.
+By Lemma 1 applied to cyclic quadrilateral $P_{i - 2}P_{i - 1}P_{i + 1}P_{i + 2}$,
+we have that point $Q_i$ lies on line $T_{i - 2}T_{i + 1}$.
+Similarly, point $Q_{i + 1}$ lies on line $T_{i - 1}T_{i + 2}$.
+
+
+Define \[f_i = \frac{\opname{Pow}(Q_i, \Gamma)}{\opname{Pow}(Q_i, \Omega)}.\]
+\begin{claim*}
+  We have $f_i = f_{i + 1}$ for all $i$.
+\end{claim*}
+\begin{proof}
+Note that
+\begin{align*}
+\opname{Pow}(Q_i, \Gamma)
+  &= Q_iP_{i - 1} \cdot Q_iP_{i + 2} \\
+\opname{Pow}(Q_{i + 1}, \Gamma)
+  &= Q_{i + 1}P_{i - 1} \cdot Q_{i + 1}P_{i + 2}. \\
+\opname{Pow}(Q_i, \Omega)
+  &= Q_iT_{i - 2} \cdot Q_iT_{i + 1} \\
+\opname{Pow}(Q_{i + 1}, \Omega)
+  &= Q_{i + 1}T_{i - 1} \cdot Q_{i + 1}T_{i + 2}.
+\end{align*}
+
+Consider cyclic quadrilateral $T_{i - 2}T_{i - 1}T_{i + 1}T_{i + 2}$.
+Since $\Gamma$ touches its opposite sides $T_{i - 2}T_{i - 1}$
+and $T_{i + 1}T_{i + 2}$ at points $P_{i - 1}$ and $P_{i + 2}$,
+we have that line $P_{i - 1}P_{i + 2}$
+makes equal angles with these opposite sides.
+From here, a simple angle chase shows
+that triangles $P_{i - 1}Q_iT_{i - 2}$ and $P_{i + 2}Q_{i + 1}T_{i + 2}$
+are similar.
+Thus
+\[\frac{Q_iP_{i - 1}}{Q_iT_{i - 2}} = \frac{Q_{i + 1}P_{i + 2}}{Q_{i + 1}T_{i + 2}}.\]
+Similarly,
+\[\frac{Q_iP_{i + 2}}{Q_iT_{i + 1}} = \frac{Q_{i + 1}P_{i - 1}}{Q_{i + 1}T_{i - 1}}.\]
+From these, the desired identity $f_i = f_{i + 1}$ follows.
+\end{proof}
+
+Therefore, the power ratio $f_i$ is the same for all $i$.
+By Lemma 3 for circles $\Gamma$ and $\Omega$, the solution is complete.
+
+\begin{remark*}
+  This solution applies to the full generalization (from $3$ to $s$)
+  mentioned in the end of the previous solution,
+  essentially with no change.
+\end{remark*}
+
+\begin{remark*}
+  Polygon $T_1T_2 \dots T_{100}$ is both
+  circumscribed about a circle and inscribed inside a circle.
+  Polygons like that are known as \emph{Poncelet polygons}.
+  See, for example, \url{https://en.wikipedia.org/wiki/Poncelet's_closure_theorem}.
+  This solution borrows a lot from the discussion of
+  Poncelet's closure theorem in \emph{Advanced Euclidean Geometry},
+  referenced above for Lemma 3.
+\end{remark*}
+\pagebreak
+
+
+\end{document}

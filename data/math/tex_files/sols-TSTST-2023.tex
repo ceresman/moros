@@ -1,0 +1,1829 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{USA TSTST 2023 Solutions}
+\subtitle{United States of America --- TST Selection Test}
+\author{Andrew Gu, Evan Chen, Gopal Goel}
+\date{65\ts{th} IMO 2024 United Kingdom and 13\ts{th} EGMO 2024 Georgia}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $ABC$ be a triangle with centroid $G$.
+Points $R$ and $S$ are chosen on rays $GB$ and $GC$, respectively, such that
+\[ \angle ABS = \angle ACR = 180^\circ - \angle BGC. \]
+Prove that $\angle RAS + \angle BAC = \angle BGC$.
+
+\item %% Problem 2
+Let $n \ge m \ge 1$ be integers.
+Prove that
+\[ \sum_{k=m}^n \left( \frac{1}{k^2} + \frac{1}{k^3} \right)
+  \ge m \cdot \left( \sum_{k=m}^n \frac{1}{k^2} \right)^2. \]
+
+\item %% Problem 3
+Find all positive integers $n$ for which it is possible to color some cells of
+an infinite grid of unit squares red, such that each rectangle consisting of
+exactly $n$ cells (and whose edges lie along the lines of the grid) contains
+an odd number of red cells.
+
+\item %% Problem 4
+Let $n \ge 3$ be an integer and let $K_n$ be the complete graph on $n$ vertices.
+Each edge of $K_n$ is colored either red, green, or blue.
+Let $A$ denote the number of triangles in $K_n$
+with all edges of the same color, and
+let $B$ denote the number of triangles in $K_n$
+with all edges of different colors.
+Prove that
+\[ B \le 2A + \frac{n(n-1)}3. \]
+
+\item %% Problem 5
+Suppose $a$, $b$, and $c$ are three complex numbers with product $1$.
+Assume that none of $a$, $b$, and $c$ are real or have absolute value $1$.
+Define
+\[ p = (a+b+c) + \left( \frac1a+\frac1b+\frac1c \right)
+  \qquad\text{and}\qquad
+  q = \frac ab + \frac bc + \frac ca. \]
+Given that both $p$ and $q$ are real numbers,
+find all possible values of the ordered pair $(p,q)$.
+
+\item %% Problem 6
+Let $ABC$ be a scalene triangle
+and let $P$ and $Q$ be two distinct points in its interior.
+Suppose that the angle bisectors of $\angle PAQ$, $\angle PBQ$,
+and $\angle PCQ$ are the altitudes of triangle $ABC$.
+Prove that the midpoint of $\ol{PQ}$ lies on the Euler line of $ABC$.
+
+\item %% Problem 7
+The Bank of Pittsburgh issues coins that have a heads side and a tails side.
+Vera has a row of $2023$ such coins alternately tails-up and heads-up,
+with the leftmost coin tails-up.
+
+In a \emph{move}, Vera may flip over one of the coins in the row,
+subject to the following rules:
+\begin{itemize}
+  \item On the first move, Vera may flip over any of the $2023$ coins.
+  \item On all subsequent moves, Vera may only flip over
+    a coin adjacent to the coin she flipped on the previous move.
+  (We do not consider a coin to be adjacent to itself.)
+\end{itemize}
+Determine the smallest possible number of moves Vera can
+make to reach a state in which every coin is heads-up.
+
+\item %% Problem 8
+Let $ABC$ be an equilateral triangle with side length $1$.
+Points $A_1$ and $A_2$ are chosen on side $BC$,
+points $B_1$ and $B_2$ are chosen on side $CA$, and
+points $C_1$ and $C_2$ are chosen on side $AB$
+such that $BA_1 < BA_2$, $CB_1 < CB_2$, and $AC_1 < AC_2$.
+
+Suppose that the three line segments $B_1C_2$, $C_1A_2$, and $A_1B_2$
+are concurrent, and the perimeters of triangles $AB_2C_1$, $BC_2A_1$, and
+$CA_2B_1$ are all equal. Find all possible values of this common perimeter.
+
+\item %% Problem 9
+Let $p$ be a fixed prime and let $a \ge 2$ and $e \ge 1$ be fixed integers.
+Given a function $f \colon \ZZ/a\ZZ \to \ZZ/p^e\ZZ$
+and an integer $k \ge 0$, the \emph{$k$th finite difference},
+denoted $\Delta^k f$, is the function from $\ZZ/a\ZZ$ to $\ZZ/p^e\ZZ$
+defined recursively by
+\begin{align*}
+  \Delta^0 f(n) &= f(n) \\
+  \Delta^k f(n) &= \Delta^{k-1} f(n+1) - \Delta^{k-1} f(n)
+  \qquad \text{for } k = 1, 2, \dots.
+\end{align*}
+
+Determine the number of functions $f$ such that there exists some
+$k \ge 1$ for which $\Delta^k f = f$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{TSTST 2023/1, proposed by Merlijn Staps}
+\textsl{Available online at \url{https://aops.com/community/p28015679}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle with centroid $G$.
+Points $R$ and $S$ are chosen on rays $GB$ and $GC$, respectively, such that
+\[ \angle ABS = \angle ACR = 180^\circ - \angle BGC. \]
+Prove that $\angle RAS + \angle BAC = \angle BGC$.
+\end{mdframed}
+In all the following solutions,
+let $M$ and $N$ denote the midpoints of $\ol{AC}$ and $\ol{AB}$, respectively.
+
+\begin{center}
+\begin{asy}
+size(12cm);
+
+pair A = dir(97);
+pair B = dir(190);
+pair C = dir(350);
+pair M = midpoint(A--C);
+pair N = midpoint(A--B);
+pair G = extension(B, M, C, N);
+draw(A--G, blue);
+pair Y = A*dir((C-G)/(B-G))**2;
+
+pair X = A*dir((B-G)/(C-G))**2;
+
+pair S = extension(B, Y, C, G);
+pair R = extension(C, X, B, G);
+filldraw(A--B--C--cycle, opacity(0.1)+lightblue, blue);
+draw(B--M, blue);
+draw(C--N, blue);
+draw(R--A--S, lightred);
+draw(C--R, deepgreen);
+draw(B--S, deepgreen);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$M$", M, dir(M));
+dot("$N$", N, dir(N));
+dot("$G$", G, dir(280));
+dot("$S$", S, dir(270));
+dot("$R$", R, dir(150));
+
+/* -----------------------------------------------------------------+
+|                 TSQX: by CJ Quines and Evan Chen                  |
+| https://github.com/vEnhance/dotfiles/blob/main/py-scripts/tsqx.py |
++-------------------------------------------------------------------+
+!size(12cm);
+A = dir 97
+B = dir 190
+C = dir 350
+M = midpoint A--C
+N = midpoint A--B
+G 280 = extension B M C N
+A--G blue
+!pair Y = A*dir((C-G)/(B-G))**2;
+!pair X = A*dir((B-G)/(C-G))**2;
+S 270 = extension B Y C G
+R 150 = extension C X B G
+A--B--C--cycle / 0.1 lightblue / blue
+B--M blue
+C--N blue
+R--A--S lightred
+C--R deepgreen
+B--S deepgreen
+*/
+
+\end{asy}
+\end{center}
+
+\paragraph{Solution 1 using power of a point.}
+From the given condition that $\dang ACR = \dang CGM$, we get that
+\[ MA^2 = MC^2 = MG \cdot MR \implies \dang RAC = \dang MGA. \]
+Analogously,
+\[ \dang BAS = \dang AGN. \]
+Hence,
+\[
+  \dang RAS + \dang BAC
+  = \dang RAC + \dang BAS
+  = \dang MGA + \dang AGN = \dang MGN = \dang BGC.
+\]
+
+\paragraph{Solution 2 using similar triangles.}
+As before, $\triangle MGC \sim \triangle MCR$ and $\triangle NGB \sim \triangle NBS$.
+We obtain
+\[
+  \frac{|AC|}{|CR|} = \frac{2|MC|}{|CR|} = \frac{2|MG|}{|GC|}
+  = \frac{|GB|}{2|NG|} = \frac{|BS|}{2|BN|} = \frac{|BS|}{|AB|}
+\]
+which together with $\angle ACR = \angle ABS$ yields
+\[ \triangle ACR \sim \triangle SBA \implies \dang BAS = \dang CRA. \]
+Hence
+\[
+  \dang RAS + \dang BAC = \dang RAC + \dang BAS
+  = \dang RAC + \dang CRA = - \dang ACR = \dang BGC,
+\]
+which proves the statement.
+
+\paragraph{Solution 3 using parallelograms.}
+Let $M$ and $N$ be defined as above.
+Let $P$ be the reflection of $G$ in $M$
+and let $Q$ the reflection of $G$ in $N$.
+Then $AGCP$ and $AGBQ$ are parallelograms.
+\begin{center}
+\begin{asy}
+size(12cm);
+
+pair A = dir(97);
+pair B = dir(190);
+pair C = dir(350);
+pair M = midpoint(A--C);
+pair N = midpoint(A--B);
+pair G = extension(B, M, C, N);
+draw(A--G, blue);
+pair Y = A*dir((C-G)/(B-G))**2;
+
+pair X = A*dir((B-G)/(C-G))**2;
+
+pair S = extension(B, Y, C, G);
+pair R = extension(C, X, B, G);
+filldraw(A--B--C--cycle, opacity(0.1)+lightblue, blue);
+draw(B--M, blue);
+draw(C--N, blue);
+draw(R--A--S, lightred);
+draw(C--R, deepgreen);
+draw(B--S, deepgreen);
+
+pair P = A+C-G;
+pair Q = A+B-G;
+draw(A--P--C, heavycyan);
+draw(P--M, heavycyan);
+draw(A--Q--B, heavycyan);
+draw(Q--N, heavycyan);
+
+draw(circumcircle(A, C, R), dotted+deepcyan);
+draw(circumcircle(A, B, S), dotted+deepcyan);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$M$", M, dir(70));
+dot("$N$", N, dir(100));
+dot("$G$", G, dir(280));
+dot("$S$", S, dir(270));
+dot("$R$", R, dir(150));
+dot("$P$", P, dir(P));
+dot("$Q$", Q, dir(Q));
+
+/* -----------------------------------------------------------------+
+|                 TSQX: by CJ Quines and Evan Chen                  |
+| https://github.com/vEnhance/dotfiles/blob/main/py-scripts/tsqx.py |
++-------------------------------------------------------------------+
+!size(12cm);
+A = dir 97
+B = dir 190
+C = dir 350
+M 70 = midpoint A--C
+N 100 = midpoint A--B
+G 280 = extension B M C N
+A--G blue
+!pair Y = A*dir((C-G)/(B-G))**2;
+!pair X = A*dir((B-G)/(C-G))**2;
+S 270 = extension B Y C G
+R 150 = extension C X B G
+A--B--C--cycle / 0.1 lightblue / blue
+B--M blue
+C--N blue
+R--A--S lightred
+C--R deepgreen
+B--S deepgreen
+P = A+C-G
+Q = A+B-G
+A--P--C heavycyan
+P--M heavycyan
+A--Q--B heavycyan
+Q--N heavycyan
+circumcircle A C R / dotted deepcyan
+circumcircle A B S / dotted deepcyan
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  Quadrilaterals $APCR$ and $AQBS$ are concyclic.
+\end{claim*}
+\begin{proof}
+  Because $\dang APR = \dang APG = \dang CGP = -\dang BGC = \dang ACR$.
+\end{proof}
+Thus from $\ol{PC} \parallel \ol{GA}$ we get
+\[ \dang RAC = \dang RPC = \dang GPC = \dang PGA \]
+and similarly
+\[ \dang BAS = \dang BQS = \dang BQG = \dang AGQ. \]
+We conclude that
+\[
+  \dang RAS + \dang BAC = \dang RAC + \dang BAS
+  = \dang PGA + \dang AGQ = \dang PGQ = \dang BGC.
+\]
+
+\paragraph{Solution 4 also using parallelograms, by Ankan Bhattacharya.}
+Construct parallelograms $ARCK$ and $ASBL$. Since
+\[ \dang CAK = \dang ACR = \dang CGB = \dang CGK, \]
+it follows that $AGCK$ is cyclic. Similarly, $AGBL$ is also cyclic.
+\begin{center}
+  \begin{asy}
+    size(12cm);
+    pair A = dir(95), B = dir(190), C = dir(350);
+    pair G = (A+B+C)/3;
+    pair K = 2*foot(circumcenter(A, G, C), B, G) - G;
+    pair L = 2*foot(circumcenter(A, G, B), C, G) - G;
+    pair R = A+C-K, S = A+B-L;
+
+    draw(A--G);
+    draw(B--K^^C--L);
+    draw(A--R--C--K--cycle, heavycyan);
+    draw(A--S--B--L--cycle, heavymagenta);
+    draw(A--B--C--cycle);
+    draw(circumcircle(A, G, C), heavycyan+dashed);
+    draw(circumcircle(A, G, B), heavymagenta+dashed);
+
+    dot("$A$", A, dir(A));
+    dot("$B$", B, dir(B));
+    dot("$C$", C, dir(C));
+    dot("$G$", G, dir(dir(B-G)+dir(C-G)));
+    dot("$K$", K, dir(dir(K-A)+dir(K-C)));
+    dot("$L$", L, dir(dir(L-A)+dir(L-B)));
+    dot("$R$", R, dir(dir(A-R)+dir(B-R)));
+    dot("$S$", S, dir(dir(A-S)+dir(C-S)));
+  \end{asy}
+\end{center}
+Finally, observe that
+\begin{align*}
+  \angle RAS + \angle BAC
+  & = \dang BAS + \dang RAC\\
+  & = \dang ABL + \dang KCA\\
+  & = \dang AGL + \dang KGA\\
+  & = \dang KGL\\
+  & = \angle BGC
+\end{align*}
+as requested.
+
+\paragraph{Solution 5 using complex numbers, by Milan Haiman.}
+Note that $\angle RAS + \angle BAC=\angle BAS+\angle RAC$.
+We compute $\angle BAS$ in complex numbers;
+then $\angle RAC$ will then be known by symmetry.
+
+Let $a$, $b$, $c$ be points on the unit circle representing $A$, $B$, $C$ respectively.
+Let $g=\frac{1}{3}(a+b+c)$ represent the centroid $G$,
+and let $s$ represent $S$.
+
+\begin{claim*}
+  We have
+  \[ \frac{s-a}{b-a} = \frac{ab-2bc+ca}{2ab-bc-ca}. \]
+\end{claim*}
+\begin{proof}
+Since $S$ is on line $CG$, which passes through the midpoint of segment $AB$, we
+have that \[ s=\frac{a+b}{2}+t(c-g) \] for some $t\in\RR$.
+
+By the given angle condition, we have that
+\[ \frac{(s-b)/(b-a)}{(c-g)/(g-b)}\in\RR. \]
+Note that \[ \frac{s-b}{b-a}=t\frac{c-g}{b-a}-\frac{1}{2}. \]
+So, \[ t\frac{g-b}{b-a}-\frac{g-b}{2(c-g)}\in \RR. \]
+Thus
+\[
+  t = \frac{\opname{Im} \left(\frac{g-b}{2(c-g)}\right)}
+  {\opname{Im} \left(\frac{g-b}{b-a}\right)}
+  = \frac{1}{2} \cdot \frac
+    {\left(\frac{g-b}{c-g}\right)-\ol{\left(\frac{g-b}{c-g}\right)}}
+    {\left(\frac{g-b}{b-a}\right)-\ol{\left(\frac{g-b}{b-a}\right)}}.
+\]
+Let $N$ and $D$ be the numerator and denominator of the second factor above.
+
+We want to compute
+\[ \frac{s-a}{b-a}
+   = \frac{1}{2}+t\frac{c-g}{b-a}
+   = \frac{(b-a)+2t(c-g)}{2(b-a)}
+   = \frac{(b-a)D+(c-g)N}{2(b-a)D}. \]
+
+We have
+\begin{align*}
+    (c-g)N &= g-b-(c-g)\ol{\left(\frac{g-b}{c-g}\right)} \\
+    &= \frac{a+b+c}{3}-b-\left(c-\frac{a+b+c}{3}\right)\frac{\frac{1}{a}+\frac{1}{b}+\frac{1}{c}-\frac{3}{b}}{\frac{3}{c}-\frac{1}{a}-\frac{1}{b}-\frac{1}{c}}\\
+    &= \frac{(a+c-2b)(2ab-bc-ca)-(2c-a-b)(ab+bc-2ca)}{3(2ab-bc-ca)}\\
+    &= \frac{3(a^2b+b^2c+c^2a-ab^2-bc^2-ca^2)}{3(2ab-bc-ca)}\\
+    &= \frac{(a-b)(b-c)(a-c)}{2ab-bc-ca}
+\end{align*}
+
+We also compute \begin{align*}
+    (b-a)D&=g-b-(b-a)\ol{\left(\frac{g-b}{b-a}\right)} \\
+    &=\frac{a+b+c}{3}-b-\left(b-a\right)\frac{\frac{1}{a}+\frac{1}{b}+\frac{1}{c}-\frac{3}{b}}{\frac{3}{b}-\frac{3}{a}}\\
+    &=\frac{(a+c-2b)c+(ab+bc-2ca)}{3c}\\
+    &=\frac{ab-bc-ca+c^2}{3c}\\
+    &=\frac{(a-c)(b-c)}{3c}
+\end{align*}
+
+So, we obtain
+\[
+  \frac{s-a}{b-a}
+  = \frac{\frac{1}{3c}+\frac{a-b}{2ab-bc-ca}}{\frac{2}{3c}}
+  = \frac{2ab-bc-ca+3c(a-b)}{2(2ab-bc-ca)}=\frac{ab-2bc+ca}{2ab-bc-ca}.
+\]
+\end{proof}
+
+By symmetry,
+\[ \frac{r-a}{c-a}=\frac{ab-2bc+ca}{2ca-ab-bc}. \]
+Hence their ratio
+\[ \frac{s-a}{b-a} \div \frac{r-a}{c-a} = \frac{2ab-bc-ca}{2ca-ab-bc} \]
+has argument $\angle RAC +\angle BAS$.
+
+We also have that $\angle BGC$ is the argument of
+\[ \frac{b-g}{c-g}=\frac{2b-a-c}{2c-a-b}. \]
+Note that these two complex numbers are inverse-conjugates,
+and thus have the same argument. So we're done.
+\pagebreak
+
+\subsection{TSTST 2023/2, proposed by Raymond Feng, Luke Robitaille}
+\textsl{Available online at \url{https://aops.com/community/p28015692}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n \ge m \ge 1$ be integers.
+Prove that
+\[ \sum_{k=m}^n \left( \frac{1}{k^2} + \frac{1}{k^3} \right)
+  \ge m \cdot \left( \sum_{k=m}^n \frac{1}{k^2} \right)^2. \]
+\end{mdframed}
+We show several approaches.
+
+\paragraph{First solution (authors).}
+By Cauchy-Schwarz, we have
+\begin{align*}
+  \sum_{k=m}^n\frac{k+1}{k^3}
+  &= \sum_{k=m}^n\frac{\left(\frac1{k^2}\right)^2}{\frac1{k(k+1)}} \\
+  &\geq
+  \frac{
+  \left( \frac{1}{m^2} + \frac{1}{(m+1)^2} + \dots + \frac{1}{n^2} \right)^2
+  }
+  {
+    \frac{1}{m(m+1)} + \frac{1}{(m+1)(m+2)} + \dots + \frac{1}{n(n+1)}
+  } \\
+  &=
+  \frac{
+  \left( \frac{1}{m^2} + \frac{1}{(m+1)^2} + \dots + \frac{1}{n^2} \right)^2
+  }
+  { \frac 1m - \frac{1}{n+1} } \\
+  &> \frac{\left(\sum_{k=m}^n\frac1{k^2}\right)^2}{\frac1m}
+\end{align*}
+as desired.
+
+\begin{remark*}[Bound on error]
+  Let $A = \sum_{k=m}^n k^{-2}$ and $B = \sum_{k=m}^n k^{-3}$. The inequality
+  above becomes tighter for large $m$ and $n \gg m$. If we use Lagrange's
+  identity in place of Cauchy-Schwarz,
+  we get \[ A+B-mA^2=m\cdot\sum_{m\leq a<b} \frac{(a-b)^2}{a^3b^3(a+1)(b+1)}.\]
+  We can upper bound this error by
+  \[
+    \leq m\cdot\sum_{m\leq a<b}\frac1{a^3(a+1)b(b+1)}
+    =m\cdot\sum_{m\leq a}\frac1{a^3(a+1)^2}
+    \approx m\cdot\frac1{m^4} = \frac1{m^3},
+  \]
+  which is still generous as $(a-b)^2 \ll b^2$
+  for $b$ not much larger than $a$,
+  so the real error is probably around $\frac1{10m^3}$.
+  This exhibits the tightness of the inequality since it implies
+  \[ mA^2+O(B/m) > A+B. \]
+\end{remark*}
+
+\begin{remark*}[Construction commentary, from author]
+  My motivation was to write an inequality where
+  Titu could be applied creatively to yield a telescoping sum.
+  This can be difficult because most of the time,
+  such a reverse-engineered inequality will be so loose it's trivial anyways.
+  My first attempt was the not-so-amazing inequality
+  \[\frac{n^2+3n}2=\sum_1^n i+1=\sum_1^n \frac{\frac1i}{\frac1{i(i+1)}}
+    >\left( \sum_1^n \frac1{\sqrt i} \right)^2,\]
+  which is really not surprising given that
+  $\sum\frac1{\sqrt i}\ll \frac n{\sqrt2}$.
+  The key here is that we need ``near-equality''
+  as dictated by the Cauchy-Schwarz equality case,
+  i.e.\ the square root of the numerators should be
+  approximately proportional to the denominators.
+
+  This motivates using $\frac1{i^4}$ as the numerator,
+  which works like a charm. After working out the resulting statement,
+  the LHS and RHS even share a sum,
+  which adds to the simplicity of the problem.
+
+  The final touch was to unrestrict the starting value of the sum,
+  since this allows the strength of the estimate
+  $\frac1{i^2}\approx\frac1{i(i+1)}$ to be fully exploited.
+\end{remark*}
+
+\paragraph{Second approach by inducting down, Luke Robitaille and Carl Schildkraut.}
+Fix $n$; we'll induct downwards on $m$.
+For the base case of $n=m$ the result is easy,
+since the left side is $\frac{m+1}{m^3}$ and the right side is $\frac m{m^4}=\frac1{m^3}$.
+
+For the inductive step, suppose we have shown the result for $m+1$.
+Let
+\[A=\sum_{k=m+1}^n\frac1{k^2}\qquad \text{and}\qquad B=\sum_{k=m+1}^n\frac1{k^3}.\]
+We know $A+B\geq (m+1)A^2$, and we want to show
+\[\left(A+\frac1{m^2}\right)+\left(B+\frac1{m^3}\right)\geq m\left(A+\frac1{m^2}\right)^2.\]
+Indeed,
+\begin{align*}
+  \left(A+\frac1{m^2}\right)+\left(B+\frac1{m^3}\right)-m\left(A+\frac1{m^2}\right)^2
+  &=A+B+\frac{m+1}{m^3}-mA^2-\frac{2A}m-\frac1{m^3}\\
+  &=\left(A+B-(m+1)A^2\right)+\left(A-\frac1m\right)^2\geq 0,
+\end{align*}
+and we are done.
+
+
+\paragraph{Third approach by reducing $n \to \infty$, Michael Ren and Carl Schildkraut.}
+First, we give:
+\begin{claim*}
+  [Reduction to $n \to \infty$]
+  If the problem is true when $n \to \infty$, it is true for all $n$.
+\end{claim*}
+\begin{proof}
+  Let $A = \sum_{k=m}^n k^{-2}$ and $B = \sum_{k=m}^n k^{-3}$.
+  Consider the region of the $xy$-plane defined by $y > mx^2 - x$.
+  We are interested in whether $(A,B)$ lies in this region.
+
+  However, the region is bounded by a convex curve,
+  and the sequence of points $(0,0)$,
+  $\left( \frac1{m^2},\frac1{m^3} \right)$,
+  $\left( \frac1{m^2}+\frac1{(m+1)^2},\frac1{m^3}+\frac1{(m+1)^3} \right)$,
+  $\dots$ has successively decreasing slopes between consecutive points.
+  Thus it suffices to check that the inequality is true when $n\to\infty$.
+\end{proof}
+
+Set $n=\infty$ henceforth.
+Let
+\[ A=\sum_{k=m}^\infty\frac1{k^2}\text{ and }B=\sum_{k=m}^\infty \frac1{k^3}; \]
+we want to show $B\geq mA^2-A$, which rearranges to
+\[ 1+4mB\geq (2mA-1)^2. \]
+Write
+\[ C=\sum_{k=m}^\infty\frac1{k^2(2k-1)(2k+1)}
+  \text{ and }D=\sum_{k=m}^\infty \frac{8k^2-1}{k^3(2k-1)^2(2k+1)^2}. \]
+Then
+\[ \frac2{2k-1}-\frac2{2k+1}=\frac1{k^2}+\frac1{k^2(2k-1)(2k+1)}, \]
+and
+\[ \frac2{(2k-1)^2}-\frac2{(2k+1)^2}
+  = \frac1{k^3}+\frac{8k^2-1}{k^3(2k-1)^2(2k+1)^2}, \]
+so that
+\[ A=\frac2{2m-1}-C \text{ and } B=\frac2{(2m-1)^2}-D. \]
+Our inequality we wish to show becomes
+\[ \frac{2m+1}{2m-1}C\geq D+mC^2. \]
+
+We in fact show two claims:
+\begin{claim*}
+  We have \[ \frac{2m+1/2}{2m-1}C\geq D. \]
+\end{claim*}
+\begin{proof}
+  We compare termwise; we need
+  \[ \frac{2m+1/2}{2m-1}\cdot \frac1{k^2(2k-1)(2k+1)}
+    \geq \frac{8k^2-1}{k^3(2k-1)^2(2k+1)^2} \]
+  for $k\geq m$. It suffices to show
+  \[ \frac{2k+1/2}{2k-1}\cdot \frac1{k^2(2k-1)(2k+1)}
+    \geq \frac{8k^2-1}{k^3(2k-1)^2(2k+1)^2}, \]
+  which is equivalent to $k(2k+1/2)(2k+1)\geq 8k^2-1$.
+  This holds for all $k\geq 1$.
+\end{proof}
+\begin{claim*}
+  We have \[ \frac{1/2}{2m-1}C\geq mC^2. \]
+\end{claim*}
+\begin{proof}
+  We need $C\leq 1/(2m(2m-1))$; indeed,
+  \[ \frac1{2m(2m-1)}
+    = \sum_{k=m}^\infty\left(\frac1{2k(2k-1)} - \frac1{2(k+1)(2k+1)}\right)
+    = \sum_{k=m}^\infty\frac{4k+1}{2k(2k-1)(k+1)(2k+1)}; \]
+  comparing term-wise with the definition of $C$ and
+  using the inequality $k(4k+1)\geq 2(k+1)$ for $k\geq 1$
+  gives the desired result.
+\end{proof}
+Combining the two claims finishes the solution.
+
+\paragraph{Fourth approach by bashing, Carl Schildkraut.}
+With a bit more work, the third approach can be adapted to avoid the $n\to\infty$ reduction.
+Similarly to before, define
+\[ A=\sum_{k=m}^n\frac1{k^2}\text{ and }B=\sum_{k=m}^n \frac1{k^3}; \]
+we want to show $1+4mB\geq (2mA-1)^2$. Writing
+\[ C=\sum_{k=m}^n\frac1{k^2(2k-1)(2k+1)}
+  \text{ and }D=\sum_{k=m}^n \frac{8k^2-1}{k^3(2k-1)^2(2k+1)^2}. \]
+We compute
+\[ A=\frac2{2m-1}-\frac2{2n+1}-C \text{ and } B=\frac2{(2m-1)^2}-\frac2{(2n+1)^2}-D. \]
+Then, the inequality we wish to show reduces (as in the previous solution) to
+\[
+  \frac{2m+1}{2m-1}C+\frac{2(2m+1)}{(2m-1)(2n+1)}
+  \geq D+mC^2+\frac{2(2m+1)}{(2n+1)^2}+\frac{4m}{2n+1}C.
+\]
+
+We deal first with the terms not containing the variable $n$, i.e.\ we show that
+\[ \frac{2m+1}{2m-1}C\geq D+mC^2. \]
+For this part, the two claims from the previous solution go through exactly
+as written above, and we have $C\leq 1/(2m(2m-1))$.
+We now need to show
+\[ \frac{2(2m+1)}{(2m-1)(2n+1)} \geq \frac{2(2m+1)}{(2n+1)^2}+\frac{4m}{2n+1}C \]
+(this is just the inequality between the remaining terms);
+our bound on $C$ reduces this to proving
+\[\frac{4(2m+1)(n-m+1)}{(2m-1)(2n+1)^2}\geq \frac2{(2m-1)(2n+1)}.\]
+Expanding and writing in terms of $n$, this is equivalent to
+\[n\geq \frac{1+2(m-1)(2m+1)}{4m}=m-\frac{2m+1}{4m},\]
+which holds for all $n\geq m$.
+\pagebreak
+
+\subsection{TSTST 2023/3, proposed by Merlijn Staps}
+\textsl{Available online at \url{https://aops.com/community/p28015682}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all positive integers $n$ for which it is possible to color some cells of
+an infinite grid of unit squares red, such that each rectangle consisting of
+exactly $n$ cells (and whose edges lie along the lines of the grid) contains
+an odd number of red cells.
+\end{mdframed}
+We claim that this is possible for all positive integers $n$. Call a positive integer for which such a coloring is possible \emph{good}. To show that all positive integers $n$ are good we prove the following:
+\begin{itemize}
+\item[(i)] If $n$ is good and $p$ is an odd prime, then $pn$ is good;
+\item[(ii)] For every $k \ge 0$, the number $n=2^k$ is good.
+\end{itemize}
+Together, (i) and (ii) imply that all positive integers are good.
+
+\paragraph{Proof of (i).}
+We simply observe that if every rectangle consisting of $n$ cells contains an
+odd number of red cells, then so must every rectangle consisting of $pn$ cells.
+Indeed, because $p$ is prime, a rectangle consisting of $pn$ cells must have a
+dimension (length or width) divisible by $p$ and can thus be subdivided
+into $p$ rectangles consisting of $n$ cells.
+
+Thus every coloring that works for $n$ automatically also works for $pn$.
+
+\paragraph{Proof of (ii).}
+Observe that rectangles with $n=2^k$ cells have $k+1$ possible shapes:
+$2^m\times 2^{k-m}$ for $0\leq m \leq k$.
+
+\begin{claim*}
+  For each of these $k+1$ shapes,
+  there exists a coloring with two properties:
+  \begin{itemize}
+    \item Every rectangle with $n$ cells and shape $2^m\times 2^{k-m}$ contains an
+      odd number of red cells.
+    \item Every rectangle with $n$ cells and a different shape contains an even
+      number of red cells.
+  \end{itemize}
+\end{claim*}
+\begin{proof}
+  This can be achieved as follows:
+  assuming the cells are labeled with $(x, y)\in \ZZ^2$,
+  color a cell red if $x\equiv 0\pmod{2^m}$ and $y\equiv 0\pmod{2^{k-m}}$.
+  For example, a $4 \times 2$ rectangle gets the following coloring:
+  \begin{center}
+    \begin{asy}
+      unitsize(12);
+      int a = 4, b = 2;
+      int n = a*b;
+      real extra = 0.25;
+      transform t = scale(1, -1);
+      for (int i = 0; i <= n; i += a)
+        for (int j = 0; j <= n; j += b)
+          fill(t * shift(i, j) * unitsquare, red);
+      clip(t*box((-extra, -extra), (n+extra, n+extra)));
+      for (int i = 0; i <= n; ++i) {
+        draw(t*((i, -extra)--(i, n+extra)));
+        draw(t*((-extra, i)--(n+extra, i)));
+      }
+    \end{asy}
+  \end{center}
+  A $2^m\times 2^{k-m}$ rectangle contains every possible pair
+  $(x\mod{2^m}, y\mod {2^{k-m}})$ exactly once,
+  so such a rectangle will contain one red cell (an odd number).
+
+  On the other hand,
+  consider a $2^{\ell}\times 2^{k-\ell}$ rectangle with $\ell > m$.
+  The set of cells this covers is $(x, y)$
+  where $x$ covers a range of size $2^{\ell}$
+  and $y$ covers a range of size $2^{k-\ell}$.
+  The number of red cells is
+  the count of $x$ with $x\equiv 0\mod{2^m}$
+  multiplied by the count of $y$ with $y\equiv 0\mod{2^{k-m}}$.
+  The former number is exactly $2^{\ell-k}$ because $2^k$ divides $2^{\ell}$
+  (while the latter is $0$ or $1$)
+  so the number of red cells is even. The $\ell < m$ case is similar.
+\end{proof}
+
+Finally, given these $k+1$ colorings, we can add them up modulo $2$,
+i.e.\ a cell will be colored red if it is red
+in an odd number of these $k+1$ colorings.
+We illustrate $n=4$ as an example;
+the coloring is $4$-periodic in both axes so we only show one $4\times 4$ cell.
+\begin{center}
+  \begin{asy}
+    unitsize(0.5cm);
+
+    int pow2(int k) {
+      int n = 1;
+      for (int i = 0; i < k; ++i) {
+        n *= 2;
+      }
+      return n;
+    }
+
+    int k = 2;
+    int n = pow2(k);
+    int XSHIFT = 0;
+
+    void draw_grid() {
+      for (int i = 0; i <= n; ++i) {
+        draw((XSHIFT+i, 0)--(XSHIFT+i, n));
+        draw((XSHIFT+0, i)--(XSHIFT+n, i));
+      }
+    }
+
+    void fill_cell(int i, int j) {
+      fill((XSHIFT+i, j)--(XSHIFT+i+1, j)--(XSHIFT+i+1, j+1)--(XSHIFT+i, j+1)--cycle, red);
+    }
+
+    void draw_single(int m) {
+      for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+          if (i%pow2(m) == 0 && j%pow2(k-m) == 0) {
+          fill_cell(i, j);
+          }
+        }
+      }
+      draw_grid();
+      XSHIFT += n;
+    }
+
+    void draw_sum() {
+      for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+          int cnt = 0;
+          for (int m = 0; m <= k; ++m) {
+            if (i%pow2(m) == 0 && j%pow2(k-m) == 0) {
+            ++cnt;
+            }
+          }
+          if (cnt%2 == 1) {
+            fill_cell(i, j);
+          }
+        }
+      }
+      draw_grid();
+      XSHIFT += n;
+    }
+
+    void draw_symbol(string s) {
+      label(scale(2)*s, (XSHIFT+1, n/2), blue);
+      XSHIFT += 2;
+    }
+
+    for (int i = 0; i < k; ++i) {
+      draw_single(i);
+      draw_symbol("$\oplus$");
+    }
+    draw_single(k);
+    draw_symbol("$=$");
+    draw_sum();
+  \end{asy}
+\end{center}
+
+This solves the problem.
+
+\begin{remark*}
+  The final coloring can be described as follows: color $(x, y)$ red if
+  \[\max(0, \min(\nu_2(x), k)+\min(\nu_2(y), k)-k+1)\]
+  is odd.
+\end{remark*}
+
+\begin{remark*}
+  [Luke Robitaille]
+  Alternatively for (i), if $n = 2^e k$ for odd $k$ then one may dissect
+  an $a \times b$ rectangle with area $n$ into
+  $k$ rectangles of area $2^e$, each $2^{\nu_2(a)} \times 2^{\nu_2(b)}$.
+  This gives a way to deduce the problem from (ii)
+  without having to consider odd prime numbers.
+\end{remark*}
+
+\paragraph{Alternate proof of (ii) using generating functions.}
+We will commit to constructing a coloring which is $n$-periodic in both directions.
+(This is actually forced, so it's natural to do so.)
+With that in mind, let
+\[ f(x, y) = \sum_{i=0}^{2^k-1} \sum_{j=0}^{2^k-1} \lambda_{i, j} x^i y^j \]
+denote its generating function, where $f \in \FF_2[x, y]$.
+
+For this to be valid, we need that for any $2^p \times 2^q$ rectangle with area $n$,
+the sum of the coefficients of $f$ over it should be one, modulo $x^{2^k} = y^{2^k} = 1$.
+In other words, whenever $p+q = k$, we must have
+\[
+  f(x, y) (1 + \dots + x^{2^p-1}) (1 + \dots + y^{2^q-1})
+  = (1 + \dots + x^{2^k-1})(1 + \dots + y^{2^k-1}),
+\]
+taken modulo $x^{2^k} = y^{2^k} = 1$.
+The idea is to rewrite these expressions:
+because we're in characteristic $2$, the given assertion is $(x+1)^{2^k} = (y+1)^{2^k} = 0$,
+and the requested property is
+\[ f(x, y) (x+1)^{2^p-1} (y+1)^{2^q-1} = (x+1)^{2^k-1} (y+1)^{2^k-1}. \]
+This suggests the substitution $g(x, y) = f(x+1, y+1)$:
+then we can replace $(x+1, y+1) \mapsto (x, y)$ to simplify the requested property significantly:
+\begin{quote}
+  Whenever $p+q = k$, we must have
+  \[ g(x, y) x^{2^p-1} y^{2^q-1} = x^{2^k-1} y^{2^k-1}, \]
+  modulo $x^{2^k}$ and $y^{2^k}$.
+\end{quote}
+However, now the construction of $g$ is very simple: for example, the choice
+\[ g(x, y) = \sum_{p+q=k} x^{2^k-2^p} y^{2^k-2^q} \]
+works. The end.
+
+\begin{remark*}
+  Unraveling the substitutions seen here,
+  it's possible to show that this is actually the
+  same construction provided in the first solution.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{TSTST 2023/4, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p28015691}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n \ge 3$ be an integer and let $K_n$ be the complete graph on $n$ vertices.
+Each edge of $K_n$ is colored either red, green, or blue.
+Let $A$ denote the number of triangles in $K_n$
+with all edges of the same color, and
+let $B$ denote the number of triangles in $K_n$
+with all edges of different colors.
+Prove that
+\[ B \le 2A + \frac{n(n-1)}3. \]
+\end{mdframed}
+Consider all unordered pairs of different edges which share exactly one vertex
+(call these \emph{vees} for convenience).
+Assign each vee a \emph{charge} of $+2$ if its edge colors are the same,
+and a charge of $-1$ otherwise.
+
+We compute the total charge in two ways.
+
+\paragraph{Total charge by summing over triangles.}
+Note that
+\begin{itemize}
+  \ii each monochromatic triangle has a charge of $+6$,
+  \ii each bichromatic triangle has a charge of $0$, and
+  \ii each trichromatic triangle has a charge of $-3$.
+\end{itemize}
+Since each vee contributes to exactly one triangle,
+we obtain that the total charge is $6A - 3B$.
+
+\paragraph{Total charge by summing over vertices.}
+We can also calculate the total charge by examining the centers of the vees.
+If a vertex has $a$ red edges, $b$ green edges, and $c$ blue edges,
+the vees centered at that vertex contribute a total charge of
+\begin{align*}
+  & \phantom{=}\;\; 2\left[ \binom a2 + \binom b2 + \binom c2\right] - (ab + ac + bc)\\
+  & = (a^2 - a + b^2 - b + c^2 - c) - (ab + ac + bc)\\
+  & = (a^2 + b^2 + c^2 - ab - ac - bc) - (a + b + c)\\
+  & = (a^2 + b^2 + c^2 - ab - ac - bc) - (n-1)\\
+  & \ge -(n-1).
+\end{align*}
+In particular, the total charge is at least $-n(n-1)$.
+
+\paragraph{Conclusion.}
+Thus, we obtain
+\[
+  6A - 3B \ge -n(n-1)
+  \iff B \le 2A + \frac{n(n-1)}3
+\]
+as desired.
+\pagebreak
+
+\subsection{TSTST 2023/5, proposed by David Altizio}
+\textsl{Available online at \url{https://aops.com/community/p28015713}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Suppose $a$, $b$, and $c$ are three complex numbers with product $1$.
+Assume that none of $a$, $b$, and $c$ are real or have absolute value $1$.
+Define
+\[ p = (a+b+c) + \left( \frac1a+\frac1b+\frac1c \right)
+  \qquad\text{and}\qquad
+  q = \frac ab + \frac bc + \frac ca. \]
+Given that both $p$ and $q$ are real numbers,
+find all possible values of the ordered pair $(p,q)$.
+\end{mdframed}
+We show $(p,q) = (-3,3)$ is the only possible ordered pair.
+
+\paragraph{First solution.}
+\subparagraph{Setup for proof}
+Let us denote $a = y/x$, $b = z/y$, $c = x/z$,
+where $x$, $y$, $z$ are nonzero complex numbers.
+Then
+\begin{align*}
+  p + 3 &= 3 + \sum_{\text{cyc}} \left( \frac xy + \frac yx \right)
+  = 3 + \frac{x^2(y+z) + y^2(z+x) + z^2(x+y)}{xyz} \\
+  &= \frac{(x+y+z)(xy+yz+zx)}{xyz}. \\
+  q - 3 &= -3 + \sum_{\text{cyc}} \frac{y^2}{zx}
+  = \frac{x^3+y^3+z^3-3xyz}{xyz} \\
+  &= \frac{(x+y+z)(x^2+y^2+z^2-xy-yz-zx)}{xyz}.
+\end{align*}
+It follows that
+\begin{align*}
+  \RR &\ni 3(p+3) + (q-3) \\
+  &= \frac{(x+y+z)(x^2+y^2+z^2+2(xy+yz+zx))}{xyz} \\
+  &= \frac{(x+y+z)^3}{xyz}.
+\end{align*}
+Now, note that if $x+y+z = 0$, then $p = -3$, $q = 3$ so we are done.
+
+\subparagraph{Main proof}
+We will prove that if $x+y+z \neq 0$
+then we contradict either the hypothesis that $a,b,c \notin \RR$
+or that $a$, $b$, $c$ do not have absolute value $1$.
+
+Scale $x$, $y$, $z$ in such a way that $x+y+z$ is nonzero and real;
+hence so is $xyz$.
+Thus, as $p+3 \in \RR$, we conclude $xy+yz+zx \in \RR$ as well.
+Hence, $x$, $y$, $z$ are the roots of a cubic with real coefficients.
+Thus,
+\begin{itemize}
+  \ii either all three of $\{x,y,z\}$ are real (which implies $a,b,c \in \RR$),
+  \ii or two of $\{x,y,z\}$ are a complex conjugate pair
+  (which implies one of $a$, $b$, $c$ has absolute value $1$).
+\end{itemize}
+Both of these were forbidden by hypothesis.
+
+\subparagraph{Construction}
+As we saw in the setup, $(p,q) = (-3,3)$ will occur as long as $x+y+z = 0$,
+and no two of $x$, $y$, $z$ to share the same magnitude or are collinear with the origin.
+This is easy to do; for example,
+we could choose $(x, y, z) = (3, 4i, -(3+4i))$.
+Hence $a = \frac{3}{4i}$, $b = -\frac{4i}{3+4i}$, $c = -\frac{3+4i}{3}$
+satisfies the hypotheses of the problem statement.
+
+\paragraph{Second solution, found by contestants.}
+The main idea is to make the substitution
+\[ x=a+\frac{1}{c}, \qquad y=b+\frac{1}{a}, \qquad z=c+\frac{1}{b}. \]
+Then we can check that
+\begin{align*}
+  x+y+z &= p \\
+  xy+yz+zx &= p+q+3 \\
+  xyz &= p+2.
+\end{align*}
+Therefore $x$, $y$, $z$ are the roots of a cubic with real coefficients.
+As in the previous solution, we note that this cubic must either
+have all real roots, or a complex conjugate pair of roots.
+We also have the relation $a(y+1)=ab+a+1=x+1$,
+and likewise $b(z+1)=y+1$, $c(x+1)=z+1$.
+This means that if any of $x$, $y$, $z$ are equal to $-1$,
+then all are equal to $-1$.
+
+Assume for the sake of contradiction that none are equal to $-1$.
+In the case where the cubic has three real roots,
+$a=\frac{x+1}{y+1}$ would be real.
+On the other hand, if there is a complex conjugate pair
+(without loss of generality, $x$ and $y$) then $a$ has magnitude $1$.
+Therefore this cannot occur.
+
+We conclude that $x=y=z=-1$, so $p=-3$ and $q=3$.
+The solutions $(a, b, c)$ can then be parameterized
+as $(a, -1-\frac{1}{a}, -\frac{1}{1+a})$.
+To construct a solution, we need to choose a specific value of $a$ such that
+none of the wrong conditions hold;
+when $a=2i$, say, we obtain the solution $(2i, -1+\frac{i}{2}, \frac{-1+2i}{5})$.
+
+\paragraph{Third solution by Luke Robitaille and Daniel Zhu.}
+The answer is $p = -3$ and $q = 3$.
+Let's first prove that no other $(p, q)$ work.
+
+Let $e_1 = a + b + c$ and $e_2 = a\inv + b\inv + c\inv = ab + ac + bc$.
+Also, let $f = e_1e_2$. Note that $p = e_1 + e_2$.
+
+Our main insight is to consider the quantity
+$q' = \frac{b}{a} + \frac{c}{b} + \frac{a}{c}$.
+Note that $f = q + q' + 3$. Also,
+\begin{align*}
+  qq' &= 3 + \frac{a^2}{bc} + \frac{b^2}{ac} + \frac{c^2}{ab}
+    + \frac{bc}{a^2} + \frac{ac}{b^2} + \frac{ab}{c^2} \\
+  &= 3 + a^3 + b^3 + c^3 + a^{-3} + b^{-3} + c^{-3} \\
+  &= 9 + a^3 + b^3 + c^3 - 3abc + a^{-3} + b^{-3} + c^{-3} - 3a\inv b\inv c\inv \\
+  &= 9 + e_1(e_1^2 - 3e_2) + e_2(e_2^2 - 3e_1) \\
+  &= 9 + e_1^3 + e_2^3 - 6e_1e_2 \\
+  &= 9 + p(p^2 - 3f) - 6f \\
+  &= p^3 - (3p + 6)f + 9.
+  \end{align*}
+As a result, the quadratic with roots $q$ and $q'$ is
+$x^2 - (f - 3)x + (p^3 - (3p+6) f + 9)$, which implies that
+\[ q^2 - qf + 3q + p^3 - (3p + 6)f + 9 = 0
+  \iff (3p + q + 6)f = p^3 + q^2 + 3q + 9. \]
+
+At this point, two miracles occur.
+The first is the following claim:
+\begin{claim*}
+  $f$ is not real.
+\end{claim*}
+\begin{proof}
+  Suppose $f$ is real. Since $(x - e_1)(x - e_2) = x^2 - px + f$, there are two cases:
+  \begin{itemize}
+  \item $e_1$ and $e_2$ are real.
+    Then, $a$, $b$, and $c$ are the roots of $x^3 - e_1 x^2 + e_2 x - 1$,
+    and since every cubic with real coefficients has at least one real root,
+    at least one of $a$, $b$, and $c$ is real, contradiction.
+  \item $e_1$ and $e_2$ are conjugates.
+    Then, the polynomial $x^3 - \bar e_2 x^2 + \bar e_1 x - 1$,
+    which has roots $\bar a\inv$, $\bar b \inv$, and $\bar c \inv$,
+    is the same as the polynomial with $a$, $b$, $c$ as roots.
+    We conclude that the multiset $\{a, b, c\}$ is invariant
+    under inversion about the unit circle,
+    so one of $a$, $b$, and $c$ must lie on the unit circle.
+    This is yet another contradiction. \qedhere
+  \end{itemize}
+\end{proof}
+
+As a result, we know that $3p + q + 6 = p^3 + q^2 + 3q + 9 = 0$.
+The second miracle is that substituting $q = -3p-6$ into
+$q^2 + 3q + p^3 + 9 = 0$, we get
+\[ 0 = p^3 + 9p^2 + 27p + 27 = (p + 3)^3, \]
+so $p = -3$.
+Thus $q = 3$.
+
+It remains to construct valid $a$, $b$, and $c$.
+To do this, let's pick some $e_1$, let $e_2 = -3 - e_1$,
+and let $a$, $b$, and $c$ be the roots of $x^3 - e_1x^2 + e_2 x - 1$.
+It is clear that this guarantees $p = -3$.
+By our above calculations, $q$ and $q'$ are the roots of the quadratic
+$x^2 - (f-3)x + (3f - 18)$, so one of $q$ and $q'$ must be $3$;
+by changing the order of $a$, $b$, and $c$ if needed,
+we can guarantee this to be $q$.
+It suffices to show that for some choice of $e_1$,
+none of $a$, $b$, or $c$ are real or lie on the unit circle.
+
+To do this, note that we can rewrite $x^3 - e_1x^2 + (-3-e_1) x - 1 = 0$ as
+\[ e_1 = \frac{x^3 - 3x - 1}{x^2 + x}, \]
+so all we need is a value of $e_1$ that is not
+$\frac{x^3 - 3x - 1}{x^2 + x}$ for any real $x$ or $x$ on the unit circle.
+One way to do this is to choose any nonreal $e_1$ with $\abs{e_1} < 1/2$.
+This clearly rules out any real $x$.
+Also, if $\abs{x} = 1$, by the triangle inequality
+$\abs{x^3 - 3x - 1} \geq \abs{3x} - \abs{x^3} - \abs{1} = 1$
+and $\abs{x^2 + x} \leq 2$, so $\abs{\frac{x^3-3x-1}{x^2+x}} \geq 1/2$.
+\pagebreak
+
+\subsection{TSTST 2023/6, proposed by Holden Mui}
+\textsl{Available online at \url{https://aops.com/community/p28015708}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a scalene triangle
+and let $P$ and $Q$ be two distinct points in its interior.
+Suppose that the angle bisectors of $\angle PAQ$, $\angle PBQ$,
+and $\angle PCQ$ are the altitudes of triangle $ABC$.
+Prove that the midpoint of $\ol{PQ}$ lies on the Euler line of $ABC$.
+\end{mdframed}
+We present three approaches.
+
+\paragraph{Solution 1 (Ankit Bisain).}
+Let $H$ be the orthocenter of $ABC$, and construct $P'$ using the following claim.
+
+\begin{claim*}
+    There is a point $P'$ for which \[\measuredangle APH + \measuredangle AP'H = \measuredangle BPH + \measuredangle BP'H = \measuredangle CPH + \measuredangle CP'H = 0.\]
+\end{claim*}
+
+\begin{proof}
+    After inversion at $H$, this is equivalent to the fact that $P$'s image has an isogonal conjugate in $ABC$'s image.
+\end{proof}
+
+Now, let $X$, $Y$, and $Z$ be the reflections of $P$ over $\ol{AH}$, $\ol{BH}$, and $\ol{CH}$ respectively. Additionally, let $Q'$ be the image of $Q$ under inversion about $(PXYZ)$.
+
+\begin{center}
+  \begin{asy}
+    size(10cm);
+    pair A = dir(110);
+    pair B = dir(210);
+    pair C = dir(330);
+
+    triangle t = triangle(A, B, C);
+    pair H = orthocentercenter(t);
+
+    pair O = (0, 0);
+
+    real r = -3.8;
+    pair Pp = r * H;
+
+    pair OB = circumcenter(triangle(B, H, Pp));
+    pair OC = circumcenter(triangle(C, H, Pp));
+    pair OBp = (reflect(line(B, H))*OB);
+    pair OCp = (reflect(line(C, H))*OC);
+    pair P = reflect(line(OBp, OCp))*H;
+
+    pair X = reflect(altitude(t.BC))*P;
+    pair Y = reflect(altitude(t.AC))*P;
+    pair Z = reflect(altitude(t.AB))*P;
+
+    pair QA = extension(B, Y, C, Z);
+    pair QB = extension(A, X, C, Z);
+    pair QC = extension(A, X, B, Y);
+
+    pair Q = (QA+QB+QC)/3;
+    pair Qp = H + (Q-H) * (abs(P-H)/abs(Q-H))^2;
+
+    pair M = (P+Q)/2;
+
+    draw(A -- B -- C -- cycle);
+    draw(A -- H ^^ B -- H ^^ C -- H, dashed);
+
+    draw(P -- A -- Q ^^ P -- B -- Q ^^ P -- C -- Q ^^ A -- X ^^ B -- Y ^^ C -- Z, heavygreen);
+
+    draw(Qp -- X ^^ H -- X ^^ H -- P ^^ H -- Pp -- A, blue);
+    draw(H -- Qp, dotted);
+
+    draw(circumcircle(triangle(X, Y, Z)));
+
+    real rad = 10;
+    markangle(radius = rad, A, Pp, H, red);
+    markangle(radius = rad, H, P, A, red);
+    markangle(radius = rad, A, X, H, red);
+    markangle(radius = rad, H, Qp, X, red);
+
+    dot("$A$", A, dir(A));
+    dot("$B$", B, dir(B));
+    dot("$C$", C, dir(C));
+
+    dot("$X$", X, dir(0));
+    dot("$Y$", Y, dir(190));
+    dot("$Z$", Z, dir(Z-H));
+
+    dot("$H$", H, dir(270));
+
+    dot("$P$", P, dir(260));
+    dot("$Q$", Q, dir(10));
+    dot("$Q'$", Qp, dir(0));
+
+    dot("$P'$", Pp, dir(Pp));
+  \end{asy}
+\end{center}
+
+\begin{claim*}
+  $ABCP' \stackrel{-}{\sim} XYZQ'$.
+\end{claim*}
+
+\begin{proof}
+    Since
+    \[\measuredangle YXZ = \measuredangle YPZ = \measuredangle(\ol{BH},
+    \ol{CH}) = -\measuredangle BAC\]
+    and cyclic variants, triangles $ABC$ and $XYZ$ are similar. Additionally,
+    \[\measuredangle HQ'X = -\measuredangle HXQ = -\measuredangle HXA =
+    \measuredangle HPA = -\measuredangle HP'A\]
+    and cyclic variants, so summing in pairs gives $\measuredangle YQ'Z =
+    -\measuredangle BP'C$ and cyclic variants; this implies the similarity.
+\end{proof}
+
+\begin{claim*}
+    $Q'$ lies on the Euler line of triangle $XYZ$.
+\end{claim*}
+
+\begin{proof}
+  Let $O$ be the circumcenter of $ABC$ so that $ABCOP' \stackrel{-}{\sim} XYZHQ'$. Then
+    $\measuredangle HP'A = -\measuredangle HQ'X = \measuredangle OP'A$, so $P'$ lies on
+    $\ol{OH}$. By the similarity, $Q'$ must lie on the Euler line of $XYZ$.
+\end{proof}
+
+To finish the problem, let $G_1$ be the centroid of $ABC$ and $G_2$ be the
+centroid of $XYZ$. Then with signed areas,
+\begin{align*}
+    [G_1HP] + [G_1HQ] &= \frac{[AHP] + [BHP] + [CHP]}{3} + \frac{[AHQ] + [BHQ] + [CHQ]}{3} \\
+    &= \frac{[AHQ] - [AHX] + [BHQ] - [BHY] + [CHQ] - [CHZ]}{3} \\
+    &= \frac{[HQX] + [HQY] + [HQZ]}{3} \\
+    &= [QG_2H] \\
+    &= 0
+\end{align*}
+where the last line follows from the last claim. Therefore $\ol{G_1H}$
+bisects $\ol{PQ}$, as desired.
+
+\begin{remark*}
+  This solution characterizes the set of all points $P$ for which such a point
+  $Q$ exists. It is the image of the Euler line under the mapping described in
+  the first claim.
+\end{remark*}
+
+\paragraph{Solution 2 using complex numbers (Carl Schildkraut and Milan Haiman).}
+Let $(ABC)$ be the unit circle in the complex plane, and let $A=a$, $B=b$, $C=c$
+such that $|a|=|b|=|c|=1$. Let $P=p$ and $Q=q$, and $O=0$ and $H=h=a+b+c$ be the
+circumcenter and orthocenter of $ABC$ respectively.
+
+The first step is to translate the given geometric conditions into a single
+usable equation:
+\begin{claim*}
+  We have the equation
+  \begin{equation}
+    (p+q)\sum_{\text{cyc}}a^3(b^2-c^2)
+    = (\ol p+\ol q)abc\sum_{\text{cyc}}(bc(b^2-c^2)).
+    \label{eq:tstst2023p6main}
+  \end{equation}
+\end{claim*}
+\begin{proof}
+  The condition that the altitude $\ol{AH}$ bisects $\angle PAQ$ is equivalent to
+  \begin{align*}
+    & \frac{(p-a)(q-a)}{(h-a)^2} = \frac{(p-a)(q-a)}{(b+c)^2}\in\RR \\
+    \implies &\frac{(p-a)(q-a)}{(b+c)^2} = \ol{\left(\frac{(p-a)(q-a)}{(b+c)^2}\right)}
+    = \frac{(a\ol p-1)(a\ol q-1)b^2c^2}{(b+c)^2a^2} \\
+    \implies & a^2(p-a)(q-a) = b^2c^2(a\ol p-1)(a\ol q-1) \\
+    \implies & a^2pq-a^2b^2c^2\ol p\ol q+(a^4-b^2c^2)
+      = a^3(p+q)-ab^2c^2(\ol p+\ol q).
+    \end{align*}
+  Writing the symmetric conditions that $\ol{BH}$ and $\ol{CH}$
+  bisect $\angle PBQ$ and $\angle PCQ$ gives three equations:
+  \begin{align*}
+    a^2pq - a^2b^2c^2\ol p\ol q + (a^4-b^2c^2)
+      &= a^3(p+q) - ab^2c^2(\ol p+\ol q) \\
+    b^2pq - a^2b^2c^2\ol p\ol q + (b^4-c^2a^2)
+      &= b^3(p+q) - bc^2a^2(\ol p+\ol q) \\
+    c^2pq - a^2b^2c^2\ol p\ol q + (c^4-a^2b^2)
+      &=c^3(p+q) - ca^2b^2(\ol p+\ol q).
+  \end{align*}
+  Now, sum $(b^2-c^2)$ times the first equation,
+  $(c^2-a^2)$ times the second equation, and $(a^2-b^2)$ times the third equation.
+  On the left side, the coefficients of $pq$ and $\ol p\ol q$ are $0$.
+  Additionally, the coefficient of $1$
+  (the parenthesized terms on the left sides of each equation) sum to $0$, since
+  \[ \sum_{\text{cyc}}(a^4-b^2c^2)(b^2-c^2)
+    = \sum_{\text{cyc}}(a^4b^2-b^4c^2-a^4c^2+c^4b^2). \]
+  This gives \eqref{eq:tstst2023p6main} as desired.
+\end{proof}
+
+We can then factor \eqref{eq:tstst2023p6main}:
+\begin{claim*}
+  The left-hand side of \eqref{eq:tstst2023p6main} factors as
+  \[ -(p+q)(a-b)(b-c)(c-a)(ab+bc+ca) \]
+  while the right-hand side factors as
+  \[ -(\ol p + \ol q)(a-b)(b-c)(c-a)(a+b+c). \]
+\end{claim*}
+\begin{proof}
+  This can of course be verified by direct expansion, but here is a slightly
+  more economic indirect proof.
+
+  Consider the cyclic sum on the left as a polynomial in $a$, $b$, and $c$.
+  If $a=b$, then it simplifies as $a^3(a^2-c^2)+a^3(c^2-a^2)+c^3(a^2-a^2)=0$,
+  so $a-b$ divides this polynomial.
+  Similarly, $a-c$ and $b-c$ divide it, so it can be written as
+  $f(a,b,c)(a-b)(b-c)(c-a)$ for some symmetric quadratic polynomial $f$,
+  and thus it is some linear combination of $a^2+b^2+c^2$ and $ab+bc+ca$.
+  When $a=0$, the whole expression is $b^2c^2(b-c)$, so $f(0,b,c)=-bc$, which
+  implies that $f(a,b,c)=-(ab+bc+ca)$.
+
+  Similarly, consider the cyclic sum on the right as a polynomial in $a$, $b$, and $c$.
+  If $a=b$, then it simplifies as $ac(a^2-c^2)+ca(c^2-a^2)+a^2(a^2-a^2)=0$,
+  so $a-b$ divides this polynomial.
+  Similarly, $a-c$ and $b-c$ divide it, so it can be written as
+  $g(a,b,c)(a-b)(b-c)(c-a)$ where $g$ is a symmetric linear polynomial;
+  hence, it is a scalar multiple of $a+b+c$.
+  When $a=0$, the whole expression is $bc(b^2-c^2)$, so $g(0,b,c)=-b-c$,
+  which implies that $g(a,b,c)=-(a+b+c)$.
+\end{proof}
+
+Since $A$, $B$, and $C$ are distinct,
+we may divide by $(a-b)(b-c)(c-a)$ to obtain
+\[
+  (p+q)(ab+bc+ca)=(\ol p+\ol q)abc(a+b+c) \implies
+  (p+q)\ol h=(\ol p+\ol q)h.
+\]
+This implies that $\frac{\frac{p+q}2-0}{h-0}$ is real,
+so the midpoint of $\ol{PQ}$ lies on line $\ol{OH}$.
+
+\paragraph{Solution 3 also using complex numbers (Michael Ren).}
+We use complex numbers as in the previous solution.
+The angle conditions imply that
+$\frac{(a-p)(a-q)}{(b-c)^2}$, $\frac{(b-p)(b-q)}{(c-a)^2}$,
+and $\frac{(c-p)(c-q)}{(a-b)^2}$ are real numbers.
+Take a linear combination of these with real coefficients
+$X$, $Y$, and $Z$ to be determined; after expansion, we obtain
+\begin{align*}
+  &\left[\frac{X}{(b-c)^2}+\frac{Y}{(c-a)^2}+\frac{Z}{(a-b)^2}\right]pq \\
+  - &\left[\frac{aX}{(b-c)^2}+\frac{bY}{(c-a)^2}+\frac{cZ}{(a-b)^2}\right](p+q)
+  \\
+  + &\left[\frac{a^2X}{(b-c)^2}+\frac{b^2Y}{(c-a)^2}+\frac{c^2Z}{(a-b)^2}\right]
+\end{align*}
+which is a real number. To get something about the midpoint of $PQ$, the $pq$
+coefficient should be zero, which motivates the following lemma.
+
+\begin{lemma*}
+  There exist real $X$, $Y$, $Z$ for which
+  \begin{align*}
+    \frac{X}{(b-c)^2}+\frac{Y}{(c-a)^2}+\frac{Z}{(a-b)^2} &= 0 \text{ and } \\
+    \frac{aX}{(b-c)^2}+\frac{bY}{(c-a)^2}+\frac{cZ}{(a-b)^2} &\neq 0.
+  \end{align*}
+\end{lemma*}
+
+\begin{proof}
+  Since $\CC$ is a $2$-dimensional vector space over $\RR$, there
+  exist real $X, Y, Z$ such that $(X, Y, Z)\neq (0, 0, 0)$ and the first
+  condition holds. Suppose for the sake of contradiction that
+  $\frac{aX}{(b-c)^2}+\frac{bY}{(c-a)^2}+\frac{cZ}{(a-b)^2}=0$. Then
+  \begin{align*}
+    & \frac{(b-a)Y}{(c-a)^2}+\frac{(c-a)Z}{(a-b)^2}\\
+    =& \frac{aX}{(b-c)^2}+\frac{bY}{(c-a)^2}+\frac{cZ}{(a-b)^2} -
+    a\left(\frac{X}{(b-c)^2}+\frac{Y}{(c-a)^2}+\frac{Z}{(a-b)^2}\right) \\
+    =& 0.
+  \end{align*}
+  We can easily check that $(Y, Z) = (0, 0)$ is impossible, therefore
+  $\frac{(b-a)^3}{(c-a)^3} = -\frac{Z}{Y}$ is real.
+  This means $\angle BAC = 60^{\circ}$ or $120^{\circ}$.
+  By symmetry, the same is true of $\angle CBA$ and $\angle ACB$.
+  This is impossible because $ABC$ is scalene.
+\end{proof}
+
+With the choice of $X$, $Y$, $Z$ as in the lemma, there exist complex numbers
+$\alpha$ and $\beta$, depending only on $a$, $b$, and $c$, such that $\alpha\neq
+0$ and $\alpha(p+q)+\beta$ is real. Therefore the midpoint of $PQ$, which
+corresponds to $\frac{p+q}{2}$, lies on a fixed line. It remains to show that
+this line is the Euler line. First, choose $P=Q$ to be the orthocenter to show
+that the orthocenter lies on the line. Secondly, choose $P$ and $Q$ to be the
+foci of the Steiner circumellipse to show that the centroid lies on the line.
+(By some ellipse properties, the external angle bisector of $\angle PAQ$ is the
+tangent to the circumellipse at $A$, which is the line through $A$ parallel to
+$BC$. Therefore these points are valid.) Therefore the fixed line of the
+midpoint is the Euler line.
+
+\begin{remark*}
+  This solution does not require fixing the origin of the complex plane or
+  setting $(ABC)$ to be the unit circle.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 3}
+\subsection{TSTST 2023/7, proposed by Luke Robitaille}
+\textsl{Available online at \url{https://aops.com/community/p28015706}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+The Bank of Pittsburgh issues coins that have a heads side and a tails side.
+Vera has a row of $2023$ such coins alternately tails-up and heads-up,
+with the leftmost coin tails-up.
+
+In a \emph{move}, Vera may flip over one of the coins in the row,
+subject to the following rules:
+\begin{itemize}
+  \item On the first move, Vera may flip over any of the $2023$ coins.
+  \item On all subsequent moves, Vera may only flip over
+    a coin adjacent to the coin she flipped on the previous move.
+  (We do not consider a coin to be adjacent to itself.)
+\end{itemize}
+Determine the smallest possible number of moves Vera can
+make to reach a state in which every coin is heads-up.
+\end{mdframed}
+The answer is $\boxed{4044}$.
+In general, replacing $2023$ with $4n+3$, the answer is $8n+4$.
+
+\paragraph{Bound.}
+Observe that the first and last coins must be flipped,
+and so every coin is flipped at least once.
+Then, the $2n+1$ even-indexed coins must be flipped at least twice,
+so they are flipped at least $4n+2$ times.
+
+The $2n+2$ odd-indexed coins must then be flipped at least $4n+1$ times.
+Since there are an even number of these coins,
+the total flip count must be even,
+so they are actually flipped a total of at least $4n+2$ times,
+for a total of at least $8n+4$ flips in all.
+
+\paragraph{Construction.}
+For $k=0,1,\dots,n-1$,
+flip $(4k+1, 4k+2, 4k+3, 4k+2, 4k+3, 4k+4, 4k+3, 4k+4)$ in that order;
+then at the end, flip $4n+1$, $4n+2$, $4n+3$, $4n+2$.
+This is illustrated below for $4n+3=15$.
+\begin{center}
+  \begin{asy}
+    unitsize(12);
+    int m = 3;
+    int n = 4*m+3;
+    int[] aux = {1, 2, 3, 2, 3, 4, 3, 4};
+    int[] a = {};
+    pen[] cols = {mediumblue, mediumred};
+    for (int i = 0; i <= m; ++i) {
+      for (int j = 0; j < aux.length; ++j) {
+        a.push(aux[j]+4*i);
+      }
+    }
+    for (int i = 0; i < 4; ++i) {
+      a.pop();
+    }
+    transform t = scale(1, -1);
+    for (int i = 1; i <= n; ++i) {
+      label((string) i, t*(0, i), cols[i % 2]);
+    }
+    for (int i = 0; i < a.length; ++i) {
+      dot(t*(i+1, a[i]), cols[a[i] % 2]);
+    }
+    for (int i = 1; i < n; ++i) {
+      draw(t*((-0.5, i+0.5)--(a.length+0.5, i+0.5)), gray(0.7));
+    }
+    for (int i = 0; i < 2*n-2; i += 8) {
+      draw(t*((i+0.5, 0.5)--(i+0.5, n+0.5)), gray(0.7));
+    }
+    for (int i = 4; i < n; i += 4) {
+      draw(t*((-0.5, i+0.5)--(a.length+0.5, i+0.5)), black + 1.4);
+    }
+  \end{asy}
+\end{center}
+It is easy to check this works, and there are $4044$ flips, as desired.
+\pagebreak
+
+\subsection{TSTST 2023/8, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p28015680}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be an equilateral triangle with side length $1$.
+Points $A_1$ and $A_2$ are chosen on side $BC$,
+points $B_1$ and $B_2$ are chosen on side $CA$, and
+points $C_1$ and $C_2$ are chosen on side $AB$
+such that $BA_1 < BA_2$, $CB_1 < CB_2$, and $AC_1 < AC_2$.
+
+Suppose that the three line segments $B_1C_2$, $C_1A_2$, and $A_1B_2$
+are concurrent, and the perimeters of triangles $AB_2C_1$, $BC_2A_1$, and
+$CA_2B_1$ are all equal. Find all possible values of this common perimeter.
+\end{mdframed}
+The only possible value of the common perimeter, denoted $p$, is $1$.
+
+\paragraph{Synthetic approach (from author).}
+We prove the converse of the problem first:
+\begin{claim*}
+  [$p=1$ implies concurrence]
+  Suppose the six points are chosen so that triangles
+  $AB_2C_1$, $BC_2A_1$, $CA_2B_1$ all have perimeter $1$.
+  Then lines $\ol{B_1C_2}$, $\ol{C_1A_2}$, and $\ol{A_1B_2}$ are concurrent.
+\end{claim*}
+\begin{proof}
+  The perimeter conditions mean that
+  $\ol{B_2C_1}$, $\ol{C_2A_1}$, and $\ol{A_2B_1}$
+  are tangent to the incircle of $\triangle ABC$.
+
+  \begin{center}
+    \begin{asy}
+      unitsize(48);
+      pair pole(pair p, pair q) {
+        return 2*p*q/(p+q);
+      }
+      pair A = 2 * dir( 90);
+      pair B = 2 * dir(210);
+      pair C = 2 * dir(330);
+      pair D = dir(100);
+      pair E = dir(190);
+      pair F = dir(320);
+
+      pair A1 = pole(dir(270), E);
+      pair A2 = pole(dir(270), F);
+      pair B1 = pole(dir( 30), F);
+      pair B2 = pole(dir( 30), D);
+      pair C1 = pole(dir(150), D);
+      pair C2 = pole(dir(150), E);
+
+      draw(A--B--C--cycle);
+      filldraw(A--B2--C1--cycle, opacity(0.1)+lightgreen, black);
+      filldraw(B--C2--A1--cycle, opacity(0.1)+lightgreen, black);
+      filldraw(C--A2--B1--cycle, opacity(0.1)+lightgreen, black);
+      fill(A1--A2--B1--B2--C1--C2--cycle, opacity(0.1)+yellow);
+      draw(A1--B2^^B1--C2^^C1--A2, dashed);
+      draw(unitcircle, blue);
+
+      dot("$A$", A, dir(A));
+      dot("$B$", B, dir(B));
+      dot("$C$", C, dir(C));
+      dot(midpoint(A--B));
+      dot(midpoint(B--C));
+      dot(midpoint(C--A));
+
+      dot("$A_1$", A1, dir(270));
+      dot("$A_2$", A2, dir(270));
+      dot("$B_1$", B1, dir( 30));
+      dot("$B_2$", B2, dir( 30));
+      dot("$C_1$", C1, dir(150));
+      dot("$C_2$", C2, dir(150));
+    \end{asy}
+  \end{center}
+
+  Hence the result follows by \emph{Brianchon's theorem}.
+\end{proof}
+
+Now suppose $p \neq 1$.
+Let $\ol{B_2'C_1'}$ be the dilation of $\ol{B_2C_1}$
+with ratio $\tfrac1p$ at center $A$,
+and define $C_2'$, $A_1'$, $A_2'$, $B_1'$ similarly.
+The following diagram showcases the situation $p < 1$.
+\begin{center}
+  \begin{asy}
+    unitsize(64);
+    pair pole(pair p, pair q) {
+      return 2*p*q/(p+q);
+    }
+
+    real fac = 0.7;
+
+    pair A = 2 * dir( 90);
+    pair B = 2 * dir(210);
+    pair C = 2 * dir(330);
+
+    pair D = dir(100);
+    pair E = dir(190);
+    pair F = dir(320);
+
+    pair A1p = pole(dir(270), E);
+    pair A2p = pole(dir(270), F);
+    pair B1p = pole(dir( 30), F);
+    pair B2p = pole(dir( 30), D);
+    pair C1p = pole(dir(150), D);
+    pair C2p = pole(dir(150), E);
+
+    pair A1 = B + fac * (A1p - B);
+    pair A2 = C + fac * (A2p - C);
+    pair B1 = C + fac * (B1p - C);
+    pair B2 = A + fac * (B2p - A);
+    pair C1 = A + fac * (C1p - A);
+    pair C2 = B + fac * (C2p - B);
+
+    draw(unitcircle, gray(0.7));
+    draw(A--B--C--cycle, gray(0.6));
+    draw(B2p--C1p^^C2p--A1p^^A2p--B1p, blue+dashed);
+    draw(B2--C1^^C2--A1^^A2--B1, red+1.4);
+
+    draw(A1p--B2p^^B1p--C2p^^C1p--A2p, blue+dotted);
+    draw(A1--B2^^B1--C2^^C1--A2, orange+0.8);
+
+    dot("$A$", A, dir(A));
+    dot("$B$", B, dir(B));
+    dot("$C$", C, dir(C));
+
+    dot("$A_1'$", A1p, dir(270));
+    dot("$A_2'$", A2p, dir(270));
+    dot("$B_1'$", B1p, dir( 30));
+    dot("$B_2'$", B2p, dir( 30));
+    dot("$C_1'$", C1p, dir(150));
+    dot("$C_2'$", C2p, dir(150));
+
+    dot("$A_1$", A1, dir(270));
+    dot("$A_2$", A2, dir(270));
+    dot("$B_1$", B1, dir( 30));
+    dot("$B_2$", B2, dir( 30));
+    dot("$C_1$", C1, dir(150));
+    dot("$C_2$", C2, dir(150));
+  \end{asy}
+\end{center}
+By the reasoning in the $p = 1$ case,
+note that $\ol{B_1'C_2'}$, $\ol{C_1'A_2'}$, and $\ol{A_1'B_2'}$ are concurrent.
+However, $\ol{B_1C_2}$, $\ol{C_1A_2}$, $\ol{A_1B_2}$
+lie in the interior of quadrilaterals
+$BCB_1'C_2'$, $CAC_1'A_2'$, and $ABA_1'B_2'$,
+and these quadrilaterals do not share an interior point, a contradiction.
+
+Thus $p \ge 1$. Similarly, we can show $p \le 1$,
+and so $p = 1$ is forced (and achieved if, for example,
+the three triangles are equilateral with side length $1/3$).
+
+\paragraph{Barycentric solution (by Carl, Krit, Milan).}
+We show that, if the common perimeter is $1$, then the lines concur.
+To do this, we use barycentric coordinates.
+Let $A=(1:0:0)$, $B=(0:1:0)$, and $C=(0:0:1)$.
+Let $A_1=(0:1-a_1:a_1)$, $A_2=(0:a_2:1-a_2)$,
+$B_1=(b_1:0:1-b_1)$, $B_2=(1-b_2:0:b_2)$,
+$C_1=(1-c_1:c_1:0)$, and $C_2=(c_2:1-c_2:0)$.
+The line $B_1C_2$ is defined by the equation
+\[ \det \begin{bmatrix}
+    x & y & z \\
+    b_1 & 0 & 1-b_1\\
+    c_2 & 1-c_2 & 0
+  \end{bmatrix} = 0; \]
+i.e.
+\[ x\big(-(1-b_1)(1-c_2)\big)
+  + y\big((1-b_1)c_2\big)
+  + z\big(b_1(1-c_2)\big) = 0. \]
+Computing the equations for the other lines cyclically,
+we get that the lines $B_1C_2$, $C_1A_2$, and $A_1B_2$ concur if and only if
+\[ \det \begin{bmatrix}
+    -(1-b_1)(1-c_2) & (1-b_1)c_2 & b_1(1-c_2)\\
+    c_1(1-a_2) & -(1-c_1)(1-a_2) & (1-c_1)a_2\\
+    (1-a_1)b_2 & a_1(1-b_2) & -(1-a_1)(1-b_2)
+  \end{bmatrix} = 0.
+\]
+Let this matrix be $M$.
+We also define the similar matrix
+\[ N = \begin{bmatrix}
+    -(1-b_2)(1-c_1) & (1-b_2)c_1 & b_2(1-c_1)\\
+    c_2(1-a_1) & -(1-c_2)(1-a_1) & (1-c_2)a_1\\
+    (1-a_2)b_1 & a_2(1-b_1) & -(1-a_2)(1-b_1)
+  \end{bmatrix}. \]
+Geometrically, $\det N=0$ if and only if
+$B_2'C_1'$, $C_2'A_1'$, and $A_2'B_1'$ concur,
+where for a point $P$ on a side of triangle $ABC$,
+$P'$ denotes its reflection over that side's midpoint.
+\begin{claim*}
+  We have $\det M = \det N$.
+\end{claim*}
+\begin{proof}
+  To show $\det M=\det N$,
+  it suffices to demonstrate that the determinant above is invariant
+  under swapping subscripts of ``$1$'' and ``$2$,'' an operation we call $\Psi$.
+
+  We use the definition of the determinant as a sum over permutations.
+  The even permutations give us the following three terms:
+  \begin{align*}
+    -(1-b_1)(1-c_2)(1-c_1)(1-a_2)(1-a_1)(1-b_2)
+      &= -\prod_{i=1}^2\big((1-a_i)(1-b_i)(1-c_i)\big)\\
+    (1-a_1)b_2(1-b_1)c_2(1-c_1)a_2
+      &= \big((1-a_1)(1-b_1)(1-c_1)\big)\big(a_2b_2c_2\big)\\
+    c_1(1-a_2)a_1(1-b_2)b_1(1-c_2)
+      &= \big((1-a_2)(1-b_2)(1-c_2)\big)\big(a_1b_1c_1\big).
+  \end{align*}
+  The first term is invariant under $\Psi$,
+  while the second and third terms are swapped under $\Psi$.
+  For the odd permutations, we have a contribution to the determinant of
+  \[ \sum_{\text{cyc}}(1-b_1)(1-c_2)(1-c_1)a_2a_1(1-b_2); \]
+  each summand is invariant under $\Psi$.
+  This finishes the proof of our claim.
+\end{proof}
+
+Now, it suffices to show that, if $AB_2C_1$, $BC_2A_1$, and $CA_2B_1$
+each have perimeter $1$, then
+\[
+  \det \begin{bmatrix}
+    -(1-b_2)(1-c_1) & (1-b_2)c_1 & b_2(1-c_1)\\
+    c_2(1-a_1) & -(1-c_2)(1-a_1) & (1-c_2)a_1\\
+    (1-a_2)b_1 & a_2(1-b_1) & -(1-a_2)(1-b_1).
+  \end{bmatrix} = 0. \]
+Indeed, we have $AB_2=b_2$ and $AC_1=c_1$, so by the law of cosines,
+\[ 1-b_2-c_1=1-AB_2-AC_1=B_2C_1=\sqrt{b_2^2+c_1^2-b_2c_1}. \]
+This gives
+\[ (1-b_2-c_1)^2=b_2^2+c_1^2-b_2c_1\implies 1-2b_2-2c_1+3b_2c_1=0. \]
+Similarly, $1-2c_2-2a_1+3c_2a_1=0$ and $1-2a_2-2b_1+3a_2b_1=0$.
+
+Now,
+\begin{align*}
+  N\begin{bmatrix} 1 \\ 1 \\ 1 \end{bmatrix}
+  &= \begin{bmatrix}
+    -(1-b_2)(1-c_1)+(1-b_2)c_1+b_2(1-c_1) \\
+   -(1-c_2)(1-a_1)+(1-c_2)a_1+c_2(1-a_1) \\
+   -(1-a_2)(1-b_1)+(1-a_2)b_1+a_2(1-b_1)
+ \end{bmatrix}\\
+  &= \begin{bmatrix}
+   -1+2b_2+2c_1-3b_2c_1\\
+   -1+2c_2+2a_1-3c_2a_1\\
+   -1+2a_2+2b_1-2a_2b_1
+  \end{bmatrix}
+  =\begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}.
+\end{align*}
+So it follows $\det N = 0$, as desired.
+\pagebreak
+
+\subsection{TSTST 2023/9, proposed by Holden Mui}
+\textsl{Available online at \url{https://aops.com/community/p28015688}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $p$ be a fixed prime and let $a \ge 2$ and $e \ge 1$ be fixed integers.
+Given a function $f \colon \ZZ/a\ZZ \to \ZZ/p^e\ZZ$
+and an integer $k \ge 0$, the \emph{$k$th finite difference},
+denoted $\Delta^k f$, is the function from $\ZZ/a\ZZ$ to $\ZZ/p^e\ZZ$
+defined recursively by
+\begin{align*}
+  \Delta^0 f(n) &= f(n) \\
+  \Delta^k f(n) &= \Delta^{k-1} f(n+1) - \Delta^{k-1} f(n)
+  \qquad \text{for } k = 1, 2, \dots.
+\end{align*}
+
+Determine the number of functions $f$ such that there exists some
+$k \ge 1$ for which $\Delta^k f = f$.
+\end{mdframed}
+The answer is
+\[ (p^e)^a \cdot p^{-ep^{\nu_p(a)}} = p^{e(a - p^{\nu_p(a)})}. \]
+
+\paragraph{First solution by author.}
+For convenience in what follows, set $d = \nu_p(a)$, let $a = p^d \cdot b$,
+and let a function $f\colon \ZZ/a\ZZ \to \ZZ/p^e\ZZ$ be \emph{essential}
+if it equals one of its iterated finite differences.
+
+The key claim is the following.
+\begin{claim*}[Characterization of essential functions]
+  A function $f$ is essential if and only if
+  \begin{equation}\label{p3:ess}
+    f(x) + f(x + p^d) + \dots + f(x + (b-1)p^d) = 0
+  \end{equation}
+  for all $x$.
+\end{claim*}
+As usual, we split the proof into two halves.
+
+\subparagraph{Proof that essential implies the equation}
+First, suppose that $f$ is essential, with $\Delta^N f = f$.
+Observe that $f$ is in the image of $\Delta^k$ for any $k$, because $\Delta^{mN} f = f$ for any $m$.
+The following lemma will be useful.
+\begin{lemma*}
+  Let $g \colon \ZZ/a\ZZ \to \ZZ/p^e\ZZ$ be any function, and let $h = \Delta^{p^d} g$. Then
+  \[ h(x) + h(x + p^d) + \dots + h(x + (b-1)p^d) \equiv 0 \pmod p \]
+  for all $x$.
+\end{lemma*}
+\begin{proof}
+  By definition,
+  \[ h(x) = \Delta^{p^d} g(x) = \sum_{k = 0}^{p^d} (-1)^k \binom{p^d}k g(x + p^d - k). \]
+  However, it is known that $\tbinom{p^d}k$ is a multiple of $p$ if $1 \le k \le p^d - 1$, so
+  \[ h(x) \equiv g(x + p^d) + (-1)^{p^d} g(x) \pmod p. \]
+  Using this, we easily obtain
+  \begin{align*}
+    & \phantom{\equiv}\;\; h(x) + h(x + p^d) + \dots + h(x + (b-1)p^d)\\
+    & \equiv
+    \begin{cases*}
+      0 & $p > 2$\\
+      2(g(x) + g(x + p^d) + \dots + g(x + (b-1)p^d)) & $p = 2$
+    \end{cases*}\\
+    & \equiv 0 \pmod p,
+  \end{align*}
+  as desired.
+\end{proof}
+
+\begin{corollary*}
+  Let $g \colon \ZZ/a\ZZ \to \ZZ/p^e\ZZ$ be any function, and let $h = \Delta^{ep^d} g$. Then
+  \[ h(x) + h(x + p^d) + \dots + h(x + (b-1)p^d) = 0 \]
+  for all $x$.
+\end{corollary*}
+\begin{proof}
+  Starting with the lemma, define
+  \[ h_1(x) = \frac{h(x) + h(x  + p^d) + \dots + h(x + (b-1)p^d)}{p}. \]
+  Applying the lemma to $h_1$ shows the corollary for $e=2$,
+  since $h_1(x)$ is divisible by $p$, hence the numerator is divisible by $p^2$.
+  Continue in this manner to get the result for general $e > 2$.
+\end{proof}
+This immediately settles this direction, since $f$ is in the image of $\Delta^{ep^d}$.
+
+\subparagraph{Proof the equation implies essential}
+Let $\mathcal S$ be the set of all functions satisfying \ref{p3:ess};
+then it's easy to see that $\Delta$ is a function on $\mathcal S$.
+To show that all functions in $\mathcal S$ are essential,
+it's equivalent to show that $\Delta$ is a permutation on $\mathcal S$.
+
+We will show that $\Delta$ is injective on $\mathcal S$.
+Suppose otherwise, and consider two functions $f$, $g$ in $\mathcal S$ with $\Delta f = \Delta g$.
+Then, we obtain that $f$ and $g$ differ by a constant; say $g = f + \lambda$.
+However, then
+\begin{align*}
+  & \phantom{=}\;\; g(0) + g(p^e) + \dots + g((b-1)p^e)\\
+  & = (f(0) + \lambda) + (f(p^e) + \lambda) + \dots + (f((b-1)p^e) + \lambda)\\
+  & = b\lambda.
+\end{align*}
+This should also be zero. Since $p \nmid b$, we obtain $\lambda = 0$, as desired.
+
+\subparagraph{Counting} Finally, we can count the essential functions:
+all but the last $p^d$ entries can be chosen arbitrarily,
+and then each remaining entry has exactly one possible choice.
+This leads to a count of
+\[ (p^e)^{a - p^d} = p^{e(a - p^{\nu_p(a)})}, \]
+as promised.
+
+\paragraph{Second solution by Daniel Zhu.}
+There are two parts to the proof:
+solving the $e = 1$ case, and using the $e=1$ result to solve the general problem
+by induction on $e$. These parts are independent of each other.
+
+\subparagraph{The case $e = 1$}
+Represent functions $f$ as elements
+\[ \alpha_f \coloneqq
+  \sum_{k \in \ZZ/a\ZZ} f(-k)x^k \in \FF_p[x]/(x^a - 1) \]
+Then, since $\alpha_{\Delta f} = (x - 1) \alpha_f$,
+we wish to find the number of $\alpha \in \FF_p[x]/(x^a - 1)$
+such that $(x-1)^m\alpha = \alpha$ for some $m$.
+
+Now, make the substitution $y = x - 1$ and let $P(y) = (y+1)^a - 1$;
+we want to find $\alpha \in \FF_p[y]/(P(y))$ such that $y^m\alpha = \alpha$ for some $m$.
+
+If we write $P(y) = y^d Q(y)$ with $Q(0) \neq 0$,
+then by the Chinese Remainder Theorem we have the ring isomorphism
+\[ \FF_p[y]/(P(y)) \cong \FF_p[y]/(y^d) \times \FF_p[y]/(Q(y)). \]
+Note that $y$ is nilpotent in the first factor,
+while it is a unit in the second factor.
+So the $\alpha$ that work are exactly those that are zero in the first factor;
+thus there are $p^{a-d}$ such $\alpha$.
+We can calculate $d = p^{v_p(a)}$ (via, say, Lucas's Theorem), so we are done.
+
+\subparagraph{The general problem}
+The general idea is as follows:
+call a $f \colon \ZZ/a\ZZ \to \ZZ/p^e\ZZ$ \emph{$e$-good}
+if $\Delta^m f = f$ for some $m$.
+Our result above allows us to count the $1$-good functions.
+Then, if $e \geq 1$, every $(e+1)$-good function, when reduced mod $p^e$,
+yields an $e$-good function, so we count $(e+1)$-good functions by counting
+how many reduce to any given $e$-good function.
+
+Formally, we use induction on $e$, with the $e = 1$ case being treated above.
+Suppose now we have solved the problem for a given $e \geq 1$,
+and we now wish to solve it for $e + 1$.
+For any function $g \colon \ZZ/a\ZZ \to \ZZ/p^{e+1}\ZZ$,
+let $\bar g \colon \ZZ/a\ZZ \to \ZZ/p^e\ZZ$ be its reduction mod $p^e$.
+For a given $e$-good $f$, let $n(f)$ be the number of $(e+1)$-good $g$ with $\bar g = f$.
+The following two claims now finish the problem:
+
+\begin{claim*}
+  If $f$ is $e$-good, then $n(f) > 0$.
+\end{claim*}
+\begin{proof}
+  Suppose $m$ is such that $\Delta^m f = f$.
+  Pick any $g$ with $\bar g = f$, and consider the sequence of functions
+  \[ g, \Delta^m g, \Delta^{2m} g, \dots. \]
+  Since there are finitely many functions $\ZZ/a\ZZ \to \ZZ/p^{e+1}\ZZ$,
+  there must exist $a < b$ such that $\Delta^{am} g = \Delta^{bm} g$.
+  We claim $\Delta^{am} g$ is the desired $(e+1)$-good function.
+  To see this, first note that since $\ol{\Delta^k g} = \Delta^k \bar g$,
+  we must have $\ol{\Delta^{am} g} = \Delta^{am} f = f$.
+  Moreover,
+  \[ \Delta^{(b-a)m} (\Delta^{am} g) = \Delta^{bm} g = \Delta^{am} g, \]
+  so $\Delta^{am} g$ is $(e+1)$-good.
+\end{proof}
+
+\begin{claim*}
+  If $f$ is $e$-good, and $n(f) > 0$,
+  then $n(f)$ is exactly the number of $1$-good functions,
+  i.e.\ $p^{a - p^{v_p(a)}}$.
+\end{claim*}
+\begin{proof}
+  Let $g$ be any $(e+1)$-good function with $\bar g = f$.
+  We claim that the $(e+1)$-good $g_1$ with $\bar g_1 = f$
+  are exactly the functions of the form $g + p^e h$ for any $1$-good $h$.
+  Since these functions are clearly distinct,
+  this characterization will prove the claim.
+
+  To show that this condition is sufficient,
+  note that $\ol{g + p^e h} = \bar g = f$.
+  Moreover, if $\Delta^m g = g$ and $\Delta^{m'} h = h$, then
+  \[ \Delta^{mm'}(g + p^e h)
+    = \Delta^{mm'} g + p^e \Delta^{mm'} h = g + p^e h. \]
+
+  To show that this condition is necessary,
+  let $g_1$ be any $(e+1)$-good function such that $\bar g_1 = f$.
+  Then $g_1 - g$ is also $(e+1)$-good, since if $\Delta^m g = g$,
+  $\Delta^{m'} g_1 = g_1$, we have
+  \[ \Delta^{mm'}(g_1 - g) = \Delta^{mm'} g_1 - \Delta^{mm'} g = g_1 - g. \]
+  On the other hand, we also know that $g_1 - g$ is divisible by $p^e$.
+  This means that it must be $p^e h$ for some function
+  $f \colon \ZZ/a\ZZ \to \ZZ/p\ZZ$, and it is not hard to show
+  that $g_1 - g$ being $(e+1)$-good means that $h$ is $1$-good.
+\end{proof}
+\pagebreak
+
+
+\end{document}

@@ -1,0 +1,732 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2019 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2019 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+A function $f \colon \NN \to \NN$ satisfies
+\[ \underbrace{f(f(\dots f}_{f(n)\text{ times}} (n)\dots)) %chktex 9
+  = \frac{n^2}{f(f(n))} \]
+for all positive integers $n$.
+What are all possible values of $f(1000)$?
+
+\item %% Problem 2
+Let $ABCD$ be a cyclic quadrilateral
+satisfying $AD^2 + BC^2 = AB^2$.
+The diagonals of $ABCD$ intersect at $E$.
+Let $P$ be a point on side $\ol{AB}$
+satisfying $\angle APD = \angle BPC$.
+Show that line $PE$ bisects $\ol{CD}$.
+
+\item %% Problem 3
+Let $K$ be the set of positive integers not containing the decimal digit $7$.
+Determine all polynomials $f(x)$ with nonnegative coefficients
+such that $f(x) \in K$ for all $x \in K$.
+
+\item %% Problem 4
+Let $n$ be a nonnegative integer.
+Determine the number of ways to choose sets
+$S_{ij} \subseteq \{1, 2, \dots, 2n\}$,
+for all $0 \le i \le n$ and $0 \le j \le n$
+(not necessarily distinct), such that
+\begin{itemize}
+  \ii $|S_{ij}| = i+j$, and
+  \ii $S_{ij} \subseteq S_{kl}$ if $0 \le i \le k \le n$
+  and $0 \le j \le l \le n$.
+\end{itemize}
+
+\item %% Problem 5
+Let $m$ and $n$ be relatively prime positive integers.
+The numbers $\frac mn$ and $\frac nm$ are written on a blackboard.
+At any point, Evan may pick two of the numbers $x$ and $y$
+written on the board and write either their arithmetic mean $\half(x+y)$
+or their harmonic mean $\frac{2xy}{x+y}$.
+For which $(m,n)$ can Evan write $1$ on the board in finitely many steps?
+
+\item %% Problem 6
+Find all polynomials $P$ with real coefficients such that
+\[ \frac{P(x)}{yz} + \frac{P(y)}{zx} + \frac{P(z)}{xy}
+  = P(x-y) + P(y-z) + P(z-x) \]
+for all nonzero real numbers $x$, $y$, $z$
+obeying $2xyz = x+y+z$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2019/1, proposed by Evan Chen}
+\textsl{Available online at \url{https://aops.com/community/p12189527}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A function $f \colon \NN \to \NN$ satisfies
+\[ \underbrace{f(f(\dots f}_{f(n)\text{ times}} (n)\dots)) %chktex 9
+  = \frac{n^2}{f(f(n))} \]
+for all positive integers $n$.
+What are all possible values of $f(1000)$?
+\end{mdframed}
+Actually, we classify all such functions:
+$f$ can be any function which fixes odd integers
+and acts as an involution on the even integers.
+In particular, $f(1000)$ may be any even integer.
+
+It's easy to check that these all work,
+so now we check they are the only solutions.
+
+\begin{claim*}
+  $f$ is injective.
+\end{claim*}
+\begin{proof}
+  If $f(a) = f(b)$,
+  then $a^2 = f^{f(a)}(a) f(f(a)) = f^{f(b)}(b) f(f(b)) = b^2$,
+  so $a = b$.
+\end{proof}
+
+\begin{claim*}
+  $f$ fixes the odd integers.
+\end{claim*}
+\begin{proof}
+  We prove this by induction on odd $n \ge 1$.
+
+  Assume $f$ fixes $S = \{1,3,\dots,n-2\}$ now
+  (allowing $S = \varnothing$ for $n=1$).
+  Now we have that
+  \[ f^{f(n)}(n) \cdot f^2(n) = n^2. \]
+  However, neither of the two factors on the left-hand
+  side can be in $S$ since $f$ was injective.
+  Therefore they must both be $n$,
+  and we have $f^2(n) = n$.
+
+  Now let $y = f(n)$, so $f(y) = n$.
+  Substituting $y$ into the given yields
+  \[ y^2 = f^n(y) \cdot y =
+    f^{n+1}(n) \cdot y = ny \]
+  since $n+1$ is even.
+  We conclude $n=y$, as desired.
+\end{proof}
+
+Thus, $f$ maps even integers to even integers.
+In light of this, we may let $g = f(f(n))$
+(which is also injective),
+so we conclude that
+\[ g^{f(n)/2} (n) g(n) = n^2 \qquad \text{ for } n = 2, 4, \dots. \]
+\begin{claim*}
+  The function $g$ is the identity function.
+\end{claim*}
+\begin{proof}
+  The proof is similar to the earlier proof of the claim.
+  Note that $g$ fixes the odd integers already.
+  We proceed by induction to show $g$ fixes the even integers;
+  so assume $g$ fixes the set $S = \{1, 2, \dots, n-1\}$,
+  for some even integer $n \ge 2$.
+  In the equation
+  \[ g^{f(n)/2}(n) \cdot g(n) = n^2 \]
+  neither of the two factors may be less than $n$.
+  So they must both be $n$.
+\end{proof}
+
+These three claims imply that the solutions we claimed earlier
+are the only ones.
+
+\begin{remark*}
+  The last claim is not necessary to solve the problem;
+  after realizing $f$ and injective fixes the odd integers,
+  this answers the question about the values of $f(1000)$.
+  However, we chose to present the ``full'' solution anyways.
+\end{remark*}
+
+\begin{remark*}
+  After noting $f$ is injective, another approach is outlined below.
+  Starting from any $n$, consider the sequence
+  \[ n, \; f(n), \; f(f(n)), \; \]
+  and so on.
+  We may let $m$ be the smallest term of the sequence;
+  then $m^2 = f(f(m)) \cdot f^{f(m)}(m)$
+  which forces $f(f(m)) = f^{f(m)}(m) = m$ by minimality.
+  Thus the sequence is $2$-periodic.
+  Therefore, $f(f(n)) = n$ always holds,
+  which is enough to finish.
+\end{remark*}
+
+\paragraph{Authorship comments.}
+I will tell you a great story about this problem.
+Two days before the start of grading of USAMO 2017,
+I had a dream that I was grading a functional equation.
+When I woke up, I wrote it down, and it was
+\[ f^{f(n)}(n) = \frac{n^2}{f(f(n))}. \]
+You can guess the rest of the story
+(and imagine how surprised I was the solution set was interesting).
+%Much to my surprise, when I woke up and remembered my dream
+%I was actually able to solve the problem
+%(and found that the solution set was nontrivial).
+I guess some dreams do come true, huh?
+\pagebreak
+
+\subsection{USAMO 2019/2, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p12189455}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCD$ be a cyclic quadrilateral
+satisfying $AD^2 + BC^2 = AB^2$.
+The diagonals of $ABCD$ intersect at $E$.
+Let $P$ be a point on side $\ol{AB}$
+satisfying $\angle APD = \angle BPC$.
+Show that line $PE$ bisects $\ol{CD}$.
+\end{mdframed}
+Here are three solutions.
+The first two are similar although the first one makes use of symmedians.
+The last solution by inversion is more advanced.
+
+\paragraph{First solution using symmedians.}
+We define point $P$ to obey
+\[ \frac{AP}{BP} = \frac{AD^2}{BC^2} = \frac{AE^2}{BE^2} \]
+so that $\ol{PE}$ is the $E$-symmedian of $\triangle EAB$,
+therefore the $E$-median of $\triangle ECD$.
+
+Now, note that
+\[ AD^2 = AP \cdot AB \quad\text{and}\quad BC^2 = BP \cdot BA. \]
+This implies $\triangle APD \sim \triangle ADB$ and $\triangle BPC \sim \triangle BCA$.
+Thus
+\[ \dang DPA = \dang ADB = \dang ACB = \dang BCP \]
+and so $P$ satisfies the condition as in the statement
+(and is the unique point to do so), as needed.
+
+\paragraph{Second solution using only angle chasing (by proposer).}
+We again re-define $P$ to obey $AD^2 = AP \cdot AB$ and $BC^2 = BP \cdot BA$.
+As before, this gives $\triangle APD \sim \triangle ABD$
+and $\triangle BPC \sim \triangle BDP$ and so we let
+\[ \theta \coloneqq \dang DPA = \dang ADB = \dang ACB = \dang BCP. \]
+Our goal is to now show $\ol{PE}$ bisects $\ol{CD}$.
+
+Let $K = \ol{AC} \cap \ol{PD}$ and $L = \ol{AD} \cap \ol{PC}$.
+Since $\dang KPA = \theta = \dang ACB$, quadrilateral $BPKC$ is cyclic.
+Similarly, so is $APLD$.
+
+\begin{center}
+\begin{asy}
+size(8cm);
+
+pair A = dir(200);
+pair B = -conj(A);
+pair D = dir(140);
+pair O = origin;
+pair P = extension(D, foot(D, A, O), A, B);
+pair Z = 100*foot(P,O,B)-99*P;
+pair C = IP(P--Z, unitcircle);
+
+markangle(13.0, A, D, B, red);
+markangle(13.0, A, C, B, red);
+markangle(13.0, D, P, A, red);
+markangle(13.0, B, P, C, red);
+
+filldraw(unitcircle, opacity(0.1)+palecyan, deepcyan);
+draw(A--B--C--D--cycle, deepcyan);
+draw(A--C, deepgreen);
+draw(B--D, deepgreen);
+pair K = extension(D, P, A, C);
+pair L = extension(C, P, D, B);
+draw(D--P--C, blue);
+pair E = extension(A, C, B, D);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$D$", D, dir(D));
+dot("$P$", P, dir(270));
+dot("$C$", C, dir(C));
+dot("$K$", K, dir(K));
+dot("$L$", L, dir(20));
+dot("$E$", E, dir(90));
+
+/* TSQ Source:
+
+!size(8cm);
+
+A = dir 200
+B = -conj(A)
+D = dir 140
+O := origin
+P 270 = extension D foot D A O A B
+Z := 100*foot(P,O,B)-99*P
+C = IP P--Z unitcircle
+
+!markangle(13.0, A, D, B, red);
+!markangle(13.0, A, C, B, red);
+!markangle(13.0, D, P, A, red);
+!markangle(13.0, B, P, C, red);
+
+unitcircle 0.1 palecyan / deepcyan
+A--B--C--D--cycle deepcyan
+A--C deepgreen
+B--D deepgreen
+K = extension D P A C
+L 20 = extension C P D B
+D--P--C blue
+E = extension A C B D R90
+
+*/
+\end{asy}
+\end{center}
+
+Finally $AKLB$ is cyclic since
+\[ \dang BKA = \dang BKC = \dang BPC = \theta = \dang DPA = \dang DLA = \dang BLA. \]
+This implies $\dang CKL = \dang LBA = \dang DCK$, so $\ol{KL} \parallel \ol{BC}$.
+Then $PE$ bisects $\ol{BC}$ by Ceva's theorem on $\triangle PCD$.
+
+\paragraph{Third solution (using inversion).}
+By hypothesis, the circle $\omega_a$ centered at $A$ with radius $AD$
+is orthogonal to the circle $\omega_b$ centered at $B$ with radius $BC$.
+For brevity, we let $\mathbf{I}_a$ and $\mathbf{I}_b$
+denote inversion with respect to $\omega_a$ and $\omega_b$.
+
+We let $P$ denote the intersection of $\ol{AB}$ with the radical axis of $\omega_a$ and $\omega_b$;
+hence $P = \mathbf{I}_a(B) = \mathbf{I}_b(A)$.
+This already implies that
+\[ \dang DPA \overset{\mathbf{I}_a}{=} \dang ADB = \dang ACB \overset{\mathbf{I}_b}{=} \dang BPC \]
+so $P$ satisfies the angle condition.
+
+\begin{center}
+\begin{asy}
+size(10cm);
+
+pair A = dir(200);
+pair B = -conj(A);
+pair D = dir(140);
+pair O = origin;
+pair P = extension(D, foot(D, A, O), A, B);
+pair Z = 100*foot(P,O,B)-99*P;
+pair C = IP(P--Z, unitcircle);
+filldraw(unitcircle, opacity(0.1)+palecyan, deepcyan);
+draw(A--B--C--D--cycle, deepcyan);
+filldraw(CP(A, D), opacity(0.1)+lightred, red);
+filldraw(CP(B, C), opacity(0.1)+orange, orange);
+pair X = IP(CP(A, D), CP(B, C));
+pair Y = OP(CP(A, D), CP(B, C));
+draw(X--Y, yellow);
+draw(A--C, deepcyan+dotted);
+draw(B--D, deepcyan+dotted);
+pair K = extension(D, P, A, C);
+pair L = extension(C, P, D, B);
+draw(D--P, red+dashed);
+draw(C--P, orange+dashed);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$D$", D, dir(D));
+dot("$P$", P, dir(270));
+dot("$C$", C, dir(C));
+dot(X);
+dot(Y);
+dot("$K$", K, dir(K));
+dot("$L$", L, dir(20));
+
+/* TSQ Source:
+
+!size(12cm);
+
+A = dir 200
+B = -conj(A)
+D = dir 140
+O := origin
+P 270 = extension D foot D A O A B
+Z := 100*foot(P,O,B)-99*P
+C = IP P--Z unitcircle
+unitcircle 0.1 palecyan / deepcyan
+A--B--C--D--cycle deepcyan
+CP A D 0.1 lightred / red
+CP B C 0.1 orange / orange
+X .= IP CP A D CP B C
+Y .= OP CP A D CP B C
+X--Y yellow
+A--C deepcyan dotted
+B--D deepcyan dotted
+K = extension D P A C
+L 20 = extension C P D B
+D--P red dashed
+C--P orange dashed
+
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  The point $K = \mathbf{I}_a(C)$ lies on $\omega_b$ and $\ol{DP}$.
+  Similarly $L = \mathbf{I}_b(D)$ lies on  $\omega_a$ and $\ol{CP}$.
+\end{claim*}
+\begin{proof}
+  The first assertion follows from the fact that $\omega_b$ is orthogonal to $\omega_a$.
+  For the other, since $(BCD)$ passes through $A$, it follows $P = \mathbf{I}_a(B)$, $K = \mathbf{I}_a(C)$,
+  and $D = \mathbf{I}_a(D)$ are collinear.
+\end{proof}
+
+Finally, since $C$, $L$, $P$ are collinear,
+we get $A$ is concyclic with $K = \mathbf{I}_a(C)$,
+$L = \mathbf{I}_a(L)$, $B = \mathbf{I}_a(B)$, i.e.\ that $AKLB$ is cyclic.
+So $\ol{KL} \parallel \ol{CD}$ by Reim's theorem,
+and hence $\ol{PE}$ bisects $\ol{CD}$ by Ceva's theorem.
+\pagebreak
+
+\subsection{USAMO 2019/3, proposed by Titu Andreescu, Vlad Matei, Cosmin Pohoata}
+\textsl{Available online at \url{https://aops.com/community/p12189457}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $K$ be the set of positive integers not containing the decimal digit $7$.
+Determine all polynomials $f(x)$ with nonnegative coefficients
+such that $f(x) \in K$ for all $x \in K$.
+\end{mdframed}
+The answer is only the obvious ones:
+$f(x) = 10^e x$, $f(x) = k$,
+and $f(x) = 10^e x + k$, for any choice of $k \in K$
+and $e > \log_{10} k$ (with $e \ge 0$).
+
+Now assume $f$ satisfies $f(K) \subseteq K$;
+such polynomials will be called \emph{stable}.
+We first prove the following claim
+which reduces the problem to the study of monomials.
+\begin{lemma*}
+  [Reduction to monomials]
+  If $f(x) = a_0 + a_1 x + a_2 x^2 + \dots$ is stable,
+  then each monomial $a_0$, $a_1 x$, $a_2 x^2$, \dots is stable.
+\end{lemma*}
+\begin{proof}
+  For any $x \in K$, plug in $f(10^e x)$ for large enough $e$:
+  the decimal representation of $f$ will contain
+  $a_0$, $a_1 x$, $a_2 x^2$ with some zeros padded in between.
+\end{proof}
+
+Let's tackle the linear case next.
+Here is an ugly but economical proof.
+\begin{claim*}
+  [Linear classification]
+  If $f(x) = cx$ is stable, then $c = 10^e$
+  for some nonnegative integer $e$.
+\end{claim*}
+\begin{proof}
+  We will show when $c \neq 10^e$ then we can find $x \in K$
+  such that $cx$ starts with the digit $7$.
+  This can actually be done with the following explicit cases
+  in terms of how $c$ starts in decimal notation:
+  \begin{itemize}
+    \ii For $9 \cdot 10^e \le c < 10 \cdot 10^e$, pick $x = 8$.
+    \ii For $8 \cdot 10^e \le c < 9 \cdot 10^e$, pick $x = 88$.
+    \ii For $7 \cdot 10^e \le c < 8 \cdot 10^e$, pick $x = 1$.
+    \ii For $4.4 \cdot 10^e \le c < 7 \cdot 10^e$, pick $11 \le x \le 16$.
+    \ii For $2.7 \cdot 10^e \le c < 4.4 \cdot 10^e$, pick $18 \le x \le 26$.
+    \ii For $2 \cdot 10^e \le c < 2.7 \cdot 10^e$, pick $28 \le x \le 36$.
+    \ii For $1.6 \cdot 10^e \le c < 2 \cdot 10^e$, pick $38 \le x \le 46$.
+    \ii For $1.3 \cdot 10^e \le c < 1.6 \cdot 10^e$, pick $48 \le x \le 56$.
+    \ii For $1.1 \cdot 10^e \le c < 1.3 \cdot 10^e$, pick $58 \le x \le 66$.
+    \ii For $1 \cdot 10^e \le c < 1.1 \cdot 10^e$, pick $x = 699\dots9$
+    for suitably many $9$'s. \qedhere
+  \end{itemize}
+\end{proof}
+
+The hardest part of the problem is the case where $\deg f > 1$.
+We claim that no solutions exist then:
+\begin{claim*}
+  [Higher-degree classification]
+  No monomial of the form $f(x) = cx^d$ is stable
+  for any $d > 1$.
+\end{claim*}
+\begin{proof}
+  Note that $f(10x+3)$ is stable too.
+  Thus
+  \[ f(10x+3) = 3^d + 10d \cdot 3^{d-1} x
+    + 100 \binom d2 \cdot 3^{d-1} x^2 + \dots \]
+  is stable.
+  By applying the lemma the linear monomial
+  $10d \cdot 3^{d-1} x$ is stable,
+  so $10d \cdot 3^{d-1}$ is a power of $10$,
+  which can only happen if $d = 1$.
+\end{proof}
+
+Thus the only nonconstant stable polynomials with nonnegative coefficients
+must be of the form $f(x) = 10^e x + k$ for $e \ge 0$.
+It is straightforward to show we then need $k < 10^e$
+and this finishes the proof.
+
+\begin{remark*}
+  The official solution replaces the proof
+  for $f(x) = cx$ with Kronecker density.
+  From $f(1) = c \in K$, we get $f(c) = c^2 \in K$,
+  et cetera and hence $c^n \in K$.
+  But it is known that when $c$ is not a power of $10$,
+  some power of $c$ starts with any specified prefix.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2019/4, proposed by Ricky Liu}
+\textsl{Available online at \url{https://aops.com/community/p12195861}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n$ be a nonnegative integer.
+Determine the number of ways to choose sets
+$S_{ij} \subseteq \{1, 2, \dots, 2n\}$,
+for all $0 \le i \le n$ and $0 \le j \le n$
+(not necessarily distinct), such that
+\begin{itemize}
+  \ii $|S_{ij}| = i+j$, and
+  \ii $S_{ij} \subseteq S_{kl}$ if $0 \le i \le k \le n$
+  and $0 \le j \le l \le n$.
+\end{itemize}
+\end{mdframed}
+The answer is $(2n)! \cdot 2^{n^2}$.
+First, we note that
+$\varnothing = S_{00} \subsetneq S_{01} \subsetneq \dots \subsetneq S_{nn}
+= \left\{ 1, \dots, 2n \right\}$
+and thus multiplying by $(2n)!$
+we may as well assume $S_{0i} = \left\{ 1, \dots, i \right\}$
+and $S_{in} = \left\{ 1, \dots, n+i \right\}$.
+We illustrate this situation by placing the sets in a grid,
+as below for $n = 4$;
+our goal is to fill in the rest of the grid.
+\[
+  \begin{bmatrix}
+    1234 & 12345 & 123456 & 1234567 & 12345678\\
+    123 \\
+    12 \\
+    1 \\
+    \varnothing
+  \end{bmatrix}
+\]
+We claim the number of ways to do so is $2^{n^2}$.
+In fact, more strongly even the partial fillings
+are given exactly by powers of $2$.
+\begin{claim*}
+  Fix a choice $T$ of cells we wish to fill in,
+  such that whenever a cell is in $T$,
+  so are all the cells above and left of it.
+  (In other words, $T$ is a Young tableau.)
+  The number of ways to fill in these cells with sets
+  satisfying the inclusion conditions is $2^{|T|}$.
+\end{claim*}
+An example is shown below, with an indeterminate set marked in red
+(and the rest of $T$ marked in blue).
+\[
+  \begin{bmatrix}
+    1234 & 12345 & 123456 & 1234567 & 12345678\\
+    123 & {\color{blue}1234} & {\color{blue}12346} & {\color{blue}123467} \\
+    12 & {\color{blue}124} & {\color{red}1234 \text{ or } 1246} \\
+    1 & {\color{blue}12} \\
+    \varnothing & {\color{blue}2}
+  \end{bmatrix}
+\]
+\begin{proof}
+  The proof is by induction on $|T|$,
+  with $|T| = 0$ being vacuous.
+
+  Now suppose we have a corner $\begin{bmatrix}
+  B & C \\ A & {\color{red}S} \end{bmatrix}$
+  where $A$, $B$, $C$ are fixed and $S$ is to be chosen.
+  Then we may write $B = A \cup \{x\}$ and $C = A \cup \{x,y\}$
+  for $x,y \notin A$.
+  Then the two choices of $S$ are $A \cup \{x\}$ (i.e.\ $B$)
+  and $A \cup \{y\}$, and both of them are seen to be valid.
+
+  In this way, we gain a factor of $2$
+  any time we add one cell as above to $T$.
+  Since we can achieve any Young tableau in this way,
+  the induction is complete.
+\end{proof}
+\pagebreak
+
+\subsection{USAMO 2019/5, proposed by Yannick Yao}
+\textsl{Available online at \url{https://aops.com/community/p12195834}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $m$ and $n$ be relatively prime positive integers.
+The numbers $\frac mn$ and $\frac nm$ are written on a blackboard.
+At any point, Evan may pick two of the numbers $x$ and $y$
+written on the board and write either their arithmetic mean $\half(x+y)$
+or their harmonic mean $\frac{2xy}{x+y}$.
+For which $(m,n)$ can Evan write $1$ on the board in finitely many steps?
+\end{mdframed}
+We claim this is possible if and only $m+n$ is a power of $2$.
+Let $q = m/n$, so the numbers on the board
+are $q$ and $1/q$.
+
+\textbf{Impossibility}:
+The main idea is the following.
+\begin{claim*}
+  Suppose $p$ is an odd prime.
+  Then if the initial numbers on the board are $-1 \pmod p$,
+  then all numbers on the board are $-1 \pmod p$.
+\end{claim*}
+\begin{proof}
+  Let $a \equiv b \equiv -1 \pmod p$.
+  Note that $2 \not\equiv 0 \pmod p$
+  and $a+b \equiv -2 \not\equiv 0 \pmod p$.
+  Thus $\frac{a+b}{2}$ and $\frac{2ab}{a+b}$
+  both make sense modulo $p$ and are equal to $-1 \pmod p$.
+\end{proof}
+
+Thus if there exists \emph{any} odd prime divisor
+$p$ of $m+n$
+(implying $p \nmid mn$), then
+\[ q \equiv \frac1q \equiv -1 \pmod p. \]
+and hence all numbers will be $-1 \pmod p$ forever.
+This implies that it's impossible to write $1$,
+whenever $m+n$ is divisible by some odd prime.
+
+\bigskip
+
+\textbf{Construction}:
+Conversely, suppose $m+n$ is a power of $2$.
+We will actually construct $1$ without even using the harmonic mean.
+\begin{center}
+\begin{asy}
+  unitsize(1.2cm);
+  draw( (-4,0)--(4,0) );
+  dot("$q$", (-4,0), dir(-90), blue);
+  dot("$q^{-1}$", (4,0), dir(-90), blue);
+  dot("$\frac{q+q^{-1}}{2}$", (0,0), dir(-90), blue);
+  dot("$\frac{3q+q^{-1}}{4}$", (-2,0), dir(-90), red);
+  dot("$\frac{q+3q^{-1}}{4}$", (2,0), dir(-90), red);
+  dot("$\frac{7q+q^{-1}}{8}$", (-3,0), dir(90), deepgreen);
+  dot("$\frac{5q+3q^{-1}}{8}$", (-1,0), dir(90), deepgreen);
+  dot("$\frac{3q+5q^{-1}}{8}$", ( 1,0), dir(90), deepgreen);
+  dot("$\frac{q+7q^{-1}}{8}$", ( 3,0), dir(90), deepgreen);
+\end{asy}
+\end{center}
+Note that
+\[
+  \frac{n}{m+n} \cdot q
+  + \frac{m}{m+n} \cdot \frac{1}{q}
+  = 1
+\]
+and obviously by taking appropriate midpoints
+(in a binary fashion) we can achieve this using
+arithmetic mean alone.
+\pagebreak
+
+\subsection{USAMO 2019/6, proposed by Titu Andreescu, Gabriel Dospinescu}
+\textsl{Available online at \url{https://aops.com/community/p12195858}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all polynomials $P$ with real coefficients such that
+\[ \frac{P(x)}{yz} + \frac{P(y)}{zx} + \frac{P(z)}{xy}
+  = P(x-y) + P(y-z) + P(z-x) \]
+for all nonzero real numbers $x$, $y$, $z$
+obeying $2xyz = x+y+z$.
+\end{mdframed}
+The given can be rewritten as saying that
+\begin{align*}
+  Q(x,y,z) &\coloneqq xP(x) + yP(y) + zP(z) \\
+  &- xyz \left( P(x-y) + P(y-z) + P(z-x) \right)
+\end{align*}
+is a polynomial vanishing whenever $xyz \neq 0$
+and $2xyz = x+y+z$,
+for real numbers $x$, $y$, $z$.
+\begin{claim*}
+  This means $Q(x,y,z)$ vanishes also
+  for any complex numbers $x$, $y$, $z$
+  obeying $2xyz=x+y+z$.
+\end{claim*}
+\begin{proof}
+  Indeed, this means that the rational function
+  \[ R(x,y) \coloneqq Q\left( x,y,\frac{x+y}{2xy-1} \right) \]
+  vanishes for any real numbers $x$ and $y$
+  such that $xy \neq \half$, $x \neq 0$, $y \neq 0$, $x+y \neq 0$.
+  This can only occur if $R$ is identically zero
+  as a rational function with real coefficients.
+  If we then regard $R$ as having complex coefficients,
+  the conclusion then follows.
+\end{proof}
+\begin{remark*}
+  [Algebraic geometry digression on real dimension]
+  Note here we use in an essential way that $z$
+  can be solved for in terms of $x$ and $y$.
+  If $s(x,y,z) = 2xyz-(x+y+z)$ is replaced with some general condition,
+  the result may become false; e.g.\ we would
+  certainly not expect the result to hold when
+  $s(x,y,z) = x^2+y^2+z^2-(xy+yz+zx)$
+  since for real numbers $s = 0$ only when $x=y=z$!
+
+  The general condition we need here is that $s(x,y,z) = 0$
+  should have ``real dimension two''.
+  Here is a proof using this language, in our situation.
+
+  Let $M \subset \RR^3$ be the surface $s=0$.
+  We first contend $M$ is two-dimensional manifold.
+  Indeed, the gradient $\nabla s = \left< 2yz-1, 2zx-1, 2xy-1 \right>$
+  vanishes only at the points $(\pm 1/\sqrt2, \pm 1/\sqrt2, \pm 1/\sqrt2)$
+  where the $\pm$ signs are all taken to be the same.
+  These points do not lie on $M$,
+  so the result follows by the \emph{regular value theorem}.
+  In particular the topological closure of points on $M$
+  with $xyz \neq 0$ is all of $M$ itself;
+  so $Q$ vanishes on all of $M$.
+
+  If we now identify $M$ with the semi-algebraic set consisting of
+  maximal ideals $(x-a,y-b,z-c)$ in $\opname{Spec} \RR[x,y,z]$
+  satisfying $2abc = a+b+c$, then we have
+  \href{https://en.wikipedia.org/wiki/Dimension_of_an_algebraic_variety#Real_dimension}{real dimension} two,
+  and thus the Zariski closure of $M$
+  is a two-dimensional closed subset of $\opname{Spec} \RR[x,y,z]$.
+  Thus it must be $Z = \mathcal V(2xyz-(x+y+z))$,
+  since this $Z$ is an irreducible two-dimensional closed subset
+  (say, by \emph{Krull's principal ideal theorem}) containing $M$.
+  Now $Q$ is a global section vanishing on all of $Z$,
+  therefore $Q$ is contained in the
+  (radical, principal) ideal $(2xyz-(x+y+z))$ as needed.
+  So it is actually divisible by $2xyz-(x+y+z)$ as desired.
+\end{remark*}
+
+Now we regard $P$ and $Q$ as complex polynomials instead.
+First, note that substituting $(x,y,z) = (t,-t,0)$ implies $P$ is even.
+We then substitute
+\[ (x,y,z) = \left(x, \frac{i}{\sqrt2}, \frac{-i}{\sqrt2}\right) \]
+to get
+\begin{align*}
+  &\phantom= xP(x) + \frac{i}{\sqrt2}
+  \left( P\left( \frac{i}{\sqrt2} \right)
+    - P\left( \frac{-i}{\sqrt2} \right) \right) \\
+  &= \half x\left( P(x-i/\sqrt2) + P(x+i/\sqrt2) + P(\sqrt2i) \right)
+\end{align*}
+which in particular implies that
+\[ P\left( x + \frac{i}{\sqrt2} \right)
+  + P\left( x - \frac{i}{\sqrt2} \right)
+  - 2P(x) \equiv P(\sqrt 2i) \]
+identically in $x$.
+The left-hand side is a second-order finite difference in $x$
+(up to scaling the argument),
+and the right-hand side is constant, so this implies $\deg P \le 2$.
+
+Since $P$ is even and $\deg P \le 2$,
+we must have $P(x) = cx^2 + d$ for some real numbers $c$ and $d$.
+A quick check now gives the answer $P(x) = c(x^2+3)$
+which all work.
+\pagebreak
+
+
+\end{document}

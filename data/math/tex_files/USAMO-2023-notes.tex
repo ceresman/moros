@@ -1,0 +1,1387 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2023 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2023 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+In an acute triangle $ABC$, let $M$ be the midpoint of $\ol{BC}$.
+Let $P$ be the foot of the perpendicular from $C$ to $AM$.
+Suppose that the circumcircle of triangle $ABP$
+intersects line $BC$ at two distinct points $B$ and $Q$.
+Let $N$ be the midpoint of $\ol{AQ}$.
+Prove that $NB = NC$.
+
+\item %% Problem 2
+Solve over the positive real numbers the functional equation
+\[ f(xy+f(x)) = xf(y) + 2. \]
+
+\item %% Problem 3
+Consider an $n$-by-$n$ board of unit squares for some odd positive integer $n$.
+We say that a collection $C$ of identical dominoes is a
+maximal grid-aligned configuration on the board if $C$ consists of $(n^2-1)/2$
+dominoes where each domino covers exactly two neighboring squares
+and the dominoes don't overlap: $C$ then covers all but one square on the board.
+We are allowed to slide (but not rotate) a domino on the board to
+cover the uncovered square, resulting in a new maximal grid-aligned configuration
+with another square uncovered. Let $k(C)$ be the number of distinct maximal
+grid-aligned configurations obtainable from $C$ by repeatedly sliding dominoes.
+
+Find all possible values of $k(C)$ as a function of $n$.
+
+\item %% Problem 4
+Positive integers $a$ and $N$ are fixed,
+and $N$ positive integers are written on a blackboard.
+Alice and Bob play the following game.
+On Alice's turn, she must replace some integer $n$ on the board with $n+a$,
+and on Bob's turn he must replace some even integer $n$ on the board with $n/2$.
+Alice goes first and they alternate turns.
+If on his turn Bob has no valid moves, the game ends.
+
+After analyzing the $N$ integers on the board, Bob realizes that,
+regardless of what moves Alice makes,
+he will be able to force the game to end eventually.
+Show that, in fact, for this value of $a$ and these $N$ integers on the board,
+the game is guaranteed to end regardless of Alice's or Bob's moves.
+
+\item %% Problem 5
+Let $n\geq3$ be an integer. We say that an arrangement of the numbers
+$1$, $2$, \dots, $n^2$ in an $n \times n$ table is \emph{row-valid}
+if the numbers in each row can be permuted to form an arithmetic progression,
+and \emph{column-valid} if the numbers in each column
+can be permuted to form an arithmetic progression.
+
+For what values of $n$ is it possible to transform any row-valid arrangement
+into a column-valid arrangement by permuting the numbers in each row?
+
+\item %% Problem 6
+Let $ABC$ be a triangle with incenter $I$
+and excenters $I_a$, $I_b$, $I_c$ opposite $A$, $B$, and $C$, respectively.
+Given an arbitrary point $D$ on the circumcircle of $\triangle ABC$
+that does not lie on any of the lines $II_a$, $I_bI_c$, or $BC$,
+suppose the circumcircles of $\triangle DII_a$ and $\triangle DI_bI_c$
+intersect at two distinct points $D$ and $F$.
+If $E$ is the intersection of lines $DF$ and $BC$,
+prove that $\angle BAD = \angle EAC$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2023/1, proposed by Holden Mui}
+\textsl{Available online at \url{https://aops.com/community/p27349297}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+In an acute triangle $ABC$, let $M$ be the midpoint of $\ol{BC}$.
+Let $P$ be the foot of the perpendicular from $C$ to $AM$.
+Suppose that the circumcircle of triangle $ABP$
+intersects line $BC$ at two distinct points $B$ and $Q$.
+Let $N$ be the midpoint of $\ol{AQ}$.
+Prove that $NB = NC$.
+\end{mdframed}
+We show several different approaches.
+In all solutions, let $D$ denote the foot of the altitude from $A$.
+
+\begin{center}
+\begin{asy}
+size(10cm);
+
+pair A = dir(115);
+pair B = dir(210);
+pair C = dir(330);
+pair D = foot(A, B, C);
+pair M = midpoint(B--C);
+pair P = foot(C, A, M);
+pair Q = 2*M-D;
+
+filldraw(A--B--C--cycle, opacity(0.1)+cyan, blue);
+filldraw(circumcircle(A, B, P), opacity(0.1)+yellow, orange+dashed);
+draw(A--D, blue);
+draw(A--P--C, deepgreen);
+
+draw(A--Q, red+dashed);
+pair N = midpoint(A--Q);
+draw(B--N--C, red+dotted);
+
+pair R = foot(B, A, M);
+draw(B--R, dashed);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(D));
+dot("$M$", M, dir(45));
+dot("$P$", P, dir(P));
+dot("$Q$", Q, dir(315));
+dot("$N$", N, dir(45));
+dot("$R$", R, dir(30));
+
+/* -----------------------------------------------------------------+
+|                 TSQX: by CJ Quines and Evan Chen                  |
+| https://github.com/vEnhance/dotfiles/blob/main/py-scripts/tsqx.py |
++-------------------------------------------------------------------+
+!size(10cm);
+A = dir 115
+B = dir 210
+C = dir 330
+D = foot A B C
+M 45 = midpoint B--C
+P = foot C A M
+Q 315 = 2*M-D
+A--B--C--cycle / 0.1 cyan / blue
+circumcircle A B P / 0.1 yellow / orange dashed
+A--D blue
+A--P--C deepgreen
+A--Q / red dashed
+N 45 = midpoint A--Q
+B--N--C / red dotted
+R 30 = foot B A M
+B--R / dashed
+*/
+\end{asy}
+\end{center}
+
+\paragraph{Most common synthetic approach.}
+The solution hinges on the following claim:
+\begin{claim*}
+  $Q$ coincides with the reflection of $D$ across $M$.
+\end{claim*}
+\begin{proof}
+  Note that $\dang ADC = \dang APC = 90\dg$, so $ADPC$ is cyclic.
+  Then by power of a point (with the lengths directed),
+  \[ MB \cdot MQ = MA \cdot MP = MC \cdot MD. \]
+  Since $MB = MC$, the claim follows.
+\end{proof}
+It follows that $\ol{MN} \parallel \ol{AD}$,
+as $M$ and $N$ are respectively the midpoints of $\ol{AQ}$ and $\ol{DQ}$.
+Thus $\ol{MN} \perp \ol{BC}$,
+and so $N$ lies on the perpendicular bisector of $\ol{BC}$, as needed.
+\begin{remark*}
+  [David Lin]
+  One can prove the main claim without power of a point as well, as follows:
+  Let $R$ be the foot from $B$ to $\ol{AM}$, so $BRCP$ is a parallelogram.
+  Note that $ABDR$ is cyclic, and hence
+  \[ \dang DRM = \dang DBA = QBA = \dang QPA = \dang QPM. \]
+  Thus, $\ol{DR} \parallel \ol{PQ}$, so $DRQ$ is also a parallelogram.
+\end{remark*}
+
+\paragraph{Synthetic approach with no additional points at all.}
+\begin{claim*}
+  $\triangle BPC \sim \triangle ANM$ (oppositely oriented).
+\end{claim*}
+\begin{proof}
+  We have $\triangle BMP \sim \triangle AMQ$ from the given concyclicity of $ABPQ$.
+  Then
+  \[ \frac{BM}{BP} = \frac{AM}{AQ} \implies
+    \frac{2BM}{BP} = \frac{AM}{AQ/2} \implies
+    \frac{BC}{BP} = \frac{AM}{AN} \]
+  implying the similarity (since $\dang MAQ = \dang BPM$).
+\end{proof}
+This similarity gives us the equality of directed angles
+\[ \dang \left( BC, MN \right) = -\dang \left( PC, AM  \right) = 90\dg \]
+as desired.
+
+\paragraph{Synthetic approach using only the point $R$.}
+Again let $R$ be the foot from $B$ to $\ol{AM}$, so $BRCP$ is a parallelogram.
+\begin{claim*}
+  $ARQC$ is cyclic; equivalently, $\triangle MAQ \sim \triangle MCR$.
+\end{claim*}
+\begin{proof}
+  $MR \cdot MA = MP \cdot MA = MB \cdot MQ = MC \cdot MQ$.
+\end{proof}
+
+Note that in $\triangle MCR$, the $M$-median is parallel to $\ol{CP}$
+and hence perpendicular to $\ol{RM}$.
+The same should be true in $\triangle MAQ$ by the similarity,
+so $\ol{MN} \perp \ol{MQ}$ as needed.
+
+\paragraph{Cartesian coordinates approach with power of a point.}
+Suppose we set $B = (-1,0)$, $M = (0,0)$, $C = (1,0)$, and $A = (a,b)$.
+One may compute:
+\begin{align*}
+  \overleftrightarrow{AM} : 0 &= bx - ay \iff y = \frac ba x \\
+  \overleftrightarrow{CP} : 0 &= a(x-1) + by
+    \iff y = -\frac ab (x-1) = -\frac ab x + \frac ab. \\
+  P &= \left( \frac{a^2}{a^2+b^2}, \frac{ab}{a^2+b^2} \right) \\
+\end{align*}
+Now note that
+\[ AM = \sqrt{a^2+b^2}, \qquad PM = \frac{a}{\sqrt{a^2+b^2}} \]
+together with power of a point
+\[ AM \cdot PM = BM \cdot QM \]
+to immediately deduce that $Q = (a,0)$.
+Hence $N = (0, b/2)$ and we're done.
+
+\paragraph{Cartesian coordinates approach without power of a point (outline).}
+After computing $A$ and $P$ as above, one could also directly calculate
+\begin{align*}
+  \text{Perpendicular bisector of $\ol{AB}$}:
+    y &= -\frac{a+1}{b} x + \frac{a^2+b^2-1}{2b} \\
+  \text{Perpendicular bisector of $\ol{PB}$}:
+    y &= - \left( \frac{2a}{b} + \frac{b}{a} \right) x - \frac{b}{2a} \\
+  \text{Perpendicular bisector of $\ol{PA}$}:
+    y &= - \frac{a}{b} x + \frac{a+a^2+b^2}{2b}. \\
+  \text{Circumcenter of $\triangle PAB$}
+    &= \left( -\frac{a+1}{2}, \frac{2a^2+2a+b^2}{2b} \right).
+\end{align*}
+This is enough to extract the coordinates of $Q = (\bullet, 0)$,
+because $B = (-1,0)$ is given, and the $x$-coordinate
+of the circumcenter should be the average of the $x$-coordinates of $B$ and $Q$.
+In other words, $Q = (-a,0)$.
+Hence, $N = \left( 0, \frac b2 \right)$, as needed.
+
+\paragraph{Ill-advised barycentric approach (outline).}
+Use reference triangle $ABC$.
+The $A$-median is parametrized by $(t:1:1)$ for $t \in \RR$.
+So because of $\ol{CP} \perp \ol{AM}$, we are looking for $t$ such that
+\[
+  \left( \frac{t \vec A + \vec B + \vec C}{t+2} - \vec C \right)
+  \perp \left( A - \frac{\vec B + \vec C}{2} \right).
+\]
+This is equivalent to
+\[
+  \left( t \vec A + \vec B - (t+1) \vec C \right)
+  \perp \left( 2 \vec A - \vec B - \vec C \right).
+\]
+By the perpendicularity formula for barycentric coordinates (EGMO 7.16),
+this is equivalent to
+\begin{align*}
+  0 &= a^2t - b^2 \cdot (3t+2) + c^2 \cdot (2-t) \\
+  &= \left( a^2-3b^2-c^2 \right) t - 2(b^2-c^2) \\
+  \implies t &= \frac{2(b^2-c^2)}{a^2-3b^2-c^2}.
+\end{align*}
+In other words,
+\[ P = \left( 2(b^2-c^2) : a^2-3b^2-c^2 : a^2-3b^2-c^2 \right). \]
+A long calculation gives
+$a^2 y_P z_P + b^2 z_P x_P + c^2 x_P y_P
+= (a^2-3b^2-c^2)(a^2-b^2+c^2)(a^2-2b^2-2c^2)$.
+Together with $x_P+y_P+z_P=2a^2-4b^2-4c^2$,
+this makes the equation of $(ABP)$ as
+\[
+  0=-a^2yz-b^2zx-c^2xy
+  + \frac{a^2-b^2+c^2}{2} z(x+y+z).
+\]
+To solve for $Q$, set $x=0$ to get to get
+\[ a^2yz = \frac{a^2-b^2+c^2}{2} z(y+z)
+  \implies \frac yz = \frac{a^2-b^2+c^2}{a^2+b^2-c^2}. \]
+In other words,
+\[ Q = \left(  0 : a^2-b^2+c^2 : a^2+b^2-c^2 \right). \]
+Taking the average with $A = (1,0,0)$ then gives
+\[ N = \left(  2a^2 : a^2-b^2+c^2 : a^2+b^2-c^2 \right). \]
+The equation for the perpendicular bisector of $\ol{BC}$
+is given by (see EGMO 7.19)
+\[ 0 = a^2(z-y)+x(c^2-b^2) \]
+which contains $N$, as needed.
+
+\paragraph{Extremely ill-advised complex numbers approaches (outline).}
+Suppose we pick $a$, $b$, $c$ as the unit circle, and let $m = (b+c)/2$.
+Using the fully general ``foot'' formula, one can get
+\[
+  p = \frac{(a-m) \ol c + (\ol a - \ol m)c
+    + \ol a m - a \ol m}{2(\ol a - \ol m)}
+    = \frac{a^2 b - a^2 c - a b^2 - 2 a b c - a c^2 + b^2 c + 3 b c^2}
+    {4bc-2a(b+c)}
+\]
+Meanwhile, an extremely ugly calculation will eventually yield
+\[ q = \frac{\frac{bc}{a}+b+c-a}{2} \]
+so
+\[ n = \frac{a+q}{2} = \frac{a+b+c+\frac{bc}{a}}{4}
+  = \frac{(a+b)(a+c)}{2a}. \]
+There are a few ways to then verify $NB = NC$.
+The simplest seems to be to verify that
+\[ \frac{n - \frac{b+c}{2}}{b-c} = \frac{a-b-c+\frac{bc}{a}}{4(b-c)}
+  = \frac{(a-b)(a-c)}{2a(b-c)} \]
+is pure imaginary, which is clear.
+\pagebreak
+
+\subsection{USAMO 2023/2, proposed by Carl Schildkraut}
+\textsl{Available online at \url{https://aops.com/community/p27349314}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Solve over the positive real numbers the functional equation
+\[ f(xy+f(x)) = xf(y) + 2. \]
+\end{mdframed}
+The answer is $f(x) \equiv x+1$,
+which is easily verified to be the only linear solution.
+
+We show conversely that $f$ is linear. Let $P(x,y)$ be the assertion.
+
+\begin{claim*}
+  $f$ is weakly increasing.
+\end{claim*}
+\begin{proof}
+  Assume for contradiction $a>b$ but $f(a)<f(b)$.
+  Choose $y$ such that $ay+f(a)=by+f(b)$, that is $y=\frac{f(b)-f(a)}{a-b}$.
+  Then $P(a,y)$ and $P(b,y)$ gives $af(y)+2=bf(y)+2$, which is impossible.
+\end{proof}
+
+\begin{claim*}
+  [Up to an error of $2$, $f$ is linear]
+  We have
+  \[ \left\lvert f(x) - (K x + C) \right\rvert \le 2 \]
+  where $K \coloneqq \frac{2}{f(1)}$ and $C \coloneqq f(f(1))-2$ are constants.
+\end{claim*}
+\begin{proof}
+  Note $P(1,y)$ gives $\boxed{f(y+f(1)) = f(y)+2}$.
+  Hence, $f(nf(1)) = 2(n-1)+f(f(1))$ for $n \ge 1$.
+  Combined with weakly increasing, this gives
+  \[ 2\left\lfloor \frac{x}{f(1)} \right\rfloor + C
+    \le f(x) \le 2\left\lceil \frac{x}{f(1)} \right\rceil + C \]
+  which implies the result.
+\end{proof}
+
+Rewrite the previous claim to the simpler $f(x) = Kx+O(1)$.
+Then for any $x$ and $y$, the above claim gives
+\[ K\left( xy + Kx + O(1) \right) + O(1) = x f(y) + 2 \]
+which means that
+\[ x \cdot \left( Ky + K^2 - f(y) \right) = O(1). \]
+If we fix $y$ and consider large $x$,
+we see this can only happen if $Ky+K^2-f(y)=0$, i.e.\ $f$ is linear.
+\pagebreak
+
+\subsection{USAMO 2023/3, proposed by Holden Mui}
+\textsl{Available online at \url{https://aops.com/community/p27349464}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Consider an $n$-by-$n$ board of unit squares for some odd positive integer $n$.
+We say that a collection $C$ of identical dominoes is a
+maximal grid-aligned configuration on the board if $C$ consists of $(n^2-1)/2$
+dominoes where each domino covers exactly two neighboring squares
+and the dominoes don't overlap: $C$ then covers all but one square on the board.
+We are allowed to slide (but not rotate) a domino on the board to
+cover the uncovered square, resulting in a new maximal grid-aligned configuration
+with another square uncovered. Let $k(C)$ be the number of distinct maximal
+grid-aligned configurations obtainable from $C$ by repeatedly sliding dominoes.
+
+Find all possible values of $k(C)$ as a function of $n$.
+\end{mdframed}
+The answer is that
+\[ k(C) \in \left\{ 1, 2, \dots, \left( \frac{n-1}{2} \right)^2 \right\}
+  \cup \left\{ \left( \frac{n+1}{2} \right)^2 \right\}. \]
+
+Index the squares by coordinates $(x,y) \in \{1,2,\dots,n\}^2$.
+We say a square is \emph{special} if it is empty or
+it has the same parity in both coordinates as the empty square.
+
+We now proceed in two cases:
+
+\paragraph{The special squares have both odd coordinates.}
+We construct a directed graph $G = G(C)$ whose
+vertices are special squares as follows:
+for each domino on a special square $s$, we draw a directed edge
+from $s$ to the special square that domino points to.
+Thus all special squares have an outgoing edge except the empty cell.
+\begin{center}
+\begin{asy}
+size(6cm);
+
+pen border = grey+1.5;
+
+filldraw(box((0, 1), (1, 3)), lightgreen, border);
+filldraw(box((0, 3), (2, 4)), lightcyan, border);
+filldraw(box((0, 4), (2, 5)), lightgreen, border);
+filldraw(box((1, 0), (2, 3)), lightred, border);
+filldraw(box((1, 2), (3, 3)), lightblue, border);
+filldraw(box((2, 3), (3, 5)), palered, border);
+filldraw(box((2, 0), (4, 1)), lightcyan, border);
+filldraw(box((2, 1), (4, 2)), lightgreen, border);
+filldraw(box((4, 0), (5, 2)), lightred, border);
+filldraw(box((3, 3), (5, 4)), lightblue, border);
+filldraw(box((3, 2), (5, 3)), palered, border);
+filldraw(box((3, 4), (5, 5)), lightcyan, border);
+filldraw(box((0, 0), (1, 1)), grey, border);
+
+pair A = (0.5, 4.5);
+pair B = (2.5, 4.5);
+pair C = (4.5, 4.5);
+pair D = (0.5, 2.5);
+pair E = (2.5, 2.5);
+pair F = (4.5, 2.5);
+pair X = (0.5, 0.5);
+pair Y = (2.5, 0.5);
+pair Z = (4.5, 0.5);
+
+dotfactor *= 2;
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+
+draw(A--B, EndArrow, Margin(3,3));
+draw(C--B, EndArrow, Margin(3,3));
+draw(B--E, EndArrow, Margin(3,3));
+draw(E--D, EndArrow, Margin(3,3));
+draw(F--E, EndArrow, Margin(3,3));
+draw(Z--F, EndArrow, Margin(3,3));
+draw(Y--Z, EndArrow, Margin(3,3));
+draw(D--X, EndArrow, Margin(3,3));
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  Any undirected connected component of $G$ is acyclic unless the cycle
+  contains the empty square inside it.
+\end{claim*}
+\begin{proof}
+  Consider a cycle of $G$; we are going to prove
+  that the number of chessboard cells enclosed is always odd.
+
+  This can be proven directly by induction,
+  but for theatrical effect, we use Pick's theorem.
+  Mark the center of every chessboard cell on or inside the cycle
+  to get a lattice.
+  The dominoes of the cycle then enclose a polyominoe which
+  actually consists of $2 \times 2$ squares,
+  meaning its area is a multiple of $4$.
+  \begin{center}
+  \begin{asy}
+    unitsize(0.9cm);
+    filldraw(box((-0.5,1.5), (0.5,3.5)), paleyellow, grey+1.4);
+    filldraw(box((-0.5,3.5), (1.5,4.5)), paleyellow, grey+1.4);
+    filldraw(box((1.5,3.5), (3.5,4.5)), paleyellow, grey+1.4);
+    filldraw(box((3.5,2.5), (4.5,4.5)), paleyellow, grey+1.4);
+    filldraw(box((3.5,0.5), (4.5,2.5)), paleyellow, grey+1.4);
+    filldraw(box((2.5,-0.5), (4.5,0.5)), paleyellow, grey+1.4);
+    filldraw(box((1.5,-0.5), (2.5,1.5)), paleyellow, grey+1.4);
+    filldraw(box((0.5,1.5), (2.5,2.5)), paleyellow, grey+1.4);
+    draw((0,2)--(0,4), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((0,4)--(2,4), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((2,4)--(4,4), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((4,4)--(4,2), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((4,2)--(4,0), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((4,0)--(2,0), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((2,0)--(2,2), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((2,2)--(0,2), blue+1.2, EndArrow(TeXHead), Margins);
+    draw((2,2)--(2,4), blue+dashed, Margins);
+    draw((2,2)--(4,2), blue+dashed, Margins);
+    dotfactor *= 1.8;
+    dot((2,0), blue);
+    dot((4,0), blue);
+    dot((0,2), blue);
+    dot((2,2), blue);
+    dot((4,2), blue);
+    dot((0,4), blue);
+    dot((2,4), blue);
+    dot((4,4), blue);
+    dot((0,3), black);
+    dot((1,4), black);
+    dot((3,4), black);
+    dot((4,3), black);
+    dot((4,1), black);
+    dot((3,0), black);
+    dot((2,1), black);
+    dot((1,2), black);
+    dot((1,3), red);
+    dot((2,3), red);
+    dot((3,3), red);
+    dot((3,2), red);
+    dot((3,1), red);
+  \end{asy}
+  \end{center}
+  Hence $B/2+I-1$ is a multiple of $4$, in the notation of Pick's theorem.
+  As $B$ is twice the number of dominoes,
+  and a parity argument on the special squares shows that number is even,
+  it follows that $B$ is also a multiple of $4$
+  (these correspond to blue and black in the figure above).
+  This means $I$ is odd (the red dots in the figure above), as desired.
+\end{proof}
+
+Let $T$ be the connected component containing the empty cell.
+By the claim, $T$ is acyclic, so it's a tree.
+Now, notice that all the arrows point along $T$ towards the empty cell,
+and moving a domino corresponds to flipping an arrow.
+Therefore:
+\begin{claim*}
+$k(C)$ is exactly the number of vertices of $T$.
+\end{claim*}
+\begin{proof}
+Starting with the underlying tree,
+the set of possible graphs is described by picking one vertex to be the sink
+(the empty cell) and then directing all arrows towards it.
+\end{proof}
+
+This implies that $k(C) \le \left( \frac{n+1}{2} \right)^2$ in this case.
+Equality is achieved if $T$ is a spanning tree of $G$.
+One example of a way to achieve this is using the snake configuration below.
+
+\begin{center}
+\begin{asy}
+unitsize(0.9cm);
+dotfactor *= 2;
+pen border = grey+1.5;
+pair A = (0.5, 4.5);
+pair B = (2.5, 4.5);
+pair C = (4.5, 4.5);
+pair D = (0.5, 2.5);
+pair E = (2.5, 2.5);
+pair F = (4.5, 2.5);
+pair X = (0.5, 0.5);
+pair Y = (2.5, 0.5);
+pair Z = (4.5, 0.5);
+
+filldraw(box((3, 4), (5, 5)), palecyan, border);
+filldraw(box((1, 4), (3, 5)), palecyan, border);
+filldraw(box((0, 3), (1, 5)), palecyan, border);
+filldraw(box((0, 2), (2, 3)), palecyan, border);
+filldraw(box((2, 2), (4, 3)), palecyan, border);
+filldraw(box((4, 1), (5, 3)), palecyan, border);
+filldraw(box((3, 0), (5, 1)), palecyan, border);
+filldraw(box((1, 0), (3, 1)), palecyan, border);
+fill(unitsquare, mediumgrey);
+filldraw(box((3, 3), (5, 4)), lightred, border);
+filldraw(box((1, 3), (3, 4)), lightred, border);
+filldraw(box((0, 1), (2, 2)), lightred, border);
+filldraw(box((2, 1), (4, 2)), lightred, border);
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+
+draw(C--B, EndArrow, Margin(3,3));
+draw(B--A, EndArrow, Margin(3,3));
+draw(A--D, EndArrow, Margin(3,3));
+draw(D--E, EndArrow, Margin(3,3));
+draw(E--F, EndArrow, Margin(3,3));
+draw(F--Z, EndArrow, Margin(3,3));
+draw(Z--Y, EndArrow, Margin(3,3));
+draw(Y--X, EndArrow, Margin(3,3));
+\end{asy}
+\end{center}
+
+\begin{remark*}
+  In Russia 1997/11.8 it's shown that as long as the missing square is a corner,
+  we have $G = T$.
+  The proof is given implicitly from our work here:
+  when the empty cell is in a corner, it cannot be surrounded,
+  ergo the resulting graph has no cycles at all.
+  And since the overall graph has one fewer edge than vertex, it's a tree.
+\end{remark*}
+
+Conversely, suppose $T$ was \emph{not} a spanning tree, i.e.\ $T \neq G$.
+Since in this odd-odd case, $G$ has one fewer edge than vertex,
+if $G$ is not a tree, then it must contain at least one cycle.
+That cycle encloses every special square of $T$.
+In particular, this means that $T$ can't contain any special squares
+from the outermost row or column of the $n \times n$ grid.
+In this situation, we therefore have $k(C) \le \left( \frac{n-3}{2} \right)^2$.
+
+\paragraph{The special squares have both even coordinates.}
+We construct the analogous graph $G$ on the same special squares.
+However, in this case, some of the points may not have outgoing edges,
+because their domino may ``point'' outside the grid.
+
+\begin{center}
+\begin{asy}
+size(8cm);
+
+pen border = grey+1.5;
+
+filldraw(box((0, 1), (1, 3)), lightgreen, border);
+filldraw(box((0, 3), (2, 4)), lightcyan, border);
+filldraw(box((0, 4), (2, 5)), lightgreen, border);
+filldraw(box((1, 0), (2, 3)), lightred, border);
+filldraw(box((1, 2), (3, 3)), lightblue, border);
+filldraw(box((2, 3), (3, 5)), palered, border);
+filldraw(box((2, 0), (4, 1)), lightcyan, border);
+filldraw(box((2, 1), (4, 2)), lightgreen, border);
+filldraw(box((4, 0), (5, 2)), lightred, border);
+filldraw(box((0, 0), (1, 1)), grey, border);
+
+filldraw(box((0, -1), (2, 0)), yellow, border);
+filldraw(box((2, -1), (4, 0)), brown, border);
+filldraw(box((4, -1), (6, 0)), yellow, border);
+filldraw(box((5, 0), (6, 2)), brown, border);
+filldraw(box((5, 4), (6, 6)), brown, border);
+filldraw(box((1, 5), (3, 6)), brown, border);
+filldraw(box((-1, 5), (1, 6)), yellow, border);
+filldraw(box((-1, -1), (0, 1)), brown, border);
+filldraw(box((-1, 1), (0, 3)), yellow, border);
+filldraw(box((-1, 3), (0, 5)), brown, border);
+
+filldraw(box((3, 4), (4, 6)), purple, border);
+filldraw(box((4, 4), (5, 6)), magenta, border);
+
+filldraw(box((4, 3), (6, 4)), lightblue, border);
+filldraw(box((4, 2), (6, 3)), palered, border);
+filldraw(box((3, 2), (4, 4)), yellow, border);
+
+pair A = (0.5, 4.5);
+pair B = (2.5, 4.5);
+pair C = (4.5, 4.5);
+pair D = (0.5, 2.5);
+pair E = (2.5, 2.5);
+pair F = (4.5, 2.5);
+pair X = (0.5, 0.5);
+pair Y = (2.5, 0.5);
+pair Z = (4.5, 0.5);
+
+dotfactor *= 2;
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+
+draw(A--B, EndArrow, Margin(3,3));
+draw(B--E, EndArrow, Margin(3,3));
+draw(E--D, EndArrow, Margin(3,3));
+draw(Z--F, EndArrow, Margin(3,3));
+draw(Y--Z, EndArrow, Margin(3,3));
+draw(D--X, EndArrow, Margin(3,3));
+\end{asy}
+\end{center}
+
+As before, the connected component $T$ containing the empty square is a tree,
+and $k(C)$ is exactly the number of vertices of $T$.
+Thus to finish the problem we need to give,
+for each $k \in \{1,2,\dots,\left( \frac{n-1}{2} \right)^2\}$,
+an example of a configuration where $G$ has exactly $k$ vertices.
+
+The construction starts with a ``snake'' picture for
+$k = \left( \frac{n-1}{2} \right)^2$,
+then decreases $k$ by one by perturbing a suitable set of dominoes.
+Rather than write out the procedure in words,
+we show the sequence of nine pictures for $n=7$ (where $k=9,8,\dots,1$);
+the generalization to larger $n$ is straightforward.
+
+\begin{center}
+\begin{asy}
+unitsize(0.6cm);
+dotfactor *= 2;
+pen border = grey+1.5;
+pair A = (0.5, 4.5);
+pair B = (2.5, 4.5);
+pair C = (4.5, 4.5);
+pair D = (0.5, 2.5);
+pair E = (2.5, 2.5);
+pair F = (4.5, 2.5);
+pair X = (0.5, 0.5);
+pair Y = (2.5, 0.5);
+pair Z = (4.5, 0.5);
+
+/* Picture 0 */
+filldraw(box((3, 4), (5, 5)), palecyan, border);
+filldraw(box((1, 4), (3, 5)), palecyan, border);
+filldraw(box((0, 3), (1, 5)), palecyan, border);
+filldraw(box((0, 2), (2, 3)), palecyan, border);
+filldraw(box((2, 2), (4, 3)), palecyan, border);
+filldraw(box((4, 1), (5, 3)), palecyan, border);
+filldraw(box((3, 0), (5, 1)), palecyan, border);
+filldraw(box((1, 0), (3, 1)), palecyan, border);
+fill(unitsquare, mediumgrey);
+filldraw(box((3, 3), (5, 4)), lightred, border);
+filldraw(box((1, 3), (3, 4)), lightred, border);
+filldraw(box((0, 1), (2, 2)), lightred, border);
+filldraw(box((2, 1), (4, 2)), lightred, border);
+filldraw(box((0, -1), (2, 0)), yellow, border);
+filldraw(box((2, -1), (4, 0)), brown, border);
+filldraw(box((4, -1), (6, 0)), yellow, border);
+filldraw(box((5, 0), (6, 2)), brown, border);
+filldraw(box((5, 2), (6, 4)), yellow, border);
+filldraw(box((5, 4), (6, 6)), brown, border);
+filldraw(box((3, 5), (5, 6)), yellow, border);
+filldraw(box((1, 5), (3, 6)), brown, border);
+filldraw(box((-1, 5), (1, 6)), yellow, border);
+filldraw(box((-1, -1), (0, 1)), brown, border);
+filldraw(box((-1, 1), (0, 3)), yellow, border);
+filldraw(box((-1, 3), (0, 5)), brown, border);
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+
+draw(C--B, EndArrow, Margin(3,3));
+draw(B--A, EndArrow, Margin(3,3));
+draw(A--D, EndArrow, Margin(3,3));
+draw(D--E, EndArrow, Margin(3,3));
+draw(E--F, EndArrow, Margin(3,3));
+draw(F--Z, EndArrow, Margin(3,3));
+draw(Z--Y, EndArrow, Margin(3,3));
+draw(Y--X, EndArrow, Margin(3,3));
+picture p0 = rotate(0)*currentpicture;
+currentpicture.erase();
+
+/* Picture 1 */
+filldraw(box((4, 4), (6, 5)), palecyan, border);
+filldraw(box((1, 4), (3, 5)), palecyan, border);
+filldraw(box((0, 3), (1, 5)), palecyan, border);
+filldraw(box((0, 2), (2, 3)), palecyan, border);
+filldraw(box((2, 2), (4, 3)), palecyan, border);
+filldraw(box((4, 1), (5, 3)), palecyan, border);
+filldraw(box((3, 0), (5, 1)), palecyan, border);
+filldraw(box((1, 0), (3, 1)), palecyan, border);
+fill(unitsquare, mediumgrey);
+filldraw(box((3, 3), (5, 4)), lightred, border);
+filldraw(box((1, 3), (3, 4)), lightred, border);
+filldraw(box((0, 1), (2, 2)), lightred, border);
+filldraw(box((2, 1), (4, 2)), lightred, border);
+filldraw(box((0, -1), (2, 0)), yellow, border);
+filldraw(box((2, -1), (4, 0)), brown, border);
+filldraw(box((4, -1), (6, 0)), yellow, border);
+filldraw(box((5, 0), (6, 2)), brown, border);
+filldraw(box((5, 2), (6, 4)), yellow, border);
+filldraw(box((3, 4), (4, 6)), brown, border);
+filldraw(box((4, 5), (6, 6)), yellow, border);
+filldraw(box((1, 5), (3, 6)), brown, border);
+filldraw(box((-1, 5), (1, 6)), yellow, border);
+filldraw(box((-1, -1), (0, 1)), brown, border);
+filldraw(box((-1, 1), (0, 3)), yellow, border);
+filldraw(box((-1, 3), (0, 5)), brown, border);
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+draw(B--A, EndArrow, Margin(3,3));
+draw(A--D, EndArrow, Margin(3,3));
+draw(D--E, EndArrow, Margin(3,3));
+draw(E--F, EndArrow, Margin(3,3));
+draw(F--Z, EndArrow, Margin(3,3));
+draw(Z--Y, EndArrow, Margin(3,3));
+draw(Y--X, EndArrow, Margin(3,3));
+picture p1 = rotate(0)*currentpicture;
+currentpicture.erase();
+
+/* Picture 2 */
+filldraw(box((4, 4), (6, 5)), palecyan, border);
+filldraw(box((2, 4), (4, 5)), palecyan, border);
+filldraw(box((0, 3), (1, 5)), palecyan, border);
+filldraw(box((0, 2), (2, 3)), palecyan, border);
+filldraw(box((2, 2), (4, 3)), palecyan, border);
+filldraw(box((4, 1), (5, 3)), palecyan, border);
+filldraw(box((3, 0), (5, 1)), palecyan, border);
+filldraw(box((1, 0), (3, 1)), palecyan, border);
+fill(unitsquare, mediumgrey);
+filldraw(box((3, 3), (5, 4)), lightred, border);
+filldraw(box((1, 3), (3, 4)), lightred, border);
+filldraw(box((0, 1), (2, 2)), lightred, border);
+filldraw(box((2, 1), (4, 2)), lightred, border);
+filldraw(box((0, -1), (2, 0)), yellow, border);
+filldraw(box((2, -1), (4, 0)), brown, border);
+filldraw(box((4, -1), (6, 0)), yellow, border);
+filldraw(box((5, 0), (6, 2)), brown, border);
+filldraw(box((5, 2), (6, 4)), yellow, border);
+filldraw(box((1, 4), (2, 6)), brown, border);
+filldraw(box((4, 5), (6, 6)), yellow, border);
+filldraw(box((2, 5), (4, 6)), brown, border);
+filldraw(box((-1, 5), (1, 6)), yellow, border);
+filldraw(box((-1, -1), (0, 1)), brown, border);
+filldraw(box((-1, 1), (0, 3)), yellow, border);
+filldraw(box((-1, 3), (0, 5)), brown, border);
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+draw(A--D, EndArrow, Margin(3,3));
+draw(D--E, EndArrow, Margin(3,3));
+draw(E--F, EndArrow, Margin(3,3));
+draw(F--Z, EndArrow, Margin(3,3));
+draw(Z--Y, EndArrow, Margin(3,3));
+draw(Y--X, EndArrow, Margin(3,3));
+picture p2 = rotate(0)*currentpicture;
+currentpicture.erase();
+
+
+/* Picture 3 */
+filldraw(box((4, 4), (6, 5)), palecyan, border);
+filldraw(box((2, 4), (4, 5)), palecyan, border);
+filldraw(box((-1, 4), (1, 5)), palecyan, border);
+filldraw(box((0, 2), (2, 3)), palecyan, border);
+filldraw(box((2, 2), (4, 3)), palecyan, border);
+filldraw(box((4, 1), (5, 3)), palecyan, border);
+filldraw(box((3, 0), (5, 1)), palecyan, border);
+filldraw(box((1, 0), (3, 1)), palecyan, border);
+fill(unitsquare, mediumgrey);
+filldraw(box((3, 3), (5, 4)), lightred, border);
+filldraw(box((1, 3), (3, 4)), lightred, border);
+filldraw(box((0, 1), (2, 2)), lightred, border);
+filldraw(box((2, 1), (4, 2)), lightred, border);
+filldraw(box((0, -1), (2, 0)), yellow, border);
+filldraw(box((2, -1), (4, 0)), brown, border);
+filldraw(box((4, -1), (6, 0)), yellow, border);
+filldraw(box((5, 0), (6, 2)), brown, border);
+filldraw(box((5, 2), (6, 4)), yellow, border);
+filldraw(box((1, 4), (2, 6)), brown, border);
+filldraw(box((4, 5), (6, 6)), yellow, border);
+filldraw(box((2, 5), (4, 6)), brown, border);
+filldraw(box((-1, 5), (1, 6)), yellow, border);
+filldraw(box((-1, -1), (0, 1)), brown, border);
+filldraw(box((-1, 1), (0, 3)), yellow, border);
+filldraw(box((-1, 3), (1, 4)), brown, border);
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+draw(D--E, EndArrow, Margin(3,3));
+draw(E--F, EndArrow, Margin(3,3));
+draw(F--Z, EndArrow, Margin(3,3));
+draw(Z--Y, EndArrow, Margin(3,3));
+draw(Y--X, EndArrow, Margin(3,3));
+picture p3 = rotate(0)*currentpicture;
+currentpicture.erase();
+
+/* Picture 4 */
+filldraw(box((4, 4), (6, 5)), palecyan, border);
+filldraw(box((2, 4), (4, 5)), palecyan, border);
+filldraw(box((-1, 4), (1, 5)), palecyan, border);
+filldraw(box((-1, 2), (1, 3)), palecyan, border);
+filldraw(box((2, 2), (4, 3)), palecyan, border);
+filldraw(box((4, 1), (5, 3)), palecyan, border);
+filldraw(box((3, 0), (5, 1)), palecyan, border);
+filldraw(box((1, 0), (3, 1)), palecyan, border);
+fill(unitsquare, mediumgrey);
+filldraw(box((3, 3), (5, 4)), lightred, border);
+filldraw(box((1, 3), (3, 4)), lightred, border);
+filldraw(box((-1, 1), (1, 2)), lightred, border);
+filldraw(box((2, 1), (4, 2)), lightred, border);
+filldraw(box((0, -1), (2, 0)), yellow, border);
+filldraw(box((2, -1), (4, 0)), brown, border);
+filldraw(box((4, -1), (6, 0)), yellow, border);
+filldraw(box((5, 0), (6, 2)), brown, border);
+filldraw(box((5, 2), (6, 4)), yellow, border);
+filldraw(box((1, 4), (2, 6)), brown, border);
+filldraw(box((4, 5), (6, 6)), yellow, border);
+filldraw(box((2, 5), (4, 6)), brown, border);
+filldraw(box((-1, 5), (1, 6)), yellow, border);
+filldraw(box((-1, -1), (0, 1)), brown, border);
+filldraw(box((1, 1), (2, 3)), yellow, border);
+filldraw(box((-1, 3), (1, 4)), brown, border);
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+draw(E--F, EndArrow, Margin(3,3));
+draw(F--Z, EndArrow, Margin(3,3));
+draw(Z--Y, EndArrow, Margin(3,3));
+draw(Y--X, EndArrow, Margin(3,3));
+picture p4 = rotate(0)*currentpicture;
+currentpicture.erase();
+
+/* Picture 5 */
+filldraw(box((4, 4), (6, 5)), palecyan, border);
+filldraw(box((2, 4), (4, 5)), palecyan, border);
+filldraw(box((-1, 4), (1, 5)), palecyan, border);
+filldraw(box((-1, 2), (1, 3)), palecyan, border);
+filldraw(box((1, 2), (3, 3)), palecyan, border);
+filldraw(box((4, 1), (5, 3)), palecyan, border);
+filldraw(box((3, 0), (5, 1)), palecyan, border);
+filldraw(box((1, 0), (3, 1)), palecyan, border);
+fill(unitsquare, mediumgrey);
+filldraw(box((3, 3), (5, 4)), lightred, border);
+filldraw(box((1, 3), (3, 4)), lightred, border);
+filldraw(box((-1, 1), (1, 2)), lightred, border);
+filldraw(box((1, 1), (3, 2)), lightred, border);
+filldraw(box((0, -1), (2, 0)), yellow, border);
+filldraw(box((2, -1), (4, 0)), brown, border);
+filldraw(box((4, -1), (6, 0)), yellow, border);
+filldraw(box((5, 0), (6, 2)), brown, border);
+filldraw(box((5, 2), (6, 4)), yellow, border);
+filldraw(box((1, 4), (2, 6)), brown, border);
+filldraw(box((4, 5), (6, 6)), yellow, border);
+filldraw(box((2, 5), (4, 6)), brown, border);
+filldraw(box((-1, 5), (1, 6)), yellow, border);
+filldraw(box((-1, -1), (0, 1)), brown, border);
+filldraw(box((3, 1), (4, 3)), yellow, border);
+filldraw(box((-1, 3), (1, 4)), brown, border);
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+draw(F--Z, EndArrow, Margin(3,3));
+draw(Z--Y, EndArrow, Margin(3,3));
+draw(Y--X, EndArrow, Margin(3,3));
+picture p5 = rotate(0)*currentpicture;
+currentpicture.erase();
+
+/* Picture 6 */
+filldraw(box((4, 4), (6, 5)), palecyan, border);
+filldraw(box((2, 4), (4, 5)), palecyan, border);
+filldraw(box((-1, 4), (1, 5)), palecyan, border);
+filldraw(box((-1, 2), (1, 3)), palecyan, border);
+filldraw(box((1, 2), (3, 3)), palecyan, border);
+filldraw(box((3, 2), (5, 3)), palecyan, border);
+filldraw(box((3, 0), (5, 1)), palecyan, border);
+filldraw(box((1, 0), (3, 1)), palecyan, border);
+fill(unitsquare, mediumgrey);
+filldraw(box((3, 3), (5, 4)), lightred, border);
+filldraw(box((1, 3), (3, 4)), lightred, border);
+filldraw(box((-1, 1), (1, 2)), lightred, border);
+filldraw(box((1, 1), (3, 2)), lightred, border);
+filldraw(box((0, -1), (2, 0)), yellow, border);
+filldraw(box((2, -1), (4, 0)), brown, border);
+filldraw(box((4, -1), (6, 0)), yellow, border);
+filldraw(box((5, 0), (6, 2)), brown, border);
+filldraw(box((5, 2), (6, 4)), yellow, border);
+filldraw(box((1, 4), (2, 6)), brown, border);
+filldraw(box((4, 5), (6, 6)), yellow, border);
+filldraw(box((2, 5), (4, 6)), brown, border);
+filldraw(box((-1, 5), (1, 6)), yellow, border);
+filldraw(box((-1, -1), (0, 1)), brown, border);
+filldraw(box((3, 1), (5, 2)), yellow, border);
+filldraw(box((-1, 3), (1, 4)), brown, border);
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+draw(Z--Y, EndArrow, Margin(3,3));
+draw(Y--X, EndArrow, Margin(3,3));
+picture p6 = rotate(0)*currentpicture;
+currentpicture.erase();
+
+/* Picture 7 */
+filldraw(box((4, 4), (6, 5)), palecyan, border);
+filldraw(box((2, 4), (4, 5)), palecyan, border);
+filldraw(box((-1, 4), (1, 5)), palecyan, border);
+filldraw(box((-1, 2), (1, 3)), palecyan, border);
+filldraw(box((1, 2), (3, 3)), palecyan, border);
+filldraw(box((3, 2), (5, 3)), palecyan, border);
+filldraw(box((4, 0), (6, 1)), palecyan, border);
+filldraw(box((1, 0), (3, 1)), palecyan, border);
+fill(unitsquare, mediumgrey);
+filldraw(box((3, 3), (5, 4)), lightred, border);
+filldraw(box((1, 3), (3, 4)), lightred, border);
+filldraw(box((-1, 1), (1, 2)), lightred, border);
+filldraw(box((1, 1), (3, 2)), lightred, border);
+filldraw(box((0, -1), (2, 0)), yellow, border);
+filldraw(box((2, -1), (4, 0)), brown, border);
+filldraw(box((4, -1), (6, 0)), yellow, border);
+filldraw(box((3, 0), (4, 2)), brown, border);
+filldraw(box((5, 2), (6, 4)), yellow, border);
+filldraw(box((1, 4), (2, 6)), brown, border);
+filldraw(box((4, 5), (6, 6)), yellow, border);
+filldraw(box((2, 5), (4, 6)), brown, border);
+filldraw(box((-1, 5), (1, 6)), yellow, border);
+filldraw(box((-1, -1), (0, 1)), brown, border);
+filldraw(box((4, 1), (6, 2)), yellow, border);
+filldraw(box((-1, 3), (1, 4)), brown, border);
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+draw(Y--X, EndArrow, Margin(3,3));
+picture p7 = rotate(0)*currentpicture;
+currentpicture.erase();
+
+/* Picture 8 */
+filldraw(box((4, 4), (6, 5)), palecyan, border);
+filldraw(box((2, 4), (4, 5)), palecyan, border);
+filldraw(box((-1, 4), (1, 5)), palecyan, border);
+filldraw(box((-1, 2), (1, 3)), palecyan, border);
+filldraw(box((1, 2), (3, 3)), palecyan, border);
+filldraw(box((3, 2), (5, 3)), palecyan, border);
+filldraw(box((4, 0), (6, 1)), palecyan, border);
+filldraw(box((2, 0), (4, 1)), palecyan, border);
+fill(unitsquare, mediumgrey);
+filldraw(box((3, 3), (5, 4)), lightred, border);
+filldraw(box((1, 3), (3, 4)), lightred, border);
+filldraw(box((-1, 1), (1, 2)), lightred, border);
+filldraw(box((2, 1), (4, 2)), lightred, border);
+filldraw(box((0, -1), (2, 0)), yellow, border);
+filldraw(box((2, -1), (4, 0)), brown, border);
+filldraw(box((4, -1), (6, 0)), yellow, border);
+filldraw(box((1, 0), (2, 2)), brown, border);
+filldraw(box((5, 2), (6, 4)), yellow, border);
+filldraw(box((1, 4), (2, 6)), brown, border);
+filldraw(box((4, 5), (6, 6)), yellow, border);
+filldraw(box((2, 5), (4, 6)), brown, border);
+filldraw(box((-1, 5), (1, 6)), yellow, border);
+filldraw(box((-1, -1), (0, 1)), brown, border);
+filldraw(box((4, 1), (6, 2)), yellow, border);
+filldraw(box((-1, 3), (1, 4)), brown, border);
+dot(A); dot(B); dot(C);
+dot(D); dot(E); dot(F);
+dot(X); dot(Y); dot(Z);
+picture p8 = rotate(0)*currentpicture;
+currentpicture.erase();
+
+add(shift(0,0)*p0);
+add(shift(8,0)*p1);
+add(shift(16,0)*p2);
+add(shift(0,-8)*p3);
+add(shift(8,-8)*p4);
+add(shift(16,-8)*p5);
+add(shift(0,-16)*p6);
+add(shift(8,-16)*p7);
+add(shift(16,-16)*p8);
+\end{asy}
+\end{center}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2023/4, proposed by Carl Schildkraut}
+\textsl{Available online at \url{https://aops.com/community/p27349336}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Positive integers $a$ and $N$ are fixed,
+and $N$ positive integers are written on a blackboard.
+Alice and Bob play the following game.
+On Alice's turn, she must replace some integer $n$ on the board with $n+a$,
+and on Bob's turn he must replace some even integer $n$ on the board with $n/2$.
+Alice goes first and they alternate turns.
+If on his turn Bob has no valid moves, the game ends.
+
+After analyzing the $N$ integers on the board, Bob realizes that,
+regardless of what moves Alice makes,
+he will be able to force the game to end eventually.
+Show that, in fact, for this value of $a$ and these $N$ integers on the board,
+the game is guaranteed to end regardless of Alice's or Bob's moves.
+\end{mdframed}
+For $N=1$, there is nothing to prove.
+We address $N \ge 2$ only henceforth.
+Let $S$ denote the numbers on the board.
+
+\begin{claim*}
+  When $N \ge 2$, if $\nu_2(x) < \nu_2(a)$ for all $x \in S$,
+  the game must terminate no matter what either player does.
+\end{claim*}
+\begin{proof}
+  The $\nu_2$ of a number is unchanged by Alice's move
+  and decreases by one on Bob's move.
+  The game ends when every $\nu_2$ is zero.
+
+  Hence, in fact the game will always terminate in exactly
+  $\sum_{x \in S} \nu_2(x)$ moves in this case,
+  regardless of what either player does.
+\end{proof}
+
+\begin{claim*}
+  When $N \ge 2$, if there exists a number $x$ on the board such that
+  $\nu_2(x) \ge \nu_2(a)$, then Alice can cause the game to go on forever.
+\end{claim*}
+\begin{proof}
+  Denote by $x$ the first entry of the board (its value changes over time).
+  Then Alice's strategy is to:
+  \begin{itemize}
+    \ii Operate on the first entry if $\nu_2(x) = \nu_2(a)$
+    (the new entry thus has $\nu_2(x+a) > \nu_2(a)$);
+    \ii Operate on any other entry besides the first one, otherwise.
+  \end{itemize}
+  A double induction then shows that
+  \begin{itemize}
+    \ii Just before each of Bob's turns, $\nu_2(x) > \nu_2(a)$ always holds; and
+    \ii After each of Bob's turns, $\nu_2(x) \ge \nu_2(a)$ always holds.
+  \end{itemize}
+  In particular Bob will never run out of legal moves,
+  since halving $x$ is always legal.
+\end{proof}
+\pagebreak
+
+\subsection{USAMO 2023/5, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p27349487}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n\geq3$ be an integer. We say that an arrangement of the numbers
+$1$, $2$, \dots, $n^2$ in an $n \times n$ table is \emph{row-valid}
+if the numbers in each row can be permuted to form an arithmetic progression,
+and \emph{column-valid} if the numbers in each column
+can be permuted to form an arithmetic progression.
+
+For what values of $n$ is it possible to transform any row-valid arrangement
+into a column-valid arrangement by permuting the numbers in each row?
+\end{mdframed}
+Answer: $n$ prime only.
+
+\paragraph{Proof for $n$ prime.}
+Suppose $n = p$.
+In an arithmetic progression with $p$ terms, it's easy to see that either
+every term has a different residue modulo $p$ (if the common difference
+is not a multiple of $p$), or all of the residues coincide
+(when the common difference is a multiple of $p$).
+
+So, look at the multiples of $p$ in a row-valid table;
+there is either $1$ or $p$ per row.
+As there are $p$ such numbers total, there are two cases:
+\begin{itemize}
+  \ii If all the multiples of $p$ are in the same row,
+  then the common difference in each row is a multiple of $p$.
+  In fact, it must be exactly $p$ for size reasons.
+  In other words, up to permutation the rows are just
+  the $k \pmod p$ numbers in some order, and this is obviously column-valid
+  because we can now permute such that the $k$th column
+  contains exactly $\{(k-1)p+1, (k-1)p+2, \dots, kp\}$.
+
+  \ii If all the multiples of $p$ are in different rows,
+  then it follows each row contains every residue modulo $p$ exactly once.
+  So we can permute to a column-valid arrangement by ensuring
+  the $k$th column contains all the $k \pmod p$ numbers.
+\end{itemize}
+
+\paragraph{Counterexample for $n$ composite (due to Anton Trygub).}
+Let $p$ be any prime divisor of $n$.
+Construct the table as follows:
+\begin{itemize}
+  \ii Row $1$ contains $1$ through $n$.
+  \ii Rows $2$ through $p+1$ contain the numbers from $p+1$ to $np+n$
+  partitioned into arithmetic progressions with common difference $p$.
+  \ii The rest of the rows contain the remaining numbers in reading order.
+\end{itemize}
+For example, when $p=2$ and $n=10$, we get the following table:
+\[
+  \begin{bmatrix}
+    1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+    \mathbf{\color{red} 11} &
+      \mathbf{\color{red} 13} &
+      \mathbf{\color{red} 15} &
+      \mathbf{\color{red} 17} &
+      \mathbf{\color{red} 19} &
+      \mathbf{\color{red} 21} &
+      \mathbf{\color{red} 23} &
+      \mathbf{\color{red} 25} &
+      \mathbf{\color{red} 27} &
+      \mathbf{\color{red} 29} \\
+    \mathbf{\color{red} 12} &
+      \mathbf{\color{red} 14} &
+      \mathbf{\color{red} 16} &
+      \mathbf{\color{red} 18} &
+      \mathbf{\color{red} 20} &
+      \mathbf{\color{red} 22} &
+      \mathbf{\color{red} 24} &
+      \mathbf{\color{red} 26} &
+      \mathbf{\color{red} 28} &
+      \mathbf{\color{red} 30} \\
+    31 & 32 & 33 & 34 & 35 & 36 & 37 & 38 & 39 & 40 \\
+    41 & 42 & 43 & 44 & 45 & 46 & 47 & 48 & 49 & 50 \\
+    51 & 52 & 53 & 54 & 55 & 56 & 57 & 58 & 59 & 60 \\
+    61 & 62 & 63 & 64 & 65 & 66 & 67 & 68 & 69 & 70 \\
+    71 & 72 & 73 & 74 & 75 & 76 & 77 & 78 & 79 & 80 \\
+    81 & 82 & 83 & 84 & 85 & 86 & 87 & 88 & 89 & 90 \\
+    91 & 92 & 93 & 94 & 95 & 96 & 97 & 98 & 99 & 100
+  \end{bmatrix}
+\]
+We claim this works fine.
+Assume for contradiction the rows may be permuted to obtain
+a column-valid arrangement.
+Then the $n$ columns should be arithmetic progressions
+whose smallest element is in $[1,n]$
+and whose largest element is in $[n^2-n+1, n^2]$.
+These two elements must be congruent modulo $n-1$,
+so in particular the column containing $2$ must end with $n^2-n+2$.
+
+Hence in that column, the common difference must in fact be exactly $n$.
+And yet $n+2$ and $2n+2$ are in the same row, contradiction.
+\pagebreak
+
+\subsection{USAMO 2023/6, proposed by Zack Chroman}
+\textsl{Available online at \url{https://aops.com/community/p27349354}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle with incenter $I$
+and excenters $I_a$, $I_b$, $I_c$ opposite $A$, $B$, and $C$, respectively.
+Given an arbitrary point $D$ on the circumcircle of $\triangle ABC$
+that does not lie on any of the lines $II_a$, $I_bI_c$, or $BC$,
+suppose the circumcircles of $\triangle DII_a$ and $\triangle DI_bI_c$
+intersect at two distinct points $D$ and $F$.
+If $E$ is the intersection of lines $DF$ and $BC$,
+prove that $\angle BAD = \angle EAC$.
+\end{mdframed}
+Here are two approaches.
+\begin{center}
+\begin{asy}
+size(9cm);
+
+pair A = dir(115);
+pair B = dir(210);
+pair C = dir(330);
+pair D = dir(240);
+pair E = extension(B, C, A, B*C/D);
+pair I = incenter(A, B, C);
+pair M = dir(270);
+pair I_a = 2*M-I;
+pair I_b = extension(B, I, C, I_a);
+pair I_c = extension(C, I, B, I_a);
+pair F = -D+2*foot(circumcenter(D, I, I_a), D, E);
+draw(D--F, deepgreen);
+
+filldraw(unitcircle, opacity(0.1)+lightcyan, blue);
+filldraw(A--B--C--cycle, opacity(0.1)+lightcyan, blue);
+draw(circumcircle(D, I, I_a), lightred);
+draw(circumcircle(D, I_b, I_c), lightred);
+
+draw(A--I_a, blue);
+draw(I_a--I_b--I_c--cycle, grey);
+draw(D--A--E, deepcyan+dashed);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(170));
+dot("$C$", C, dir(350));
+dot("$D$", D, dir(D));
+dot("$E$", E, dir(280));
+dot("$I$", I, dir(160));
+dot("$M$", M, dir(225));
+dot("$I_a$", I_a, dir(I_a));
+dot("$I_b$", I_b, dir(I_b));
+dot("$I_c$", I_c, dir(I_c));
+dot("$F$", F, dir(F));
+
+/* -----------------------------------------------------------------+
+|                 TSQX: by CJ Quines and Evan Chen                  |
+| https://github.com/vEnhance/dotfiles/blob/main/py-scripts/tsqx.py |
++-------------------------------------------------------------------+
+!size(9cm);
+A = dir 115
+B 170 = dir 210
+C 350 = dir 330
+D = dir 240
+E 280 = extension B C A B*C/D
+I 160 = incenter A B C
+M 225 = dir 270
+I_a = 2*M-I
+I_b = extension B I C I_a
+I_c = extension C I B I_a
+F = -D+2*foot (circumcenter D I I_a) D E
+D--F deepgreen
+unitcircle / 0.1 lightcyan / blue
+A--B--C--cycle / 0.1 lightcyan / blue
+circumcircle D I I_a / lightred
+circumcircle D I_b I_c / lightred
+A--I_a / blue
+I_a--I_b--I_c--cycle / grey
+D--A--E / deepcyan dashed
+*/
+\end{asy}
+\end{center}
+
+\paragraph{Barycentric coordinates (Carl Schildkraut).}
+With reference triangle $\triangle ABC$, set $D = (r:s:t)$.
+\begin{claim*}
+  The equations of $(DII_a)$ and $(DI_bI_c)$ are, respectively,
+  \begin{align*}
+    0 &= -a^2yz-b^2zx-c^2xy + (x+y+z)
+    \cdot \left( bc x - \frac{bcr}{cs-bt} (cy-bz) \right) \\
+    0 &= -a^2yz-b^2zx-c^2xy + (x+y+z)
+    \cdot \left( -bc x + \frac{bcr}{cs+bt} (cy+bz) \right).
+  \end{align*}
+\end{claim*}
+\begin{proof}
+  Since $D \in (ABC)$, we have $a^2st+b^2tr+c^2rs=0$.
+  Now each equation can be verified by direct substitution of three points.
+\end{proof}
+
+By EGMO Lemma 7.24, the radical axis is then given by
+\[ \ol{DF}: bc x - \frac{bcr}{cs-bt} (cy-bz)
+    = -bc x + \frac{bcr}{cs+bt} (cy+bz). \]
+Now the point
+\[ \left( 0 : \frac{b^2}{s} : \frac{c^2}{t} \right)
+  = \left( 0 : b^2t : c^2s \right) \]
+lies on line $DF$ by inspection, and is obviously on line $BC$,
+hence it coincides with $E$.
+This lies on the isogonal of $\ol{AD}$ (by EGMO Lemma 7.6), as needed.
+
+\paragraph{Synthetic approach (Anant Mudgal).}
+Focus on just $(DII_a)$.
+Let $P$ be the second intersection of $(DII_a)$ with $(ABC)$,
+and let $M$ be the midpoint of minor arc $\arc{BC}$.
+Then by radical axis, lines $AM$, $DP$, and $BC$ are concurrent at a point $K$.
+
+Let $E' = \ol{PM} \cap \ol{BC}$.
+
+\begin{center}
+\begin{asy}
+size(9cm);
+
+pair A = dir(140);
+pair B = dir(210);
+pair C = dir(330);
+pair D = dir(240);
+pair E_prime = extension(B, C, A, B*C/D);
+pair I = incenter(A, B, C);
+pair M = dir(270);
+pair I_a = 2*M-I;
+pair K = extension(A, I, B, C);
+pair P = extension(D, K, M, E_prime);
+pair X = 2*M-E_prime;
+
+filldraw(unitcircle, opacity(0.1)+lightcyan, blue);
+filldraw(A--B--C--cycle, opacity(0.1)+lightcyan, blue);
+filldraw(circumcircle(D, I, I_a), opacity(0.1)+yellow, blue);
+draw(A--I_a, blue);
+draw(D--P--X, orange);
+filldraw(X--I--E_prime--I_a--cycle, opacity(0.1)+magenta, red);
+filldraw(circumcircle(B, I, C), opacity(0.1)+grey, grey);
+
+draw(D--A--E_prime, deepcyan+dashed);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(350));
+dot("$D$", D, dir(D));
+dot("$E'$", E_prime, dir(325));
+dot("$I$", I, dir(160));
+dot("$M$", M, dir(M));
+dot("$I_a$", I_a, dir(I_a));
+dot("$K$", K, dir(325));
+dot("$P$", P, dir(P));
+dot("$X$", X, dir(X));
+
+/* -----------------------------------------------------------------+
+|                 TSQX: by CJ Quines and Evan Chen                  |
+| https://github.com/vEnhance/dotfiles/blob/main/py-scripts/tsqx.py |
++-------------------------------------------------------------------+
+!size(9cm);
+A = dir 140
+B = dir 210
+C 350 = dir 330
+D = dir 240
+E' 325 = extension B C A B*C/D
+I 160 = incenter A B C
+M = dir 270
+I_a = 2*M-I
+K 325 = extension A I B C
+P = extension D K M E'
+X = 2*M-E'
+unitcircle / 0.1 lightcyan / blue
+A--B--C--cycle / 0.1 lightcyan / blue
+circumcircle D I I_a / 0.1 yellow / blue
+A--I_a / blue
+D--P--X / orange
+X--I--E'--I_a--cycle / 0.1 magenta / red
+circumcircle B I C / 0.1 grey / grey
+D--A--E' / deepcyan dashed
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  We have $\dang BAD = \dang E'AC$.
+\end{claim*}
+\begin{proof}
+  By shooting lemma, $AKE'P$ is cyclic, so
+  \[ \dang KAE' = \dang KPE' = \dang DPM = \dang DAM. \qedhere \]
+\end{proof}
+
+\begin{claim*}
+  The power of point $E'$ with respect to $(DII_a)$ is $2 E'B \cdot E'C$.
+\end{claim*}
+\begin{proof}
+  Construct parallelogram $IE'I_aX$.
+  Since $MI^2 = ME' \cdot MP$, we can get
+  \[ \dang XI_aI = \dang I_aIE' = \dang MIE' = \dang MPI = \dang XPI. \]
+  Hence $X$ lies on $(DII_a)$,
+  and $E'X \cdot E'P = 2 E'M \cdot E'P = 2 E'B \cdot E'C$.
+\end{proof}
+
+Repeat the argument on $(DI_bI_c)$;
+the same point $E'$ (because of the first claim)
+then has power $2 E'B \cdot E'C$ with respect to $(DI_bI_c)$.
+Hence $E'$ lies on the radical axis of $(DII_a)$ and $(DI_bI_c)$, ergo $E'=E$.
+The first claim then solves the problem.
+\pagebreak
+
+
+\end{document}

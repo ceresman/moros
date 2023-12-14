@@ -1,0 +1,899 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{USA TST 2015 Solution Notes}
+\date{\today}
+
+\maketitle
+\begin{abstract}
+This is a compilation of solutions
+for the 2015 USA TST.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $ABC$ be a scalene triangle with incenter $I$ whose incircle is
+tangent to $\ol{BC}$, $\ol{CA}$, $\ol{AB}$ at $D$, $E$, $F$,
+respectively.  Denote by $M$ the midpoint of $\ol{BC}$ and
+let $P$ be a point in the interior of $\triangle ABC$
+so that $MD = MP$ and $\angle PAB = \angle PAC$.
+Let $Q$ be a point on the incircle such that $\angle AQD = 90^{\circ}$.
+Prove that either $\angle PQE = 90^{\circ}$ or $\angle PQF = 90^{\circ}$.
+
+\item %% Problem 2
+Prove that for every positive integer $n$, there exists a set $S$ of $n$ positive integers
+such that for any two distinct $a,b \in S$, $a-b$ divides $a$ and $b$
+but none of the other elements of $S$.
+
+\item %% Problem 3
+A physicist encounters $2015$ atoms called usamons.
+Each usamon either has one electron or zero electrons,
+and the physicist can't tell the difference.
+The physicist's only tool is a diode.
+The physicist may connect the diode from any usamon $A$
+to any other usamon $B$.  (This connection is directed.)
+When she does so, if usamon $A$ has an electron and usamon $B$
+does not, then the electron jumps from $A$ to $B$.
+In any other case, nothing happens.  In addition,
+the physicist cannot tell whether an electron jumps during any given step.
+The physicist's goal is to isolate two usamons that she is 100\%
+sure are currently in the same state.
+Is there any series of diode usage that makes this possible?
+
+\item %% Problem 4
+Let $f \colon \QQ \to \QQ$ be a function such that for any $x,y \in \QQ$,
+the number $f(x+y)-f(x)-f(y)$ is an integer.
+Decide whether there must exist a constant $c$
+such that $f(x) - cx$ is an integer for every rational number $x$.
+
+\item %% Problem 5
+Fix a positive integer $n$.
+A tournament on $n$ vertices has all its edges colored by $\chi$ colors,
+so that any two directed edges $u \to v$
+and $v \to w$ have different colors.
+Over all possible tournaments on $n$ vertices,
+determine the minimum possible value of $\chi$.
+
+\item %% Problem 6
+Let $ABC$ be a non-equilateral triangle
+and let $M_a$, $M_b$, $M_c$ be the midpoints
+of the sides $BC$, $CA$, $AB$, respectively.
+Let $S$ be a point lying on the Euler line.
+Denote by $X$, $Y$, $Z$ the second intersections
+of $M_a S$, $M_b S$, $M_c S$ with the nine-point circle.
+Prove that $AX$, $BY$, $CZ$ are concurrent.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USA TST 2015/1, proposed by Evan Chen}
+\textsl{Available online at \url{https://aops.com/community/p3683109}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a scalene triangle with incenter $I$ whose incircle is
+tangent to $\ol{BC}$, $\ol{CA}$, $\ol{AB}$ at $D$, $E$, $F$,
+respectively.  Denote by $M$ the midpoint of $\ol{BC}$ and
+let $P$ be a point in the interior of $\triangle ABC$
+so that $MD = MP$ and $\angle PAB = \angle PAC$.
+Let $Q$ be a point on the incircle such that $\angle AQD = 90^{\circ}$.
+Prove that either $\angle PQE = 90^{\circ}$ or $\angle PQF = 90^{\circ}$.
+\end{mdframed}
+We present two solutions.
+
+\paragraph{Official solution.}
+Assume without loss of generality that $AB < AC$; we show $\angle PQE=90^{\circ}$.
+\begin{center}
+  \begin{asy}
+    size(9cm);
+
+    pair A = dir(130);
+    pair B = dir(210);
+    pair C = dir(330);
+    filldraw(A--B--C--cycle, opacity(0.2)+palecyan, blue);
+    pair I = incenter(A, B, C);
+    filldraw(incircle(A, B, C), opacity(0.3)+palered, red);
+    pair D = foot(I, B, C);
+    pair E = foot(I, C, A);
+    pair F = foot(I, A, B);
+
+    pair M = midpoint(B--C);
+    pair P = extension(A, I, D, E);
+    draw(A--P, orange);
+
+    pair D1 = 2*M-D;
+    pair Q = foot(D, A, D1);
+    draw(P--Q--E, heavyred+1);
+    draw(M--Q, red);
+    markrightangle(E,Q,P,heavyred+1);
+
+    pair N = midpoint(A--B);
+    draw(N--M, dashed+orange);
+    draw(D--E, dashed+orange);
+
+    filldraw(CP(M, P), opacity(0.2)+palegreen, heavygreen+dashed);
+
+    pair T = extension(A, Q, B, C);
+    pair S = extension(D, I, A, T);
+    draw(A--T, heavygreen);
+    draw(D--Q, red);
+    draw(D--S, dashed+red);
+
+    dot("$A$", A, dir(A));
+    dot("$B$", B, dir(B));
+    dot("$C$", C, dir(C));
+    dot("$I$", I, dir(I));
+    dot("$D$", D, dir(D));
+    dot("$E$", E, dir(P-D));
+    dot("$F$", F, dir(F));
+    dot("$M$", M, dir(M));
+    dot("$P$", P, dir(200));
+    dot("$Q$", Q, dir(25));
+    dot("$N$", N, dir(N));
+    dot("$T$", T, dir(T));
+    dot("$S$", S, dir(70));
+
+    /* Source generated by TSQ
+
+    A = dir 130
+    B = dir 210
+    C = dir 330
+    A--B--C--cycle
+    I = incenter A B C
+    incircle A B C
+    D = foot I B C
+    E = foot I C A RP-D
+    F = foot I A B
+
+    M = midpoint B--C
+    P = extension A I D E R200
+    A--P
+
+    D1 := 2*M-D
+    Q = foot D A D1 R25
+    E--Q--P--M--Q
+    !markrightangle(E,Q,P,heavyred+1);
+
+    N = midpoint A--B
+    N--M dotted
+    D--E dotted
+
+    CP M P dashed
+
+    T = extension A Q B C
+    S = extension D I A T R70
+    A--T
+    D--Q
+    D--S dashed
+
+    */
+  \end{asy}
+\end{center}
+
+First, we claim that $D$, $P$, $E$ are collinear.
+Let $N$ be the midpoint of $\ol{AB}$.
+It is well-known that the three lines $MN$, $DE$, $AI$ are concurrent at a point
+(see for example problem 6 of USAJMO 2014).
+Let $P'$ be this intersection point, noting that $P'$ actually lies on segment $DE$.
+Then $P'$ lies inside $\triangle ABC$ and moreover
+\[ \triangle DP'M \sim \triangle DEC \]
+so $MP' = MD$.
+Hence $P'=P$, proving the claim.
+
+Let $S$ be the point diametrically opposite $D$ on the incircle,
+which is also the second intersection of $\ol{AQ}$ with the incircle.
+Let $T = \ol{AQ} \cap \ol{BC}$.
+Then $T$ is the contact point of the $A$-excircle;
+consequently, \[ MD = MP = MT \] and we obtain a circle with diameter $\ol{DT}$.
+Since $\angle DQT = \angle DQS = 90^{\circ}$ we have $Q$ on this circle as well.
+
+As $\ol{SD}$ is tangent to the circle with diameter $\ol{DT}$,
+we obtain \[ \angle PQD = \angle SDP = \angle SDE = \angle SQE. \]
+Since $\angle DQS = 90^{\circ}$, $\angle PQE = 90^{\circ}$ too.
+
+\paragraph{Solution using spiral similarity.}
+We will ignore for now the point $P$.
+As before define $S$, $T$ and note $\ol{AQST}$ collinear,
+as well as $DPQT$ cyclic on circle $\omega$ with diameter $\ol{DT}$.
+
+Let $\tau$ be the spiral similarity at $Q$
+sending $\omega$ to the incircle.
+We have $\tau(T) = D$, $\tau(D) = S$, $\tau(Q) = Q$.
+Now
+\[ I = \ol{DD} \cap \ol{QQ} \implies
+\tau(I) = \ol{SS} \cap \ol{QQ} \]
+and hence we conclude $\tau(I)$ is the pole of $\ol{ASQT}$
+with respect to the incircle, which lies on line $EF$.
+
+Then since $\ol{AI} \perp \ol{EF}$ too,
+we deduce $\tau$ sends line $AI$ to line $EF$,
+hence $\tau(P)$ must be either $E$ or $F$ as desired.
+
+\paragraph{Authorship comments.}
+Written April 2014.
+I found this problem while playing with GeoGebra.
+Specifically, I started by drawing in the points $A$, $B$, $C$,
+$I$, $D$, $M$, $T$, common points.
+I decided to add in the circle with diameter $DT$,
+because of the synergy it had with the rest of the picture.
+After a while of playing around,
+I intersected ray $AI$ with the circle to get $P$,
+and was surprised to find that $D$, $P$, $E$ were collinear,
+which I thought was impossible since the setup should have been symmetric.
+On further reflection, I realized it was because $AI$
+intersected the circle twice, and set about trying to prove this.
+I noticed the relation $\angle PQE = 90\dg$ in my attempts
+to prove the result, even though this ended up being a corollary
+rather than a useful lemma.
+\pagebreak
+
+\subsection{USA TST 2015/2, proposed by Iurie Boreico}
+\textsl{Available online at \url{https://aops.com/community/p3683110}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that for every positive integer $n$, there exists a set $S$ of $n$ positive integers
+such that for any two distinct $a,b \in S$, $a-b$ divides $a$ and $b$
+but none of the other elements of $S$.
+\end{mdframed}
+The idea is to look for a
+sequence $d_1, \dots, d_{n-1}$ of ``differences''
+such that the following two conditions hold.
+Let $s_i = d_1 + \dots + d_{i-1}$,
+and $t_{i,j} = d_i + \dots + d_{j-1}$ for $i \le j$.
+\begin{enumerate}
+\item[(i)] No two of the $t_{i,j}$ divide each other.
+\item[(ii)] There exists an integer $a$
+   satisfying the CRT equivalences
+   \[ a \equiv -s_i \pmod{t_{i,j}} \quad \forall i \le j \]
+\end{enumerate}
+Then the sequence $a+s_1$, $a+s_2$, \dots, $a+s_n$ will work.
+For example, when $n=3$ we can take $(d_1,d_2)=(2,3)$ giving
+\[ 10 \overbrace{\underbrace{\qquad}_2 12 \underbrace{\qquad}_3}^5 15 \]
+because the only conditions we need satisfy are
+\begin{align*}
+  a &\equiv 0 \pmod 2 \\
+  a &\equiv 0 \pmod 5 \\
+  a &\equiv -2 \pmod 3.
+\end{align*}
+
+But with this setup we can just construct the $d_i$ inductively.
+To go from $n$ to $n+1$, take a $d_1, \dots, d_{n-1}$
+and let $p$ be a prime
+not dividing any of the $d_i$.
+Moreover, let $M$ be a multiple of $\prod_{i \le j} t_{i,j}$ coprime to $p$.
+Then we claim that $d_1M, d_2M, \dots, d_{n-1}M, p$
+is such a difference sequence.
+For example, the previous example extends as follows with $M = 300$ and $p=7$.
+\[
+   a \overbrace{\underbrace{\qquad}_{600} b
+   \overbrace{\underbrace{\qquad}_{900} c
+   \underbrace{\qquad}_{7}}^{907}}^{1507} d
+\]
+The new numbers $p$, $p+Mt_{n-1,n}$, $p+Mt_{n-2,n}$, \dots\
+are all relatively prime to everything else.
+Hence (i) still holds.
+To see that (ii) still holds,
+just note that we can still get a family of solutions
+for the first $n$ terms, and then the last $(n+1)$st term
+can be made to work by Chinese Remainder Theorem
+since all the new $p+Mt_{n-2,n}$ are coprime to everything.
+\pagebreak
+
+\subsection{USA TST 2015/3, proposed by Linus Hamilton}
+\textsl{Available online at \url{https://aops.com/community/p3683111}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A physicist encounters $2015$ atoms called usamons.
+Each usamon either has one electron or zero electrons,
+and the physicist can't tell the difference.
+The physicist's only tool is a diode.
+The physicist may connect the diode from any usamon $A$
+to any other usamon $B$.  (This connection is directed.)
+When she does so, if usamon $A$ has an electron and usamon $B$
+does not, then the electron jumps from $A$ to $B$.
+In any other case, nothing happens.  In addition,
+the physicist cannot tell whether an electron jumps during any given step.
+The physicist's goal is to isolate two usamons that she is 100\%
+sure are currently in the same state.
+Is there any series of diode usage that makes this possible?
+\end{mdframed}
+The answer is no.
+Call the usamons $U_1, \dots, U_m$ (here $m=2015$).
+Consider models $M_k$ of the following form:
+$U_1, \dots, U_k$ are all charged for some $0 \le k \le m$
+and the other usamons are not charged.
+Note that for any pair there's a model
+where they are different states, by construction.
+
+We can consider the physicist as acting
+on these $m+1$ models simultaneously,
+and trying to reach a state where there's a pair
+in all models which are all the same charge.
+(This is a necessary condition for a winning strategy to exist.)
+
+But we claim that any diode operation $U_i \to U_j$
+results in the $m+1$ models being an isomorphic copy
+of the previous set.
+If $i < j$ then the diode operation can be interpreted
+as just swapping $U_i$ with $U_j$, which doesn't change anything.
+Moreover if $i > j$ the operation never does anything.
+The conclusion follows from this.
+
+\begin{remark*}
+  This problem is not a ``standard'' olympiad problem,
+  so I can't say it's trivial.
+  But the idea is pretty natural I think.
+
+  You can motivate it as follows:
+  there's a sequence of diode operations
+  you can do which forces the situation to be one of the $M_k$ above:
+  first, use the diode into $U_1$ for all other $U_i$'s,
+  so that either no electrons exist at all or $U_1$ has an electron.
+  Repeat with the other $U_i$.
+  This leaves us at the situation described at the start of the problem.
+  Then you could guess the answer was ``no'' just based on the fact
+  that it's impossible for $n=2,3$
+  and that there doesn't seem to be a reasonable strategy.
+
+  In this way it's possible to give a pretty good description
+  of what it's possible to do.
+  One possible phrasing:
+  ``the physicist can arrange the usamons in a line such that
+  all the charged usamons are to the left of the un-charged usamons,
+  but can't determine the \emph{number} of charged usamons''.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USA TST 2015/4, proposed by Victor Wang}
+\textsl{Available online at \url{https://aops.com/community/p4628083}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $f \colon \QQ \to \QQ$ be a function such that for any $x,y \in \QQ$,
+the number $f(x+y)-f(x)-f(y)$ is an integer.
+Decide whether there must exist a constant $c$
+such that $f(x) - cx$ is an integer for every rational number $x$.
+\end{mdframed}
+No, such a constant need not exist.
+
+One possible solution is as follows:
+define a sequence by $x_0 = 1$ and
+\begin{align*}
+  2x_1 &= x_0 \\
+  2x_2 &= x_1 + 1 \\
+  2x_3 &= x_2 \\
+  2x_4 &= x_3 + 1 \\
+  2x_5 &= x_4 \\
+  2x_6 &= x_5 + 1 \\
+  &\vdotswithin=
+\end{align*}
+Set $f(2^{-k}) = x_k$ and $f(2^k)=2^k$ for $k=0,1,\dots$.
+Then, let
+\[ f\left( a \cdot 2^k + \frac bc \right)
+  = a f\left( 2^k \right) + \frac bc \]
+for odd integers $a$, $b$, $c$.
+One can verify this works.
+
+A second shorter solution (given by the proposer) is to set,
+whenever $\gcd(p,q) = 1$ and $q > 0$,
+\[ f\left( \frac pq \right)
+  = \frac pq \left( 1! + 2! + \dots + q! \right). \]
+
+
+\begin{remark*}
+  Silly note: despite appearances,
+  $f(x) = \left\lfloor x \right\rfloor$
+  is not a counterexample since one can take $c = 0$.
+\end{remark*}
+\pagebreak
+
+\subsection{USA TST 2015/5, proposed by Po-Shen Loh}
+\textsl{Available online at \url{https://aops.com/community/p4628085}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Fix a positive integer $n$.
+A tournament on $n$ vertices has all its edges colored by $\chi$ colors,
+so that any two directed edges $u \to v$
+and $v \to w$ have different colors.
+Over all possible tournaments on $n$ vertices,
+determine the minimum possible value of $\chi$.
+\end{mdframed}
+The answer is
+\[ \chi = \left\lceil \log_2 n \right\rceil. \]
+
+First, we prove by induction on $n$
+that $\chi \ge \log_2 n$ for any coloring and any tournament.
+The base case $n = 1$ is obvious.
+Now given any tournament, consider any used color $c$.
+Then it should be possible to divide the tournament
+into two subsets $A$ and $B$ such that all $c$-colored edges
+point from $A$ to $B$
+(for example by letting $A$ be all vertices
+which are the starting point of a $c$-edge).
+\begin{center}
+\begin{asy}
+  size(5cm);
+  filldraw(box( (-2,-2), (-0.6,2) ), opacity(0.1)+lightcyan, lightblue );
+  filldraw(box( (0.6,-2), (2,2) ), opacity(0.1)+lightcyan, lightblue );
+  label("$A$", (-2,0), dir(180), blue);
+  label("$B$", ( 2,0), dir(  0), blue);
+  label("all edges colored $c$", (0,2), dir(90), deepgreen);
+  draw( (-1.3,1.2)--(1.5,0.2), deepgreen, EndArrow);
+  draw( (-0.9,-0.2)--(1.1, -0.1), deepgreen, EndArrow);
+  draw( (-1.4, 0.4)--(0.9, 0.8), deepgreen, EndArrow);
+  draw( (-1.4, -0.8)--(1.3, -0.6), deepgreen, EndArrow);
+  draw( (-1.3, -0.5)--(1.2, -1.6), deepgreen, EndArrow);
+\end{asy}
+\end{center}
+One of $A$ and $B$ has size at least $n/2$, say $A$.
+Since $A$ has no $c$ edges,
+and uses at least $\log_2 |A|$ colors other than $c$, we get
+\[ \chi \ge 1 + \log_2 (n/2) = \log_2 n \]
+completing the induction.
+
+One can read the construction off from the argument above,
+but here is a concrete description.
+For each integer $n$,
+consider the tournament whose vertices are
+the binary representations of $S  =\{0, \dots, n-1\}$.
+Instantiate colors $c_1$, $c_2$, \dots.
+Then for $v, w \in S$,
+we look at the smallest order bit for which they differ;
+say the $k$th one.
+If $v$ has a zero in the $k$th bit,
+and $w$ has a one in the $k$th bit,
+we draw $v \to w$.
+Moreover we color the edge with color $c_k$.
+This works and uses at most $\left\lceil \log_2 n \right\rceil$ colors.
+
+\begin{remark*}
+  [Motivation]
+  The philosophy ``combinatorial optimization'' applies here.
+  The idea is given any color $c$,
+  we can find sets $A$ and $B$ such that all $c$-edges point $A$ to $B$.
+  Once you realize this, the next insight is to realize
+  that you may as well color \emph{all} the edges from $A$ to $B$ by $c$;
+  after all, this doesn't hurt the condition and makes your life easier.
+  Hence, if $f$ is the answer, we have already a proof that
+  $f(n) = 1 + \max \left( f(|A|), f(|B|) \right)$
+  and we choose $|A| \approx |B|$.
+  This optimization also gives the inductive construction.
+\end{remark*}
+\pagebreak
+
+\subsection{USA TST 2015/6}
+\textsl{Available online at \url{https://aops.com/community/p4628087}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a non-equilateral triangle
+and let $M_a$, $M_b$, $M_c$ be the midpoints
+of the sides $BC$, $CA$, $AB$, respectively.
+Let $S$ be a point lying on the Euler line.
+Denote by $X$, $Y$, $Z$ the second intersections
+of $M_a S$, $M_b S$, $M_c S$ with the nine-point circle.
+Prove that $AX$, $BY$, $CZ$ are concurrent.
+\end{mdframed}
+We assume now and forever that $ABC$ is scalene since the problem
+follows by symmetry in the isosceles case.
+We present four solutions.
+
+\paragraph{First solution by barycentric coordinates (Evan Chen).}
+Let $AX$ meet $M_b M_c$ at $D$,
+and let $X$ reflected over $M_b M_c$'s midpoint be $X'$.
+Let $Y'$, $Z'$, $E$, $F$ be similarly defined.
+
+\begin{center}
+\begin{asy}
+pair M_a = dir(110);
+pair M_b = dir(210);
+pair M_c = dir(330);
+pair A = M_b+M_c-M_a;
+pair B = M_c+M_a-M_b;
+pair C = M_a+M_b-M_c;
+pair O = circumcenter(A, B, C);
+pair S = 0.65*O;
+pair N = origin;
+pair X = -M_a+2*foot(N,M_a,S);
+pair Y = -M_b+2*foot(N,M_b,S);
+pair Z = -M_c+2*foot(N,M_c,S);
+filldraw(unitcircle, opacity(0.1)+lightcyan, lightblue);
+draw(M_a--M_b--M_c--cycle, lightblue);
+draw(A--B--C--cycle, lightblue);
+draw(X--M_a, cyan);
+draw(Y--M_b, cyan);
+draw(Z--M_c, cyan);
+
+pair D = extension(X, A, M_b, M_c);
+pair Dp = M_b+M_c-D;
+
+pair E = extension(Y, B, M_c, M_a);
+pair Ep = M_c+M_a-E;
+pair F = extension(Z, C, M_a, M_b);
+pair Fp = M_a+M_b-F;
+
+draw(A--D, deepgreen);
+draw(B--E, deepgreen);
+draw(C--F, deepgreen);
+
+draw(M_a--Dp, lightred);
+draw(M_b--Ep, lightred);
+draw(M_c--Fp, lightred);
+
+draw(M_a--D, lightred+dotted);
+draw(M_b--E, lightred+dotted);
+draw(M_c--F, lightred+dotted);
+
+dot("$X$", X, dir(250));
+dot("$Y$", Y, dir(80));
+dot("$Z$", Z, dir(200));
+
+dot("$M_a$", M_a, dir(M_a));
+dot("$M_b$", M_b, dir(M_b));
+dot("$M_c$", M_c, dir(M_c));
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$S$", S, dir(310));
+dot("$D$", D, dir(D));
+dot("$D'$", Dp, dir(Dp));
+dot("$E$", E, dir(E));
+dot("$E'$", Ep, dir(Ep));
+dot("$F$", F, dir(220));
+dot("$F'$", Fp, dir(Fp));
+
+/* TSQ Source:
+
+M_a = dir 110
+M_b = dir 210
+M_c = dir 330
+A = M_b+M_c-M_a
+B = M_c+M_a-M_b
+C = M_a+M_b-M_c
+O := circumcenter A B C
+S = 0.65*O R310
+N := origin R45
+X := -M_a+2*foot(N,M_a,S)
+Y := -M_b+2*foot(N,M_b,S)
+Z := -M_c+2*foot(N,M_c,S)
+unitcircle 0.1 lightcyan / lightblue
+M_a--M_b--M_c--cycle lightblue
+A--B--C--cycle lightblue
+X--M_a cyan
+Y--M_b cyan
+Z--M_c cyan
+
+D = extension X A M_b M_c
+D' = M_b+M_c-D
+
+E = extension Y B M_c M_a
+E' = M_c+M_a-E
+F = extension Z C M_a M_b R220
+F' = M_a+M_b-F
+
+A--D deepgreen
+B--E deepgreen
+C--F deepgreen
+
+M_a--Dp lightred
+M_b--Ep lightred
+M_c--Fp lightred
+
+M_a--D lightred dotted
+M_b--E lightred dotted
+M_c--F lightred dotted
+
+!dot("$X$", X, dir(250));
+!dot("$Y$", Y, dir(80));
+!dot("$Z$", Z, dir(200));
+
+*/
+\end{asy}
+\end{center}
+
+By Cevian Nest Theorem it suffices to
+prove that $M_a D$, $M_b E$, $M_c F$ are concurrent.
+Taking the isotomic conjugate and recalling that
+$M_a M_b A M_c$ is a parallelogram,
+we see that it suffices to prove
+$M_a X'$, $M_b Y'$, $M_c Z'$ are concurrent.
+
+We now use barycentric coordinates on $\triangle M_a M_b M_c$.
+Let \[ S = \left( a^2S_A + t : b^2S_B + t : c^2S_C + t \right) \]
+(possibly $t=\infty$ if $S$ is the centroid).
+Let $v = b^2S_B+t$, $w=c^2S_C+t$.
+Hence \[ X = \left( -a^2 vw : (b^2w+c^2v)v : (b^2w+c^2v)w \right). \]
+Consequently,
+\[ X' = \left( a^2vw : -a^2vw + (b^2w+c^2v)w : -a^2vw + (b^2w+c^2v)v \right) \]
+We can compute
+\[ b^2w+c^2v = (bc)^2(S_B+S_C)+ (b^2+c^2)t = (abc)^2 + (b^2+c^2)t. \]
+Thus
+\[ -a^2v+b^2w+c^2v
+  = (b^2+c^2)t + (abc)^2 - (ab)^2S_B - a^2t =
+  S_A( (ab)^2 +t ). \]
+Finally
+\[ X' = \left( a^2vw :
+  S_A (c^2S_C+t) \left( (ab)^2 +2t \right) :
+  S_A (b^2S_B+t) \left( (ac)^2 +2t \right)
+  \right) \]
+and from this it's evident that $AX'$, $BY'$, $CZ'$ are concurrent.
+
+\paragraph{Second solution by moving points (Anant Mudgal).}
+Let $H_a$, $H_b$, $H_c$ be feet of altitudes,
+and let $\gamma$ denote the nine-point circle.
+The main claim is that:
+\begin{claim*}
+  Lines $XH_a$, $YH_b$, $ZH_c$ are concurrent,
+\end{claim*}
+\begin{proof}
+  In fact, we claim that the concurrence point lies on the Euler line $\ell$.
+  This gives us a way to apply the moving points method:
+  fix triangle $ABC$ and animate $S \in \ell$;
+  then the map
+  \begin{align*}
+    \ell & \to \gamma \to \ell \\
+    S &\mapsto X \mapsto S_a \coloneqq \ell \cap \ol{H_a X}
+  \end{align*}
+  is projective, because it consists of two perspectivities.
+  So we want the analogous maps $S \mapsto S_b$, $S \mapsto S_c$ to coincide.
+  For this it suffices to check three positions of $S$;
+  since you're such a good customer here are four.
+  \begin{itemize}
+    \ii If $S$ is the orthocenter of $\triangle M_a M_b M_c$
+    (equivalently the circumcenter of $\triangle ABC$)
+    then $S_a$ coincides with the circumcenter of $M_a M_b M_c$
+    (equivalently the nine-point center of $\triangle ABC$).
+    By symmetry $S_b$ and $S_c$ are too.
+
+    \ii If $S$ is the circumcenter of $\triangle M_a M_b M_c$
+    (equivalently the nine-point center of $\triangle ABC$)
+    then $S_a$ coincides with the de Longchamps point of $\triangle M_a M_b M_c$
+    (equivalently orthocenter of $\triangle ABC$).
+    By symmetry $S_b$ and $S_c$ are too.
+
+    \ii If $S$ is either of the intersections of the Euler
+    line with $\gamma$, then $S = S_a = S_b = S_c$
+    (as $S = X = Y = Z$).
+  \end{itemize}
+  This concludes the proof.
+\end{proof}
+
+\begin{center}
+\begin{asy}
+pair M_a = dir(110);
+pair M_b = dir(210);
+pair M_c = dir(330);
+pair A = M_b+M_c-M_a;
+pair B = M_c+M_a-M_b;
+pair C = M_a+M_b-M_c;
+pair O = circumcenter(A, B, C);
+pair S = 0.75*O;
+pair N = origin;
+
+pair X = -M_a+2*foot(N,M_a,S);
+pair Y = -M_b+2*foot(N,M_b,S);
+pair Z = -M_c+2*foot(N,M_c,S);
+
+filldraw(unitcircle, opacity(0.1)+lightcyan, lightblue);
+draw(M_a--M_b--M_c--cycle, lightblue);
+draw(A--B--C--cycle, lightblue);
+draw(X--M_a, cyan);
+draw(Y--M_b, cyan);
+draw(Z--M_c, cyan);
+
+pair H_a = M_b*M_c/M_a;
+pair H_b = M_c*M_a/M_b;
+pair H_c = M_a*M_b/M_c;
+
+draw(X--A, deepgreen);
+draw(Y--B, deepgreen);
+draw(Z--C, deepgreen);
+
+filldraw(H_a--H_b--H_c--cycle, opacity(0.1)+lightred, lightred);
+draw(H_a--X, lightred);
+draw(H_b--Y, lightred);
+draw(H_c--Z, lightred);
+
+dot("$X$", X, dir(250));
+dot("$Y$", Y, dir(80));
+dot("$Z$", Z, dir(200));
+
+dot("$M_a$", M_a, dir(M_a));
+dot("$M_b$", M_b, dir(M_b));
+dot("$M_c$", M_c, dir(M_c));
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$S$", S, dir(310));
+dot("$H_a$", H_a, dir(H_a));
+dot("$H_b$", H_b, dir(H_b));
+dot("$H_c$", H_c, dir(H_c));
+
+/* TSQ Source:
+
+M_a = dir 110
+M_b = dir 210
+M_c = dir 330
+A = M_b+M_c-M_a
+B = M_c+M_a-M_b
+C = M_a+M_b-M_c
+O := circumcenter A B C
+S = 0.75*O R310
+N := origin R45
+
+X := -M_a+2*foot(N,M_a,S)
+Y := -M_b+2*foot(N,M_b,S)
+Z := -M_c+2*foot(N,M_c,S)
+
+unitcircle 0.1 lightcyan / lightblue
+M_a--M_b--M_c--cycle lightblue
+A--B--C--cycle lightblue
+X--M_a cyan
+Y--M_b cyan
+Z--M_c cyan
+
+H_a = M_b*M_c/M_a
+H_b = M_c*M_a/M_b
+H_c = M_a*M_b/M_c
+
+X--A deepgreen
+Y--B deepgreen
+Z--C deepgreen
+
+H_a--H_b--H_c--cycle 0.1 lightred / lightred
+H_a--X lightred
+H_b--Y lightred
+H_c--Z lightred
+
+!dot("$X$", X, dir(250));
+!dot("$Y$", Y, dir(80));
+!dot("$Z$", Z, dir(200));
+
+*/
+\end{asy}
+\end{center}
+
+We now use Trig Ceva to carry over the concurrence.
+By sine law,
+\[ \frac{\sin \angle M_{c}AX}{\sin \angle AM_{c}X}
+  =\frac{M_{c}X}{AX} \]
+and a similar relation for $M_b$ gives that
+\[ \frac{\sin \angle M_{c}AX}{\sin \angle M_{b}AX}
+  = \frac{\sin \angle AM_{c}X}{\sin \angle AM_{b}X} \cdot \frac{M_{c}X}{M_{b}X}
+  = \frac{\sin \angle AM_{c}X}{\sin \angle AM_{b}X}
+  \cdot \frac{\sin \angle XM_{a}M_{c}}{\sin \angle XM_{a}M_{b}}. \]
+Thus multiplying cyclically gives
+\[ \prod_{\text{cyc}} \frac{\sin \angle M_{c}AX}{\sin \angle M_{b}AX}
+  = \prod_{\text{cyc}} \frac{\sin \angle AM_{c}X}{\sin \angle AM_{b}X}
+  \prod_{\text{cyc}} \frac{\sin \angle XM_{a}M_{c}}{\sin \angle XM_{a}M_{b}}. \]
+The latter product on the right-hand side equals $1$
+by Trig Ceva on $\triangle M_a M_b M_c$ with cevians
+$\ol{M_a X}$, $\ol{M_b Y}$, $\ol{M_c Z}$.
+The former product also equals $1$
+by Trig Ceva for the concurrence in the previous claim
+(and the fact that $\angle AM_{c}X=\angle H_{c}H_{a}X$).
+Hence the left-hand side equals $1$, implying the result.
+
+\paragraph{Third solution by moving points (Gopal Goel).}
+In this solution,
+we will instead use barycentric coordinates with resect to $\triangle ABC$
+to bound the degrees suitably,
+and then verify for seven distinct choices of $S$.
+
+We let $R$ denote the radius of $\triangle ABC$,
+and $N$ the nine-point center.
+
+First, imagine solving for $X$ in the following way.
+Suppose $\vec X = (1-t_a) \vec M_a + t_a \vec S$.
+Then, using the dot product
+(with $\left\lvert \vec v \right\rvert^2 = \vec v \cdot \vec v$ in general)
+\begin{align*}
+  \frac14 R^2
+  &= \left\lvert \vec X - \vec N \right\rvert^2 \\
+  &= \left\lvert t_a(\vec S - \vec M_a) + \vec M_a - \vec N \right\rvert^2 \\
+  &= \left\lvert t_a(\vec S - \vec M_a) \right\rvert^2
+    + 2t_a \left( \vec S - \vec M_a \right) \cdot \left( \vec M_a - \vec N \right)
+    + \left\lvert \vec M_a - \vec N \right\rvert^2 \\
+  &= t_a^2 \left\lvert (\vec S - \vec M_a) \right\rvert^2
+    + 2t_a \left( \vec S - \vec M_a \right) \cdot \left( \vec M_a - \vec N \right)
+    + \frac 14 R^2
+\end{align*}
+Since $t_a \neq 0$ we may solve to obtain
+\[ t_a = -\frac{2(\vec M_a - \vec N) \cdot (\vec S - \vec M_a)}%
+  {\left\lvert \vec S - \vec M_a \right\rvert^2}.  \]
+Now imagine $S$ varies along the Euler line,
+meaning there should exist linear functions
+$\alpha, \beta, \gamma \colon \RR \to \RR$ such that
+\[ S = \left( \alpha(s) , \beta(s) , \gamma(s) \right)
+  \qquad s \in \RR \]
+with $\alpha(s) + \beta(s) + \gamma(s) = 1$.
+Thus $t_a = \frac{f_a}{g_a} = \frac{f_a(s)}{g_a(s)}$
+is the quotient of a linear function
+$f_a(s)$ and a quadratic function $g_a(s)$.
+
+So we may write:
+\begin{align*}
+  X &= (1-t_a) \left( 0, \half, \half \right)
+    + t_a \left( \alpha, \beta, \gamma \right) \\
+  &= \left( t_a \alpha, \half(1-t_a) + t_a \beta,
+    \half(1-t_a) + t_a \gamma \right) \\
+  &= \left( 2f_a \alpha : g_a - f_a + 2f_a \beta : g_a - f_a + 2 f_a \gamma \right).
+\end{align*}
+Thus the coordinates of $X$ are quadratic polynomials in $s$
+when written in this way.
+
+In a similar way, the coordinates of $Y$ and $Z$
+should be quadratic polynomials in $s$.
+The Ceva concurrence condition
+\[ \prod_{\text{cyc}} \frac{g_a-f_a+2f_a\beta}{g_a-f_a+2f_a\gamma}
+  = 1 \]
+is thus a polynomial in $s$ of degree at most six.
+Our goal is to verify it is identically zero,
+thus it suffices to check seven positions of $S$.
+
+\begin{itemize}
+  \ii If $S$ is the circumcenter of $\triangle M_a M_b M_c$
+  (equivalently the nine-point center of $\triangle ABC$)
+  then $\ol{AX}$, $\ol{BY}$, $\ol{CZ}$
+  are altitudes of $\triangle ABC$.
+
+  \ii If $S$ is the centroid of $\triangle M_a M_b M_c$
+  (equivalently the centroid of $\triangle ABC$),
+  then $\ol{AX}$, $\ol{BY}$, $\ol{CZ}$
+  are medians of $\triangle ABC$.
+
+  \ii If $S$ is either of the intersections of the Euler
+  line with $\gamma$, then $S = X = Y = Z$
+  and all cevians concur at $S$.
+
+  \ii If $S$ lies on the $\ol{M_a M_b}$,
+  then $Y = M_a$, $X = M_c$, and thus $\ol{AX} \cap \ol{BY} = C$,
+  which is of course concurrent with $\ol{CZ}$
+  (regardless of $Z$).
+  Similarly if $S$ lies on the other sides of $\triangle M_a M_b M_c$.
+\end{itemize}
+Thus we are also done.
+
+\paragraph{Fourth solution using Pascal (official one).}
+We give a different proof of the claim that
+$\ol{XH_a}$, $\ol{YH_b}$, $\ol{ZH_c}$ are concurrent
+(and then proceed as in the end of the second solution).
+
+Let $H$ denote the orthocenter, $N$ the nine-point center,
+and moreover let $N_a$, $N_b$, $N_c$ denote the midpoints
+of $\ol{AH}$, $\ol{BH}$, $\ol{CH}$,
+which also lie on the nine-point circle
+(and are the antipodes of $M_a$, $M_b$, $M_c$).
+\begin{itemize}
+  \ii By Pascal's theorem on $M_b N_b H_b M_c N_c H_c$,
+  the point $P = \ol{M_c H_b} \cap \ol{M_b H_c}$
+  is collinear with $N = \ol{M_b N_b} \cap \ol{M_c N_c}$,
+  and $H = \ol{N_b H_b} \cap \ol{N_c H_c}$.
+  So $P$ lies on the Euler line.
+
+  \ii By Pascal's theorem on $M_b Y H_b M_c Z H_c$,
+  the point $\ol{YH_b} \cap \ol{ZH_c}$ is collinear
+  with $S = \ol{M_b Y} \cap \ol{M_c Z}$
+  and $P = \ol{M_b H_c} \cap \ol{M_c H_b}$.
+  Hence $YH_b$ and $ZH_c$ meet on the Euler line, as needed.
+\end{itemize}
+\pagebreak
+
+
+\end{document}

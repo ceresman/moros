@@ -1,0 +1,594 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2011 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2011 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $a$, $b$, $c$ be positive real numbers
+such that $a^2+b^2+c^2+(a+b+c)^2 \le 4$. Prove that
+\[ \frac{ab+1}{(a+b)^2}
+  + \frac{bc+1}{(b+c)^2}
+  + \frac{ca+1}{(c+a)^2} \ge 3. \]
+
+\item %% Problem 2
+An integer is assigned to each vertex of a regular pentagon
+so that the sum of the five integers is $2011$.
+A turn of a solitaire game consists of subtracting an integer $m$
+(not necessarily positive) from each of the integers at two neighboring vertices
+and adding $2m$ to the opposite vertex, which is not adjacent
+to either of the first two vertices.
+(The amount $m$ and the vertices chosen can vary from turn to turn.)
+The game is won at a certain vertex if, after some number of turns,
+that vertex has the number $2011$ and the other four vertices have the number $0$.
+Prove that for any choice of the initial integers,
+there is exactly one vertex at which the game can be won.
+
+\item %% Problem 3
+In hexagon $ABCDEF$, which is nonconvex but not self-intersecting,
+no pair of opposite sides are parallel.
+The internal angles satisfy
+$\angle A=3\angle D$, $\angle C=3\angle F$, and $\angle E=3\angle B$.
+Furthermore $AB=DE$, $BC=EF$, and $CD=FA$.
+Prove that diagonals $\ol{AD}$, $\ol{BE}$, and $\ol{CF}$
+are concurrent.
+
+\item %% Problem 4
+Consider the assertion that for each positive integer $n\geq2$,
+the remainder upon dividing $2^{2^n}$ by $2^n-1$ is a power of $4$.
+Either prove the assertion or find (with proof) a counterexample.
+
+\item %% Problem 5
+Let $P$ be a point inside convex quadrilateral $ABCD$.
+Points $Q_1$ and $Q_2$ are located within $ABCD$ such that
+\begin{align*}
+\angle Q_1BC=\angle ABP, & \qquad \angle Q_1CB=\angle DCP, \\
+\angle Q_2AD=\angle BAP, & \qquad \angle Q_2DA=\angle CDP.
+\end{align*}
+Prove that $\ol{Q_1Q_2} \parallel \ol{AB}$
+if and only if $\ol{Q_1Q_2} \parallel \ol{CD}$.
+
+\item %% Problem 6
+Let $A$ be a set with $|A|=225$, meaning that $A$ has $225$ elements.
+Suppose further that there are eleven subsets $A_1, \dots, A_{11}$ of $A$
+such that $|A_i|=45$ for $1\leq i\leq11$ and $|A_i\cap A_j|=9$
+for $1\leq i<j\leq11$.
+Prove that $|A_1\cup A_2\cup\dots\cup A_{11}|\geq 165$,
+and give an example for which equality holds.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2011/1, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p2254758}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$, $b$, $c$ be positive real numbers
+such that $a^2+b^2+c^2+(a+b+c)^2 \le 4$. Prove that
+\[ \frac{ab+1}{(a+b)^2}
+  + \frac{bc+1}{(b+c)^2}
+  + \frac{ca+1}{(c+a)^2} \ge 3. \]
+\end{mdframed}
+The condition becomes $2 \ge a^2+b^2+c^2 + ab+bc+ca$.
+Therefore,
+\begin{align*}
+  \sum_{\text{cyc}} \frac{2ab+2}{(a+b)^2}
+  &\ge \sum_{\text{cyc}} \frac{2ab+(a^2+b^2+c^2+ab+bc+ca)}{(a+b)^2} \\
+  &= \sum_{\text{cyc}} \frac{(a+b)^2+(c+a)(c+b)}{(a+b)^2} \\
+  &= 3 + \sum_{\text{cyc}} \frac{(c+a)(c+b)}{(a+b)^2} \\
+  &\ge 3 + 3\sqrt[3]{\prod_{\text{cyc}} \frac{(c+a)(c+b)}{(a+b)^2}}
+  = 3 + 3 = 6
+\end{align*}
+with the last line by AM-GM.
+This completes the proof.
+\pagebreak
+
+\subsection{USAMO 2011/2, proposed by Sam Vandervelde}
+\textsl{Available online at \url{https://aops.com/community/p2254765}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+An integer is assigned to each vertex of a regular pentagon
+so that the sum of the five integers is $2011$.
+A turn of a solitaire game consists of subtracting an integer $m$
+(not necessarily positive) from each of the integers at two neighboring vertices
+and adding $2m$ to the opposite vertex, which is not adjacent
+to either of the first two vertices.
+(The amount $m$ and the vertices chosen can vary from turn to turn.)
+The game is won at a certain vertex if, after some number of turns,
+that vertex has the number $2011$ and the other four vertices have the number $0$.
+Prove that for any choice of the initial integers,
+there is exactly one vertex at which the game can be won.
+\end{mdframed}
+Call the vertices $0$, $1$, $2$, $3$, $4$ in order.
+First, notice that the quantity
+\[ S \coloneqq N_1 + 2N_2 + 3N_3 + 4N_4 \pmod 5 \]
+is invariant, where $N_i$ is the amount at vertex $i$.
+This immediately implies that at most one vertex can win,
+since in a winning situation all $N_i$ are $0$ except for one, which is $2011$.
+(For example, if $S \equiv 3 \pmod 5$, any victory must occur at the
+vertex $3$, via $N_3 = 2011$, $N_0 = N_1 = N_2 = N_4 = 0$.)
+
+Now we prove we can win on this unique vertex.
+Let $a_i$, $x_i$ denote the number initially at $i$
+and $x_i$ denote $\sum m$ over all $m$ where vertex $i$ gains $2m$.
+WLOG the possible vertex is $0$,
+meaning $a_1 + 2a_2 + 3a_3 + 4a_4 \equiv 0 \pmod 5$.
+Moreover we want
+\begin{align*}
+  2011 &= a_0 + 2x_0 - x_2 - x_3 \\
+  0 &= a_1 + 2x_1 - x_3 - x_4 \\
+  0 &= a_2 + 2x_2 - x_4 - x_0 \\
+  0 &= a_3 + 2x_3 - x_0 - x_1 \\
+  0 &= a_4 + 2x_4 - x_1 - x_2.
+\end{align*}
+We can ignore the first equation since its the sum of the other four,
+and we can WLOG shift $x_0 \to 0$ by shifting each $x_i$ by a fixed amount.
+We will now solve the resulting system of equations.
+
+First, we have \[ x_4 = 2x_2 + a_2 \text{ and } x_1 = 2x_3 + a_3. \]
+Using these to remove all instances of $x_1$ and $x_4$ gives
+\[ 2x_2-3x_3 = 2a_3+a_1-a_2 \text{ and } 2x_3-3x_2 = 2a_2+a_4-a_3 \]
+whence we have a two-variable system of equations!
+To verify its solution is integral, note that
+\[ x_2-x_3 = \frac{a_1 - 3a_2 + 3a_3 - a_4}{5} \]
+is an integer, since
+\[ a_1 - 3a_2 + 3a_3 - a_4 \equiv a_1 + 2a_2 + 3a_3 + 4a_4 \equiv 0 \pmod 5. \]
+Abbreviating $\frac{a_1 - 3a_2 + 3a_3 - a_4}{5}$ as $k$, we obtain the desired $x_i$:
+\begin{align*}
+  x_2 &= 2a_3+a_1-a_2 + 2k \\
+  x_3 &= x_2 + k \\
+  x_1 &= 2x_3 + a_3 \\
+  x_4 &= 2x_2 + a_2 \\
+  x_0 &= 0.
+\end{align*}
+This is the desired integer solution.
+
+\begin{remark*}
+  In principle, you could unwind all the definitions above to explicitly
+  write every $x_i$ as a function of $a_1$, $a_2$, $a_3$, $a_4$.
+  If you did this, you could get the long equations
+  \begin{align*}
+    x_0 &= 0 \\
+    x_1 &= -\tfrac15(6a_1 + 2a_2 + 3a_3 + 4a_4) \\
+    x_2 &= -\tfrac15(2a_1 + 4a_2 + a_3 + 3a_4) \\
+    x_3 &= -\tfrac15(3a_1 + a_2 + 4a_3 + 2a_4) \\
+    x_4 &= -\tfrac15(4a_1 + 3a_2 + 2a_3 + 6a_4)
+  \end{align*}
+  which indeed are all integers whenever $a_1 + 2a_2 + 3a_3 + 4a_4 \equiv 0 \pmod 5$.
+
+  However, this is quite tedious and also unnecessary to solve the problem.
+  That's because we only care that the $x_i$ are integers,
+  and do not need to actually know the values.
+  This lets us work more indirectly to avoid long calculation, as we did above.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2011/3, proposed by Gabriel Carroll}
+\textsl{Available online at \url{https://aops.com/community/p2254803}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+In hexagon $ABCDEF$, which is nonconvex but not self-intersecting,
+no pair of opposite sides are parallel.
+The internal angles satisfy
+$\angle A=3\angle D$, $\angle C=3\angle F$, and $\angle E=3\angle B$.
+Furthermore $AB=DE$, $BC=EF$, and $CD=FA$.
+Prove that diagonals $\ol{AD}$, $\ol{BE}$, and $\ol{CF}$
+are concurrent.
+\end{mdframed}
+We present the official solution.
+We say a hexagon is \emph{satisfying}
+if it obeys the six conditions;
+note that intuitively we expect three degrees of freedom
+for satisfying hexagons.
+
+Main idea:
+\begin{claim*}
+In a satisfying hexagon,
+$B$, $D$, $F$ are reflections of $A$, $C$, $E$ across
+the sides of $\triangle ACE$.
+\end{claim*}
+(This claim looks plausible because every excellent hexagon is satisfying,
+and both configuration spaces are three-dimensional.)
+Call a hexagon of this shape ``excellent'';
+in a excellent hexagon the diagonals clearly concur (at the orthocenter).
+
+Set $\beta = \angle B$, $\delta = \angle D$, $\varphi = \angle F$.
+
+Now given a satisfying hexagon $ABCDEF$,
+construct a ``phantom hexagon'' $A'B'C'D'E'F'$
+with the same angles which is excellent (see figure).
+This is possible since $\beta + \delta + \varphi = 180\dg$.
+
+\begin{center}
+\begin{asy}
+size(12cm);
+
+void MA(string s, pair A, pair O, pair B) {
+  markangle(11.0, A,O,B);
+  label("$"+s+"$", O, 4*dir((pair)incenter(A,O,B)-O));
+}
+
+pair A = dir(110);
+pair C = dir(205);
+pair E = dir(335);
+pair B = -E+2*foot(E, A, C);
+pair D = -A+2*foot(A, C, E);
+pair F = -C+2*foot(C, E, A);
+
+filldraw(A--B--C--D--E--F--cycle, opacity(0.1)+lightgreen, heavygreen);
+draw(A--C--E--cycle, green);
+draw(A--D, dashed+green);
+draw(B--E, dashed+green);
+draw(C--F, dashed+green);
+
+MA("\beta", C,B,A);
+MA("\delta", E,D,C);
+MA("\varphi", A,F,E);
+
+transform t = shift(-4,0);
+
+add(t*CC());
+
+
+// Again
+
+pair Ap = A;
+pair Cp = C;
+pair Ep = E;
+pair Bp = B;
+pair Dp = D;
+pair Fp = F;
+
+filldraw(A--B--C--D--E--F--cycle, opacity(0.1)+lightcyan, heavycyan);
+draw(A--C--E--cycle, heavycyan);
+draw(A--D, dashed+heavycyan);
+draw(B--E, dashed+heavycyan);
+draw(C--F, dashed+heavycyan);
+
+MA("\beta", C,B,A);
+MA("\delta", E,D,C);
+MA("\varphi", A,F,E);
+
+MA("\beta", A,E,C);
+MA("\varphi", E,C,A);
+MA("\delta", C,A,E);
+
+
+pair A = t*A;
+pair B = t*B;
+pair C = t*C;
+pair D = t*D;
+pair E = t*E;
+pair F = t*F;
+
+dot("$A'$", Ap, dir(Ap));
+dot("$C'$", Cp, dir(Cp));
+dot("$E'$", Ep, dir(Ep));
+dot("$B'$", Bp, dir(Bp));
+dot("$D'$", Dp, dir(Dp));
+dot("$F'$", Fp, dir(Fp));
+dot("$A$", A, dir(120));
+dot("$B$", B, dir(135));
+dot("$C$", C, dir(225));
+dot("$D$", D, dir(270));
+dot("$E$", E, dir(350));
+dot("$F$", F, dir(45));
+
+/* TSQ Source:
+
+!size(12cm);
+
+A := dir 110
+C := dir 205
+E := dir 335
+B := -E+2*foot E A C
+D := -A+2*foot A C E
+F := -C+2*foot C E A
+
+A--B--C--D--E--F--cycle 0.1 lightgreen / heavygreen
+A--C--E--cycle green
+A--D dashed green
+B--E dashed green
+C--F dashed green
+
+!MA("\beta", C,B,A, 0.2);
+!MA("\delta", E,D,C, 0.2);
+!MA("\varphi", A,F,E, 0.2);
+
+! transform t = shift(-4,0);
+
+!add(t*CC());
+
+
+// Again
+
+A' = A
+C' = C
+E' = E
+B' = B
+D' = D
+F' = F
+
+A--B--C--D--E--F--cycle 0.1 lightcyan / heavycyan
+A--C--E--cycle heavycyan
+A--D dashed heavycyan
+B--E dashed heavycyan
+C--F dashed heavycyan
+! anglepen = heavycyan;
+
+!MA("\beta", C,B,A, 0.2);
+!MA("\delta", E,D,C, 0.2);
+!MA("\varphi", A,F,E, 0.2);
+
+!MA("\beta", A,E,C, 0.2);
+!MA("\varphi", E,C,A, 0.2);
+!MA("\delta", C,A,E, 0.2);
+
+
+A = t*A R120
+B = t*B R135
+C = t*C R225
+D = t*D R270
+E = t*E R350
+F = t*F R45
+
+*/
+
+\end{asy}
+\end{center}
+
+
+Then it would suffice to prove that:
+\begin{lemma*}
+  A satisfying hexagon is uniquely determined by its angles
+  up to similarity.
+  That is, at most one hexagon
+  (up to similarity) has angles $\beta$, $\delta$, $\gamma$ as above.
+\end{lemma*}
+\begin{proof}
+  Consider any two satisfying hexagons $ABCDEF$ and $A'B'C'D'E'F'$
+  (not necessarily as constructed above!) with the same angles.
+  We show they are similar.
+
+  To do this, consider the unit complex numbers
+  in the directions $\overrightarrow{BA}$ and $\overrightarrow{DE}$
+  respectively and let $\vec x$ denote their sum.
+  Define $\vec y$, $\vec z$ similarly.
+  Note that the condition $\ol{AB} \not\parallel \ol{DE}$
+  implies $\vec x \neq 0$, and similarly.
+  Then we have the identities
+  \[ AB \cdot \vec x + CD \cdot \vec y + EF \cdot \vec z
+    = A'B' \cdot \vec x + C'D' \cdot \vec y + E'F' \cdot \vec z
+    = 0. \]
+
+  So we would obtain $AB : CD : EF = A'B' : C'D' : E'F'$
+  if only we could show that $\vec x$, $\vec y$, $\vec z$
+  are not multiples of each other
+  (linear dependency reasons).
+  This is a tiresome computation with arguments,
+  but here it is.
+
+  First note that none of $\beta$, $\delta$, $\varphi$
+  can be $90\dg$,
+  since otherwise we get a pair of parallel sides.
+  Now work in the complex plane,
+  fix a reference such that $\vec A - \vec B$ has argument $0$,
+  and assume $ABCDEF$ are labelled counterclockwise.
+  Then
+  \begin{itemize}
+    \ii $\vec B - \vec C$ has argument $\pi-\beta$
+    \ii $\vec C - \vec D$ has argument $-(\beta+3\varphi)$
+    \ii $\vec D - \vec E$ has argument $\pi-(\beta+3\varphi+\delta)$
+    \ii $\vec E - \vec F$ has argument $-(4\beta+3\varphi+\delta)$
+    % \ii $\vec F - \vec A$ has argument $\pi-(4\beta+4\varphi+\delta)$
+  \end{itemize}
+  So the argument of $\vec x$ has argument
+  $\frac{\pi-(\beta+3\varphi+\delta)}{2} \pmod \pi$.
+  The argument of $\vec y$ has argument
+  $\frac{\pi-(5\beta+3\varphi+\delta)}{2} \pmod \pi$.
+  Their difference is $2\beta \pmod \pi$, and since $\beta \neq 90\dg$,
+  it follows that $\vec x$ and $\vec y$ are not
+  multiples of each other; the other cases are similar.
+\end{proof}
+
+Then the lemma implies $ABCDEF \sim A'B'C'D'E'F$ and we're done.
+
+\begin{remark*}
+  This problem turned out to be known already.
+  It appears in this reference:
+  \begin{quote}
+  Nikolai Beluhov, \emph{Matematika}, 2008, issue 6, problem 3.
+  \end{quote}
+  It was reprinted as Kvant, 2009, issue 2, problem M2130;
+  the reprint is available at
+  \url{http://kvant.ras.ru/pdf/2009/2009-02.pdf}.
+\end{remark*}
+
+\begin{remark*}
+  The vector perspective also shows the condition about parallel
+  sides cannot be dropped.
+  Here is a counterexample from Ryan Kim
+  in the event that it is.
+  \begin{center}
+  \begin{asy}
+  pair A = dir(140);
+  pair C_0 = conj(A);
+  pair E = -A;
+  pair B_0 = 2*C_0-E;
+  pair D_0 = 2*C_0-A;
+  pair F = extension(A, E*E/C_0, E, A*A/C_0);
+
+
+  pair C = C_0+2*C_0;
+  pair B = B_0+2*C_0;
+  pair D = D_0+2*C_0;
+
+  filldraw(A--B--C--D--E--F--cycle, opacity(0.1)+lightcyan, heavycyan);
+
+  draw(A--D, heavygreen);
+  draw(B--E, heavygreen);
+  draw(C--F, heavygreen);
+  draw(A--C_0--E--cycle, blue);
+
+  draw(B_0--C--D_0--C_0--cycle, orange+dashed);
+
+  dot("$A$", A, dir(A));
+  dot("$C_0$", C_0, dir(45));
+  dot("$E$", E, dir(E));
+  dot("$B_0$", B_0, dir(135));
+  dot("$D_0$", D_0, dir(315));
+  dot("$F$", F, dir(F));
+  dot("$C$", C, dir(C));
+  dot("$B$", B, dir(B));
+  dot("$D$", D, dir(D));
+
+  /* TSQ Source:
+
+  A = dir 140
+  C_0 = conj(A) R45
+  E = -A
+  B_0 = 2*C_0-E R135
+  D_0 = 2*C_0-A R315
+  F = extension A E*E/C_0 E A*A/C_0
+
+
+  C = C_0+2*C_0
+  B = B_0+2*C_0
+  D = D_0+2*C_0
+
+  A--B--C--D--E--F--cycle 0.1 lightcyan / heavycyan
+
+  A--D heavygreen
+  B--E heavygreen
+  C--F heavygreen
+  A--C_0--E--cycle blue
+
+  B_0--C--D_0--C_0--cycle orange dashed
+
+  */
+  \end{asy}
+  \end{center}
+  By adjusting the figure above so that
+  the triangles are right isosceles (instead of just right),
+  one also finds an example of a hexagon which is satisfying
+  and whose diagonals are concurrent,
+  but which is \emph{not} excellent.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2011/4, proposed by Sam Vandervelde}
+\textsl{Available online at \url{https://aops.com/community/p2254810}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Consider the assertion that for each positive integer $n\geq2$,
+the remainder upon dividing $2^{2^n}$ by $2^n-1$ is a power of $4$.
+Either prove the assertion or find (with proof) a counterexample.
+\end{mdframed}
+We claim $n = 25$ is a counterexample.
+Since $2^{25} \equiv 2^0 \pmod{2^{25}-1}$, we have
+\[ 2^{2^{25}} \equiv 2^{2^{25} \bmod{25}}
+  \equiv 2^7 \bmod{2^{25}-1} \]
+and the right-hand side is actually the remainder,
+since $0 < 2^7 < 2^{25}$.
+But $2^7$ is not a power of $4$.
+
+\begin{remark*}
+  Really, the problem is just equivalent
+  for asking $2^n$ to have odd remainder when divided by $n$.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2011/5, proposed by Zuming Feng, Delong Meng}
+\textsl{Available online at \url{https://aops.com/community/p2254841}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $P$ be a point inside convex quadrilateral $ABCD$.
+Points $Q_1$ and $Q_2$ are located within $ABCD$ such that
+\begin{align*}
+\angle Q_1BC=\angle ABP, & \qquad \angle Q_1CB=\angle DCP, \\
+\angle Q_2AD=\angle BAP, & \qquad \angle Q_2DA=\angle CDP.
+\end{align*}
+Prove that $\ol{Q_1Q_2} \parallel \ol{AB}$
+if and only if $\ol{Q_1Q_2} \parallel \ol{CD}$.
+\end{mdframed}
+If $\ol{AB} \parallel \ol{CD}$ there is nothing to prove.
+Otherwise let $X = \ol{AB} \cap \ol{CD}$.
+Then the $Q_1$ and $Q_2$ are the isogonal conjugates of $P$
+with respect to triangles $XBC$ and $XAD$.
+Thus $X$, $Q_1$, $Q_2$ are collinear,
+on the isogonal of $\ol{XP}$ with respect to
+$\angle DXA = \angle CXB$.
+\pagebreak
+
+\subsection{USAMO 2011/6, proposed by Sid Graham}
+\textsl{Available online at \url{https://aops.com/community/p2254871}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $A$ be a set with $|A|=225$, meaning that $A$ has $225$ elements.
+Suppose further that there are eleven subsets $A_1, \dots, A_{11}$ of $A$
+such that $|A_i|=45$ for $1\leq i\leq11$ and $|A_i\cap A_j|=9$
+for $1\leq i<j\leq11$.
+Prove that $|A_1\cup A_2\cup\dots\cup A_{11}|\geq 165$,
+and give an example for which equality holds.
+\end{mdframed}
+Ignore the $225$ --- it is irrelevant.
+
+Denote the elements of $A_1 \cup \dots \cup A_{11}$
+by $a_1$, \dots, $a_n$,
+and suppose that $a_i$ appears $x_i$ times among $A_i$
+for each $1 \le i \le n$ (so $1 \le x_i \le 11$).
+Then we have
+\[ \sum_{i=1}^{11} x_i = \sum_{i=1}^{11} |A_i| = 45 \cdot 11 \]
+and
+\[ \sum_{i=1}^{11} \binom{x_i}{2} = \sum_{1 \le i < j \le 11}
+  \left\lvert A_i \cap A_j \right\rvert
+  = \binom{11}{2} \cdot 9. \]
+Therefore, we deduce that
+$\sum x_i = 495$ and $\sum_i x_i^2 = 1485$.
+Now, by Cauchy Schwarz
+\[ n \left( \sum_i x_i^2 \right) \ge \left( \sum x_i \right)^2 \]
+which implies $n \ge \frac{495^2}{1485} = 165$.
+
+Equality occurs if we let $A$ consist of the $165$
+three-element subsets of $\left\{ 1, \dots, 11 \right\}$
+(plus $60$ of your favorite reptiles
+if you really insist $|A|=225$).
+Then we let $A_i$ denote those subsets containing $i$,
+of which there are $\binom{10}{2} = 45$,
+and so that $|A_i \cap A_j| = \binom 91 = 9$.
+\pagebreak
+
+
+\end{document}

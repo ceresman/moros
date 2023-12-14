@@ -1,0 +1,2126 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{USA TSTST 2021 Solutions}
+\subtitle{United States of America --- TST Selection Test}
+\author{Andrew Gu and Evan Chen}
+\date{63\ts{rd} IMO 2022 Norway and 11\ts{th} EGMO 2022 Hungary}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $ABCD$ be a quadrilateral inscribed in a circle with center $O$.
+Points $X$ and $Y$ lie on sides $AB$ and $CD$, respectively.
+Suppose the circumcircles of $ADX$ and $BCY$
+meet line $XY$ again at $P$ and $Q$, respectively.
+Show that $OP=OQ$.
+
+\item %% Problem 2
+Let $a_1 < a_2 < a_3 < a_4 < \dotsb$ be an
+infinite sequence of real numbers in the interval $(0,1)$.
+Show that there exists a number that occurs
+exactly once in the sequence
+\[ \frac{a_1}{1}, \; \frac{a_2}{2}, \;
+  \frac{a_3}{3}, \; \frac{a_4}{4}, \; \dots. \]
+
+\item %% Problem 3
+Find all positive integers $k > 1$ for which there exists a positive integer
+$n$ such that $\binom{n}{k}$ is divisible by $n$, and $\binom{n}{m}$ is not
+divisible by $n$ for $2\leq m < k$.
+
+\item %% Problem 4
+Let $a$ and $b$ be positive integers.
+Suppose that there are infinitely many pairs of positive integers $(m, n)$
+for which $m^2+an+b$ and $n^2+am+b$ are both perfect squares.
+Prove that $a$ divides $2b$.
+
+\item %% Problem 5
+Let $T$ be a tree on $n$ vertices with exactly $k$ leaves.
+Suppose that there exists a subset of
+at least $\frac{n+k-1}{2}$ vertices of $T$,
+no two of which are adjacent.
+Show that the longest path in $T$ contains
+an even number of edges.
+
+\item %% Problem 6
+Triangles $ABC$ and $DEF$ share circumcircle $\Omega$ and incircle $\omega$
+so that points $A$, $F$, $B$, $D$, $C$, and $E$ occur in this order along $\Omega$.
+Let $\Delta_A$ be the triangle formed by lines $AB$, $AC$, and $EF$,
+and define triangles $\Delta_B$, $\Delta_C, \dots, \Delta_F$ similarly.
+Furthermore, let $\Omega_A$ and $\omega_A$ be the circumcircle and incircle
+of triangle $\Delta_A$, respectively, and define circles
+$\Omega_B$, $\omega_B, \dots, \Omega_F$, $\omega_F$ similarly.
+\begin{enumerate}[(a)]
+  \item Prove that the two common external tangents to circles $\Omega_A$ and $\Omega_D$
+    and the two common external tangents to circles $\omega_A$ and $\omega_D$
+    are either concurrent or pairwise parallel.
+
+  \item Suppose that these four lines meet at point $T_A$,
+    and define points $T_B$ and $T_C$ similarly.
+    Prove that points $T_A$, $T_B$, and $T_C$ are collinear.
+\end{enumerate}
+
+\item %% Problem 7
+Let $M$ be a finite set of lattice points
+and $n$ be a positive integer.
+A \emph{mine-avoiding path} is a path of lattice points with length $n$,
+beginning at $(0,0)$ and ending at a point on the line $x+y=n$,
+that does not contain any point in $M$.
+Prove that if there exists a mine-avoiding path,
+then there exist at least $2^{n-|M|}$ mine-avoiding paths.
+
+\item %% Problem 8
+Let $ABC$ be a scalene triangle.
+Points $A_1$, $B_1$ and $C_1$ are chosen
+on segments $BC$, $CA$, and $AB$, respectively,
+such that $\triangle A_1B_1C_1$ and $\triangle ABC$
+are similar.
+Let $A_2$ be the unique point on line $B_1C_1$
+such that $AA_2 = A_1A_2$.
+Points $B_2$ and $C_2$ are defined similarly.
+Prove that $\triangle A_2B_2C_2$ and $\triangle ABC$ are similar.
+
+\item %% Problem 9
+Let $q=p^r$ for a prime number $p$ and positive integer $r$.
+Let $\zeta = e^{\frac{2\pi i}{q}}$.
+Find the least positive integer $n$ such that
+\[
+  \sum_{\substack{1 \le k \le q \\ \gcd(k,p) = 1}}
+  \frac{1}{(1 - \zeta^k)^n}
+\]
+is not an integer.
+(The sum is over all $1\leq k\leq q$ with $p$ not dividing $k$.)
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{TSTST 2021/1, proposed by Holden Mui}
+\textsl{Available online at \url{https://aops.com/community/p23586650}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCD$ be a quadrilateral inscribed in a circle with center $O$.
+Points $X$ and $Y$ lie on sides $AB$ and $CD$, respectively.
+Suppose the circumcircles of $ADX$ and $BCY$
+meet line $XY$ again at $P$ and $Q$, respectively.
+Show that $OP=OQ$.
+\end{mdframed}
+We present many solutions.
+
+\paragraph{First solution, angle chasing only (Ankit Bisain).}
+Let lines $BQ$ and $DP$ meet $(ABCD)$ again at $D'$ and $B'$, respectively.
+\begin{center}
+\begin{asy}[width = 0.5\textwidth]
+path omega = circle((0, 0), 1);
+pair A = dir(70);
+pair B = dir(180);
+pair C = dir(200);
+pair D = dir(340);
+pair O = (0, 0);
+
+real x = 0.2;
+real y = 0.3;
+pair X = (1-x) * A + x * B;
+pair Y = (1-y) * C + y * D;
+
+pair P = 2 * foot(circumcenter(A, D, X), X, Y) - X;
+pair Q = 2 * foot(circumcenter(B, C, Y), X, Y) - Y;
+
+dot("$A$", A, A);
+dot("$B$", B, B);
+dot("$C$", C, C);
+dot("$D$", D, D);
+dot("$O$", O, -dir(A+B+C+D));
+dot("$X$", X, dir(A+B));
+dot("$Y$", Y, dir(C+D));
+dot("$P$", P, dir(30));
+dot("$Q$", Q, dir(-60));
+
+draw(omega);
+draw(A -- B -- C -- D -- cycle);
+draw(circumcircle(A, D, X));
+draw(circumcircle(B, C, Y));
+draw(X -- Y);
+draw(P -- O -- Q, dotted);
+
+pair Bp = 2 * foot(B, O, foot(O, X, Y)) - B;
+dot("$B'$", Bp, dir(Bp));
+pair Dp = 2 * foot(D, O, foot(O, X, Y)) - D;
+dot("$D'$", Dp, dir(300));
+
+draw(B -- Dp -- D -- Bp -- cycle, dashed);
+\end{asy}
+\end{center}
+Then $BB' \parallel PX$ and $DD' \parallel QY$ by Reim's theorem. Segments
+$BB', DD'$, and $PQ$ share a perpendicular bisector which passes through $O$, so
+$OP=OQ$.
+
+\paragraph{Second solution via isosceles triangles (from contestants).}
+Let $T = \ol{BQ} \cap \ol{DP}$.
+\begin{center}
+\begin{asy}
+  size(200);
+  path omega = circle((0, 0), 1);
+  pair A = dir(70);
+  pair B = dir(180);
+  pair C = dir(200);
+  pair D = dir(340);
+  pair O = (0, 0);
+
+  real x = 0.2;
+  real y = 0.3;
+  pair X = (1-x) * A + x * B;
+  pair Y = (1-y) * C + y * D;
+
+  pair P = 2 * foot(circumcenter(A, D, X), X, Y) - X;
+  pair Q = 2 * foot(circumcenter(B, C, Y), X, Y) - Y;
+
+  pair T = extension(B, Q, D, P);
+
+  dot("$A$", A, A);
+  dot("$B$", B, dir(135));
+  dot("$C$", C, C);
+  dot("$D$", D, 2*dir(5));
+  dot("$O$", O, dir(60));
+  dot("$X$", X, dir(A+B));
+  dot("$Y$", Y, dir(C+D));
+  dot("$P$", P, dir(30));
+  dot("$Q$", Q, dir(-60));
+  dot("$T$", T, dir(240));
+
+  draw(omega);
+  draw(A -- B -- C -- D -- cycle);
+  draw(circumcircle(A, D, X));
+  draw(circumcircle(B, C, Y));
+  draw(X -- Y);
+  draw(P -- O -- Q, dotted);
+  draw(B -- T -- P, dashed);
+
+  pair O1 = circumcenter(B, O, D);
+  real r = abs(O1 - O);
+  draw(arc(O1, r, 45, 120), dashed);
+\end{asy}
+\end{center}
+Note that $PQT$ is isosceles because
+\[ \dang PQT = \dang YQB = \dang BCD = \dang BAD = \dang XPD = \dang TPQ.  \]
+Then $(BODT)$ is cyclic because
+\[\dang BOD = 2 \dang BCD = \dang PQT + \dang TPQ = \dang BTD.\]
+Since $BO=OD$, $\ol{TO}$ is an angle bisector of $\dang BTD$. Since $\triangle PQT$ is isosceles, $\ol{TO} \perp \ol{PQ}$, so $OP = OQ$.
+
+\paragraph{Third solution using a parallelogram (from contestants).}
+Let $(BCY)$ meet $\ol{AB}$ again at $W$ and let $(ADX)$ meet $\ol{CD}$ again at $Z$. Additionally, let $O_1$ be the center of $(ADX)$ and $O_2$ be the center of $(BCY)$.
+\begin{center}
+\begin{asy}
+size(200);
+path omega = circle((0, 0), 1);
+pair A = dir(70);
+pair B = dir(180);
+pair C = dir(200);
+pair D = dir(340);
+pair O = (0, 0);
+
+real x = 0.2;
+real y = 0.3;
+pair X = (1-x) * A + x * B;
+pair Y = (1-y) * C + y * D;
+
+pair P = 2 * foot(circumcenter(A, D, X), X, Y) - X;
+pair Q = 2 * foot(circumcenter(B, C, Y), X, Y) - Y;
+
+pair T = extension(B, Q, D, P);
+
+draw(omega);
+
+draw(A -- B ^^ C -- D);
+draw(circumcircle(A, D, X));
+draw(circumcircle(B, C, Y));
+draw(X -- Y);
+
+pair W = 2 * foot(circumcenter(B, C, Y), A, B) - B;
+pair Z = 2 * foot(circumcenter(A, D, X), C, D) - D;
+
+pair O1 = circumcenter(A, D, X);
+pair O2 = circumcenter(B, C, Y);
+pair Op = circumcenter(X, Y, Z);
+
+draw(W -- Z);
+draw(circumcircle(X, Y, Z), dashed);
+
+dot("$A$", A, A);
+dot("$B$", B, B);
+dot("$C$", C, C);
+dot("$D$", D, D);
+dot("$X$", X, dir(A+B));
+dot("$Y$", Y, dir(C+D));
+dot("$P$", P, dir(-45));
+dot("$Q$", Q, dir(0));
+dot("$W$", W, dir(A+B));
+dot("$Z$", Z, dir(C+D));
+
+dot("$O$", O, dir(300));
+dot("$O_1$", O1, dir(O1));
+dot("$O_2$", O2, dir(O2));
+dot("$O'$", Op, dir(300));
+
+draw(O -- O1 -- Op -- O2 -- cycle, dotted);
+\end{asy}
+\end{center}
+Note that $(WXYZ)$ is cyclic since
+\[\dang XWY + \dang YZX = \dang YWB + \dang XZD = \dang YCB + \dang XAD = 0^\circ,\]
+so let $O'$ be the center of $(WXYZ)$. Since $\ol{AD} \parallel \ol{WY}$ and $\ol{BC} \parallel \ol{XZ}$ by Reim's theorem, $OO_1O'O_2$ is a parallelogram.
+
+To finish the problem, note that projecting $O_1$, $O_2$, and $O'$ onto
+$\ol{XY}$ gives the midpoints of $\ol{PX}$, $\ol{QY}$, and
+$\ol{XY}$. Since $OO_1O'O_2$ is a parallelogram, projecting $O$ onto
+$\ol{XY}$ must give the midpoint of $\ol{PQ}$, so $OP=OQ$.
+
+\paragraph{Fourth solution using congruent circles (from contestants).}
+Let the angle bisector of $\dang BOD$ meet $\ol{XY}$ at $K$.
+\begin{center}
+\begin{asy}
+  size(200);
+  path omega = circle((0, 0), 1);
+  pair A = dir(70);
+  pair B = dir(180);
+  pair C = dir(200);
+  pair D = dir(340);
+  pair O = (0, 0);
+
+  real x = 0.2;
+  real y = 0.3;
+  pair X = (1-x) * A + x * B;
+  pair Y = (1-y) * C + y * D;
+
+  pair P = 2 * foot(circumcenter(A, D, X), X, Y) - X;
+  pair Q = 2 * foot(circumcenter(B, C, Y), X, Y) - Y;
+
+  pair T = extension(B, Q, D, P);
+  dot("$A$", A, A);
+  dot("$B$", B, B);
+  dot("$C$", C, C);
+  dot("$D$", D, D);
+  dot("$O$", O, 2*dir(15));
+  dot("$X$", X, 1/3*dir(A+B));
+  dot("$Y$", Y, dir(C+D));
+  dot("$P$", P, dir(0));
+  dot("$Q$", Q, dir(-30));
+
+
+  pair K = extension(O, foot(O, B, D), X, Y);
+  dot("$K$", K, 2*dir(K));
+  draw(X -- K -- O);
+  draw(B -- O -- D);
+
+  draw(omega);
+  draw(A -- B -- C -- D -- cycle);
+  draw(circumcircle(A, D, X));
+  draw(circumcircle(B, C, Y));
+  draw(X -- Y);
+
+  draw(circumcircle(O, P, D), dotted);
+  draw(circumcircle(O, Q, B), dotted);
+\end{asy}
+\end{center}
+Then $(BQOK)$ is cyclic because $\dang KOD = \dang BAD = \dang KPD$, and $(DOPK)$ is cyclic similarly.
+By symmetry over $KO$, these circles have the same radius $r$, so
+\[ OP = 2r \sin \angle OKP = 2r \sin \angle OKQ = OQ \]
+by the Law of Sines.
+
+\paragraph{Fifth solution by ratio calculation (from contestants).}
+Let $\ol{XY}$ meet $(ABCD)$ at $X'$ and $Y'$.
+\begin{center}
+\begin{asy}
+size(200);
+path omega = circle((0, 0), 1);
+pair A = dir(70);
+pair B = dir(180);
+pair C = dir(200);
+pair D = dir(340);
+pair O = (0, 0);
+
+real x = 0.2;
+real y = 0.3;
+pair X = (1-x) * A + x * B;
+pair Y = (1-y) * C + y * D;
+
+pair P = 2 * foot(circumcenter(A, D, X), X, Y) - X;
+pair Q = 2 * foot(circumcenter(B, C, Y), X, Y) - Y;
+
+pair T = extension(B, Q, D, P);
+
+pair Xp = intersectionpoints(circumcircle(A,B,C), Y + (Y-X)*10 -- X + (X-Y)*10)[0];
+pair Yp = intersectionpoints(circumcircle(A,B,C), Y + (Y-X)*10 -- X + (X-Y)*10)[1];
+
+fill(D -- P -- Xp -- cycle, lightblue+opacity(0.5));
+fill(B -- Yp -- D -- cycle, lightblue+opacity(0.5));
+
+// fill(B -- D -- X -- cycle, lightgreen+opacity(0.5));
+//fill(B -- Xp -- D -- cycle, lightgreen+opacity(0.5));
+
+dot("$A$", A, A);
+dot("$B$", B, B);
+dot("$C$", C, C);
+dot("$D$", D, D);
+dot("$O$", O, -dir(A+B+C+D));
+dot("$X$", X, dir(A+B));
+dot("$Y$", Y, dir(-45));
+dot("$P$", P, dir(0));
+dot("$Q$", Q, dir(-30));
+
+draw(omega);
+draw(A -- B -- C -- D -- cycle);
+draw(circumcircle(A, D, X));
+draw(circumcircle(B, C, Y));
+
+draw(Xp -- Yp);
+
+dot("$X'$", Xp, dir(Xp));
+dot("$Y'$", Yp, dir(Yp));
+\end{asy}
+\end{center}
+Since $\dang Y'BD = \dang PX'D$ and $\dang BY'D = \dang BAD = \dang X'PD$,
+\[ \triangle BY'D \sim \triangle XP'D \implies PX' = BY' \cdot \frac{DX'}{BD}.\]
+Similarly,
+\[ \triangle BX'D \sim \triangle BQY' \implies QY' = DX' \cdot \frac{BY'}{BD}.\]
+Thus $PX' = QY'$, which gives $OP=OQ$.
+
+\paragraph{Sixth solution using radical axis (from author).}
+Without loss of generality, assume $\ol{AD} \nparallel \ol{BC}$, as this case holds by continuity. Let $(BCY)$ meet $\ol{AB}$ again at $W$, let $(ADX)$ meet $\ol{CD}$ again at $Z$, and let $\ol{WZ}$ meet $(ADX)$ and $(BCY)$ again at $R$ and $S$.
+\begin{center}
+\begin{asy}
+size(200);
+path omega = circle((0, 0), 1);
+pair A = dir(70);
+pair B = dir(180);
+pair C = dir(200);
+pair D = dir(340);
+pair O = (0, 0);
+
+real x = 0.2;
+real y = 0.3;
+pair X = (1-x) * A + x * B;
+pair Y = (1-y) * C + y * D;
+
+pair P = 2 * foot(circumcenter(A, D, X), X, Y) - X;
+pair Q = 2 * foot(circumcenter(B, C, Y), X, Y) - Y;
+
+pair T = extension(B, Q, D, P);
+
+draw(omega);
+
+draw(A -- B ^^ C -- D);
+draw(circumcircle(A, D, X));
+draw(circumcircle(B, C, Y));
+draw(X -- Y);
+
+pair W = 2 * foot(circumcenter(B, C, Y), A, B) - B;
+pair Z = 2 * foot(circumcenter(A, D, X), C, D) - D;
+pair R = 2 * foot(circumcenter(A, D, X), W, Z) - Z;
+pair S = 2 * foot(circumcenter(B, C, Y), W, Z) - W;
+
+draw(W -- Z);
+draw(circumcircle(P, Q, R), dashed);
+draw(circumcircle(X, Y, Z), dashed);
+
+dot("$A$", A, A);
+dot("$B$", B, B);
+dot("$C$", C, C);
+dot("$D$", D, D);
+dot("$X$", X, dir(A+B));
+dot("$Y$", Y, dir(C+D));
+dot("$P$", P, dir(-45));
+dot("$Q$", Q, dir(0));
+dot("$W$", W, dir(A+B));
+dot("$Z$", Z, dir(C+D));
+dot("$R$", R, dir(90));
+dot("$S$", S, dir(210));
+\end{asy}
+\end{center}
+Note that $(WXYZ)$ is cyclic since
+\[\dang XWY + \dang YZX = \dang YWB + \dang XZD = \dang YCB + \dang XAD = 0^\circ\]
+and $(PQRS)$ is cyclic since
+\[\dang PQS = \dang YQS = \dang YWS = \dang PXZ = \dang PRZ = \dang SRP.\]
+Additionally, $\ol{AD} \parallel \ol{PR}$ since
+\[\dang DAX + \dang AXP + \dang XPR = \dang YWX + \dang WXY + \dang XYW = 0^\circ,\]
+and $\ol{BC} \parallel \ol{SQ}$ similarly.
+
+Lastly, $(ABCD)$ and $(PQRS)$ are concentric; if not, using the radical axis theorem twice shows that their radical axis must be parallel to both $\ol{AD}$ and $\ol{BC}$, contradiction.
+
+\paragraph{Seventh solution using Cayley-Bacharach (author).}
+Define points $W, Z, R, S$ as in the previous solution.
+\begin{center}
+\begin{asy}[width = 0.5\textwidth]
+path omega = circle((0, 0), 1);
+pair A = dir(70);
+pair B = dir(180);
+pair C = dir(200);
+pair D = dir(340);
+pair O = (0, 0);
+
+real x = 0.2;
+real y = 0.3;
+pair X = (1-x) * A + x * B;
+pair Y = (1-y) * C + y * D;
+
+pair P = 2 * foot(circumcenter(A, D, X), X, Y) - X;
+pair Q = 2 * foot(circumcenter(B, C, Y), X, Y) - Y;
+draw(omega, green);
+
+draw(A -- B ^^ C -- D, red);
+draw(circumcircle(A, D, X), blue);
+draw(circumcircle(B, C, Y), blue);
+draw(X -- Y, green);
+
+pair W = 2 * foot(circumcenter(B, C, Y), A, B) - B;
+pair Z = 2 * foot(circumcenter(A, D, X), C, D) - D;
+pair R = 2 * foot(circumcenter(A, D, X), W, Z) - Z;
+pair S = 2 * foot(circumcenter(B, C, Y), W, Z) - W;
+
+draw(W -- Z, green);
+draw(circumcircle(P, Q, R), red+dashed);
+
+dot("$A$", A, A);
+dot("$B$", B, B);
+dot("$C$", C, C);
+dot("$D$", D, D);
+dot("$X$", X, dir(A+B));
+dot("$Y$", Y, dir(C+D));
+dot("$P$", P, dir(-45));
+dot("$Q$", Q, dir(0));
+dot("$W$", W, dir(A+B));
+dot("$Z$", Z, dir(C+D));
+dot("$R$", R, dir(90));
+dot("$S$", S, dir(210));
+\end{asy}
+\end{center}
+The quartics $(ADXZ) \cup (BCWY)$ and $\ol{XY} \cup \ol{WZ} \cup (ABCD)$ meet at the 16 points
+\[A, B, C, D, W, X, Y, Z, P, Q, R, S, I, I, J, J,\]
+where $I$ and $J$ are the circular points at infinity. Since $\ol{AB} \cup \ol{CD} \cup (PQR)$ contains the 13 points
+\[A,B,C,D,P,Q,R,W,X,Y,Z,I,J,\]
+it must contain $S$, $I$, and $J$ as well, by quartic Cayley-Bacharach.
+Thus, $(PQRS)$ is cyclic and intersects $(ABCD)$ at $I$, $I$, $J$, and $J$, implying that the two circles are concentric, as desired.
+
+\begin{remark*}
+  [Author comments]
+  Holden says he came up with this problem via the Cayley-Bacharach solution,
+  by trying to get two quartics to intersect.
+\end{remark*}
+\pagebreak
+
+\subsection{TSTST 2021/2, proposed by Merlijn Staps}
+\textsl{Available online at \url{https://aops.com/community/p23586635}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a_1 < a_2 < a_3 < a_4 < \dotsb$ be an
+infinite sequence of real numbers in the interval $(0,1)$.
+Show that there exists a number that occurs
+exactly once in the sequence
+\[ \frac{a_1}{1}, \; \frac{a_2}{2}, \;
+  \frac{a_3}{3}, \; \frac{a_4}{4}, \; \dots. \]
+\end{mdframed}
+We present three solutions.
+\paragraph{Solution 1 (Merlijn Staps).}
+We argue by contradiction, so suppose that for each $\lambda$ for which the set
+$S_\lambda = \{k : a_k/k = \lambda\}$ is  non-empty, it contains at least two
+elements.  Note that $S_\lambda$ is always a finite set because  $a_k =
+k\lambda$ implies $k < 1/\lambda$.
+
+Write $m_\lambda$ and $M_\lambda$ for the smallest and largest element of
+$S_\lambda$,  respectively, and define $T_\lambda = \{m_\lambda,
+m_\lambda+1,\dots,M_\lambda\}$ as the smallest set of consecutive positive
+integers  that contains $S_\lambda$.  Then all $T_\lambda$ are sets of at least
+two consecutive positive integers, and moreover the $T_\lambda$ cover
+$\NN$. Additionally, each positive integer is covered finitely many times
+because there are only finitely many possible values of $m_{\lambda}$ smaller
+than any fixed integer.
+
+Recall that if three intervals have a point in common then one
+of them is contained in the union of the other two. Thus, if any positive
+integer is covered more than twice by the sets $T_{\lambda}$, we may throw out
+one set while maintaining the property that the $T_{\lambda}$
+cover $\NN$. By using the fact that each positive integer is covered
+finitely many times, we can apply this process so that each positive integer is
+eventually covered at most twice.
+%By repeatedly throwing away some of the $T_\lambda$ we may assume
+%that each positive integer is contained in at most two sets $T_\lambda$, while
+%still maintaining the property that the $T_\lambda$ cover $\NN$; this
+%follows from the fact that  if three intervals have a point in common then one
+%of them is contained in the union of the other two.
+
+Let $\Lambda$ denote the set
+of the $\lambda$-values for which $T_\lambda$ remains in our collection of sets;
+then $\bigcup_{\lambda \in \Lambda} T_\lambda = \NN$ and each positive
+integer is contained in at most two sets $T_\lambda$.
+
+We now obtain
+\[
+\sum_{\lambda \in \Lambda} \sum_{k \in T_\lambda} (a_{k+1}-a_k) \le 2 \sum_{k \ge 1} (a_{k+1} - a_k) \le 2.
+\]
+On the other hand,  because $a_{m_\lambda} = \lambda m_\lambda$ and $a_{M_\lambda} = \lambda M_\lambda$, we have
+\begin{align*}
+  2\sum_{k \in T_\lambda} (a_{k+1} - a_k) &\ge2 \sum_{m_\lambda \le k < M_\lambda}
+  (a_{k+1} - a_k) = 2(a_{M_\lambda}-a_{m_\lambda}) = 2(M_\lambda-m_\lambda)\lambda
+                                        \\
+                                          & = 2(M_\lambda - m_\lambda) \cdot
+                                        \frac{a_{m_\lambda}}{m_\lambda} \ge
+                                        (M_\lambda - m_\lambda + 1) \cdot
+                                        \frac{a_1}{m_\lambda} \ge a_1 \cdot
+                                        \sum_{k \in T_\lambda} \frac1k.
+\end{align*}
+Combining this with our first estimate, and using the fact that the $T_\lambda$ cover $\NN$,  we obtain
+\[
+4 \ge 2 \sum_{\lambda \in \Lambda} \sum_{k \in T_\lambda} (a_{k+1}-a_k) \ge a_1 \sum_{\lambda \in \Lambda} \sum_{k \in T_\lambda} \frac1k \ge a_1 \sum_{k \ge 1} \frac1k,
+\]
+contradicting the fact that the harmonic series diverges.
+
+\paragraph{Solution 2 (Sanjana Das).}
+
+Assume for the sake of contradiction that no number appears exactly once in the
+sequence. For every $i < j$ with $a_i/i = a_j/j$, draw an edge
+between $i$ and $j$, so every $i$ has an edge (and being connected by an edge is
+a transitive property). Call $i$ \emph{good} if it has an edge with some $j > i$.
+
+First, each $i$ has finite degree -- otherwise \[\frac{a_{x_1}}{x_1} = \frac{a_{x_2}}{x_2} = \dotsb\] for an infinite increasing sequence of positive integers $x_i$, but then the $a_{x_i}$ are unbounded.
+
+Now we use the following process to build a sequence of indices whose $a_i$ we can lower-bound:
+\begin{itemize}
+    \item Start at $x_1 = 1$, which is good.
+    \item If we're currently at good index $x_i$, then let $s_i$ be the largest positive integer such that $x_i$ has an edge to $x_i + s_i$. (This exists because the degrees are finite.)
+    \item Let $t_i$ be the smallest positive integer for which $x_i + s_i + t_i$ is good, and let this be $x_{i + 1}$. This exists because if all numbers $k \leq x \leq 2k$ are bad, they must each connect to some number less than $k$ (if two connect to each other, the smaller one is good), but then two connect to the same number, and therefore to each other -- this is the idea we will use later to bound the $t_i$ as well.
+\end{itemize}
+
+Then $x_i = 1 + s_1 + t_1 + \dotsb + s_{i - 1} + t_{i - 1}$, and we have
+\[a_{x_{i + 1}} > a_{x_i + s_i} = \frac{x_i + s_i}{x_i} a_{x_i} = \frac{1 + (s_1
+  + \dotsb + s_{i - 1} + s_i) + (t_1 + \dotsb + t_{i - 1})}{1 + (s_1 + \dotsb +
+s_{i - 1}) + (t_1 + \dotsb + t_{i - 1})}a_{x_i}.\] This means
+\[c_n := \frac{a_{x_n}}{a_1} > \prod_{i = 1}^{n-1} \frac{1 + (s_1 + \dotsb +
+s_{i-1} + s_{i}) + (t_1 + \dotsb + t_{i-1})}{1 + (s_1 + \dotsb + s_{i-1}) + (t_1
++ \dotsb + t_{i-1})}.\]
+
+\begin{lemma*}
+  $t_1 + \dotsb + t_n \leq s_1 + \dotsb + s_n$ for each $n$.
+\end{lemma*}
+
+\begin{proof}
+  Consider $1 \leq i \leq n$. Note that for every $i$, the $t_i - 1$ integers strictly between $x_i + s_i$ and $x_i + s_i + t_i$ are all bad, so each such index $x$ must have an edge to some $y < x$.
+
+  First we claim that if $x \in (x_i + s_i, x_i + s_i + t_i)$, then $x$ cannot
+  have an edge to $x_j$ for any $j \leq i$. This is because $x > x_i + s_i
+  \geq x_j + s_j$, contradicting the fact that $x_j + s_j$ is the largest
+  neighbor of $x_j$.
+
+  This also means $x$ doesn't have an edge to $x_j + s_j$ for any $j \leq i$, since if it did, it would have an edge to $x_j$.
+
+  Second, no two bad values of $x$ can have an edge, since then the smaller
+  one is good. This also means no two bad $x$ can have an edge to the same $y$.
+
+  Then each of the $\sum (t_i - 1)$ values in the intervals $(x_i+s_i,
+  x_i+s_i+t_i)$ for $1 \leq i \leq n$ must have an edge to an unique $y$ in one
+  of the intervals $(x_i, x_i + s_i)$ (not necessarily with the same $i$). Therefore
+  \[\sum (t_i - 1) \leq \sum (s_i - 1)\implies \sum t_i \leq \sum s_i.\qedhere\]
+\end{proof}
+
+Now note that if $a > b$, then $\frac{a + x}{b + x} = 1 + \frac{a - b}{b + x}$
+is decreasing in $x$. This means
+\[c_n > \prod_{i = 1}^{n-1} \frac{1 + 2s_1 + \dotsb + 2s_{i-1} + s_{i}}{1 + 2s_1
+    + \dotsb + 2s_{i-1}} > \prod_{i = 1}^{n-1} \frac{1 + 2s_1 + \dotsb +
+    2s_{i-1} + 2s_{i}}{1 + 2s_1 + \dotsb + 2s_{i-1} + s_{i}},\]
+By multiplying both products, we have a telescoping product, which results in
+\[c_n^2 \geq 1 + 2s_1 + \dotsb + 2s_n + 2s_{n + 1}.\]
+The right hand side is unbounded since the $s_i$ are positive integers, while
+$c_n = a_{x_n}/a_1 < 1/a_1$ is bounded, contradiction.
+
+\paragraph{Solution 3 (Gopal Goel).}
+
+Suppose for sake of contradiction that the problem is false. Call an index $i$ a
+\emph{pin} if
+\[\frac{a_j}{j} = \frac{a_i}{i} \implies j\ge i.\]
+\begin{lemma*}
+There exists $k$ such that if we have $\tfrac{a_i}{i}=\tfrac{a_j}{j}$ with
+$j > i \ge k$, then $j\le 1.1i$.
+\end{lemma*}
+\begin{proof}
+  Note that for any $i$, there are only finitely many $j$ with
+  $\frac{a_j}{j}=\frac{a_i}{i}$, otherwise $a_j=\frac{ja_i}{i}$ is unbounded.
+  Thus it suffices to find $k$ for which $j\leq 1.1i$ when $j > i\geq k$.
+
+  Suppose no such $k$ exists. Then, take a pair $j_1>i_1$ such that
+  $\tfrac{a_{j_1}}{j_1} = \tfrac{a_{i_1}}{i_1}$ and $j_1>1.1i_1$, or
+  $a_{j_1}>1.1a_{i_1}$. Now, since $k=j_1$ can't work, there exists a pair
+  $j_2>i_2\ge i_1$ such that $\tfrac{a_{j_2}}{j_2} = \tfrac{a_{i_2}}{i_2}$ and
+  $j_2>1.1i_2$, or $a_{j_2}>1.1a_{i_2}$. Continuing in this fashion, we see that
+  \[a_{j_\ell}>1.1a_{i_\ell}> 1.1a_{j_{\ell-1}},\]
+  so we have that $a_{j_\ell}>1.1^\ell a_{i_1}$. Taking $\ell>\log_{1.1}(1/a_1)$ gives the desired contradiction.
+\end{proof}
+
+\begin{lemma*}
+For $N>k^2$, there are at most $0.8N$ pins in $[\sqrt{N},N)$.
+\end{lemma*}
+\begin{proof}
+By the first lemma, we see that the number of pins in $[\sqrt{N},\tfrac{N}{1.1})$ is at most the number of non-pins in $[\sqrt{N},N)$. Therefore, if the number of pins in $[\sqrt{N},N)$ is $p$, then we have
+\[p-N\left(1-\frac{1}{1.1}\right)\le N-p,\]
+so $p\le 0.8N$, as desired.
+\end{proof}
+We say that $i$ is the pin of $j$ if it is the smallest index such that
+$\tfrac{a_i}{i}=\tfrac{a_j}{j}$. The pin of $j$ is always a pin.
+
+Given an index $i$, let $f(i)$ denote the largest index less than $i$ that is
+not a pin (we leave the function undefined when no such index exists, as we are
+only interested in the behavior for large $i$). Then $f$ is weakly increasing
+and unbounded by the first lemma. Let $N_0$ be a positive integer such that
+$f(\sqrt{N_0}) > k$.
+
+Take any $N>N_0$ such that $N$ is not a pin. Let $b_0=N$, and $b_1$ be the pin
+of $b_0$. Recursively define $b_{2i}=f(b_{2i-1})$, and $b_{2i+1}$ to be the pin of $b_{2i}$.
+
+Let $\ell$ be the largest odd index such that $b_\ell\ge\sqrt{N}$. We first show
+that $b_\ell\le 100\sqrt{N}$. Since $N > N_0$, we have $b_{\ell+1} > k$. By the
+choice of $\ell$ we have $b_{\ell+2}<\sqrt{N}$, so \[b_{\ell+1}<1.1b_{\ell+2}<
+1.1\sqrt{N}\] by the first lemma. We see
+that all the indices from $b_{\ell+1}+1$ to $b_\ell$ must be pins, so we have
+at least $b_\ell-1.1\sqrt{N}$ pins in $[\sqrt{N},b_\ell)$. Combined with the
+second lemma, this shows that $b_\ell\le 100\sqrt{N}$.
+
+Now, we have that $a_{b_{2i}}=\tfrac{b_{2i}}{b_{2i+1}}a_{b_{2i+1}}$ and
+$a_{b_{2i+1}}> a_{b_{2i+2}}$, so combining gives us
+\[\frac{a_{b_0}}{a_{b_\ell}}> \frac{b_0}{b_1}\frac{b_2}{b_3}\dotsm\frac{b_{\ell-1}}{b_\ell}.\]
+Note that there are at least
+\[(b_1-b_2)+(b_3-b_4)+\dotsb+(b_{\ell-2}-b_{\ell-1})\]
+pins in $[\sqrt{N},N)$, so by the second lemma, that sum is at most $0.8N$. Thus,
+\begin{align*}
+  (b_0-b_1)+(b_2-b_3)+\dotsb+(b_{\ell-1}-b_\ell)
+  &=b_0-[(b_1-b_2)+\dotsb + (b_{\ell-2}-b_{\ell-1})]-b_\ell
+  \\ &\ge 0.2N-100\sqrt{N}.
+\end{align*}
+Then
+\begin{align*}
+\frac{b_0}{b_1}\frac{b_2}{b_3}\dotsm
+\frac{b_{\ell-1}}{b_\ell} &\ge 1+\frac{b_0-b_1}{b_1}+\dotsb+\frac{b_{\ell-1}-b_\ell}{b_\ell} \\
+&> 1 +\frac{b_0-b_1}{b_0} + \dotsb +
+\frac{b_{\ell-1}-b_{\ell}}{b_0} \\
+&\ge 1+\frac{0.2N-100\sqrt{N}}{N},
+\end{align*}
+which is at least $1.01$ if $N_0$ is large enough. Thus, we see that
+\[a_N>1.01 a_{b_{\ell}} \geq 1.01 a_{\lfloor\sqrt{N}\rfloor}\]
+if $N>N_0$ is not a pin. Since there are arbitrarily large non-pins, this implies that the sequence $(a_n)$ is unbounded, which is the desired contradiction.
+\pagebreak
+
+\subsection{TSTST 2021/3, proposed by Merlijn Staps}
+\textsl{Available online at \url{https://aops.com/community/p23586679}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all positive integers $k > 1$ for which there exists a positive integer
+$n$ such that $\binom{n}{k}$ is divisible by $n$, and $\binom{n}{m}$ is not
+divisible by $n$ for $2\leq m < k$.
+\end{mdframed}
+Such an $n$ exists for any $k$.
+
+First,  suppose $k$ is prime.  We choose $n=(k-1)!$. For
+$m<k$,  it follows from $m! \mid n$ that
+\begin{align*}
+  (n-1)(n-2) \dotsm (n-m+1) &\equiv (-1)(-2) \dotsm (-m+1) \\
+  &\equiv (-1)^{m-1} (m-1)! \\
+  &\not\equiv 0 \mod m!.
+\end{align*}
+We see that $\binom{n}{m}$ is not a multiple of $m$.  For $m=k$, note that
+$\binom{n}{k} = \frac{n}{k} \binom{n-1}{k-1}$.  Because $k \nmid n$, we must
+have $k \mid \binom{n-1}{k-1}$,  and it follows that $n \mid \binom{n}{k}$.
+
+Now suppose $k$ is composite.
+We will choose $n$ to satisfy a number of congruence relations.  For each prime $p \le k$,  let
+\[t_p = \nu_p(\opname{lcm}(1,2,\dots,k-1)) = \max(\nu_p(1), \nu_p(2),\dots,\nu_p(k-1))\]
+and choose $k_p \in \{1,2,\dots,k-1\}$ as large as possible such that $\nu_p(k_p)=t_p$.  We now require
+\begin{align}
+n \equiv 0 \mod p^{t_p+1} \qquad \mbox{if $p \nmid k$}; \label{eq:cong1}\\
+\nu_p(n - k_p) = t_p+\nu_p(k) \qquad \mbox{if $p \mid k$}. \label{eq:cong2}
+\end{align}
+for all $p \le k$.  From the Chinese Remainder Theorem,  we know that an $n$ exists that satisfies \eqref{eq:cong1} and \eqref{eq:cong2} (indeed, a sufficient condition for \eqref{eq:cong2} is the congruence $n \equiv k_p + p^{t_p+\nu_p(k)} \mod p^{t_p+\nu_p(k)+1}$).  We show that this $n$ has the required property.
+
+We first will compute $\nu_p(n-i)$ for primes $p<k$ and $1 \le i < k$.
+\begin{itemize}
+\item If $p \nmid k$, then we have $\nu_p(i), \nu_p(n-i) \le t_p$ and $\nu_p(n) > t_p$, so $\nu_p(n-i) = \nu_p(i)$;
+\item If $p \mid k$ and $i \neq k_p$, then we have $\nu_p(i), \nu_p(n-i) \le t_p$ and $\nu_p(n) \ge t_p$, so again $\nu_p(n-i) = \nu_p(i)$;
+\item If $p \mid k$ and $i = k_p$, then we have $\nu_p(n-i) = \nu_p(i) + \nu_p(k)$ by \eqref{eq:cong2}.
+\end{itemize}
+We conclude that $\nu_p(n-i) = \nu_p(i)$ always holds, except when $i = k_p$, when we have $\nu_p(n-i) = \nu_p(i) + \nu_p(k)$ (this formula holds irrespective of whether $p \mid k$ or $p \nmid k$).
+
+We can now show that $\binom{n}{k}$ is divisible by $n$,  which amounts to
+showing that $k!$ divides $(n-1)(n-2) \dotsm (n-k+1)$.  Indeed,  for each prime $p \le k$ we have
+\begin{align*}
+\nu_p\left( (n-1)(n-2) \dots (n-k+1) \right) &=  \nu_p(n-k_p) + \sum_{i<k,  i \neq k_p} \nu_p(n-i) \\
+&= \nu_p(k_p) + \nu_p(k) + \sum_{i<k, i \neq k_p} \nu_p(i) \\
+&= \sum_{i=1}^k \nu_p(i) = \nu_p(k!),
+\end{align*}
+so it follows that $(n-1)(n-2) \dotsm (n-k+1)$ is a multiple of $k!$.
+
+Finally,  let $1<m<k$.  We will show that $n$ does \emph{not} divide
+$\binom{n}{m}$,  which amounts to showing that $m!$ does not divide $(n-1)(n-2)
+\dotsm (n-m+1)$.  First,  suppose that $m$ has a prime divisor $q$ that does not divide $k$.  Then we have
+\begin{align*}
+  \nu_q\left( (n-1)(n-2) \dots (n-m+1) \right) &= \sum_{i=1}^{m-1} \nu_q(n-i) \\
+  &= \sum_{i=1}^{m-1} \nu_q(i) \\
+  &= \nu_q((m-1)!) < \nu_q(m!),
+\end{align*}
+as desired. Therefore,  suppose that $m$ is only divisible by primes that divide $k$.  If there is such a prime $p$ with $\nu_p(m) > \nu_p(k)$,  then it follows that
+\begin{align*}
+  \nu_p\left( (n-1)(n-2) \dots (n-m+1) \right)
+  &= \nu_p(k) + \sum_{i=1}^{m-1} \nu_p(i) \\
+  &< \nu_p(m) + \sum_{i=1}^{m-1}
+  \nu_p(i) \\
+  &= \nu_p(m!),
+\end{align*}
+so $m!$ cannot divide $(n-1)(n-2) \dots (n-m+1)$.  On the other hand,  suppose
+that $\nu_p(m) \le \nu_p(k)$ for all $p \mid k$, which would mean that $m \mid
+k$ and hence $m \le \frac{k}{2}$.  Consider a prime $p$ dividing $m$.  We have
+$k_p \ge \frac{k}{2}$,  because otherwise $2k_p$ could have been used instead of
+$k_p$. It follows that $m \le \frac{k}{2} \le k_p$. Therefore, we obtain
+\begin{align*}
+  \nu_p\left( (n-1)(n-2) \dots (n-m+1) \right) &= \sum_{i=1}^{m-1} \nu_p(n-i) \\
+  &= \sum_{i=1}^{m-1} \nu_p(i)  \\
+  &= \nu_p((m-1)!) < \nu_p(m!),
+\end{align*}
+showing that $(n-1)(n-2) \dotsm (n-m+1)$ is not divisible by $m!$.
+This shows that $\binom{n}{m}$ is not divisible by $n$ for $m<k$,
+and hence $n$ does have the required property.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{TSTST 2021/4, proposed by Holden Mui}
+\textsl{Available online at \url{https://aops.com/community/p23864177}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$ and $b$ be positive integers.
+Suppose that there are infinitely many pairs of positive integers $(m, n)$
+for which $m^2+an+b$ and $n^2+am+b$ are both perfect squares.
+Prove that $a$ divides $2b$.
+\end{mdframed}
+Treating $a$ and $b$ as fixed,
+we are given that there are infinitely many quadrpules $(m,n,r,s)$
+which satisfy the system
+\begin{gather*}
+  m^2+an+b=(m+r)^2 \\
+  n^2+am+b=(n+s)^2
+\end{gather*}
+We say that $(r,s)$ is \emph{exceptional}
+if there exists infinitely many $(m,n)$ that satisfy.
+
+\begin{claim*}
+  If $(r,s)$ is exceptional, then either
+  \begin{itemize}
+    \ii $0 < r < a/2$, and $0 < s < \frac14 a^2$; or
+    \ii $0 < s < a/2$, and $0 < r < \frac14 a^2$; or
+    \ii $r^2 + s^2 \le 2b$.
+  \end{itemize}
+  In particular, finitely many pairs $(r,s)$ can be exceptional.
+\end{claim*}
+
+\begin{proof}
+  Sum the two equations to get:
+  \[ r^2+s^2-2b = (a-2r)m + (a-2s)n. \qquad (\dagger) \]
+  If $0 < r < a/2$, then the idea is to use the bound
+  $an+b \ge 2m+1$ to get $m \le \frac{an+b-1}{2}$.
+  Consequently,
+  \[ (n+s)^2 = n^2+am+b \le n^2 + a \cdot \frac{an+b-1}{2} + b \]
+  For this to hold for infinitely many integers $n$,
+  we need $2s \le \frac{a^2}{2}$, by comparing coefficients.
+
+  A similar case occurs when $0 < s < a/2$.
+
+  If $\min(r,s) > a/2$, then $(\dagger)$ forces $r^2+s^2 \le 2b$,
+  giving the last case.
+\end{proof}
+
+Hence, there exists some particular pair $(r,s)$
+for which there are infinitely many solutions
+$(m,n)$. Simplifying the system gives
+\begin{gather*}
+  an = 2rm + r^2-b \\
+  2sn = am + b-s^2
+\end{gather*}
+Since the system is linear,
+for there to be infinitely many solutions $(m, n)$
+the system must be dependent.
+This gives \[\frac{a}{2s}=\frac{2r}{a}=\frac{r^2-b}{b-s^2}\]
+so $a = 2\sqrt{rs}$ and $b = \frac{s^2\sqrt{r}+r^2\sqrt{s}}{\sqrt{r}+\sqrt{s}}$.
+Since $rs$ must be square, we can reparametrize as $r=kx^2$, $s=ky^2$, and $\gcd(x, y)=1$.
+This gives
+\begin{align*}
+    a &= 2kxy \\
+    b &= k^2xy(x^2-xy+y^2).
+\end{align*}
+Thus, $a \mid 2b$, as desired.
+\pagebreak
+
+\subsection{TSTST 2021/5, proposed by Vincent Huang}
+\textsl{Available online at \url{https://aops.com/community/p23864182}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $T$ be a tree on $n$ vertices with exactly $k$ leaves.
+Suppose that there exists a subset of
+at least $\frac{n+k-1}{2}$ vertices of $T$,
+no two of which are adjacent.
+Show that the longest path in $T$ contains
+an even number of edges.
+\end{mdframed}
+The longest path in $T$ must go between two leaves. The solutions presented here
+will solve the problem by showing that in the unique $2$-coloring of $T$, all
+leaves are the same color.
+
+\paragraph{Solution 1 (Ankan Bhattacharya, Jeffery Li).}
+\begin{lemma*}
+  If $S$ is an independent set of $T$, then
+  \[\sum_{v\in S}\deg(v)\leq n-1.\]
+  Equality holds if and only if $S$ is one of the two components of the unique
+  $2$-coloring of $T$.
+\end{lemma*}
+
+\begin{proof}
+  Each edge of $T$ is incident to at most one vertex of $S$, so we obtain the
+  inequality by counting how many vertices of $S$ each edge is incident to. For
+  equality to hold, each edge is incident to exactly one vertex of $S$, which
+  implies the $2$-coloring.
+\end{proof}
+
+We are given that there exists an independent set of at least $\frac{n+k-1}{2}$
+vertices. By greedily choosing vertices of smallest degree, the sum of the
+degrees of these vertices is at least
+\[k+2\cdot\frac{n-k-1}{2}=n-1.\]
+Thus equality holds everywhere, which implies that the independent set contains
+every leaf and is one of the components of the $2$-coloring.
+
+\paragraph{Solution 2 (Andrew Gu).}
+
+\begin{lemma*}
+  The vertices of $T$ can be partitioned into $k-1$ paths (i.e. the induced
+  subgraph on each set of vertices is a path) such that all edges of $T$
+  which are not part of a path are incident to an endpoint of a path.
+\end{lemma*}
+
+\begin{proof}
+  Repeatedly trim the tree by taking a leaf and removing the longest path
+  containing that leaf such that the remaining graph is still a tree.
+\end{proof}
+
+Now given a path of $a$ vertices, at most $\frac{a+1}{2}$ of those vertices can
+be in an independent set of $T$. By the lemma, $T$ can be partitioned into $k-1$
+paths of $a_1, \dots, a_{k-1}$ vertices, so the maximum size of an independent
+set of $T$ is
+\[\sum \frac{a_i+1}{2}=\frac{n+k-1}{2}.\]
+For equality to hold, each path in the partition must have an odd number of
+vertices, and has a unique $2$-coloring in red and blue where the endpoints are
+red. The unique independent set of $T$ of size $\frac{n+k-1}{2}$ is then the set of red
+vertices. By the lemma, the edges of $T$ which are not part of a path connect an
+endpoint of a path (which is colored red) to another vertex (which must be blue,
+because the red vertices are independent). Thus the coloring of the paths
+extends to the unique $2$-coloring of $T$. The leaves of $T$ are endpoints of
+paths, so they are all red.
+\pagebreak
+
+\subsection{TSTST 2021/6, proposed by Nikolai Beluhov}
+\textsl{Available online at \url{https://aops.com/community/p23864189}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Triangles $ABC$ and $DEF$ share circumcircle $\Omega$ and incircle $\omega$
+so that points $A$, $F$, $B$, $D$, $C$, and $E$ occur in this order along $\Omega$.
+Let $\Delta_A$ be the triangle formed by lines $AB$, $AC$, and $EF$,
+and define triangles $\Delta_B$, $\Delta_C, \dots, \Delta_F$ similarly.
+Furthermore, let $\Omega_A$ and $\omega_A$ be the circumcircle and incircle
+of triangle $\Delta_A$, respectively, and define circles
+$\Omega_B$, $\omega_B, \dots, \Omega_F$, $\omega_F$ similarly.
+\begin{enumerate}[(a)]
+  \item Prove that the two common external tangents to circles $\Omega_A$ and $\Omega_D$
+    and the two common external tangents to circles $\omega_A$ and $\omega_D$
+    are either concurrent or pairwise parallel.
+
+  \item Suppose that these four lines meet at point $T_A$,
+    and define points $T_B$ and $T_C$ similarly.
+    Prove that points $T_A$, $T_B$, and $T_C$ are collinear.
+\end{enumerate}
+\end{mdframed}
+\begin{center}
+\begin{asy}
+import geometry;
+
+linemargin = 0;
+
+real R = 120;
+pair O = (0, 0);
+
+pair A = rotate(35, O)*(R, 0);
+pair B = rotate(210, O)*(R, 0);
+pair C = rotate(330, O)*(R, 0);
+
+circle omega = incircle(A, B, C);
+circle k = circle((point) O, R);
+
+pair D = rotate(255, O)*(R, 0);
+line[] ts = tangents(omega, (point) D);
+pair E = 2*(projection(ts[0])*O) - D;
+pair F = 2*(projection(ts[1])*O) - D;
+
+pair K = extension(A, B, E, F);
+pair L = extension(A, B, F, D);
+pair M = extension(B, C, F, D);
+pair N = extension(B, C, D, E);
+pair P = extension(C, A, D, E);
+pair Q = extension(C, A, E, F);
+
+triangle dA = triangle(Q, A, K);
+triangle dB = triangle(L, B, M);
+triangle dC = triangle(N, C, P);
+triangle dD = triangle(M, D, N);
+triangle dE = triangle(P, E, Q);
+triangle dF = triangle(K, F, L);
+
+circle oA = incircle(dA);
+circle oB = incircle(dB);
+circle oC = incircle(dC);
+circle oD = incircle(dD);
+circle oE = incircle(dE);
+circle oF = incircle(dF);
+
+circle kA = circumcircle(dA);
+circle kB = circumcircle(dB);
+circle kC = circumcircle(dC);
+circle kD = circumcircle(dD);
+circle kE = circumcircle(dE);
+circle kF = circumcircle(dF);
+
+point similitude(circle a, circle b) {
+  return extension(a.C, b.C, a.C + (0, a.r), b.C + (0, b.r));
+}
+
+point TA = similitude(oA, oD);
+point TB = similitude(oB, oE);
+point TC = similitude(oC, oF);
+
+
+
+draw(A--B--C..cycle);
+draw(D--E--F..cycle);
+draw(omega);
+draw(k);
+
+pen otp = red+opacity(0.5);
+
+draw(TA--projection(tangents(oD, TA)[0])*oD.C, otp);
+draw(TA--projection(tangents(oD, TA)[1])*oD.C, otp);
+draw(TB--projection(tangents(oB, TB)[0])*oB.C, otp);
+draw(TB--projection(tangents(oB, TB)[1])*oB.C, otp);
+draw(TC--projection(tangents(oF, TC)[0])*oF.C, otp);
+draw(TC--projection(tangents(oF, TC)[1])*oF.C, otp);
+//draw(tangents(oA, TA), otp);
+//draw(tangents(oB, TB), otp);
+//draw(tangents(oC, TC), otp);
+
+pen ktp = lightolive+opacity(0.5);
+
+draw(TA--projection(tangents(kD, TA)[0])*kD.C, ktp);
+draw(TA--projection(tangents(kD, TA)[1])*kD.C, ktp);
+draw(TB--projection(tangents(kB, TB)[0])*kB.C, ktp);
+draw(TB--projection(tangents(kB, TB)[1])*kB.C, ktp);
+draw(TC--projection(tangents(kF, TC)[0])*kF.C, ktp);
+draw(TC--projection(tangents(kF, TC)[1])*kF.C, ktp);
+//draw(tangents(kA, TA), ktp);
+//draw(tangents(kB, TB), ktp);
+//draw(tangents(kC, TC), ktp);
+
+pen op = blue;
+
+draw(oA, op);
+draw(oB, op);
+draw(oC, op);
+draw(oD, op);
+draw(oE, op);
+draw(oF, op);
+
+pen kp = heavygreen;
+
+draw(kA, kp);
+draw(kB, kp);
+draw(kC, kp);
+draw(kD, kp);
+draw(kE, kp);
+draw(kF, kp);
+
+draw(line(TA, TB), 1.0 + heavymagenta);
+
+
+
+dot(A);
+dot(B);
+dot(C);
+dot(D);
+dot(E);
+dot(F);
+dot(TA);
+dot(TB);
+dot(TC);
+
+
+
+label("$A$", A, dir(A));
+label("$B$", B, dir(B));
+label("$C$", C, dir(C));
+label("$D$", D, dir(D));
+label("$E$", E, dir(E));
+label("$F$", F, dir(F));
+label("$T_A$", TA, dir((1, 0)));
+label("$T_B$", TB, dir((1, 0)));
+label("$T_C$", TC, dir((1, 0)));
+
+\end{asy}
+\end{center}
+
+Let $I$ and $r$ be the center and radius of $\omega$, and let $O$ and $R$ be the
+center and radius of $\Omega$. Let $O_A$ and $I_A$ be the circumcenter and
+incenter of triangle $\Delta_A$, and define $O_B$, $I_B, \dots, I_F$
+similarly. Let $\omega$ touch $EF$ at $A_1$, and define $B_1$, $C_1, \dots,
+F_1$ similarly.
+
+\paragraph{Part (a).} All solutions to part (a) will prove the stronger claim
+that
+\[(\Omega_A\cup \omega_A)\sim (\Omega_D\cup \omega_D).\]
+The four lines will concur at the homothetic center of these figures (possibly
+at infinity).
+
+\subparagraph{Solution 1 (author)} Let the second tangent to $\omega$ parallel to $EF$ meet lines $AB$ and $AC$ at $P$ and $Q$, respectively, and let the second tangent to $\omega$ parallel to $BC$ meet lines $DE$ and $DF$ at $R$ and $S$, respectively. Furthermore, let $\omega$ touch $PQ$ and $RS$ at $U$ and $V$, respectively.
+
+Let $h$ be inversion with respect to $\omega$. Then $h$ maps $A$, $B$, and $C$ onto the midpoints of the sides of triangle $D_1E_1F_1$. So $h$ maps $k$ onto the Euler circle of triangle $D_1E_1F_1$.
+
+Similarly, $h$ maps $k$ onto the Euler circle of triangle $A_1B_1C_1$.
+Therefore, triangles $A_1B_1C_1$ and $D_1E_1F_1$ share a common nine-point
+circle $\gamma$. Let $K$ be its center; its radius equals $\frac{1}{2}r$.
+
+Let $H$ be the reflection of $I$ in $K$. Then $H$ is the common orthocenter of triangles $A_1B_1C_1$ and $D_1E_1F_1$.
+
+Let $\gamma_U$ of center $K_U$ and radius $\frac{1}{2}r$ be the Euler circle of
+triangle $UE_1F_1$, and let $\gamma_V$ of center $K_V$ and radius $\frac{1}{2}r$ be
+the Euler circle of triangle $VB_1C_1$.
+
+Let $H_U$ be the orthocenter of triangle $UE_1F_1$. Since quadrilateral
+$D_1E_1F_1U$ is cyclic, vectors $\overrightarrow{HH_U}$ and
+$\overrightarrow{D_1U}$ are equal. Consequently,
+$\overrightarrow{KK_U}=\frac{1}{2}\overrightarrow{D_1U}$. Similarly,
+$\overrightarrow{KK_V}=\frac{1}{2}\overrightarrow{A_1V}$.
+
+Since both of $A_1U$ and $D_1V$ are diameters in $\omega$, vectors
+$\overrightarrow{D_1U}$ and $\overrightarrow{A_1V}$ are equal. Therefore, $K_U$
+and $K_V$ coincide, and so do $\gamma_U$ and $\gamma_V$.
+
+As above, $h$ maps $\gamma_U$ onto the circumcircle of triangle $APQ$ and
+$\gamma_V$ onto the circumcircle of triangle $DRS$. Therefore, triangles $APQ$
+and $DRS$ are inscribed inside the same circle $\Omega_{AD}$.
+
+Since $EF$ and $PQ$ are parallel, triangles $\Delta_A$ and $APQ$ are homothetic,
+and so are figures $\Omega_A \cup \omega_A$ and $\Omega_{AD}\cup \omega$.
+Consequently, we have
+\[(\Omega_A\cup \omega_A)\sim (\Omega_{AD}\cup \omega)\sim (\Omega_D\cup
+\omega_D),\]
+which solves part (a).
+
+%If figures $\omega_A \cup k_A$ and $\omega_D \cup k_D$ are noncongruent, then the two common external tangents to $\omega_A$ and $\omega_D$ and the two common external tangents to $k_A$ and $k_D$ meet at their homothetic center. Otherwise, the two common external tangents to $\omega_A$ and $\omega_D$ and the two common external tangents to $k_A$ and $k_D$ are pairwise parallel.
+
+\subparagraph{Solution 2 (Michael Ren)} As in the previous solution, let the
+second tangent to $\omega$ parallel to $EF$ meet $AB$ and $AC$ at $P$ and $Q$,
+respectively. Let $(APQ)$ meet $\Omega$ again at $D'$, so that $D'$ is the
+Miquel point of $\{AB, AC, BC, PQ\}$. Since the quadrilateral formed by these
+lines has incircle $\omega$, it is classical that $D'I$ bisects $\angle PD'C$
+and $BD'Q$ (e.g. by DDIT).
+
+Let $\ell$ be the tangent to $\Omega$ at $D'$ and $D'I$ meet $\Omega$ again at
+$M$. We have
+\[
+  \measuredangle(\ell, D'B) = \measuredangle D'CB = \measuredangle D'QP =
+  \measuredangle(D'Q, EF).
+\]
+Therefore $D'I$ also bisects the angle between $\ell$ and the line parallel to
+$EF$ through $D'$. This means that $M$ is one of the arc midpoints of $EF$.
+Additionally, $D'$ lies on arc $BC$ not containing $A$, so $D'=D$.
+
+Similarly, letting the second tangent to $\omega$ parallel to $BC$ meet $DE$ and
+$DF$ again at $R$ and $S$, we have $ADRS$ cyclic.
+
+\begin{lemma*}
+  There exists a circle $\Omega_{AD}$ tangent to $\Omega_A$ and $\Omega_D$ at
+  $A$ and $D$, respectively.
+\end{lemma*}
+\begin{proof}
+  (This step is due to Ankan Bhattacharya.) It is equivalent to have
+  $\measuredangle OAO_A = \measuredangle O_DDO$. Taking isogonals with respect
+  to the shared angle of $\triangle ABC$ and $\Delta_A$, we see that
+  \[\measuredangle OAO_A = \measuredangle(\perp EF, \perp BC) = \measuredangle
+  (EF, BC).\]
+  (Here, $\perp EF$ means the direction perpendicular to $EF$.) By symmetry,
+  this is equal to $\measuredangle O_DDO$.
+\end{proof}
+
+The circle $(ADPQ)$ passes through $A$ and $D$, and is tangent to $\Omega_A$ by
+homothety. Therefore it coincides with $\Omega_{AD}$, as does $(ADRS)$. Like the
+previous solution, we finish with
+\[(\Omega_A\cup \omega_A)\sim (\Omega_{AD}\cup \omega)\sim (\Omega_D\cup
+\omega_D).\]
+
+\subparagraph{Solution 3 (Andrew Gu)}
+Construct triangles homothetic to $\Delta_A$ and $\Delta_D$ (with positive ratio) which
+have the same circumcircle; it suffices to show that these copies have the same
+incircle as well. Let $O$ be the center of this common circumcircle, which we
+take to be the origin, and $M_{XY}$ denote the point on the circle such that the
+tangent at that point is parallel to line $XY$ (from the two possible choices,
+we make the choice that corresponds to the arc midpoint on $\Omega$, e.g. $M_{AB}$
+should correspond to the arc midpoint on the internal angle bisector of $ACB$).
+The left diagram below shows the original triangles $ABC$ and $DEF$, while the
+right diagram shows the triangles homothetic to $\Delta_A$ and $\Delta_D$.
+
+\begin{center}
+  \begin{asy}
+    size(6cm);
+    pair O = origin;
+    pair Mbc = dir(-90);
+    pair Mca = dir(40);
+    pair Mab = dir(160);
+    pair A = -Mca*Mab/Mbc;
+    pair B = -Mab*Mbc/Mca;
+    pair C = -Mbc*Mca/Mab;
+    pair I = Mbc+Mca+Mab;
+    pair Mef = dir(75);
+    pair D = 2*foot(O, I, Mef)-Mef;
+    pair X = midpoint(D--I);
+    pair Y = X+5*dir(90)*(X-D);
+    pair Mfd = intersectionpoints(X--Y, unitcircle)[0];
+    pair Mde = 2*foot(O, X, Mfd)-Mfd;
+    pair E = -Mde*Mef/Mfd;
+    pair F = -Mef*Mfd/Mde;
+
+    draw(unitcircle);
+    draw(A--B--C--cycle, red);
+    draw(D--E--F--cycle, blue);
+    draw(incircle(A, B, C));
+
+    string[] names = {"$A$", "$B$", "$C$", "$M_{BC}$", "$M_{CA}$", "$M_{AB}$", "$I$", "$D$", "$E$", "$F$", "$M_{FD}$", "$M_{DE}$", "$M_{EF}$"};
+    pair[] pts = {A, B, C, Mbc, Mca, Mab, I, D, E, F, Mfd, Mde, Mef};
+    pair[] labels = {A, B, C, Mbc, Mca, Mab, I, D, E, F, Mfd, Mde, Mef};
+    for(int i=0; i<names.length; ++i){
+      dot(names[i], pts[i], dir(labels[i]));
+    }
+  \end{asy}
+  \begin{asy}
+    size(6cm);
+    pair O = origin;
+    pair Mbc = dir(-90);
+    pair Mca = dir(40);
+    pair Mab = dir(160);
+    pair Mef = dir(75);
+    pair oldI = Mbc+Mca+Mab;
+    pair I = -Mef+Mca+Mab;
+    pair oldD = 2*foot(O, oldI, Mef)-Mef;
+    pair X = midpoint(oldD--oldI);
+    pair Y = X+5*dir(90)*(X-oldD);
+    pair Mfd = intersectionpoints(X--Y, unitcircle)[0];
+    pair Mde = 2*foot(O, X, Mfd)-Mfd;
+    pair A = Mca*Mab/Mef;
+    pair B = Mab*Mef/Mca;
+    pair C = Mef*Mca/Mab;
+    pair D = Mfd*Mde/Mbc;
+    pair E = Mde*Mbc/Mfd;
+    pair F = Mbc*Mfd/Mde;
+
+    draw(unitcircle);
+    draw(C--A--B, red);
+    draw(B--C, blue);
+    draw(F--D--E, blue);
+    draw(E--F, red);
+    draw(incircle(A, B, C));
+
+    string[] names = {" ", " ", " ", "$M_{BC}$", "$M_{CA}$", "$M_{AB}$", "$I$", " ", " ", " ", "$M_{FD}$", "$M_{DE}$", "$M_{EF}$"};
+    pair[] pts = {A, B, C, Mbc, Mca, Mab, I, D, E, F, Mfd, Mde, Mef};
+    pair[] labels = {A, B, C, Mbc, Mca, Mab, I, D, E, F, Mfd, Mde, Mef};
+    for(int i=0; i<names.length; ++i){
+      dot(names[i], pts[i], dir(labels[i]));
+    }
+  \end{asy}
+\end{center}
+
+Using the fact that the incenter is the orthocenter of the arc midpoints, the
+incenter of $\Delta_A$ in this reference frame is $M_{AB}+M_{AC}-M_{EF}$ and the
+incenter of $\Delta_D$ in this reference frame is $M_{DE}+M_{DF}-M_{BC}$. Since
+$ABC$ and $DEF$ share a common incenter, we have
+\[M_{AB}+M_{BC}+M_{CA}=M_{DE}+M_{EF}+M_{FD}.\]
+Thus the copies of $\Delta_A$ and $\Delta_D$ have the same incenter, and
+therefore the same incircle as well (Euler's theorem determines the inradius).
+
+\paragraph{Part (b).}
+We present several solutions for this part of the problem. Solutions 3 and 4
+require solving part (a) first, while the others do not. Solutions 1, 4, and 5
+define $T_A$ solely as the exsimilicenter of $\omega_A$ and $\omega_D$, whereas
+solutions 2 and 3 define $T_A$ solely as the exsimilicenter of $\Omega_A$ and
+$\Omega_D$.
+
+\subparagraph{Solution 1 (author)}
+
+By Monge's theorem applied to $\omega$, $\omega_A$, and $\omega_D$,
+points $A$, $D$, and $T_A$ are collinear. Therefore, $T_A= AD\cap I_AI_D$.
+
+Let $p$ be pole-and-polar correspondence with respect to $\omega$. Then $p$ maps
+$A$ onto line $E_1F_1$ and $D$ onto line $B_1C_1$. Consequently, $p$ maps line
+$AD$ onto $X_A=B_1C_1\cap E_1F_1$.
+
+Furthermore, $p$ maps the line that bisects the angle formed by lines $AB$ and
+$EF$ and does not contain $I$ onto the midpoint of segment $A_1F_1$. Similarly,
+$p$ maps the line that bisects the angle formed by lines $AC$ and $EF$ and does
+not contain $I$ onto the midpoint of segment $A_1E_1$. So $p$ maps $I_A$ onto
+the midline of triangle $A_1E_1F_1$ opposite $A_1$. Similarly, $p$ maps $I_D$
+onto the midline of triangle $D_1B_1C_1$ opposite $D_1$. Consequently, $p$ maps
+line $I_AI_D$ onto the intersection point $Y_A$ of this pair of midlines, and
+$p$ maps $T_A$ onto line $X_AY_A$.
+
+As in the solution to part (a), let $H$ be the common orthocenter of triangles
+$A_1B_1C_1$ and $D_1E_1F_1$. Let $H_A$ be the foot of the altitude from $A_1$ in
+triangle $A_1B_1C_1$ and let $H_D$ be the foot of the altitude from $D_1$ in
+triangle $D_1E_1F_1$. Furthermore, let $L_A=HA_1\cap E_1F_1$ and $L_D=HD_1\cap
+B_1C_1$.
+
+Since the reflection of $H$ in line $B_1C_1$ lies on $\omega$, $A_1H \cdot HH_A$ equals half the power of $H$ with respect to $\omega$. Similarly, $D_1H \cdot HH_D$ equals half the power of $H$ with respect to $\omega$.
+
+Then $A_1H \cdot HH_A = D_1H \cdot HH_D$ and $A_1HH_D\sim D_1HH_A$. Since
+$\angle HH_DL_A = 90^\circ = \angle HH_AL_D$, figures $A_1HH_DL_A$ and
+$D_1HH_AL_D$ are similar as well. Consequently,
+\[
+  \frac{HL_A}{L_AA_1}=\frac{HL_D}{L_DD_1}=s
+\]
+as a signed ratio.
+%$L_A$ divides segment $HA_1$ in
+%the same signed ratio $s$ as $L_D$ divides segment $HD_1$.
+
+Let the line through $A_1$ parallel to $E_1F_1$ and the line through $D_1$
+parallel to $B_1C_1$ meet at $Z_A$. Then $HX_A/X_AZ_A=s$
+%$X_A$ divides segment $HZ_A$ in signed ratio $s$
+and $Y_A$ is the midpoint of segment $X_AZ_A$. Therefore, $H$ lies on
+line $X_AY_A$. This means that $T_A$ lies on the polar of $H$ with respect to
+$\omega$, and by symmetry so do $T_B$ and $T_C$.
+
+
+\subparagraph{Solution 2 (author)}
+
+As in the first solution to part (a), let
+$h$ be inversion with respect to $\omega$, let $\gamma$ of center $K$ be the common
+Euler circle of triangles $A_1B_1C_1$ and $D_1E_1F_1$, and let $H$ be their
+common orthocenter.
+
+Again as in the solution to part (a), $h$ maps $\Omega_A$ onto the nine-point
+circle $\gamma_A$ of triangle $A_1E_1F_1$ and $\Omega_D$ onto the nine-point
+circle $\gamma_D$ of triangle $D_1B_1C_1$.
+
+Let $K_A$ and $K_D$ be the centers of $\gamma_A$ and $\gamma_D$, respectively,
+and let $\ell_A$ be the perpendicular bisector of segment $K_AK_D$. Since
+$\gamma_A$ and $\gamma_D$ are congruent (both of them are of radius
+$\frac{1}{2}r$), they are reflections of each other across $\ell_A$.
+
+Inversion $h$ maps the two common external tangents of $\Omega_A$ and $\Omega_D$
+onto the two circles $\alpha$ and $\beta$ through $I$ that are tangent to both
+of $\gamma_A$ and $\gamma_D$ in the same way. (That is, either internally to both or
+externally to both.) Consequently, $\alpha$ and $\beta$ are reflections of each
+other in $\ell_A$ and so their second point of intersection $S_A$, which $h$
+maps $T_A$ onto, is the reflection of $I$ in $\ell_A$.
+
+Define $\ell_B$, $\ell_C$, $S_B$, and $S_C$ similarly. Then $S_B$ is the reflection of $I$ in $\ell_B$ and $S_C$ is the reflection of $I$ in $\ell_C$.
+
+As in the solution to part (a),
+$\overrightarrow{KK_A}=\frac{1}{2}\overrightarrow{D_1A_1}$ and
+$\overrightarrow{KK_D}=\frac{1}{2}\overrightarrow{A_1D_1}$. Consequently, $K$ is
+the midpoint of segment $K_AK_D$ and so $K$ lies on $\ell_A$. Similarly, $K$
+lies on $\ell_B$ and $\ell_C$.
+
+Therefore, all four points $I$, $S_A$, $S_B$, and $S_C$ lie on the circle of center $K$ that contains $I$. (This is also the circle on diameter $IH$.) Since points $S_A$, $S_B$, and $S_C$ are concyclic with $I$, their images $T_A$, $T_B$, and $T_C$ under $h$ are collinear, and the solution is complete.
+
+\subparagraph{Solution 3 (Ankan Bhattacharya)}
+
+From either of the first two solutions to part (a), we know that there is a
+circle $\Omega_{AD}$ passing through $A$ and $D$ which is (internally) tangent
+to $\Omega_A$ and $\Omega_D$. By Monge's theorem applied to $\Omega_A,
+\Omega_D$, and $\Omega_{AD}$, it follows that $A, D$, and $T_A$ are collinear.
+
+The inversion at $T_A$ swapping $\Omega_A$ with $\Omega_D$ also swaps $A$ with
+$D$ because $T_A$ lies on $AD$ and $A$ is not homologous to $D$. Let $\Omega_A$
+and $\Omega_D$ meet $\Omega$ again at $L_A$ and $L_D$. Since $ADL_AL_D$ is
+cyclic, the same inversion at $T_A$ also swaps $L_A$ and $L_D$, so $T_A=AD\cap
+L_AL_D$.
+
+By \href{https://aops.com/community/c6h598547p3551881}{Taiwan TST
+2014}, $L_A$ and $L_D$ are the tangency points of the $A$-mixtilinear and
+$D$-mixtilinear incircles, respectively, with $\Omega$. Therefore $AL_A\cap
+DL_D$ is the exsimilicenter $X$ of $\Omega$ and $\omega$. Then $T_A, T_B,$ and
+$T_C$ all lie on the polar of $X$ with respect to $\Omega$.
+
+\subparagraph{Solution 4 (Andrew Gu)}
+
+We show that $T_A$ lies on the radical axis of the point circle at $I$ and
+$\Omega$, which will solve the problem.  Let $I_A$ and $I_D$ be the centers of
+$\omega_A$ and $\omega_D$ respectively. By the Monge's theorem applied to
+$\omega$, $\omega_A$, and $\omega_D$, points $A$, $D$, and $T_A$ are collinear.
+Additionally, these other triples are collinear: $(A, I_A, I), (D, I_D, I),
+(I_A, I_D, T)$.  By Menelaus's theorem, we have
+
+\[\frac{T_AD}{T_AA}=\frac{I_AI}{I_AA}\cdot\frac{I_DD}{I_DI}.\]
+If $s$ is the length of the side opposite $A$ in $\Delta_A$, then we compute
+\begin{align*}
+  \frac{I_AI}{I_AA} &=\frac{s/\cos(A/2)}{r_A/\sin(A/2)} \\
+                    &=\frac{2R_A\sin(A)\sin(A/2)}{\cos(A/2)} \\
+                    &=\frac{4R_A\sin^2(A/2)}{r_A} \\
+                    &=\frac{4R_Ar^2}{r_AAI^2}.
+\end{align*}
+From part (a), we know that $\frac{R_A}{r_A}=\frac{R_D}{r_D}$.
+Therefore, doing a similar calculation for $\frac{I_DD}{I_DI}$, we get
+\begin{align*}
+  \frac{T_AD}{T_AA} &=\frac{I_AI}{I_AA}\cdot\frac{I_DD}{I_DI} \\
+                    &=\frac{4R_Ar^2}{r_AAI^2}\cdot \frac{r_DDI^2}{4R_Dr^2} \\
+                    &=\frac{DI^2}{AI^2}.
+\end{align*}
+Thus $T_A$ is the point where the tangent to $(AID)$ at $I$ meets $AD$ and
+$T_AI^2=T_AA\cdot T_AD$. This shows what we claimed at the start.
+
+\subparagraph{Solution 5 (Ankit Bisain)}
+
+As in the previous solution, it suffices to show that $\frac{I_AI}{AI_A}\cdot
+\frac{DI_D}{I_DI} = \frac{DI^2}{AI^2}$. Let $AI$ and $DI$ meet $\Omega$ again at
+$M$ and $N$, respectively. Let $\ell$ be the line parallel to $BC$ and tangent
+to $\omega$ but different from $BC$. Then
+\[
+  \frac{DI_D}{I_DI}=\frac{d(D, BC)}{d(BC, \ell)} = \frac{DB\cdot DC/2R}{2r} =
+  \frac{MI^2-MD^2}{4Rr}.
+\]
+%(One way to prove $DB\cdot DC=MI^2-MD^2$ is to let $CD$ meet $(BIC)$ again at
+%$B'$, show that $DB=DB'$, and apply power of a point.)
+Since $IDM\sim IAN$, we have
+\[\frac{DI_D}{I_DI}\cdot \frac{I_AI}{AI_A} =
+\frac{MI^2-MD^2}{NI^2-NA^2}=\frac{DI^2}{AI^2},\]
+as desired.
+
+%\begin{remark}
+%The proof of part (a) also shows that lines $I_AO_A$ and $I_DO_D$ are parallel, and similarly for lines $I_BO_B$ and $I_EO_E$ and lines $I_CO_C$ and $I_FO_F$.
+%\end{remark}
+%
+%\bigskip
+%
+%\begin{remark}
+%All proofs of part (b) also show that lines $IO$ and $T_AT_BT_C$ are perpendicular. (Since $h$ maps $k$ onto $e$, the center $K$ of $e$ lies on line $IO$. Therefore, the reflection $H$ of $I$ in $K$ lies on line $IO$ as well.)
+%\end{remark}
+
+\begin{remark*}[Author comments on generalization of part (b) with a
+  circumscribed hexagram]
+Let triangles $ABC$ and $DEF$ be circumscribed about the same circle $\omega$ so that they form a hexagram. However, we do not require anymore that they are inscribed in the same circle.
+
+Define circles $\Omega_A$, $\omega_A, \dots, \omega_F$ as in the problem.
+Let $T^\text{Circ}_A$ be the intersection point of the two common external
+tangents to circles $\Omega_A$ and $\Omega_D$, and define points $T^\text{Circ}_B$
+and $T^\text{Circ}_C$ similarly. Also let $T^\text{In}_A$ be the intersection
+point of the two common external tangents to circles $\omega_A$ and $\omega_D$, and define
+points $T^\text{In}_B$ and $T^\text{In}_C$ similarly.
+
+Then points $T^\text{Circ}_A$, $T^\text{Circ}_B$, and $T^\text{Circ}_C$ are collinear
+and points $T^\text{In}_A$, $T^\text{In}_B$, and $T^\text{In}_C$ are also
+collinear.
+
+The second solution to part (b) of the problem works also for the circumcircles
+part of the generalisation. To see that segments $K_AK_D$, $K_BK_E$, and
+$K_CK_F$ still have a common midpoint, let $M$ be the centroid of points $A$,
+$B$, $C$, $D$, $E$, and $F$. Then the midpoint of segment $K_AK_D$ divides
+segment $OM$ externally in ratio $3 : 1$, and so do the other two midpoints as
+well.
+
+For the incircles part of the generalisation, we start out as in the first
+solution to part (b) of the problem, and eventually we reduce everything to the
+following:
+
+\emph{Let points $A_1$, $B_1$, $C_1$, $D_1$, $E_1$, and $F_1$ lie on circle $\omega$. Let lines $B_1C_1$ and $E_1F_1$ meet at point $X_A$, let the line through $A_1$ parallel to $B_1C_1$ and the line through $D_1$ parallel to $E_1F_1$ meet at point $Z_A$, and define points $X_B$, $Z_B$, $X_C$, and $Z_C$ similarly. Then lines $X_AZ_A$, $X_BZ_B$, and $X_CZ_C$ are concurrent.}
+
+Take $\omega$ as the unit circle and assign complex numbers $u$, $v$, $w$, $x$, $y$, and $z$ to points $A_1$, $F_1$, $B_1$, $D_1$, $C_1$, and $E_1$, respectively, so that when we permute $u$, $v$, $w$, $x$, $y$, and $z$ cyclically the configuration remains unchanged. Then by standard complex bash formulas we obtain that each two out of our three lines meet at $\varphi/\psi$, where \[\varphi = \sum_\text{Cyc} u^2vw(wx - wy + xy)(y - z)\] and \[\psi = {} - u^2w^2y^2 - v^2x^2z^2 - 4uvwxyz + \sum_\text{Cyc} u^2(vwxy - vwxz + vwyz - vxyz + wxyz).\]
+
+(But the calculations were too difficult for me to do by hand, so I used SymPy.)
+\end{remark*}
+
+\bigskip
+
+\begin{remark*}[Author comments on generalization of part (b) with an
+  inscribed hexagram]
+Let triangles $ABC$ and $DEF$ be inscribed inside the same circle $\Omega$ so that they form a hexagram. However, we do not require anymore that they are circumscribed about the same circle.
+
+Define points $T^\text{Circ}_A$, $T^\text{Circ}_B$, \dots, $T^\text{In}_C$ as
+in the previous remark. It looks like once again points $T^\text{Circ}_A$,
+$T^\text{Circ}_B$, and $T^\text{Circ}_C$ are collinear and points $T^\text{In}_A$,
+$T^\text{In}_B$, and $T^\text{In}_C$ are also collinear. However, I do not
+have proofs of these claims.
+\end{remark*}
+
+\begin{remark*}[Further generalization from Andrew Gu]
+  Let $ABC$ and $DEF$ be triangles which share an
+  inconic, or equivalently share a circumconic.  Define points $T^\text{Circ}_A$,
+  $T^\text{Circ}_B, \dots, T^\text{In}_C$ as in the previous remarks. Then
+  it is conjectured that points $T^\text{Circ}_A$, $T^\text{Circ}_B$, and
+  $T^\text{Circ}_C$ are collinear and points $T^\text{In}_A$, $T^\text{In}_B$,
+  and $T^\text{In}_C$ are also collinear. (Note that extraversion may be
+  required depending on the configuration of points, e.g. excircles instead of
+  incircles.) Additionally, it appears that the insimilicenters of the
+  circumcircles lie on a line perpendicular to the line through
+  $T^\text{Circ}_A$, $T^\text{Circ}_B$, and $T^\text{Circ}_C$.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 3}
+\subsection{TSTST 2021/7, proposed by Ankit Bisain, Holden Mui}
+\textsl{Available online at \url{https://aops.com/community/p24130213}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $M$ be a finite set of lattice points
+and $n$ be a positive integer.
+A \emph{mine-avoiding path} is a path of lattice points with length $n$,
+beginning at $(0,0)$ and ending at a point on the line $x+y=n$,
+that does not contain any point in $M$.
+Prove that if there exists a mine-avoiding path,
+then there exist at least $2^{n-|M|}$ mine-avoiding paths.
+\end{mdframed}
+We present two approaches.
+
+\paragraph{Solution 1.}
+We prove the statement by induction on $n$. We use $n=0$ as a base case, where
+the statement follows from $1\geq 2^{-|M|}$. For the inductive step, let $n >
+0$. There exists at least one mine-avoiding path, which must pass through either
+$(0, 1)$ or $(1, 0)$. We consider two cases:
+
+\textbf{Case 1: there exist mine-avoiding paths starting at both $(1, 0)$ and
+$(0, 1)$.}
+
+By the inductive hypothesis, there are at least $2^{n-1-|M|}$ mine-avoiding
+paths starting from each of $(1, 0)$ and $(0, 1)$. Then the total number of
+mine-avoiding paths is at least $2^{n-1-|M|}+2^{n-1-|M|}=2^{n-|M|}$.
+
+\textbf{Case 2: only one of $(1, 0)$ and $(0, 1)$ is on a mine-avoiding path.}
+
+Without loss of generality, suppose no mine-avoiding path starts at $(0, 1)$.
+Then some element of $M$ must be of the form $(0, k)$ for $1\leq k\leq n$ in
+order to block the path along the $y$-axis. This element can be ignored for any
+mine-avoiding path starting at $(1, 0)$. By the inductive hypothesis, there are
+at least $2^{n-1-(|M|-1)}=2^{n-|M|}$ mine-avoiding paths.
+
+This completes the induction step, which solves the problem.
+
+\paragraph{Solution 2.}
+
+\begin{lemma*}
+  If $|M|<n$, there is more than one mine-avoiding path.
+\end{lemma*}
+
+\begin{proof}
+  Let $P_0,P_1,\dots,P_{n}$ be a mine-avoiding path. Set $P_i=(x_i,y_i)$. For $0 \leq i < n$, define a path $Q_i$ as follows:
+
+  \begin{itemize}
+    \item Make the first $i+1$ points $P_0,P_1,\dots,P_i$.
+    \item If $P_i \to P_{i+1}$ is one unit up, go right until $(n-y_i,y_i)$.
+    \item If $P_i \to P_{i+1}$ is one unit right, go up until $(x_i,n-x_i)$.
+  \end{itemize}
+
+  \begin{center}
+    \begin{asy}
+      unitsize(3);
+      draw((0,0)--(10,0)--(20,0)--(20,10)--(30,10)--(30,20));
+      draw((0,0)--(0,10)--(0,20)--(0,30)--(0,40)--(0,50), rgb(1,0,0));
+      draw((10,0)--(10,40),rgb(1,0,0));
+      draw((20,0)--(50,0),rgb(1,0,0));
+      draw((20,10)--(20,30),rgb(1,0,0));
+      draw((30,10)--(40,10),rgb(1,0,0));
+      draw((0,50)--(50,0),rgb(0,0,1) + dashed);
+    \end{asy}
+
+  \end{center}
+
+  The diagram above is an example for $n=5$ with the new segments formed by the $Q_i$ in red, and the line $x+y=n$ in blue.
+
+  By definition, $M$ has less than $n$ points, none of which are in the original path. Since all $Q_i$ only intersect in the original path, each mine is in at most one of $Q_0,Q_1,\dots,Q_{n-1}.$ By the Pigeonhole Principle, one of the $Q_i$ is mine-avoiding.
+\end{proof}
+
+Now, consider the following process:
+\begin{itemize}
+  \item Start at $(0,0)$.
+  \item If there is only one choice of next step that is part of a mine-avoiding path, make that choice.
+  \item Repeat the above until at a point with two possible steps that are part of mine-avoiding paths.
+  \item Add a mine to the choice of next step with more mine-avoiding paths through it. If both have the same number of mine-avoiding paths through them, add a mine arbitrarily.
+\end{itemize}
+
+\begin{center}
+  \begin{asy}
+    unitsize(3);
+    draw((-5,-5)--(45,-5));
+    draw((-5,5)--(45,5));
+    draw((-5,15)--(35,15));
+    draw((-5,25)--(25,25));
+    draw((-5,35)--(15,35));
+    draw((-5,45)--(5,45));
+    draw((-5,-5)--(-5,45));
+    draw((5,-5)--(5,45));
+    draw((15,-5)--(15,35));
+    draw((25,-5)--(25,25));
+    draw((35,-5)--(35,15));
+    draw((45,-5)--(45,5));
+    fill((-5,5)--(-5,15)--(5,15)--(5,5)--cycle);
+    fill((25,5)--(25,15)--(35,15)--(35,5)--cycle);
+    label("$1$",(10,30));
+    label("$1$",(20,20));
+    label("$1$",(40,0));
+    label("$1$",(30,0));
+    label("$2$",(20,0));
+    label("$2$",(10,20));
+    label("$1$",(20,10));
+    label("$3$",(10,10));
+    label("$5$",(10,0));
+    label("$5$",(0,0));
+    label("$0$",(0,20));
+    label("$0$",(0,30));
+    label("$0$",(0,40));
+  \end{asy}
+\end{center}
+
+For instance, consider the above diagram for $n=4$. Lattice points are replaced with squares. Mines are black squares and each non-mine is labelled with the number of mine-avoiding paths passing through it. This process would start at $(0,0)$, go to $(1,0)$, then place a mine at $(1,1)$.
+
+
+This path increases the size of $M$ by one, and reduces the number of mine-avoiding paths to a nonzero number at most half of the original. Repeat this process until there is only one path left. By our lemma, the number of mines must be at least $n$ by the end of the process, so the process was iterated at least $n-|M|$ times. By the halving property, there must have been at least $2^{n-|M|}$ mine-avoiding paths before the process, as desired.
+\pagebreak
+
+\subsection{TSTST 2021/8, proposed by Fedir Yudin}
+\textsl{Available online at \url{https://aops.com/community/p24130228}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a scalene triangle.
+Points $A_1$, $B_1$ and $C_1$ are chosen
+on segments $BC$, $CA$, and $AB$, respectively,
+such that $\triangle A_1B_1C_1$ and $\triangle ABC$
+are similar.
+Let $A_2$ be the unique point on line $B_1C_1$
+such that $AA_2 = A_1A_2$.
+Points $B_2$ and $C_2$ are defined similarly.
+Prove that $\triangle A_2B_2C_2$ and $\triangle ABC$ are similar.
+\end{mdframed}
+We give three solutions.
+\paragraph{Solution 1 (author).}
+We'll use the following lemma.
+
+\begin{lemma*}
+  Suppose that $PQRS$ is a convex quadrilateral with $\angle P = \angle R$. Then
+  there is a point $T$ on $QS$ such that $\angle QPT = \angle SRP$, $\angle
+  TRQ = \angle RPS$, and $PT=RT$.
+\end{lemma*}
+
+Before proving the lemma, we will show how it solves the problem. The lemma
+applied for the quadrilateral $AB_1A_1C_1$ with $\angle A = \angle A_1$ shows
+that $\angle B_1A_1A_2 = \angle C_1AA_1$. This implies that the point $A_2$ in
+$\triangle A_1B_1C_1$ corresponds to the point $A_1$ in $\triangle ABC$. Then
+$\triangle A_2B_2C_2 \sim \triangle A_1B_1C_1 \sim \triangle ABC$, as desired.
+
+Additionally, $PT=RT$ is a corollary of the angle conditions because
+\[\measuredangle PRT = \measuredangle SRQ - \measuredangle TRQ - \measuredangle SRP = \measuredangle QPS - \measuredangle RPS -
+\measuredangle QPT = \measuredangle TPR.\]
+Therefore we only need to prove the angle conditions.
+
+\subparagraph{Proof 1 of lemma}
+  Denote $X = PQ \cap RS$ and $Y = PS \cap RQ$. Note that $\angle XPY = \angle
+  XRY$, so $PRXY$ is cyclic. Let $T$ be the point of intersection of tangents to this circle at $P$ and $R$. By Pascal's theorem for the degenerate hexagon $PPXRRY$, we have $T \in QS$ (alternatively, $Q$, $S$, and $T$ are collinear on the pole of $PR \cap XY$ with respect to the circle). Also, $\measuredangle QPT = \measuredangle XRP = \measuredangle SRP$ and similarly $\measuredangle TRQ = \measuredangle RPY = \measuredangle RPS$, so we're done.
+
+\begin{center}
+  \begin{asy}
+    size(8cm);
+
+    pair P, Q, Rp, R, S, X, Y, T;
+
+    P = dir(50);
+    Q = dir(200);
+    S = dir(340);
+    Rp = dir(40);
+    R = 2*foot(Rp, Q, S) - Rp;
+    X = extension(P, Q, R, S);
+    Y = extension(P, S, R, Q);
+    T = extension(Q, S, (P+R)/2, (P+R)/2+dir(90)*(P-R));
+
+    draw(P--Q--R--S--cycle);
+    draw(P--X--S--Y--R--cycle);
+    draw(Q--S);
+    draw(P--T--R, red);
+
+    //draw(anglemark(Q, P, T, 10));
+    //draw(anglemark(S, R, P, 10));
+    //draw(anglemark(T, R, Q, 9, 11));
+    //draw(anglemark(R, P, S, 9, 11));
+
+    draw(circumcircle(P, R, X));
+
+    string[] names={"$P$","$Q$","$R$","$S$","$X$","$Y$","$T$"};
+    pair[] pts={P, Q, R, S, X, Y, T};
+    pair[] labels={dir(110), Q, dir(220), S, dir(120), dir(240), T};
+    for(int i=0;i<names.length;++i){
+      dot(names[i], pts[i], dir(labels[i]));
+    }
+  \end{asy}
+\end{center}
+
+
+\subparagraph{Proof 2 of lemma}
+Let $P'$ and $R'$ be the reflections of $P$ and $R$ in $QS$. Note that $PR'$ and
+$RP'$ intersect at a point $X$ on $QS$. Let $T$ be the second intersection of
+the circumcircle of $\triangle PRX$ with $QS$. Note that
+\begin{align*}
+  \measuredangle PXT &= \measuredangle R'PQ + \measuredangle PQS \\
+                       &= \measuredangle R'SQ + \measuredangle PQS  \\
+                       &= \measuredangle QSR + \measuredangle PQS \\
+                       &= \measuredangle (PQ, SR) \\
+                       &= \measuredangle QPR + \measuredangle PRS.
+\end{align*}
+This means that
+\begin{align*}
+  \measuredangle QPT &= \measuredangle QPR - \measuredangle TPR \\
+                       &= \measuredangle QPR - \measuredangle TXR \\
+                       &= \measuredangle QPR - \measuredangle PXT \\
+                       &= \measuredangle QPR - \measuredangle QPR -
+                       \measuredangle PRS \\
+                       &= \measuredangle SRP.
+\end{align*}
+Similarly, $\measuredangle QRT = \measuredangle SPR$, so we're done.
+
+\begin{center}
+  \begin{asy}
+    size(8cm);
+
+    pair P, Q, R, S, Pp, Rp, X, T;
+
+    P = dir(50);
+    Q = dir(200);
+    S = dir(340);
+    Rp = dir(70);
+    R = 2*foot(Rp, Q, S) - Rp;
+    Pp = 2*foot(P, Q, S) - P;
+    X = extension(P, Rp, R, Pp);
+    T = 2*foot(circumcenter(P, R, X), Q, S) - X;
+
+
+    draw(P--Q--R--S--cycle);
+    draw(P--R--T--cycle);
+    draw(Pp--Q--Rp--S--cycle, dashed);
+    draw(Q--X);
+    draw(R--X--Rp, red);
+
+    draw(circumcircle(P, Q, S));
+    draw(circumcircle(R, Q, S));
+    draw(circumcircle(P, R, X), blue);
+
+    string[] names={"$P$","$Q$","$R$","$S$","$P'$","$R'$","$X$","$T$"};
+    pair[] pts={P, Q, R, S, Pp, Rp, X, T};
+    pair[] labels={P, Q, R, dir(330), Pp, Rp, X, dir(220)};
+    for(int i=0;i<names.length;++i){
+      dot(names[i], pts[i], dir(labels[i]));
+    }
+
+  \end{asy}
+\end{center}
+
+\subparagraph{Proof 3 of lemma}
+  Let $T$ be the point on $QS$ such that $\angle QPT = \angle SRP$. Then we have
+  \[
+    \frac{QT}{TS} = \frac{\sin QPT \cdot PT / \sin PQT}{\sin TPS \cdot PT / \sin TSP} = \frac{PQ / \sin PRQ}{PS / \sin SRP} = \frac{R(\triangle PQR)}{R(\triangle PRS)},
+  \]
+  which is symmetric in $P$ and $R$, so we're done.
+
+\paragraph{Solution 2 (Ankan Bhattacharya).}
+We prove the main claim $\tfrac{B_1A_2}{A_2C_1} = \tfrac{BA_1}{A_1C}$.
+
+Let $\triangle A_0B_0C_0$ be the medial triangle of $\triangle ABC$.
+In addition, let $A_1'$ be the reflection of $A_1$ over $\ol{B_1C_1}$,
+and let $X$ be the point satisfying $\triangle XBC \stackrel{-}{\sim} \triangle AB_1C_1$,
+so that we have a compound similarity
+\[ \triangle ABC \sqcup X
+\stackrel{-}{\sim} \triangle A_1'B_1C_1 \sqcup A. \]
+Finally, let $O_A$ be the circumcenter of $\triangle A_1'B_1C_1$,
+and let $A_2^*$ be the point on $\ol{B_1C_1}$
+satisfying $\tfrac{B_1A_2^*}{A_2^*C_1} = \tfrac{BA_1}{A_1C}$.
+
+Recall that $O$ is the Miquel point of $\triangle A_1B_1C_1$,
+as well as its orthocenter.
+\begin{claim*}
+  $\ol{AA_1'} \parallel \ol{BC}$.
+\end{claim*}
+\begin{proof}
+  We need to verify that the foot from $A_1$ to $\ol{B_1C_1}$
+  lies on the $A$-midline.
+  This follows from the fact that $O$ is both the Miquel point
+  and the orthocenter.
+\end{proof}
+
+\begin{claim*}
+  $\ol{AX} \parallel \ol{B_1C_1}$.
+\end{claim*}
+\begin{proof}
+  From the compound similarity,
+  \[ \dang (\ol{BC}, \ol{AX})
+  = \dang (\ol{AA_1'}, \ol{B_1C_1}). \]
+  As $\ol{AA_1'} \parallel \ol{BC}$,
+  we obtain $\ol{AX} \parallel \ol{B_1C_1}$.
+\end{proof}
+
+\begin{claim*}
+  $\ol{AX} \perp \ol{A_1O}$.
+\end{claim*}
+\begin{proof}
+  Because $O$ is the orthocenter of $\triangle A_1B_1C_1$.
+\end{proof}
+
+\begin{claim*}
+  $\ol{AA_1'} \perp \ol{A_2^*O_A}$.
+\end{claim*}
+\begin{proof}
+  Follows from $\ol{AX} \perp \ol{A_1O}$
+  after the similarity
+  \[ \triangle ABC \sqcup X
+  \stackrel{-}{\sim} \triangle A_1'B_1C_1 \sqcup A.\qedhere\]
+\end{proof}
+
+\begin{claim*}
+  $AA_2^* = A_1'A_2$.
+\end{claim*}
+\begin{proof}
+  Since $\dang C_1AB_1 = \dang C_1A_1'B_1$,
+  $AO_A = A_1'O_A$,
+  so $\ol{AA_1'} \perp \ol{A_2^*O_A}$
+  implies $AA_2^* = A_1'A_2^*$.
+\end{proof}
+
+Finally, $A_1'A_2^* = A_1A_2^*$ by reflections,
+so $AA_2^* = A_1A_2^*$, and $A_2^* = A_2$.
+\pagebreak
+\pagebreak
+
+\subsection{TSTST 2021/9, proposed by Victor Wang}
+\textsl{Available online at \url{https://aops.com/community/p24130243}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $q=p^r$ for a prime number $p$ and positive integer $r$.
+Let $\zeta = e^{\frac{2\pi i}{q}}$.
+Find the least positive integer $n$ such that
+\[
+  \sum_{\substack{1 \le k \le q \\ \gcd(k,p) = 1}}
+  \frac{1}{(1 - \zeta^k)^n}
+\]
+is not an integer.
+(The sum is over all $1\leq k\leq q$ with $p$ not dividing $k$.)
+\end{mdframed}
+Let $S_q$ denote the set of primitive $q$th roots of unity (thus,
+the sum in question is a sum over $S_q$).
+\paragraph{Solution 1 (author).}
+Let $\zeta_p=e^{2\pi i/p}$ be a fixed primitive $p$th root of unity. Observe
+that the given sum is an integer for all $n\leq 0$ (e.g.  because the sum is an
+integer symmetric polynomial in the primitive $q$th roots of unity). By
+expanding polynomials in the basis $(1-x)^{k}$, it follows that if the sum in
+the problem statement is an integer for all $n < n_0$, then
+\[\sum_{\omega\in S_q} \frac{f(\omega)}{(1-\omega)^{n}}\in \ZZ\]
+for all $n < n_0$ and $f\in \ZZ[x]$, whereas for $n=n_0$ there is some
+$f\in \ZZ[x]$ for which the sum is not an integer (e.g. $f=1$).
+
+Let $z_q=r\phi(q)-q/p=p^{r-1}[r(p-1)-1]$. We claim that the answer is $n =
+z_q+1$.  We prove this by induction on $r$. First is the base case $r=1$.
+
+\begin{lemma*}
+  There exist polynomials $u,v\in \ZZ[x]$ such that
+  $(1-\omega)^{p-1}/p = u(\omega)$ and $p/(1-\omega)^{p-1} = v(\omega)$ for all
+  $\omega\in S_p$.
+
+  (What we are saying is that $p$ is $(1-\omega)^{p-1}$ times a \emph{unit}
+  (invertible algebraic integer), namely $v(\omega)$.)
+\end{lemma*}
+
+\begin{proof}
+  Note that $p = (1-\omega)\dotsm(1-\omega^{p-1})$. Thus we can write
+  \begin{align*}
+    \frac{p}{(1-\omega)^{p-1}} &=
+    \frac{1-\omega}{1-\omega} \cdot\frac{1-\omega^2}{1-\omega} \dotsm
+    \frac{1-\omega^{p-1}}{1-\omega}
+  \end{align*}
+  and take
+  \[v(x)=\prod_{k=1}^{p-1}\frac{1-x^{k}}{1-x}.\]
+  Similarly, the polynomial $u$ is
+  \[u(x) = \prod_{k=1}^{p-1}\frac{1-x^{k\ell_k}}{1-x^k}\]
+  where $\ell_k$ is a multiplicative inverse of $k$ modulo $p$.
+\end{proof}
+
+Now, the main idea: given $g\in \ZZ[x]$, observe that \[S = \sum_{\omega
+\in S_p} (1-\omega)g(\omega)\] is divisible by $1-\zeta_p^k$ (i.e. it is
+$1-\zeta_p^k$ times an algebraic integer) for every $k$ coprime to $p$.  By
+symmetric sums, $S$ is an integer; since $S^{p-1}$ is divisible by
+$(1-\zeta_p)\dotsm(1-\zeta_p^{p-1}) = p$, the integer $S$ must itself be
+divisible by $p$. (Alternatively, since $h(x) := (1-x)g(x)$ vanishes at
+$x=1$, one can interpret $S$ using a roots of unity filter: $S = p\cdot h([x^0]
++ [x^p] + \dotsb) \equiv 0\pmod{p}$.) Now write
+\[
+\ZZ
+\ni \frac{S}{p}
+= \sum_{\omega \in S_p} \frac{(1-\omega)^{p-1}}{p} \frac{g(\omega)}{(1-\omega)^{p-2}}
+= \sum_{\omega \in S_p} u(\omega)\frac{g(\omega)}{(1-\omega)^{p-2}}.
+\]
+Taking $g = v\cdot (1-x)^k$ for $k\geq 0$, we see that the sum in the
+problem statement is an integer for any $n\leq p-2$.
+
+Finally, we have
+\[\sum_{\omega\in S_p}\frac{u(\omega)}{(1-\omega)^{p-1}}=\sum_{\omega\in
+S_p}\frac{1}{p}=\frac{p-1}{p}\notin\ZZ,\]
+so the sum is not an integer for $n=p-1$.
+
+Now let $r\ge2$ and assume the induction hypothesis for $r-1$.
+
+\begin{lemma*}
+  There exist polynomials $U,V\in \ZZ[x]$ such that
+  $(1-\omega)^p/(1-\omega^p) = U(\omega)$ and $(1-\omega^p)/(1-\omega)^p =
+  V(\omega)$ for all $\omega\in S_q$. (Again, these are units.)
+\end{lemma*}
+
+\begin{proof}
+  Similarly to the previous lemma, we write $1-\omega^p =
+  (1-\omega\zeta_p^0)\dotsm(1-\omega\zeta_p^{p-1})$. The polynomials $U$ and $V$
+  are
+  \begin{align*}
+    U(x) &= \prod_{k=1}^{p-1}\frac{1-x^{(kq/p+1)\ell_k}}{1-x^{kq/p+1}} \\
+    V(x) &= \prod_{k=1}^{p-1}\frac{1-x^{kq/p+1}}{1-x}
+  \end{align*}
+  where $\ell_k$ is a multiplicative inverse of $kq/p+1$ modulo $q$.
+\end{proof}
+
+\begin{corollary*}
+  If $\omega\in S_q$, then $(1-\omega)^{\phi(q)}/p$ is a unit.
+\end{corollary*}
+
+\begin{proof}
+  Induct on $r$. For $r=1$, this is the first lemma. For the inductive step,
+we are given that $(1-\omega^p)^{\phi(q/p)}/p$ is a unit. By the second lemma,
+$(1-\omega)^{\phi(q)}/(1-\omega^p)^{\phi(q/p)}$ is also a unit. Multiplying
+these together yields another unit.
+\end{proof}
+
+Thus we have polynomials $A, B\in \ZZ[x]$ such that
+\begin{align*}
+  A(\omega) &= \frac{p}{(1-\omega)^{\phi(q)}}V(\omega)^{z_{q/p}} \\
+  B(\omega) &= \frac{(1-\omega)^{\phi(q)}}{p}U(\omega)^{z_{q/p}}
+\end{align*}
+for all $\omega\in S_q$.
+
+Given $g\in \ZZ[x]$, consider the $p$th roots of unity filter \[S(x) :=
+\sum_{k=0}^{p-1} g(\zeta_p^k x) = p\cdot h(x^p),\] where $h\in \ZZ[x]$.
+Then \[ph(\eta) = S(\omega) = \sum_{\omega^p = \eta} g(\omega)\] for all $\eta\in
+S_{q/p}$, so
+\begin{align*}
+\frac{h(\eta)}{(1-\eta)^{z_{q/p}}}
+= \frac{S(\omega)}{p(1-\eta)^{z_{q/p}}}
+&= \sum_{\omega^p = \eta} \frac{(1-\omega)^{pz_{q/p}}}{(1-\omega^p)^{z_{q/p}}} \frac{g(\omega)}{p(1-\omega)^{pz_{q/p}}} \\
+&= \sum_{\omega^p = \eta}
+U(\omega)^{z_{q/p}}\frac{(1-\omega)^{\phi(q)}}{p}\frac{g(\omega)}{(1-\omega)^{z_q}}.
+\end{align*}
+(Implicit in the last line is $z_q=\phi(q)+pz_{q/p}$.)
+Since $U(\omega)$ and $(1-\omega)^{\phi(q)}/p$ are units, we can let $g=A\cdot
+f$ for arbitrary $f\in \ZZ[x]$, so that the expression in the summation
+simplifies to $f(\omega)/(1-\omega)^{z_q}$.
+From this we conclude that for any $f\in \ZZ[x]$, there exists $h\in
+\ZZ[x]$ such that
+\begin{align*}
+  \sum_{\omega\in S_q}\frac{f(\omega)}{(1-\omega)^{z_q}} &= \sum_{\eta\in
+  S_{q/p}}\sum_{\omega^p=\eta}\frac{f(\omega)}{(1-\omega)^{z_q}} \\
+                                                         &= \sum_{\eta\in
+                                                         S_{q/p}}\frac{h(\eta)}{(1-\eta)^{z_{q/p}}}.
+\end{align*}
+By the inductive hypothesis, this is always an integer.
+
+In the other direction, for $\eta\in S_{q/p}$ we have
+\begin{align*}
+  \sum_{\omega^p = \eta} \frac{B(\omega)}{(1-\omega)^{1+z_q}} &=
+  \sum_{\omega^p=\eta}\frac{1}{p(1-\omega^p)^{z_{q/p}}(1-\omega)} \\
+& = \frac{1}{p(1-\eta)^{z_{q/p}}}\sum_{\omega^p = \eta} \frac{1}{1-\omega} \\
+& = \frac{1}{p(1-\eta)^{z_{q/p}}}\left[\frac{px^{p-1}}{x^p - \eta}\right]_{x=1}
+\\
+& = \frac{1}{(1-\eta)^{1 + z_{q/p}}}.
+\end{align*}
+Summing over all $\eta\in S_{q/p}$, we conclude by the inductive hypothesis that
+\[\sum_{\omega\in S_q}\frac{B(\omega)}{(1-\omega)^{1+z_q}}=\sum_{\eta\in
+S_{q/p}}\frac{1}{(1-\eta)^{1+z_{q/p}}}\]
+is not an integer. This completes the solution.
+
+\paragraph{Solution 2 (Nikolai Beluhov).} %Newton sums
+
+Suppose that the complex numbers $\frac{1}{1-\omega}$ for $\omega \in S_q$ are
+the roots of
+\[P(x) = x^d - c_1x^{d - 1} + c_2x^{d - 2} - \dotsb \pm c_d,\]
+so that $c_k$ is their $k$-th elementary symmetric polynomial and $d = \phi(q) =
+(p - 1)p^{r - 1}$. Additionally denote
+\[S_n = \sum_{\omega\in S_q} \frac{1}{(1 - \omega)^n}.\]
+Then, by Newton's identities,
+\begin{align*}
+  S_1 &= c_1, \\
+  S_2 &= c_1S_1 - 2c_2, \\
+  S_3 &= c_1S_2 - c_2S_1 + 3c_3,
+\end{align*}
+and so on. The general pattern when $n\leq d$ is
+\[S_n = \left[\sum_{j = 1}^{n - 1} (-1)^{j + 1}c_jS_{n - j}\right] + (-1)^{n +
+1}nc_n.\]
+After that, when $n > d$, the pattern changes to
+\[S_n = \sum_{j = 1}^d (-1)^{j + 1}c_jS_{n - j}.\]
+
+\begin{lemma*}
+  All of the $c_i$ are integers except for $c_d$. Furthermore, $c_d$ is $1/p$
+  times an integer.
+\end{lemma*}
+
+\begin{proof}
+The $q$th cyclotomic polynomial is
+\[\Phi_q(x)=1+x^{p^{r-1}}+x^{2p^{r-1}}+\dotsb+x^{(p-1)p^{r-1}}.\]
+The polynomial
+\[Q(x) = 1+(1+x)^{p^{r-1}}+(1+x)^{2p^{r-1}}+\dotsb+(1+x)^{(p-1)p^{r-1}}\]
+has roots $\omega-1$ for $\omega \in S_q$, so it is equal to $p(-x)^dP(-1/x)$ by
+comparing constant coefficients. Comparing the remaining coefficients, we find
+that $c_n$ is $1/p$ times the $x^{n}$ coefficient of $Q$.
+
+Since $(x + y)^p \equiv x^p + y^p \pmod{p}$, we conclude that, modulo $p$,
+\begin{align*}
+  Q(x) &\equiv 1 + \big(1 + x^{p^{r - 1}}\big) + \big(1 + x^{p^{r - 1}}\big)^2 + \dotsb + \big(1 + x^{p^{r -
+1}}\big)^{p - 1} \\
+       &\equiv \Big[\big(1 + x^{p^{r - 1}}\big)^p - 1\Big]/x^{p^{r - 1}}.
+\end{align*}
+
+Since $\binom{p}{j}$ is a multiple of $p$ when $0 < j < p$, it follows that all
+coefficients of $Q(x)$ are multiples of $p$ save for the leading one. Therefore,
+$c_n$ is an integer when $n < d$, while $c_d$ is $1/p$ times an integer.
+\end{proof}
+
+By the recurrences above, $S_n$ is an integer for $n < d$. When $r = 1$, we get
+that $dc_d$ is not an integer, so $S_d$ is not an integer, either. Thus the
+answer for $r=1$ is $n=p-1$.
+
+Suppose now that $r \ge 2$. Then $dc_d$ does become an integer, so $S_d$ is an integer as well.
+
+%Using our recurrence for the $S_n$ with $n > d$, we see that the smallest $n$
+%with $S_n$ non-integer is $d$ larger than the smallest $n$ with $S_n$ not a multiple of $p$.
+
+\begin{lemma*}
+  For all $n$ with $1 \le n \le d$, we have $\nu_p(nc_n) \ge r - 2$.
+  Furthermore, the smallest $n$ such that $\nu_p(nc_n) = r - 2$ is $d - p^{r - 1} +
+  1$.
+\end{lemma*}
+\begin{proof}
+  The value of $nc_n$ is $1/p$ times the coefficient of $x^{n-1}$ in the
+  derivative $Q'(x)$. This derivative is
+\[p^{r - 1}(1 + x)^{p^{r - 1} - 1}\left[\sum_{k = 1}^{p - 1} k(1 + x)^{(k - 1)p^{r -
+1}}\right].\]
+
+What we want to prove reduces to showing that all coefficients of the
+polynomial in the square brackets are multiples of $p$ except for the leading one.
+
+Using the same trick $(x + y)^p \equiv x^p + y^p \pmod{p}$ as before and also
+writing $w$ for $x^{p^{r - 1}}$, modulo $p$ the polynomial in the square brackets
+becomes
+\[1 + 2(1 + w) + 3(1 + w)^2 + \dotsb + (p - 1)(1 + w)^{p - 2}.\]
+This is the derivative of
+\[1 + (1 + w) + (1 + w)^2 + \dotsb + (1 + w)^{p - 1} = [(1 + w)^p - 1]/w\]
+and so, since $\binom{p}{j}$ is a multiple of $p$ when $0 < j < p$, we are
+done.
+\end{proof}
+
+Finally, we finish the problem with the following claim.
+\begin{claim*}
+  Let $m=d-p^{r-1}$. Then for all $k\geq 0$ and $1\leq j\leq d$, we have
+  \begin{align*}
+    \nu_p(S_{kd+m+1}) &= r-2-k \\
+    \nu_p(S_{kd+m+j}) &\geq r-2-k.
+  \end{align*}
+\end{claim*}
+
+\begin{proof}
+  First, $S_1, S_2, \dots, S_m$ are all divisible by $p^{r - 1}$ by Newton's
+  identities and the second lemma. Then $\nu_p(S_{m + 1}) = r - 2$ because
+  \[\nu_p((m+1)c_{m+1})=r-2,\]
+  and all other terms in the recurrence relation are divisible by $p^{r-1}$. We
+  can similarly check that $\nu_p(S_{n})\geq r-2$ for $m+1\leq n \leq d$.
+  Newton's identities combined with the first lemma now imply
+  the following for $n > d$:
+  \begin{itemize}
+    \item If $\nu_p(S_{n-j})\geq \ell$ for all $1\leq j\leq d$ and
+      $\nu_p(S_{n-d})\geq \ell+1$, then $\nu_p(S_{n})\geq \ell$.
+    \item If $\nu_p(S_{n-j})\geq \ell$ for all $1\leq j\leq d$ and
+      $\nu_p(S_{n-d})=\ell$, then $\nu_p(S_{n})=\ell-1$.
+  \end{itemize}
+  Together, these prove the claim by induction.
+\end{proof}
+By the claim, the smallest $n$ for which $\nu_p(S_n) < 0$ (equivalent to $S_n$
+not being an integer, by the recurrences) is
+\[n=(r-1)d+m+1=((p-1)r-1)p^{r-1}+1.\]
+
+\begin{remark*}
+  The original proposal was the following more general version:
+  \begin{quote}
+    Let $n$ be an integer with prime power factorization $q_1\dotsm q_m$.
+    Let $S_n$ denote the set of primitive $n$th roots of unity. Find all tuples of nonnegative integers $(z_1,\dots,z_m)$ such that
+    \[
+      \sum_{\omega\in S_n} \frac{f(\omega)}{(1-\omega^{n/q_1})^{z_1}\dotsm (1-\omega^{n/q_m})^{z_m}} \in \ZZ
+    \]
+    for all polynomials $f\in \ZZ[x]$.
+  \end{quote}
+  The maximal $z_i$ are exponents in the prime ideal factorization of the \href{https://en.wikipedia.org/wiki/Different_ideal}{different ideal} of the cyclotomic extension $\QQ(\zeta_n)/\QQ$.
+\end{remark*}
+
+\begin{remark*}
+Let $F = (x^p - 1)/(x-1)$ be the minimal polynomial of $\zeta_p = e^{2\pi i/p}$ over $\QQ$.
+A calculation of Euler shows that
+\[
+(\ZZ[\zeta_p])^*
+:= \{\alpha = g(\zeta_p)\in \QQ[\zeta_p]: \sum_{\omega \in S_p}
+f(\omega)g(\omega)\in \ZZ\; \forall f\in \ZZ[x]\}
+= \frac{1}{F'(\zeta_p)}\cdot \ZZ[\zeta_p],
+\]
+where
+\[
+F'(\zeta_p) = \frac{p\zeta_p^{p-1} - [1+\zeta_p+\dotsb+\zeta_p^{p-1}]}{1-\zeta_p} = p(1-\zeta_p)^{-1}\zeta_p^{p-1}
+\]
+is $(1-\zeta_p)^{[p-1]-1} = (1-\zeta_p)^{p-2}$ times a unit of
+$\ZZ[\zeta_p]$. Here, $(\ZZ[\zeta_p])^*$ is the dual lattice of
+$\ZZ[\zeta_p]$.
+\end{remark*}
+
+%\begin{remark*}
+%Let $\alpha$ be algebraic of degree $d$ over $\QQ$, and let $f\in \QQ[x]$ be the minimal polynomial of $\alpha$ (of degree $d$).
+%Hidden in the previous remark is Euler's calculation: the trace of $\alpha^i/f'(\alpha)$ (sum over conjugates) is $0$ for $i=0,1,\dots,d-2$ and $1$ for $i=d-1$, proven either using partial fractions, Lagrange interpolation, or other symmetric sum techniques (e.g. Newton sums).
+%All of this can be phrased more directly (e.g. in terms of symmetric sums of $S_n$), so one could likely use standard elementary methods to directly compute the sums in the problem statement.
+%\end{remark*}
+
+\begin{remark*}
+Let $K = \QQ(\omega)$, so $(p)$ factors as $(1-\omega)^{p-1}$ in the ring of integers $\mathcal{O}_K$ (which, for cyclotomic fields, can be shown to be $\ZZ[\omega]$).
+%total ramification
+In particular, the \emph{ramification index} $e$ of $(1-\omega)$ over $p$ is the exponent, $p-1$.
+Since $e = p-1$ is not divisible by $p$, we have so-called \emph{tame ramification}.
+%So look at the exponent of $1-\omega$ in the inverse different, get $[p-1]-1 = p-2$.
+Now by the
+\href{https://en.wikipedia.org/wiki/Different_ideal\#Ramification}{ramification
+theory} of Dedekind's different ideal, the exponent $z_1$ that works when $n=p$ is $e-1 = p-2$.
+
+Higher prime powers are more interesting because of wild ramification: $p$ divides $\phi(p^r) = p^{r-1}(p-1)$ if and only if $r>1$.
+(This is a similar phenomena to how Hensel's lemma for $x^2 - c$ is more interesting mod powers of 2 than mod odd prime powers.)
+\end{remark*}
+
+\begin{remark*}
+Let $F = (x^q - 1)/(x^{q/p}-1)$ be the minimal polynomial of $\zeta_q = e^{2\pi i/q}$ over $\QQ$.
+The aforementioned calculation of Euler shows that
+\[
+(\ZZ[\zeta_q])^*
+:= \{\alpha = g(\zeta_q)\in \QQ[\zeta_q]: \sum_{\omega \in S_q}
+f(\omega)g(\omega)\in \ZZ \; \forall f\in \ZZ[x]\}
+= \frac{1}{F'(\zeta_q)}\cdot \ZZ[\zeta_q],
+\]
+where the chain rule implies (using the computation from the prime case)
+\[
+F'(\zeta_q) = [p(1-\zeta_p)^{-1}\zeta_p^{p-1}]\cdot \frac{q}{p}\zeta_q^{(q/p) - 1} = q(1-\zeta_p)^{-1}\zeta_q^{-1}.
+\]
+is $(1-\zeta_q)^{r\phi(q) - q/p} = (1-\zeta_q)^{z_q}$ times a unit of $\ZZ[\zeta_q]$.
+\end{remark*}
+
+\pagebreak
+\pagebreak
+
+
+\end{document}

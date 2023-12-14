@@ -1,0 +1,693 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2018 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2018 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $a$, $b$, $c$ be positive real numbers such that $a+b+c = 4\sqrt[3]{abc}$.
+Prove that
+\[ 2(ab+bc+ca) + 4 \min (a^2, b^2, c^2) \ge a^2 + b^2 + c^2. \]
+
+\item %% Problem 2
+Find all functions $f \colon (0,\infty) \to (0,\infty)$ such that
+\[
+  f\left( x+\frac 1y \right)
+  + f\left( y+\frac 1z \right)
+  + f\left( z+\frac 1x \right)
+  = 1
+\]
+for all $x,y,z > 0$ with $xyz = 1$.
+
+\item %% Problem 3
+Let $n \ge 2$ be an integer, and let $\{a_1, \dots, a_m\}$ denote
+the $m = \varphi(n)$ integers less than $n$ and relatively prime to $n$.
+Assume that every prime divisor of $m$ also divides $n$.
+Prove that $m$ divides $a_1^k + \dots + a_m^k$ for every positive
+integer $k$.
+
+\item %% Problem 4
+Let $p$ be a prime, and let $a_1$, \dots, $a_p$ be integers.
+Show that there exists an integer $k$ such that the numbers
+\[ a_1 + k, \; a_2 + 2k, \; \dots, \; a_p + pk \]
+produce at least $\half p$ distinct remainders upon division by $p$.
+
+\item %% Problem 5
+Let $ABCD$ be a convex cyclic quadrilateral with
+$E = \ol{AC} \cap \ol{BD}$, $F = \ol{AB} \cap \ol{CD}$,
+$G = \ol{DA} \cap \ol{BC}$.
+The circumcircle of $\triangle ABE$
+intersects line $CB$ at $B$ and $P$,
+and the circumcircle of $\triangle ADE$
+intersects line $CD$ at $D$ and $Q$.
+Assume $C$, $B$, $P$, $G$
+and $C$, $Q$, $D$, $F$ are collinear in that order.
+Let $M = \ol{FP} \cap \ol{GQ}$.
+Prove that $\angle MAC = 90\dg$.
+
+\item %% Problem 6
+Let $a_n$ be the number of permutations $(x_1, \dots, x_n)$ of $(1, \dots, n)$
+such that the ratios $x_k / k$ are all distinct.
+Prove that $a_n$ is odd for all $n \ge 1$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2018/1, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p10226140}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$, $b$, $c$ be positive real numbers such that $a+b+c = 4\sqrt[3]{abc}$.
+Prove that
+\[ 2(ab+bc+ca) + 4 \min (a^2, b^2, c^2) \ge a^2 + b^2 + c^2. \]
+\end{mdframed}
+WLOG let $c = \min(a,b,c) = 1$ by scaling.
+The given inequality becomes equivalent to
+\[ 4ab + 2a + 2b + 3 \ge (a+b)^2 \qquad \forall a+b = 4(ab)^{1/3}-1. \]
+Now, let $t = (ab)^{1/3}$ and eliminate $a+b$ using the condition, to get
+\[ 4t^3 + 2(4t-1) + 3 \ge (4t-1)^2
+  \iff 0 \le 4t^3 - 16t^2 + 16t = 4t(t-2)^2 \]
+which solves the problem.
+
+Equality occurs only if $t=2$,
+meaning $ab = 8$ and $a+b=7$, which gives
+\[ \{a,b\} = \left\{ \frac{7 \pm \sqrt{17}}{2} \right\} \]
+with the assumption $c = 1$.
+Scaling gives the curve of equality cases.
+\pagebreak
+
+\subsection{USAMO 2018/2, proposed by Titu Andreescu, Nikolai Nikolov}
+\textsl{Available online at \url{https://aops.com/community/p10226145}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all functions $f \colon (0,\infty) \to (0,\infty)$ such that
+\[
+  f\left( x+\frac 1y \right)
+  + f\left( y+\frac 1z \right)
+  + f\left( z+\frac 1x \right)
+  = 1
+\]
+for all $x,y,z > 0$ with $xyz = 1$.
+\end{mdframed}
+The main part of the problem is to show all solutions are linear.
+As always, let $x=b/c$, $y=c/a$, $z=a/b$
+(classical inequality trick).
+Then the problem becomes
+\[ \sum_{\text{cyc}} f\left( \frac{b+c}{a} \right) = 1. \]
+Let $f(t) = g(\frac{1}{t+1})$,
+equivalently $g(s) = f(1/s-1)$.
+Thus $g \colon (0,1) \to (0,1)$
+which satisfies $\sum_{\text{cyc}} g\left( \frac{a}{a+b+c} \right) = 1$,
+or equivalently
+\[ \boxed{g(a) + g(b) + g(c) = 1} \qquad \forall a+b+c=1. \]
+
+The rest of the solution is dedicated to solving this
+equivalent functional equation in $g$.
+It is a lot of technical details and I will only outline them
+(with apologies to the contestants who didn't have that luxury).
+
+\begin{claim*}
+  The function $g$ is linear.
+\end{claim*}
+\begin{proof}
+  This takes several steps, all of which are technical.
+  We begin by proving $g$ is linear over $[1/8, 3/8]$.
+  \begin{itemize}
+    \ii First, whenever $a+b \le 1$ we have
+    \[ 1 - g(1-(a+b)) = g(a) + g(b) = 2 g\left( \frac{a+b}{2} \right). \]
+    Hence $g$ obeys Jensen's functional equation over $(0,1/2)$.
+    \ii Define $h \colon [0,1] \to \RR$
+    by $h(t) = g(\frac{2t+1}{8}) - (1-t) \cdot g(1/8) - t \cdot g(3/8)$,
+    then $h$ satisfies Jensen's functional equation too over $[0,1]$.
+    We have also arranged that $h(0) = h(1) = 0$, hence $h(1/2) = 0$ as well.
+    \ii Since
+    \[ h(t) = h(t) + h(1/2) = 2h(t/2+1/4)
+      = h(t+1/2) + h(0) = h(t+1/2) \]
+    for any $t < 1/2$, we find $h$ is periodic modulo $1/2$.
+    It follows one can extend $\wt h$ by
+    \[ \wt h \colon \RR \to \RR \qquad\text{by}\qquad
+      \wt h(t) = h(t - \left\lfloor t \right\rfloor) \]
+    and still satisfy Jensen's functional equation.
+    Because $\wt h(0) = 0$, it's well-known this implies $\wt h$ is additive
+    (because $\wt h(x+y) = 2\wt h\left( (x+y)/2 \right) = \wt h(x) + \wt h(y)$
+    for any real numbers $x$ to $y$).
+  \end{itemize}
+  But $\wt h$ is bounded below on $[0,1]$ since $g \ge 0$,
+  and since $\wt h$ is also additive,
+  it follows (well-known) that $\wt h$ is linear.
+  Thus $h$ is the zero function.
+  So, the function $g$ is linear over $[1/8,3/8]$;
+  thus we may write $g(x) = kx + \ell$, valid for $1/8 \le x \le 3/8$.
+
+  Since $3g(1/3) = 1$, it follows $k + 3\ell = 1$.
+
+  For $0 < x < 1/8$ we have
+  $g(x) = 2g(0.15) - g(0.3-x) = 2(0.15k+\ell) - (k(0.3-x)+\ell) = kx+\ell$,
+  so $g$ is linear over $(0,3/8)$ as well.
+  Finally, for $3/8 < x < 1$, we use the given equation
+  \[
+    1 = g\left( \frac{1-x}{2} \right)
+    + g\left( \frac{1-x}{2} \right)
+    + g(x)
+    \implies g(x) = 1 - 2\left( k \cdot \frac{1-x}{2} + \ell \right)
+    = kx+\ell
+  \]
+  since $\frac{1-x}{2} < \frac{5}{16} < \frac{3}{8}$.
+  Thus $g$ is linear over all.
+\end{proof}
+
+Putting this back in,
+we deduce that $g(x) = kx + \frac{1-k}{3}$ for some $k \in [-1/2,1]$,
+and so \[ f(x) = \frac{k}{x+1} + \frac{1-k}{3} \]
+for some $k \in [-1/2,1]$.
+All such functions work.
+\pagebreak
+
+\subsection{USAMO 2018/3, proposed by Ivan Borsenco}
+\textsl{Available online at \url{https://aops.com/community/p10226222}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n \ge 2$ be an integer, and let $\{a_1, \dots, a_m\}$ denote
+the $m = \varphi(n)$ integers less than $n$ and relatively prime to $n$.
+Assume that every prime divisor of $m$ also divides $n$.
+Prove that $m$ divides $a_1^k + \dots + a_m^k$ for every positive
+integer $k$.
+\end{mdframed}
+For brevity, given any $n$,
+we let $A(n) = \left\{ 1 \le x \le n, \gcd(x,n) = 1 \right\}$
+(thus $|A(n)| = \varphi(n)$).
+Also, let $S(n,k) = \sum_{a \in A(n)} a^k$.
+
+We will prove the stronger statement
+(which eliminates the hypothesis on $n$).
+\begin{claim*}
+  Let $n \ge 2$ be arbitrary (and $k \ge 0$).
+  If $p \mid n$, then \[ \nu_p (\varphi(n)) \le \nu_p(S(n,k)). \]
+\end{claim*}
+
+We start with the special case where $n$ is a prime power.
+\begin{lemma*}
+  Let $p$ be prime, $e \ge 1$, $k \ge 0$.
+  We always have
+  \[ S(p^e, k) = \sum_{x \in A(p^e)} x^k \equiv 0 \pmod{p^{e-1}}.  \]
+\end{lemma*}
+\begin{proof}
+  For $p$ odd, this follows by taking a primitive root $g$ modulo $p^{e}$.
+  We will have
+  \[ S(p^e, k) \equiv 1 + g^k + g^{2k} + \dots + g^{(\varphi(p^e)-1)k}
+    \equiv \frac{g^{\varphi(p^e) k} - 1}{g^k - 1}. \]
+  If $p-1 \nmid k$, then the denominator is not divisible by $p$
+  and hence the entire expression is $0 \pmod{p^e}$.
+  In the other case where $p-1 \mid k$,
+  since $\nu_p(\varphi(p^e)) = e-1$,
+  the exponent lifting lemma implies
+  \[ \nu_p\left( (g^k)^{\varphi(p^e)} - 1 \right)
+    = \nu_p(g^k-1) + (e-1) \]
+  and so the conclusion is true here too.
+
+  In the annoying case $p = 2$, the proof is broken into two cases:
+  for $k$ odd it follows by pairing $x$ with $2^e-x$
+  and when $k$ is even one can take $5$ as a generator
+  of all the quadratic residues as in the $p > 2$ case.
+\end{proof}
+\begin{corollary*}
+  We have $\nu_p(1^k + \dots + t^k) \ge \nu_p(t) - 1$ for any $k$,
+  $t$, $p$.
+\end{corollary*}
+\begin{proof}
+  Assume $p \mid t$.
+  Handle the terms in that sum divisible by $p$ (by induction)
+  and apply the lemma a bunch of times.
+\end{proof}
+
+Now the idea is to add primes $q$ one at a time to $n$,
+starting from the base case $n = p^e$.
+So, formally we proceed by induction on the number
+of prime divisors of $n$.
+We'll also assume $k \ge 1$ in what follows
+since the base case $k=0$ is easy.
+
+\begin{itemize}
+\ii First, suppose we want to go from $n$ to $nq$
+where $q \nmid n$.
+In that case $\varphi(nq)$ gained $\nu_p(q-1)$ factors of $p$
+and then we need to show $\nu_p(S(nq,k)) \ge \nu_p(\varphi(n)) + \nu_p(q-1)$.
+The trick is to write
+\[ A(nq) = \left\{ a + nh \mid a \in A(n)
+    \text{ and } h = 0,\dots,q-1 \right\}
+    \setminus qA(n)  \]
+and then expand using binomial theorem:
+\begin{align*}
+  S(nq, k) &=
+  \sum_{a \in A(n)} \sum_{h=0}^{q-1} (a+nh)^k
+  - \sum_{a \in A(n)} (qa)^k \\
+  &= -q^k S(n,k) + \sum_{a \in A(n)} \sum_{h=0}^{q-1} \sum_{j=0}^k
+    \left[ \binom kj a^{k-j} n^j h^j \right] \\
+  &= -q^k S(n,k) +
+    \sum_{j=0}^k \left[ \binom kj n^j \left( \sum_{a \in A(n)} a^{k-j} \right)
+    \left( \sum_{h=0}^{q-1} h^j \right) \right] \\
+  &= -q^k S(n,k) + \sum_{j=0}^k \left[ \binom kj n^j S(n,k-j)
+    \left( \sum_{h=1}^{q-1} h^j \right) \right] \\
+  &= (q-q^k) S(n,k)
+    + \sum_{j=1}^k \left[ \binom kj n^j S(n,k-j)
+    \left( \sum_{h=1}^{q-1} h^j \right) \right].
+\end{align*}
+We claim every term here has enough powers of $p$.
+For the first term, $S(n,k)$
+has at least $\nu_p(\varphi(n))$ factors of $p$;
+and we have the $q-q^k$ multiplier out there.
+For the other terms, we apply induction to $S(n,k-j)$;
+moreover $\sum_{h=1}^{q-1} h^j$
+has at least $\nu_p(q-1)-1$ factors of $p$ by corollary,
+and we get one more factor of $p$ (at least) from $n^j$.
+
+\ii On the other hand, if $q$ already divides $n$,
+then this time
+\[ A(nq) = \left\{ a + nh \mid a \in A(n)
+    \text{ and } h = 0,\dots,q-1 \right\}.  \]
+and we have no additional burden of $p$ to deal with;
+the same calculation gives
+\[ S(nq,k) = qS(n,k)
+  + \sum_{j=1}^k \left[ \binom kj n^j S(n,k-j)
+  \left( \sum_{h=1}^{q-1} h^j \right) \right].
+\]
+which certainly has enough factors of $p$ already.
+\end{itemize}
+
+\begin{remark*}
+  A curious bit about the problem is
+  that $\nu_p(\varphi(n))$ can exceed $\nu_p(n)$,
+  and so it is not true that the residues
+  of $A(n)$ are well-behaved modulo $\varphi(n)$.
+
+  As an example, let $n = 2 \cdot 3 \cdot 7 \cdot 13 = 546$,
+  so $m = \varphi(n) = 1 \cdot 2 \cdot 6 \cdot 12 = 144$.
+  Then $A(n)$ contains $26$ elements which are $1 \bmod 9$
+  and $23$ elements which are $4 \bmod 9$.
+\end{remark*}
+
+\begin{remark*}
+  The converse of the problem is true too
+  (but asking both parts would make this too long for exam).
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2018/4, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p10232389}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $p$ be a prime, and let $a_1$, \dots, $a_p$ be integers.
+Show that there exists an integer $k$ such that the numbers
+\[ a_1 + k, \; a_2 + 2k, \; \dots, \; a_p + pk \]
+produce at least $\half p$ distinct remainders upon division by $p$.
+\end{mdframed}
+For each $k = 0, \dots, p-1$ let $G_k$ be the graph
+on $\{1, \dots, p\}$ where we join $\{i,j\}$ if and only if
+\[ a_i + ik \equiv a_j + jk \pmod p
+  \iff k \equiv - \frac{a_i - a_j}{i-j} \pmod p. \]
+So we want a graph $G_k$ with at least $\half p$ connected components.
+
+However, each $\{i,j\}$ appears in exactly one graph $G_k$,
+so some graph has at most $\frac 1p \binom p2 = \half(p-1)$ edges
+(by ``pigeonhole'').
+This graph has at least $\half(p+1)$ connected components, as desired.
+
+\begin{remark*}
+  Here is an example for $p=5$ showing equality can occur:
+  \[
+    \begin{bmatrix}
+      0 & 0 & 3 & 4 & 3 \\
+      0 & 1 & 0 & 2 & 2 \\
+      0 & 2 & 2 & 0 & 1 \\
+      0 & 3 & 4 & 3 & 0 \\
+      0 & 4 & 1 & 1 & 4
+    \end{bmatrix}.
+  \]
+  Ankan Bhattacharya points out more generally
+  that $a_i = i^2$ is sharp in general.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 2018/5, proposed by Kada Williams}
+\textsl{Available online at \url{https://aops.com/community/p10232392}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCD$ be a convex cyclic quadrilateral with
+$E = \ol{AC} \cap \ol{BD}$, $F = \ol{AB} \cap \ol{CD}$,
+$G = \ol{DA} \cap \ol{BC}$.
+The circumcircle of $\triangle ABE$
+intersects line $CB$ at $B$ and $P$,
+and the circumcircle of $\triangle ADE$
+intersects line $CD$ at $D$ and $Q$.
+Assume $C$, $B$, $P$, $G$
+and $C$, $Q$, $D$, $F$ are collinear in that order.
+Let $M = \ol{FP} \cap \ol{GQ}$.
+Prove that $\angle MAC = 90\dg$.
+\end{mdframed}
+We present three general routes.
+(The second route, using the fact that $\ol{AC}$
+is an angle bisector, has many possible variations.)
+
+\paragraph{First solution (Miquel points).}
+This is indeed a Miquel point problem,
+but the main idea is to focus on the self-intersecting
+cyclic quadrilateral $PBQD$ as the key player,
+rather than on the given $ABCD$.
+
+Indeed, we will prove that $A$ is its Miquel point;
+this follows from the following two claims.
+\begin{claim*}
+  The self-intersecting quadrilateral $PQDB$ is cyclic.
+\end{claim*}
+\begin{proof}
+  By power of a point from $C$:
+  $CQ \cdot CD = CA \cdot CE = CB \cdot CP$.
+\end{proof}
+\begin{claim*}
+  Point $E$ lies on line $PQ$.
+\end{claim*}
+\begin{proof}
+  $\dang AEP = \dang ABP = \dang ABC = \dang ADC
+  = \dang ADQ = \dang AEQ$.
+\end{proof}
+
+\begin{center}
+\begin{asy}
+pair P = dir(240);
+pair B = dir(300);
+pair Q = dir(20);
+pair D = dir(50);
+pair E = extension(Q, P, B, D);
+pair C = extension(D, Q, B, P);
+pair H = extension(D, P, B, Q);
+pair A = foot(H, E, C);
+filldraw(unitcircle, opacity(0.1)+lightcyan, lightblue);
+
+pair G = extension(D, A, B, C);
+pair F = extension(B, A, C, D);
+
+filldraw(circumcircle(P, A, E), opacity(0.1)+green, heavygreen);
+filldraw(circumcircle(Q, A, E), opacity(0.1)+green, heavygreen);
+filldraw(circumcircle(A, B, C), opacity(0.05)+yellow, heavygreen+dotted);
+draw(B--F--C, grey);
+draw(D--G--C, grey);
+draw(P--H--B, blue);
+draw(P--B--Q--D--cycle, blue);
+draw(A--C, grey);
+draw(P--Q, blue);
+draw(B--D, blue);
+
+pair M = extension(P, F, G, Q);
+draw(F--P, heavycyan);
+draw(G--Q, heavycyan);
+
+dot("$P$", P, dir(P));
+dot("$B$", B, dir(B));
+dot("$Q$", Q, dir(Q));
+dot("$D$", D, dir(D));
+dot("$E$", E, dir(E));
+dot("$C$", C, dir(C));
+dot("$H$", H, dir(H));
+dot("$A$", A, dir(E-C));
+dot("$G$", G, dir(G));
+dot("$F$", F, dir(F));
+dot("$M$", M, dir(B-M));
+
+/* TSQ Source:
+
+P = dir 240
+B = dir 300
+Q = dir 20
+D = dir 50
+E = extension Q P B D
+C = extension D Q B P
+H = extension D P B Q
+A = foot H E C RE-C
+unitcircle 0.1 lightcyan / lightblue
+
+G = extension D A B C
+F = extension B A C D
+
+circumcircle P A E 0.1 green / heavygreen
+circumcircle Q A E 0.1 green / heavygreen
+circumcircle A B C 0.05 yellow / heavygreen dotted
+B--F--C grey
+D--G--C grey
+P--H--B blue
+P--B--Q--D--cycle blue
+A--C grey
+P--Q blue
+B--D blue
+
+M = extension P F G Q
+F--P heavycyan
+G--Q heavycyan
+
+*/
+\end{asy}
+\end{center}
+
+To finish, let $H = \ol{PD} \cap \ol{BQ}$.
+By properties of the Miquel point, we have $A$ is the
+foot from $H$ to $\ol{CE}$.
+But also, points $M$, $A$, $H$ are collinear
+by Pappus theorem on $\ol{BPG}$ and $\ol{DQF}$, as desired.
+
+\paragraph{Second solution (projective).}
+We start with a synthetic observation.
+\begin{claim*}
+  The line $\ol{AC}$ bisects $\angle PAD$ and $\angle BAQ$.
+\end{claim*}
+\begin{proof}
+  Angle chase:
+  $\dang PAC = \dang PAE = \dang PBE = \dang CBD = \dang CAD$.
+\end{proof}
+
+There are three ways to finish from here:
+\begin{itemize}
+  \ii (Michael Kural) Suppose the external bisector
+  of $\angle PAD$ and $\angle BAQ$
+  meet lines $BC$ and $DC$ at $X$ and $Y$.
+  Then \[ -1 = (GP;XC) = (FD;YC) \]
+  which is enough to imply that $\ol{XY}$, $\ol{GQ}$, $\ol{PF}$
+  are concurrent (by so-called prism lemma).
+
+  \ii (Daniel Liu) Alternatively,
+  apply the dual Desargues involution theorem
+  to complete quadrilateral $GQFPCM$, through the point $A$.
+  This gives that an involutive pairing of
+  \[ (AC,AM) \; (AP,AQ) \; (AG, AF). \]
+  This is easier to see if we project it onto the
+  line $\ell$ through $C$ perpendicular to $\ol{AC}$;
+  if we let $P'$, $Q'$, $G'$, $F'$ be the images of the last four lines,
+  we find the involution coincides with negative inversion through $C$
+  with power $\sqrt{CP' \cdot CQ'}$
+  which implies that $\ol{AM} \cap \ell$ is an infinity point, as desired.
+
+  \ii (Kada Williams) The official solution instead shows the external angle
+  bisector by a long trig calculation.
+\end{itemize}
+
+\paragraph{Third solution (inversion, Andrew Wu).}
+Noting that $CE \cdot CA = CP \cdot CB = CQ \cdot CD$,
+we perform an inversion at $C$ swapping these pairs of points.
+The point $G$ is mapped to a point $G^\ast$ ray $CB$
+for which $QEG^\ast C$ is cyclic, but then
+\[ \dang CG^\ast E = \dang CQE = \dang CQP = \dang DBC = \dang CBE \]
+and so we conclude $EB = EG^\ast$.
+Similarly, $ED = EF^\ast$.
+
+Finally, $M^\ast = (CG^\ast D) \cap (CF^\ast B) \neq C$,
+and we wish to show that $\angle EM^\ast C = 90\dg$.
+
+\begin{center}
+\begin{asy}
+pair D = dir(100);
+pair B = dir(220);
+pair C = dir(320);
+pair E = 0.3*D+0.7*B;
+pair K = foot(E, B, C);
+pair L = foot(E, D, C);
+pair Gs = 2*K-B;
+pair Fs = 2*L-D;
+pair Ms = (D*B-Fs*Gs)/(D+B-Fs-Gs);
+
+filldraw(circumcircle(Gs, D, C), opacity(0.05)+yellow, orange);
+filldraw(circumcircle(Fs, B, C), opacity(0.05)+yellow, orange);
+
+fill(B--C--D--cycle, opacity(0.1)+yellow);
+draw(B--C--D, orange);
+draw(B--D, red);
+draw(Gs--E--K, red);
+draw(Fs--E--L, red);
+filldraw(circumcircle(E, L, K), opacity(0.1)+red, lightred+dashed);
+
+dot("$D$", D, dir(D));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$E$", E, dir(E));
+dot("$K$", K, dir(K));
+dot("$L$", L, dir(L));
+dot("$G^\ast$", Gs, dir(Gs));
+dot("$F^\ast$", Fs, dir(30));
+dot("$M^\ast$", Ms, dir(Ms));
+
+/* TSQ Source:
+
+D = dir 100
+B = dir 220
+C = dir 320
+E = 0.3*D+0.7*B
+K = foot E B C
+L = foot E D C
+G* = 2*K-B
+F* = 2*L-D R30
+M* = (D*B-Fs*Gs)/(D+B-Fs-Gs)
+
+circumcircle Gs D C 0.05 yellow / orange
+circumcircle Fs B C 0.05 yellow / orange
+
+!fill(B--C--D--cycle, opacity(0.1)+yellow);
+B--C--D orange
+B--D red
+Gs--E--K red
+Fs--E--L red
+circumcircle E L K 0.1 red / lightred dashed
+
+*/
+\end{asy}
+\end{center}
+
+Note that $M^\ast$ is the center of the
+spiral similarity sending $\ol{BG^\ast}$ to $\ol{F^\ast D}$.
+Hence it also maps the midpoint $K$ of $BG^\ast$
+to the midpoint $L$ of $\ol{F^\ast E}$.
+Consequently, $M^\ast$ lies on the circumcircle $KLC$ as well.
+In other words, $ELCKM^\ast$ is a cyclic pentagon
+with circumdiameter $\ol{CE}$, as desired.
+\pagebreak
+
+\subsection{USAMO 2018/6, proposed by Richard Stong}
+\textsl{Available online at \url{https://aops.com/community/p10232388}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a_n$ be the number of permutations $(x_1, \dots, x_n)$ of $(1, \dots, n)$
+such that the ratios $x_k / k$ are all distinct.
+Prove that $a_n$ is odd for all $n \ge 1$.
+\end{mdframed}
+This is the official solution; the proof has two main insights.
+
+The first idea:
+\begin{lemma*}
+  If a permutation $x$ works, so does the inverse permutation.
+\end{lemma*}
+
+Thus it suffices to consider permutations $x$
+in which all cycles have length at most $2$.
+Of course, there can be at most one fixed point
+(since that gives the ratio $1$),
+and hence exactly one if $n$ is odd, none if $n$ is even.
+
+We consider the graph $K_n$ such that the edge
+$\{i,j\}$ is labeled with $i / j$ (for $i < j$).
+The permutations we're considering are then equivalent to maximal
+matchings of this $K_n$.
+We call such a matching \emph{fantastic} if it has an
+all of distinct edge labels.
+
+\bigskip
+
+Now the second insight is that if edges $ab$ and $cd$
+have the same label for $a<b$ and $c<d$,
+then so do edges $ac$ and $bd$.
+Thus:
+\begin{definition*}
+  Given a matching $\mathcal M$ as above we say the \emph{neighbors}
+  of $\mathcal M$ are those other matchings obtained as follows:
+  for each label $\ell$,
+  we take some disjoint pairs of edges (possibly none)
+  with label $\ell$ and apply the above switching operation
+  (in which we replace $ab$ and $cd$ with $ac$ and $bd$).
+\end{definition*}
+This neighborship relation is reflexive,
+and most importantly it is \emph{symmetric}
+(because one can simply reverse the moves).
+But it is not transitive.
+
+The second observation is that:
+\begin{claim*}
+  The matching $\mathcal M$ has an odd number of neighbors
+  (including itself) if and only if it is fantastic.
+\end{claim*}
+\begin{proof}
+  Consider the label $\ell$,
+  and assume it appears $n_\ell \ge 1$ times.
+
+  If we pick $k$ disjoint pairs and swap them,
+  the number of ways to do this is
+  $\binom{n_\ell}{2k} (2k-1)!!$, and so the total
+  number of ways to perform operations on the edges
+  labeled $\ell$ is
+  \[ \sum_k \binom{n_\ell}{2k} (2k-1)!!
+    \equiv \sum_k \binom{n_\ell}{2k}
+    = 2^{n_\ell-1} \pmod 2.
+  \]
+  This is even if and only if $n_\ell > 1$.
+
+  Finally, note that the number of neighbors
+  of $\mathcal M$ is the product across all $\ell$ of the above.
+  So it is odd if and only if each factor is odd,
+  if and only if $n_\ell = 1$ for every $\ell$.
+\end{proof}
+
+To finish, consider a huge simple graph $\Gamma$ on all the
+maximal matchings, with edge relations given by neighbor relation
+(we don't consider vertices to be connected to themselves).
+Observe that:
+\begin{itemize}
+  \ii Fantastic matchings correspond to isolated vertices
+  (of degree zero, with no other neighbors) of $\Gamma$.
+  \ii The rest of the vertices of $\Gamma$ have odd degrees
+  (one less than the neighbor count)
+  \ii The graph $\Gamma$ has an even number of vertices of odd degree
+  (this is true for any simple graph, see ``handshake lemma'').
+  \ii The number of vertices of $\Gamma$ is odd,
+  namely $\left( 2\left\lceil n/2 \right\rceil - 1 \right)!!$.
+\end{itemize}
+This concludes the proof.
+\pagebreak
+
+
+\end{document}

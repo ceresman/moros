@@ -1,0 +1,561 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{TSTST 2011 Solution Notes}
+\subtitle{Lincoln, Nebraska}
+\date{\today}
+
+\maketitle
+\begin{abstract}
+This is a compilation of solutions
+for the 2011 TSTST.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Find all real-valued functions $f$ defined on pairs of real numbers,
+having the following property: for all real numbers $a, b, c$,
+the median of $f(a,b), f(b,c), f(c,a)$ equals the median of $a, b, c$.
+
+(The \emph{median} of three real numbers, not necessarily distinct,
+is the number that is in the middle when the three numbers
+are arranged in nondecreasing order.)
+
+\item %% Problem 2
+Two circles $\omega_1$ and $\omega_2$ intersect at points $A$ and $B$.
+Line $\ell$ is tangent to $\omega_1$ at $P$
+and to $\omega_2$ at $Q$ so that $A$ is closer to $\ell$ than $B$.
+Let $X$ and $Y$ be points on major arcs $\arc{PA}$
+(on $\omega_1$) and $\arc{AQ}$ (on $\omega_2$), respectively,
+such that $AX/PX = AY/QY = c$.
+Extend segments $PA$ and $QA$ through $A$ to $R$ and $S$,
+respectively, such that $AR = AS = c\cdot PQ$.
+Given that the circumcenter of triangle $ARS$ lies on line $XY$,
+prove that $\angle XPA = \angle AQY$.
+
+\item %% Problem 3
+Prove that there exists a real constant $c$
+such that for any pair $(x,y)$ of real numbers,
+there exist relatively prime integers $m$ and $n$
+satisfying the relation
+\[ \sqrt{(x-m)^2 + (y-n)^2} < c \log(x^2+y^2+2). \]
+
+\item %% Problem 4
+Acute triangle $ABC$ is inscribed in circle $\omega$.
+Let $H$ and $O$ denote its orthocenter and circumcenter, respectively.
+Let $M$ and $N$ be the midpoints of sides $AB$ and $AC$, respectively.
+Rays $MH$ and $NH$ meet $\omega$ at $P$ and $Q$, respectively.
+Lines $MN$ and $PQ$ meet at $R$.
+Prove that $\ol{OA} \perp \ol{RA}$.
+
+\item %% Problem 5
+At a certain orphanage, every pair of orphans are either friends or enemies.
+For every three of an orphan's friends,
+an even number of pairs of them are enemies.
+Prove that it's possible to assign each orphan two parents
+such that every pair of friends shares exactly one parent, but no pair of enemies does,
+and no three parents are in a love triangle (where each pair of them has a child).
+
+\item %% Problem 6
+Let $a,b,c$ be real numbers in the interval $[0,1]$
+with $a+b,b+c,c+a \ge 1$.  Prove that
+\[ 1 \le (1-a)^2 + (1-b)^2 + (1-c)^2
+  + \frac{2\sqrt2 abc}{\sqrt{a^2+b^2+c^2}}. \]
+
+\item %% Problem 7
+Let $ABC$ be a triangle.
+Its excircles touch sides $BC$, $CA$, $AB$ at $D$, $E$, $F$.
+Prove that the perimeter of triangle $ABC$ is
+at most twice that of triangle $DEF$.
+
+\item %% Problem 8
+Let $x_0$, $x_1$, \dots, $x_{n_0-1}$ be integers,
+and let $d_1$, $d_2$, \dots, $d_k$ be positive integers
+with $n_0 = d_1 > d_2 > \dotsb > d_k$ and
+$\gcd(d_1, d_2, \dots, d_k) = 1$.
+For every integer $n \geq n_0$, define
+\[ x_n = \left\lfloor \frac{x_{n-d_1} + x_{n-d_2}
+  + \dots + x_{n-d_k}}{k} \right\rfloor. \]
+Show that the sequence $(x_n)$ is eventually constant.
+
+\item %% Problem 9
+Let $n$ be a positive integer.
+Suppose we are given $2^n+1$ distinct sets,
+each containing finitely many objects.
+Place each set into one of two categories, the red sets and the blue sets,
+so that there is at least one set in each category.
+We define the \textit{symmetric difference} of two sets as
+the set of objects belonging to exactly one of the two sets.
+Prove that there are at least $2^n$ different sets which
+can be obtained as the symmetric difference of a red set and a blue set.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{TSTST 2011/1}
+\textsl{Available online at \url{https://aops.com/community/p2374841}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all real-valued functions $f$ defined on pairs of real numbers,
+having the following property: for all real numbers $a, b, c$,
+the median of $f(a,b), f(b,c), f(c,a)$ equals the median of $a, b, c$.
+
+(The \emph{median} of three real numbers, not necessarily distinct,
+is the number that is in the middle when the three numbers
+are arranged in nondecreasing order.)
+\end{mdframed}
+The following solution is joint with Andrew He.
+
+We prove the following main claim,
+from which repeated applications can deduce the problem.
+
+\begin{claim*}
+  Let $a < b < c$ be arbitrary. On $\{a,b,c\}^2$,
+  $f$ takes one of the following two forms,
+  where the column indicates the $x$-value
+  and the row indicates the $y$-value.
+  \[
+   \begin{array}{c|rrr}
+    f & a & b & c \\ \hline
+    a & a & b & \ge c \\
+    b & \le a & b & \ge c \\
+    c & \le a & b & c
+   \end{array}
+   \qquad
+   \text{or}
+   \qquad
+   \begin{array}{c|rrr}
+    f & a & b & c \\ \hline
+    a & a & \le a & \le a \\
+    b & b & b & b \\
+    c & \ge c & \ge c & c
+   \end{array}
+  \]
+\end{claim*}
+\begin{proof}
+  First, we of course have $f(x,x) = x$ for all $x$.
+  Now:
+  \begin{itemize}
+  \ii By considering the assertion for $(a,a,c)$ and $(a,c,c)$
+  we see that one of $f(a,c)$ and $f(c,a)$ is $\ge c$
+  and the other is $\le a$.
+  \ii Hence, by considering $(a,b,c)$ we find that
+  one of $f(a,b)$ and $f(b,c)$ must be $b$,
+  and similarly for $f(b,a)$ and $f(c,b)$.
+  \ii Now, WLOG $f(b,a) = b$; we prove we get the first case.
+  \ii By considering $(a,a,b)$ we deduce $f(a,b) \le a$,
+  so $f(b,c) = b$ and then $f(c,b) \ge c$.
+  \ii Finally, considering $(c,b,a)$ once again
+  in conjunction with the first bullet, we arrive at the conclusion
+  that $f(a,c) \le a$; similarly $f(c,a) \ge c$.
+  \qedhere
+  \end{itemize}
+\end{proof}
+From this it's easy to obtain that $f(x,y) \equiv x$
+or $f(x,y) \equiv y$ are the only solutions.
+\pagebreak
+
+\subsection{TSTST 2011/2}
+\textsl{Available online at \url{https://aops.com/community/p2374843}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Two circles $\omega_1$ and $\omega_2$ intersect at points $A$ and $B$.
+Line $\ell$ is tangent to $\omega_1$ at $P$
+and to $\omega_2$ at $Q$ so that $A$ is closer to $\ell$ than $B$.
+Let $X$ and $Y$ be points on major arcs $\arc{PA}$
+(on $\omega_1$) and $\arc{AQ}$ (on $\omega_2$), respectively,
+such that $AX/PX = AY/QY = c$.
+Extend segments $PA$ and $QA$ through $A$ to $R$ and $S$,
+respectively, such that $AR = AS = c\cdot PQ$.
+Given that the circumcenter of triangle $ARS$ lies on line $XY$,
+prove that $\angle XPA = \angle AQY$.
+\end{mdframed}
+We begin as follows:
+\begin{claim*}
+  There is a spiral similarity centered at $X$ mapping $AR$ to $PQ$.
+  Similarly there is a spiral similarity centered at $Y$ mapping $SA$ to $PQ$.
+\end{claim*}
+\begin{proof}
+  Since $\dang XAR = \dang XAP = \dang XPQ$,
+  and $AR/AX = PQ/PX$ is given.
+\end{proof}
+Now the composition of the two spiral similarities
+\[ AR \xmapsto{X} PQ \xmapsto{Y} SA \]
+must be a rotation, since $AR = AS$.
+The center of this rotation must coincide with the circumcenter $O$ of $\triangle ARS$,
+which is known to lie on line $XY$.
+
+\begin{center}
+\begin{asy}
+import graph; size(10cm);
+pen uququq = rgb(0.25098,0.25098,0.25098); pen zzttqq = rgb(0.6,0.2,0.);
+draw((13.97096,-7.13004)--(20.23013,-5.53182)--(27.19232,-12.23004)--cycle, linewidth(0.6) + zzttqq);
+draw(circle((25.,-3.), 9.48683), linewidth(0.6) + uququq);
+draw(circle((13.,-3.), 4.24264), linewidth(0.6) + uququq);
+
+draw((13.97096,-7.13004)--(16.,0.), linewidth(0.6) + red);
+draw((13.97096,-7.13004)--(11.14589,0.81605), linewidth(0.6) + red);
+draw((11.14589,0.81605)--(25.35640,-1.57297), linewidth(0.6) + blue);
+draw((27.19232,-12.23004)--(20.85410,5.53296), linewidth(0.6) + red);
+draw((27.19232,-12.23004)--(16.,0.), linewidth(0.6) + red);
+draw((20.85410,5.53296)--(9.74299,-7.13207), linewidth(0.6) + blue);
+draw((13.97096,-7.13004)--(20.23013,-5.53182), linewidth(0.6) + zzttqq);
+draw((20.23013,-5.53182)--(27.19232,-12.23004), linewidth(0.6) + zzttqq);
+draw((27.19232,-12.23004)--(13.97096,-7.13004), linewidth(0.6) + zzttqq);
+draw((20.23013,-5.53182)--(19.26755,-9.17733), linewidth(0.6));
+draw((11.14589,0.81605)--(20.85410,5.53296), linewidth(0.6));
+dot("$A$", (16.,0.), dir(100));
+dot("$Q$", (20.85410,5.53296), dir(120));
+dot("$P$", (11.14589,0.81605), dir(120));
+dot("$X$", (13.97096,-7.13004), dir(280));
+dot("$Y$", (27.19232,-12.23004), dir(280));
+dot("$R$", (25.35640,-1.57297), dir((8.043, 16.110)));
+dot("$S$", (9.74299,-7.13207), dir(225));
+dot("$O$", (19.26755,-9.17733), dir(45));
+dot("$O'$", (20.23013,-5.53182), dir(135));
+\end{asy}
+\end{center}
+
+As $O$ is a fixed-point of the composed map above,
+we may let $O'$ be the image of $O$ under the rotation at $X$,
+so that
+\[ \triangle XPA \overset{+}{\sim} \triangle XO'O, \qquad
+  \triangle YQA \overset{+}{\sim} \triangle YO'O. \]
+Because
+\[ \frac{XO}{XO'} = \frac{XA}{XP} = c \frac{YQ}{YA} = \frac{YO}{YO'} \]
+it follows $\ol{O'O}$ bisects $\angle XO'Y$.
+Finally, we have
+\[ \dang XPA = \dang XO'O = \dang OO'Y = \dang AQY. \]
+
+\begin{remark*}
+  Indeed, this also shows $\ol{XP} \parallel \ol{YQ}$; so the positive homothety
+  from $\omega_1$ to $\omega_2$ maps $P$ to $Q$ and $X$ to $Y$.
+\end{remark*}
+\pagebreak
+
+\subsection{TSTST 2011/3}
+\textsl{Available online at \url{https://aops.com/community/p2374845}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that there exists a real constant $c$
+such that for any pair $(x,y)$ of real numbers,
+there exist relatively prime integers $m$ and $n$
+satisfying the relation
+\[ \sqrt{(x-m)^2 + (y-n)^2} < c \log(x^2+y^2+2). \]
+\end{mdframed}
+This is actually the same problem as USAMO 2014/6. Surprise!
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{TSTST 2011/4}
+\textsl{Available online at \url{https://aops.com/community/p2374848}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Acute triangle $ABC$ is inscribed in circle $\omega$.
+Let $H$ and $O$ denote its orthocenter and circumcenter, respectively.
+Let $M$ and $N$ be the midpoints of sides $AB$ and $AC$, respectively.
+Rays $MH$ and $NH$ meet $\omega$ at $P$ and $Q$, respectively.
+Lines $MN$ and $PQ$ meet at $R$.
+Prove that $\ol{OA} \perp \ol{RA}$.
+\end{mdframed}
+Let $MH$ and $NH$ meet the nine-point circle again at $P'$ and $Q'$, respectively.
+Recall that $H$ is the center of the homothety between
+the circumcircle and the nine-point circle.
+From this we can see that $P$ and $Q$ are the images of this homothety, meaning that
+\[ HQ = 2HQ' \quad\text{and}\quad HP = 2HP'. \]
+Since $M$, $P'$, $Q'$, $N$ are cyclic, Power of a Point gives us
+\[ MH \cdot HP' = HN \cdot HQ'. \]
+Multiplying both sides by two, we thus derive
+\[ HM \cdot HP = HN \cdot HQ. \]
+It follows that the points $M$, $N$, $P$, $Q$ are concyclic.
+
+\begin{center}
+  \begin{asy}
+    size(11cm);
+    defaultpen(fontsize(8pt));
+    pair A = dir(110);
+    pair B = dir(210);
+    pair C = dir(330);
+    pair H = A+B+C;
+    pair O = circumcenter(A, B, C);
+    pair M = midpoint(A--B);
+    pair N = midpoint(A--C);
+    pair U = -C;
+    pair V = -B;
+    pair P = -U+2*foot(O, U, H);
+    pair Q = -V+2*foot(O, V, H);
+    pair R = extension(M, N, P, Q);
+
+    draw(A--B--C--cycle, blue);
+    draw(unitcircle, blue);
+    draw(M--P);
+    draw(N--Q);
+    draw(circumcircle(M, N, midpoint(B--C)), green);
+    draw(circumcircle(P, Q, M), red+dashed);
+    draw(P--R--A);
+    draw(R--N, dotted);
+    draw(circumcircle(A, M, N), dashed);
+
+    pair Qp = midpoint(H--Q);
+    pair Pp = midpoint(H--P);
+
+    dot("$A$", A, dir(A));
+    dot("$B$", B, dir(250));
+    dot("$C$", C, dir(C));
+    dot("$H$", H, dir(-90));
+    dot("$O$", O, dir(315));
+    dot("$M$", M, 1.4*dir(150));
+    dot("$N$", N, dir(20));
+    dot("$P$", P, dir(P));
+    dot("$Q$", Q, dir(Q));
+    dot("$R$", R, dir(R));
+    dot("$Q'$", Qp, dir(255));
+    dot("$P'$", Pp, dir(Pp));
+
+    /* Source generated by TSQ */
+  \end{asy}
+\end{center}
+
+Let $\omega_1$, $\omega_2$, $\omega_3$ denote the circumcircles of
+$MNPQ$, $AMN$, and $ABC$, respectively.
+The radical axis of $\omega_1$ and $\omega_2$ is line $MN$, while the
+radical axis of $\omega_1$ and $\omega_3$ is line $PQ$.
+Hence the line $R$ lies on the radical axis of $\omega_2$ and $\omega_3$.
+
+But we claim that $\omega_2$ and $\omega_3$ are internally tangent at $A$.
+This follows by noting the homothety at $A$ with ratio $2$ sends
+$M$ to $B$ and $N$ to $C$.
+Hence the radical axis of $\omega_2$ and $\omega_3$ is a line tangent to
+both circles at $A$.
+
+Hence $\ol{RA}$ is tangent to $\omega_3$.
+Therefore, $\ol{RA} \perp \ol{OA}$.
+\pagebreak
+
+\subsection{TSTST 2011/5}
+\textsl{Available online at \url{https://aops.com/community/p2374849}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+At a certain orphanage, every pair of orphans are either friends or enemies.
+For every three of an orphan's friends,
+an even number of pairs of them are enemies.
+Prove that it's possible to assign each orphan two parents
+such that every pair of friends shares exactly one parent, but no pair of enemies does,
+and no three parents are in a love triangle (where each pair of them has a child).
+\end{mdframed}
+Of course, we consider the graph with vertices as children and edges as friendships.
+Consider all the maximal cliques in the graph
+(i.e.\ repeatedly remove maximal cliques until no edges remain;
+thus all edges are in some clique).
+
+\begin{claim*}
+Every vertex is in at most two maximal cliques.
+\end{claim*}
+
+\begin{proof}
+Indeed, consider a vertex $v$ adjacent to $w_1$ and $w_2$,
+but with $w_1$ not adjacent to $w_2$.
+Then by condition, any third vertex $u$
+must be adjacent to exactly one of $w_1$ and $w_2$.
+Moreover, given vertices $u$ and $u'$ adjacent to $w_1$,
+vertices $u$ and $u'$ are adjacent too.
+This proves the claim.
+\end{proof}
+
+Now, for every maximal clique we assign a particular parent
+to all vertices in that clique,
+adding in additional distinct parents if there are any deficient children.
+This satisfies the friendship/enemy condition.
+Moreover, one can readily check that there are no love triangles:
+given children $a$, $b$, $c$
+such that $a$ and $b$ share a parent
+while $a$ and $c$ share another parent,
+according to the claim $b$ and $c$ can't share a third parent.
+This completes the problem.
+
+\begin{remark*}
+This solution is highly motivated for the following reason:
+by experimenting with small cases,
+one quickly finds that given some vertices which form a clique,
+one \emph{must} assign some particular parent
+to all vertices in that clique.
+That is, the requirements of the problem are sufficiently rigid
+that there is no room for freedom on our part,
+so we know \emph{a priori} that an assignment based on cliques
+(as above) must work.
+From there we know exactly what to prove,
+and everything else follows through.
+
+Ironically, the condition that there be no love triangle
+actually makes the problem easier,
+because it tells us exactly what to do!
+\end{remark*}
+\pagebreak
+
+\subsection{TSTST 2011/6}
+\textsl{Available online at \url{https://aops.com/community/p2374852}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a,b,c$ be real numbers in the interval $[0,1]$
+with $a+b,b+c,c+a \ge 1$.  Prove that
+\[ 1 \le (1-a)^2 + (1-b)^2 + (1-c)^2
+  + \frac{2\sqrt2 abc}{\sqrt{a^2+b^2+c^2}}. \]
+\end{mdframed}
+The following approach is due to Ashwin Sah.
+
+We will prove the inequality for any $a$, $b$, $c$
+the sides of a possibly degenerate triangle
+(which is implied by the condition),
+ignoring the particular constant $1$.
+Homogenizing, we instead prove the problem
+in the following form:
+\begin{claim*}
+  We have
+  \[ k^2 \le (k-a)^2 + (k-b)^2 + (k-c)^2
+    + \frac{2\sqrt2 abc}{\sqrt{a^2+b^2+c^2}} \]
+  for any $a$, $b$, $c$, $k$
+  with $(a,b,c)$ the sides of a
+  possibly degenerate triangle.
+\end{claim*}
+\begin{proof}
+  For any particular $(a,b,c)$ this is a quadratic in $k$
+  of the form $2k^2 - 2(a+b+c)k + C \ge 0$;
+  thus we will verify it holds for $k = \half(a+b+c)$.
+
+  Letting $x = \half(b+c-a)$ as is usual,
+  the problem rearranges to
+  In that case, the problem amounts to
+  \[ (x+y+z)^2 \le x^2+y^2+z^2
+    + \frac{2(x+y)(y+z)(z+x)}{\sqrt{x^2+y^2+z^2+xy+yz+zx}} \]
+  or equivalently
+  \[ x^2+y^2+z^2+xy+yz+zx
+    \le \left( \frac{(x+y)(y+z)(z+x)}{xy+yz+zx} \right)^2. \]
+  To show this, one may let $t = xy+yz+zx$,
+  then using $(x+y)(x+z) = x^2+B$ this becomes
+  \[ t^2(x^2+y^2+z^2+t)
+    \le (x^2+t)(y^2+t)(z^2+t) \]
+  which is obvious upon expansion.
+\end{proof}
+
+\begin{remark*}
+  The inequality holds actually for
+  all real numbers $a$, $b$, $c$,
+  with very disgusting proofs.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 3}
+\subsection{TSTST 2011/7}
+\textsl{Available online at \url{https://aops.com/community/p2374855}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle.
+Its excircles touch sides $BC$, $CA$, $AB$ at $D$, $E$, $F$.
+Prove that the perimeter of triangle $ABC$ is
+at most twice that of triangle $DEF$.
+\end{mdframed}
+Solution by August Chen:
+It turns out that it is enough to take the
+orthogonal projection of $EF$ onto side $BC$
+(which has length $a-(s-a)(\cos B + \cos C)$)
+and sum cyclically:
+\begin{align*}
+  -s + \sum_{\text{cyc}} EF &\ge
+  -s +
+  \sum_{\text{cyc}}
+  \left[ a - (s-a)\left( \cos B + \cos C \right) \right] \\
+  &= s - \sum_{\text{cyc}} a \cos A
+    = \sum_{\text{cyc}} a \left( \half - \cos A \right) \\
+  &= R \sum_{\text{cyc}}
+  \sin A (1 - 2 \cos A) \\
+  &= R \sum_{\text{cyc}} \left( \sin A - \sin2A \right).
+\end{align*}
+Thus we're done upon noting that
+\[ \frac{\sin2B + \sin2C}{2} = \sin(B+C) \cos(B-C)
+  = \sin A \cos(B-C) \le \sin A. \]
+(Alternatively, one can avoid trigonometry by substituting
+$\cos A = \frac{b^2+c^2-a^2}{2bc}$
+and doing some routine but long calculation.)
+\pagebreak
+
+\subsection{TSTST 2011/8}
+\textsl{Available online at \url{https://aops.com/community/p2374856}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $x_0$, $x_1$, \dots, $x_{n_0-1}$ be integers,
+and let $d_1$, $d_2$, \dots, $d_k$ be positive integers
+with $n_0 = d_1 > d_2 > \dotsb > d_k$ and
+$\gcd(d_1, d_2, \dots, d_k) = 1$.
+For every integer $n \geq n_0$, define
+\[ x_n = \left\lfloor \frac{x_{n-d_1} + x_{n-d_2}
+  + \dots + x_{n-d_k}}{k} \right\rfloor. \]
+Show that the sequence $(x_n)$ is eventually constant.
+\end{mdframed}
+Note that if the initial terms are contained
+in some interval $[A,B]$ then they will remain in that interval.
+Thus the sequence is eventually periodic.
+Discard initial terms and let the period be $T$;
+we will consider all indices modulo $T$ from now on.
+
+Let $M$ be the maximal term in the sequence
+(which makes sense since the sequence is periodic).
+Note that if $x_n = M$, we must have
+$x_{n-d_i} = M$ for all $i$ as well.
+By taking a linear combination $\sum c_i d_i \equiv 1 \pmod T$
+(possibly be Bezout's theorem, since $\gcd_i(d_i)=1$),
+we conclude $x_{n-1} = M$, as desired.
+\pagebreak
+
+\subsection{TSTST 2011/9}
+\textsl{Available online at \url{https://aops.com/community/p2374857}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n$ be a positive integer.
+Suppose we are given $2^n+1$ distinct sets,
+each containing finitely many objects.
+Place each set into one of two categories, the red sets and the blue sets,
+so that there is at least one set in each category.
+We define the \textit{symmetric difference} of two sets as
+the set of objects belonging to exactly one of the two sets.
+Prove that there are at least $2^n$ different sets which
+can be obtained as the symmetric difference of a red set and a blue set.
+\end{mdframed}
+We can interpret the problem as working with
+binary strings of length $\ell \ge n+1$,
+with $\ell$ the number of elements across all sets.
+
+Let $F$ be a field of cardinality $2^\ell$,
+hence $F \cong \FF_2^{\oplus \ell}$.
+
+Then, we can think of red/blue as elements of $F$,
+so we have some $B \subseteq F$, and an $R \subseteq F$.
+We wish to prove that $|B+R| \ge 2^n$.
+Want $|B + R| \ge 2^n$.
+
+Equivalently, any element of a set $X$ with $|X| = 2^n - 1$
+should omit some element of $|B+R|$.
+To prove this: we know $|B| + |R| = 2^n+1$, and define
+\[ P(b,r) = \prod_{x \in X} (b+r-x). \]
+Consider $b^{|B|-1} r^{|R|-1}$.
+The coefficient of is $\binom{2^n-1}{|B|-1}$,
+which is odd (say by Lucas theorem),
+so the nullstellensatz applies.
+\pagebreak
+
+
+\end{document}

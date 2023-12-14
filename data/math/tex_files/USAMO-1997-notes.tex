@@ -1,0 +1,410 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 1997 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 1997 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $p_1, p_2, p_3, \dots$ be the prime numbers
+listed in increasing order,
+and let $0 < x_0 < 1$ be a real number between 0 and 1.
+For each positive integer $k$, define
+\[ x_k = \begin{cases} 0 & \mbox{if} \; x_{k-1} = 0, \\[.1in]
+  {\displaystyle \left\{ \frac{p_k}{x_{k-1}} \right\}}
+  & \mbox{if} \; x_{k-1} \neq 0,
+  \end{cases}  \]
+where $\{x\}$ denotes the fractional part of $x$.
+Find, with proof, all $x_0$ satisfying $0 < x_0 < 1$
+for which the sequence $x_0, x_1, x_2, \dots$ eventually becomes $0$.
+
+\item %% Problem 2
+Let $ABC$ be a triangle.
+Take noncollinear points $D$, $E$, $F$ on the perpendicular bisectors
+of $BC$, $CA$, $AB$ respectively.
+Show that the lines through $A$, $B$, $C$
+perpendicular to $EF$, $FD$, $DE$ respectively are concurrent.
+
+\item %% Problem 3
+Prove that for any integer $n$,
+there exists a unique polynomial $Q$ with coefficients
+in $\{0,1,\dots,9\}$ such that $Q(-2) = Q(-5) = n$.
+
+\item %% Problem 4
+To clip a convex $n$-gon means to choose a pair of
+consecutive sides $AB$, $BC$ and to replace them
+by the three segments $AM$, $MN$, and $NC$,
+where $M$ is the midpoint of $AB$ and $N$ is the midpoint of $BC$.
+In other words, one cuts off the triangle $MBN$ to obtain a convex $(n+1)$-gon.
+A regular hexagon $\mathcal{P}_6$ of area 1 is clipped to obtain a
+heptagon $\mathcal{P}_7$.
+Then $\mathcal{P}_7$ is clipped (in one of the seven possible ways)
+to obtain an octagon $\mathcal{P}_8$, and so on.
+Prove that no matter how the clippings are done,
+the area of $\mathcal{P}_n$ is greater than $\frac 13$, for all $n \geq 6$.
+
+\item %% Problem 5
+If $a,b,c > 0$ prove that
+\[
+  \frac{1}{a^3+b^3+abc}
+  + \frac{1}{b^3+c^3+abc}
+  + \frac{1}{c^3+a^3+abc}
+  \le \frac{1}{abc}.
+\]
+
+\item %% Problem 6
+Suppose the sequence of nonnegative integers
+$a_1, a_2, \dots, a_{1997}$ satisfies
+\[ a_i + a_j \leq a_{i+j} \leq a_i + a_j + 1  \]
+for all $i,j \geq 1$ with $i + j \leq 1997$.
+Show that there exists a real number $x$ such that
+$a_n = \lfloor nx \rfloor$ for all $1 \leq n \leq 1997$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 1997/1}
+\textsl{Available online at \url{https://aops.com/community/p343871}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $p_1, p_2, p_3, \dots$ be the prime numbers
+listed in increasing order,
+and let $0 < x_0 < 1$ be a real number between 0 and 1.
+For each positive integer $k$, define
+\[ x_k = \begin{cases} 0 & \mbox{if} \; x_{k-1} = 0, \\[.1in]
+  {\displaystyle \left\{ \frac{p_k}{x_{k-1}} \right\}}
+  & \mbox{if} \; x_{k-1} \neq 0,
+  \end{cases}  \]
+where $\{x\}$ denotes the fractional part of $x$.
+Find, with proof, all $x_0$ satisfying $0 < x_0 < 1$
+for which the sequence $x_0, x_1, x_2, \dots$ eventually becomes $0$.
+\end{mdframed}
+The answer is $x_0$ rational.
+
+If $x_0$ is irrational, then all $x_i$ are irrational by induction.
+So the sequence cannot become zero.
+
+If $x_0$ is rational, then all are.
+Now one simply observes that the denominators of $x_n$
+are strictly decreasing, until we reach $0 = \frac 01$.
+This concludes the proof.
+
+\begin{remark*}
+  The sequence $p_k$ could have been any sequence of integers.
+\end{remark*}
+\pagebreak
+
+\subsection{USAMO 1997/2}
+\textsl{Available online at \url{https://aops.com/community/p210283}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle.
+Take noncollinear points $D$, $E$, $F$ on the perpendicular bisectors
+of $BC$, $CA$, $AB$ respectively.
+Show that the lines through $A$, $B$, $C$
+perpendicular to $EF$, $FD$, $DE$ respectively are concurrent.
+\end{mdframed}
+The three lines are the radical axii of the three circles
+centered at $D$, $E$, $F$, so they concur.
+\pagebreak
+
+\subsection{USAMO 1997/3}
+\textsl{Available online at \url{https://aops.com/community/p343873}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that for any integer $n$,
+there exists a unique polynomial $Q$ with coefficients
+in $\{0,1,\dots,9\}$ such that $Q(-2) = Q(-5) = n$.
+\end{mdframed}
+If we let
+\[ Q(x) = \sum_{k \ge 0} a_k x^k \]
+then $a_k$ is uniquely determined by $n \pmod{2^k}$ and $n \pmod{5^k}$.
+Indeed, we can extract the coefficients of $Q$
+exactly by the following algorithm:
+\begin{itemize}
+  \ii Define $b_0 = c_0 = n$.
+  \ii For $i \ge 0$, let $a_i$ be the unique digit
+  satisfying $a_i \equiv b_i \pmod 2$, $a_i \equiv c_i \pmod 5$.
+  Then, define
+  \[ b_{i+1} = \frac{b_i - a_i}{-2}, \qquad
+    c_{i+1} = \frac{c_i - a_i}{-5}. \]
+\end{itemize}
+The proof is automatic by Chinese remainder theorem,
+so this shows uniqueness already.
+The tricky part is to show that all $a_i$ are eventually zero
+(i.e.\ the ``existence'' step is nontrivial
+because a polynomial may only have finitely many nonzero terms).
+
+In fact, we will prove the following claim:
+\begin{claim*}
+  Suppose $b_0$ and $c_0$ are any integers such that
+  \[ b_0 \equiv c_0 \pmod 3.\]
+  Then defining $b_i$ and $c_i$ as above,
+  we have $b_i \equiv c_i \pmod 3$ for all $i$,
+  and $b_N = c_N = 0$ for large enough $N$.
+\end{claim*}
+\begin{proof}
+Dropping the subscripts for ease of notation,
+we are looking at the map
+\[ (b, c) \mapsto \left( \frac{b-a}{-2},
+    \frac{c-a}{-5} \right) \]
+for some $0 \le a \le 9$ (a function in $b$ and $c$).
+
+The $b \equiv c \pmod 3$ is clearly preserved.
+Also, examining the size,
+\begin{itemize}
+  \ii If $|c| > 2$,
+  we have $\left\lvert \frac{c-a}{-5} \right\rvert
+  \le \frac{|c|+9}{5} < |c|$.
+  Thus, we eventually reach a pair with $|c| \le 2$.
+  \ii Similarly, if $|b| > 9$,
+  we have $\left\lvert \frac{b-a}{-2} \right\rvert
+  \le \frac{|b|+9}{2} < |b|$,
+  so we eventually reach a pair with $|b| \le 9$.
+\end{itemize}
+this leaves us with $5 \cdot 19 = 95$ ordered pairs to check
+(though only about one third have $b \equiv c \pmod 3$).
+This can be done by the following code:
+\begin{lstlisting}[language=Python]
+import functools
+@functools.lru_cache()
+def f(x0, y0):
+  if x0 == 0 and y0 == 0:
+    return 0
+  if x0 % 2 == (y0 % 5) % 2:
+    d = y0 % 5
+  else:
+    d = (y0 % 5) + 5
+
+  x1 = (x0 - d) // (-2)
+  y1 = (y0 - d) // (-5)
+
+  return 1 + f(x1, y1)
+
+for x in range(-9, 10):
+for y in range(-2, 3):
+  if (x % 3 == y % 3):
+    print(f"({x:2d}, {y:2d}) finished in {f(x,y)} moves")
+\end{lstlisting}
+As this gives the output
+\begin{lstlisting}
+(-9,  0) finished in 5 moves
+(-8, -2) finished in 5 moves
+(-8,  1) finished in 5 moves
+(-7, -1) finished in 5 moves
+(-7,  2) finished in 5 moves
+(-6,  0) finished in 3 moves
+(-5, -2) finished in 3 moves
+(-5,  1) finished in 3 moves
+(-4, -1) finished in 3 moves
+(-4,  2) finished in 3 moves
+(-3,  0) finished in 3 moves
+(-2, -2) finished in 3 moves
+(-2,  1) finished in 3 moves
+(-1, -1) finished in 3 moves
+(-1,  2) finished in 3 moves
+( 0,  0) finished in 0 moves
+( 1, -2) finished in 2 moves
+( 1,  1) finished in 1 moves
+( 2, -1) finished in 2 moves
+( 2,  2) finished in 1 moves
+( 3,  0) finished in 2 moves
+( 4, -2) finished in 2 moves
+( 4,  1) finished in 2 moves
+( 5, -1) finished in 2 moves
+( 5,  2) finished in 2 moves
+( 6,  0) finished in 4 moves
+( 7, -2) finished in 4 moves
+( 7,  1) finished in 4 moves
+( 8, -1) finished in 4 moves
+( 8,  2) finished in 4 moves
+( 9,  0) finished in 4 moves
+\end{lstlisting}
+we are done.
+\end{proof}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 1997/4}
+\textsl{Available online at \url{https://aops.com/community/p343875}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+To clip a convex $n$-gon means to choose a pair of
+consecutive sides $AB$, $BC$ and to replace them
+by the three segments $AM$, $MN$, and $NC$,
+where $M$ is the midpoint of $AB$ and $N$ is the midpoint of $BC$.
+In other words, one cuts off the triangle $MBN$ to obtain a convex $(n+1)$-gon.
+A regular hexagon $\mathcal{P}_6$ of area 1 is clipped to obtain a
+heptagon $\mathcal{P}_7$.
+Then $\mathcal{P}_7$ is clipped (in one of the seven possible ways)
+to obtain an octagon $\mathcal{P}_8$, and so on.
+Prove that no matter how the clippings are done,
+the area of $\mathcal{P}_n$ is greater than $\frac 13$, for all $n \geq 6$.
+\end{mdframed}
+Call the original hexagon $ABCDEF$.
+We show the area common to triangles $ACE$ and $BDF$ is in every
+$\mathcal{P}_n$; this solves the problem since the area is $1/3$.
+
+For every side of a clipped polygon,
+we define its \emph{foundation} recursively as follows:
+\begin{itemize}
+  \ii $AB$, $BC$, $CD$, $DE$, $EF$, $FA$
+  are each their own foundation
+  (we also call these \emph{original sides}).
+  \ii When a new clipped edge is added,
+  its foundation is the union of the foundations
+  of the two edges it touches.
+\end{itemize}
+Hence, any foundations are nonempty subsets
+of original sides.
+
+\begin{claim*}
+  All foundations are in fact at most
+  two-element sets of adjacent original sides.
+\end{claim*}
+\begin{proof}
+  It's immediate by induction
+  that any two adjacent sides have at most two elements
+  in the union of their foundations, and if there are two,
+  they are two adjacent original sides.
+\end{proof}
+
+Now, if a side has foundation contained in $\{AB,BC\}$, say,
+then the side should be contained within triangle $ABC$.
+Hence the side does not touch $AC$.
+This proves the problem.
+\pagebreak
+
+\subsection{USAMO 1997/5}
+\textsl{Available online at \url{https://aops.com/community/p2971}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+If $a,b,c > 0$ prove that
+\[
+  \frac{1}{a^3+b^3+abc}
+  + \frac{1}{b^3+c^3+abc}
+  + \frac{1}{c^3+a^3+abc}
+  \le \frac{1}{abc}.
+\]
+\end{mdframed}
+From $a^3 + b^3 \ge ab(a+b)$, the left-hand side becomes
+\[
+  \sum_{\text{cyc}} \frac{1}{a^3+b^3+abc}
+  \le \sum_{\text{cyc}} \frac{1}{ab(a+b+c)}
+  = \frac{1}{abc} \sum_{\text{cyc}} \frac{c}{a+b+c}
+  = \frac{1}{abc}.
+\]
+\pagebreak
+
+\subsection{USAMO 1997/6}
+\textsl{Available online at \url{https://aops.com/community/p343876}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Suppose the sequence of nonnegative integers
+$a_1, a_2, \dots, a_{1997}$ satisfies
+\[ a_i + a_j \leq a_{i+j} \leq a_i + a_j + 1  \]
+for all $i,j \geq 1$ with $i + j \leq 1997$.
+Show that there exists a real number $x$ such that
+$a_n = \lfloor nx \rfloor$ for all $1 \leq n \leq 1997$.
+\end{mdframed}
+We are trying to show there exists an $x \in \RR$
+such that
+\[ \frac{a_n}{n} \le x < \frac{a_n+1}{n} \qquad \forall n. \]
+This means we need to show
+\[ \max_i \frac{a_i}{i} < \min_j \frac{a_j+1}{j}. \]
+Replace 1997 by $N$.
+We will prove this by induction,
+but we will need some extra hypotheses on the indices $i,j$
+which are used above.
+
+\begin{claim*}
+  Suppose that
+  \begin{itemize}
+    \ii Integers $a_1$, $a_2$, \dots, $a_N$ satisfy the given conditions.
+    \ii Let $i = \opname{argmax}_n \frac{a_n}{n}$;
+    if there are ties, pick the smallest $i$.
+    \ii Let $j = \opname{argmin}_n \frac{a_n+1}{n}$;
+    if there are ties, pick the smallest $j$.
+  \end{itemize}
+  Then \[ \frac{a_i}{i} < \frac{a_j+1}{j}. \]
+  Moreover, these two fractions are in lowest terms,
+  and are adjacent in the Farey sequence of order $\max(i,j)$.
+\end{claim*}
+\begin{proof}
+  By induction on $N \ge 1$ with the base case clear.
+  So suppose we have the induction hypothesis
+  with numbers $a_1$, \dots, $a_{N-1}$,
+  with $i$ and $j$ as promised.
+
+  Now, consider the new number $a_N$.
+  We have two cases:
+  \begin{itemize}
+    \ii Suppose $i+j > N$.
+    Then, no fraction with denominator $N$
+    can lie strictly inside the interval;
+    so we may write for some integer $b$
+    \[ \frac bN \le \frac{a_i}{i}
+      < \frac{a_j+1}{j} \le \frac{b+1}{N}. \]
+    For purely algebraic reasons we have
+    \[ \frac{b-a_i}{N-i} \le \frac bN \le \frac{a_i}{i}
+      < \frac{a_j+1}{j} \le \frac{b+1}{N}
+      \le \frac{b-a_j}{N-j}. \]
+    Now,
+    \begin{align*}
+      a_N &\ge a_i + a_{N-i}
+        \ge a_i + (N-i) \cdot \frac{a_i}{i} \\
+      &\ge a_i + (b-a_i) = b \\
+      a_N &\le a_j + a_{N-j} + 1
+        \le (a_j+1) + (N-j) \cdot \frac{a_j+1}{j} \\
+      &= (a_j+1) + (b-a_j) = b+1.
+    \end{align*}
+    Thus $a_N \in \{b,b+1\}$.
+    This proves that $\frac{a_N}{N} \le \frac{a_i}{i}$
+    while $\frac{a_N+1}{N} \ge \frac{a_j+1}{j}$.
+    Moreover, the pair $(i,j)$ does not change,
+    so all inductive hypotheses carry over.
+
+    \ii On the other hand, suppose $i+j = N$.
+    Then we have
+    \[ \frac{a_i}{i} < \frac{a_i + a_j + 1}{N} < \frac{a_j+1}{j}.  \]
+    Now, we know $a_N$ could be either $a_i + a_j$ or $a_i + a_j + 1$.
+    If it's the former, then $(i,j)$ becomes $(i,N)$.
+    If it's the latter, then $(i,j)$ becomes $(N,j)$.
+    The properties of Farey sequences ensure that
+    the $\frac{a_i + a_j + 1}{N}$ is reduced, either way.
+  \end{itemize}
+\end{proof}
+\pagebreak
+
+
+\end{document}

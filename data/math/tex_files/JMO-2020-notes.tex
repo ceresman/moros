@@ -1,0 +1,948 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{JMO 2020 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2020 JMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $n \ge 2$ be an integer.
+Carl has $n$ books arranged on a bookshelf.
+Each book has a height and a width.
+No two books have the same height,
+and no two books have the same width.
+
+Initially, the books are arranged in
+increasing order of height from left to right.
+In a \emph{move}, Carl picks any two adjacent books
+where the left book is wider and shorter than the right book,
+and swaps their locations.
+Carl does this repeatedly until no further moves are possible.
+
+Prove that regardless of how Carl makes his moves,
+he must stop after a finite number of moves, and when he does stop,
+the books are sorted in increasing order of width from left to right.
+
+\item %% Problem 2
+Let $\omega$ be the incircle of a
+fixed equilateral triangle $ABC$.
+Let $\ell$ be a variable line that is tangent to $\omega$
+and meets the interior of segments $BC$ and $CA$
+at points $P$ and $Q$, respectively.
+A point $R$ is chosen such that $PR=PA$ and $QR=QB$.
+Find all possible locations of the point $R$,
+over all choices of $\ell$.
+
+\item %% Problem 3
+An empty $2020 \times 2020 \times 2020$ cube is given,
+and a $2020 \times 2020$ grid of square unit cells is drawn on each of its six faces.
+A \emph{beam} is a $1 \times 1 \times 2020$ rectangular prism.
+Several beams are placed inside the cube subject to the following conditions:
+\begin{itemize}
+\item The two $1 \times 1$ faces of each beam coincide
+  with unit cells lying on opposite faces of the cube.
+  (Hence, there are $3 \cdot 2020^2$ possible positions for a beam.)
+\item No two beams have intersecting interiors.
+\item The interiors of each of the four $1 \times 2020$ faces of each beam touch
+  either a face of the cube or the interior of the face of another beam.
+\end{itemize}
+What is the smallest positive number of beams that can be placed to satisfy these conditions?
+
+\item %% Problem 4
+Let $ABCD$ be a convex quadrilateral inscribed in a circle and satisfying
+\[ DA < AB = BC < CD. \]
+Points $E$ and $F$ are chosen on sides $CD$ and $AB$
+such that $\ol{BE} \perp \ol{AC}$ and $\ol{EF} \parallel \ol{BC}$.
+Prove that $FB=FD$.
+
+\item %% Problem 5
+Suppose that $(a_1, b_1)$, $(a_2, b_2)$, \dots, $(a_{100}, b_{100})$
+are distinct ordered pairs of nonnegative integers.
+Let $N$ denote the number of pairs of integers $(i,j)$ satisfying
+$1 \le i < j \le 100$ and $\left\lvert a_ib_j - a_jb_i \right\rvert = 1$.
+Determine the largest possible value of $N$
+over all possible choices of the $100$ ordered pairs.
+
+\item %% Problem 6
+Let $n \ge 2$ be an integer.
+Let $P(x_1, x_2, \dots, x_n)$ be a nonconstant
+$n$-variable polynomial with real coefficients.
+Assuming that $P$ vanishes whenever two of its arguments are equal,
+prove that $P$ has at least $n!$ terms.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{JMO 2020/1, proposed by Milan Haiman}
+\textsl{Available online at \url{https://aops.com/community/p15952780}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n \ge 2$ be an integer.
+Carl has $n$ books arranged on a bookshelf.
+Each book has a height and a width.
+No two books have the same height,
+and no two books have the same width.
+
+Initially, the books are arranged in
+increasing order of height from left to right.
+In a \emph{move}, Carl picks any two adjacent books
+where the left book is wider and shorter than the right book,
+and swaps their locations.
+Carl does this repeatedly until no further moves are possible.
+
+Prove that regardless of how Carl makes his moves,
+he must stop after a finite number of moves, and when he does stop,
+the books are sorted in increasing order of width from left to right.
+\end{mdframed}
+We say that a pair of books $(A,B)$ is \emph{height-inverted}
+if $A$ is to the left of $B$ and taller than $A$.
+Similarly define \emph{width-inverted} pairs.
+
+Note that every operation decreases the number of width-inverted pairs.
+This proves the procedure terminates,
+since the number of width-inverted pairs starts at $\binom n2$
+and cannot increase indefinitely.
+
+Now consider a situation where no more moves are possible.
+Assume for contradiction two consecutive books $(A,B)$ are still width-inverted.
+Since the operation isn't possible anymore, they are also height-inverted.
+In particular, the operation could never have swapped $A$ and $B$.
+But this contradicts the assumption there were no height-inverted pairs initially.
+\pagebreak
+
+\subsection{JMO 2020/2, proposed by Titu Andreescu, Waldemar Pompe}
+\textsl{Available online at \url{https://aops.com/community/p15952801}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $\omega$ be the incircle of a
+fixed equilateral triangle $ABC$.
+Let $\ell$ be a variable line that is tangent to $\omega$
+and meets the interior of segments $BC$ and $CA$
+at points $P$ and $Q$, respectively.
+A point $R$ is chosen such that $PR=PA$ and $QR=QB$.
+Find all possible locations of the point $R$,
+over all choices of $\ell$.
+\end{mdframed}
+Let $r$ be the inradius.
+Let $T$ be the tangency point of $\ol{PQ}$
+on arc $\widehat{DE}$ of the incircle, which we consider varying.
+We define $R_1$ and $R_2$ to be the two intersections
+of the circle centered at $P$ with radius $PA$,
+and the circle centered at $Q$ with radius $QB$.
+We choose $R_1$ to lie on the opposite side of $C$ as line $PQ$.
+
+\begin{center}
+\begin{asy}
+size(11cm);
+pair A = dir(150);
+pair B = dir(30);
+pair C = dir(270);
+pair D = midpoint(B--C);
+pair E = midpoint(A--C);
+pair I = incenter(A, B, C);
+draw(incircle(A, B, C), blue);
+pair R_1 = dir(70);
+pair P = extension(midpoint(A--R_1), I, B, C);
+pair Q = extension(midpoint(B--R_1), I, A, C);
+pair T = extension(R_1, I, P, Q);
+filldraw(A--B--C--cycle, opacity(0.1)+yellow, blue);
+draw(P--Q, blue);
+
+pair Ap = 4*D;
+pair Bp = 4*E;
+pair R_2 = 2*T-R_1;
+
+draw(R_2--P--R_1, grey);
+draw(P--A, grey);
+draw(R_2--R_1, heavycyan);
+draw(A--Ap, deepgreen);
+draw(B--Bp, deepgreen);
+
+draw(arc(I,B,A), red+1);
+draw(arc(I,Bp,Ap), red+1);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(10));
+dot("$E$", E, dir(170));
+dot("$I$", I, dir(100));
+dot("$R_1$", R_1, dir(R_1));
+dot("$P$", P, dir(P));
+dot("$Q$", Q, dir(Q));
+dot("$T$", T, dir(290));
+dot("$A'$", Ap, dir(Ap));
+dot("$B'$", Bp, dir(Bp));
+dot("$R_2$", R_2, dir(R_2));
+
+/* TSQ Source:
+
+!size(11cm);
+A = dir 150
+B = dir 30
+C = dir 270
+D = midpoint B--C R10
+E = midpoint A--C R170
+I = incenter A B C R100
+incircle A B C blue
+R_1 = dir 70
+P = extension midpoint A--R_1 I B C
+Q = extension midpoint B--R_1 I A C
+T = extension R_1 I P Q R290
+A--B--C--cycle 0.1 yellow / blue
+P--Q blue
+
+A' = 4*D
+B' = 4*E
+R_2 = 2*T-R_1
+
+R_2--P--R_1 grey
+P--A grey
+R_2--R_1 heavycyan
+A--Ap deepgreen
+B--Bp deepgreen
+
+!draw(arc(I,B,A), red+1);
+!draw(arc(I,Bp,Ap), red+1);
+
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  The point $R_1$ is the unique point on ray $TI$ with $R_1I = 2r$.
+\end{claim*}
+\begin{proof}
+  Define $S$ to be the point on ray $TI$ with $SI = 2r$.
+  Note that there is a homothety at $I$ which maps $\triangle DTE$
+  to $\triangle ASB$, for some point $S$.
+
+  Note that since $TASD$ is an isosceles trapezoid,
+  it follows $PA = PS$.
+  Similarly, $QB = QS$.
+  So it follows that $S = R_1$.
+\end{proof}
+
+Since $T$ can be any point on the open arc $\widehat{DE}$,
+it follows that the locus of $R_1$
+is exactly the open $120\dg$ arc of $\widehat{AB}$
+of the circle centered at $I$ with radius $2r$
+(i.e.\ the circumcircle of $ABC$).
+
+It remains to characterize $R_2$.
+Since $TI = r$, $IR_1 = 2r$, it follows $TR_2 = 3r$ and $IR_2 = 4r$.
+Define $A'$ on ray $DI$ such that $A'I = 4r$,
+and $B'$ on ray $IE$ such that $B'I = 4r$.
+Then it follows, again by homothety,
+that the locus of $R_2$ is the $120\dg$ arc $\widehat{A'B'}$
+of the circle centered at $I$ with radius $4r$.
+
+In conclusion, the locus of $R$ is the two open $120\dg$ arcs we identified.
+\pagebreak
+
+\subsection{JMO 2020/3, proposed by Alex Zhai}
+\textsl{Available online at \url{https://aops.com/community/p15952773}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+An empty $2020 \times 2020 \times 2020$ cube is given,
+and a $2020 \times 2020$ grid of square unit cells is drawn on each of its six faces.
+A \emph{beam} is a $1 \times 1 \times 2020$ rectangular prism.
+Several beams are placed inside the cube subject to the following conditions:
+\begin{itemize}
+\item The two $1 \times 1$ faces of each beam coincide
+  with unit cells lying on opposite faces of the cube.
+  (Hence, there are $3 \cdot 2020^2$ possible positions for a beam.)
+\item No two beams have intersecting interiors.
+\item The interiors of each of the four $1 \times 2020$ faces of each beam touch
+  either a face of the cube or the interior of the face of another beam.
+\end{itemize}
+What is the smallest positive number of beams that can be placed to satisfy these conditions?
+\end{mdframed}
+Answer: $3030$ beams.
+
+\medskip
+
+\textbf{Construction}:
+We first give a construction with $3n/2$ beams for any $n \times n \times n$ box,
+where $n$ is an even integer.
+Shown below is the construction for $n=6$, which generalizes.
+(The left figure shows the cube in 3d;
+the right figure shows a direct view of the three visible faces.)
+\begin{center}
+\begin{asy}
+import three;
+import bsp;
+
+size(8cm);
+settings.prc = false;
+settings.render = 0;
+settings.tex="pdflatex";
+settings.outformat="pdf";
+
+triple O = (9,7,5);
+currentprojection = orthographic(O);
+currentlight = light(gray(2),specular=gray(0.7), specularfactor=3, (7,7,5));
+
+pen finalpen = yellow+2;
+pen meshpenlight = rgb(0.95,0.95,0.99);
+
+int M = 6;
+int s = 0;
+for (int i=0; i<=M; ++i) {
+draw( (s,i,0)--(s,i,M), meshpenlight);
+draw( (s,0,i)--(s,M,i), meshpenlight);
+draw( (i,s,0)--(i,s,M), meshpenlight);
+draw( (0,s,i)--(M,s,i), meshpenlight);
+draw( (i,0,s)--(i,M,s), meshpenlight);
+draw( (0,i,s)--(M,i,s), meshpenlight);
+}
+
+draw(box((0,0,0), (M,M,M)), finalpen);
+
+pen penA = red;
+pen penB = cyan;
+pen penC = green;
+
+draw(shift(0,0,0)*unitcube, penA);
+draw(shift(0,0,1)*unitcube, penA);
+draw(shift(0,0,2)*unitcube, penA);
+draw(shift(0,0,3)*unitcube, penA);
+draw(shift(0,0,4)*unitcube, penA);
+draw(shift(0,0,5)*unitcube, penA);
+
+draw(shift(1,0,0)*unitcube, penB);
+draw(shift(1,1,0)*unitcube, penB);
+draw(shift(1,2,0)*unitcube, penB);
+draw(shift(1,3,0)*unitcube, penB);
+draw(shift(1,4,0)*unitcube, penB);
+draw(shift(1,5,0)*unitcube, penB);
+
+draw(shift(0,1,1)*unitcube, penC);
+draw(shift(1,1,1)*unitcube, penC);
+draw(shift(2,1,1)*unitcube, penC);
+draw(shift(3,1,1)*unitcube, penC);
+draw(shift(4,1,1)*unitcube, penC);
+draw(shift(5,1,1)*unitcube, penC);
+
+draw(shift(2,2,0)*unitcube, penA);
+draw(shift(2,2,1)*unitcube, penA);
+draw(shift(2,2,2)*unitcube, penA);
+draw(shift(2,2,3)*unitcube, penA);
+draw(shift(2,2,4)*unitcube, penA);
+draw(shift(2,2,5)*unitcube, penA);
+
+draw(shift(3,0,2)*unitcube, penB);
+draw(shift(3,1,2)*unitcube, penB);
+draw(shift(3,2,2)*unitcube, penB);
+draw(shift(3,3,2)*unitcube, penB);
+draw(shift(3,4,2)*unitcube, penB);
+draw(shift(3,5,2)*unitcube, penB);
+
+draw(shift(0,3,3)*unitcube, penC);
+draw(shift(1,3,3)*unitcube, penC);
+draw(shift(2,3,3)*unitcube, penC);
+draw(shift(3,3,3)*unitcube, penC);
+draw(shift(4,3,3)*unitcube, penC);
+draw(shift(5,3,3)*unitcube, penC);
+
+draw(shift(4,4,0)*unitcube, penA);
+draw(shift(4,4,1)*unitcube, penA);
+draw(shift(4,4,2)*unitcube, penA);
+draw(shift(4,4,3)*unitcube, penA);
+draw(shift(4,4,4)*unitcube, penA);
+draw(shift(4,4,5)*unitcube, penA);
+
+draw(shift(5,0,4)*unitcube, penB);
+draw(shift(5,1,4)*unitcube, penB);
+draw(shift(5,2,4)*unitcube, penB);
+draw(shift(5,3,4)*unitcube, penB);
+draw(shift(5,4,4)*unitcube, penB);
+draw(shift(5,5,4)*unitcube, penB);
+
+draw(shift(0,5,5)*unitcube, penC);
+draw(shift(1,5,5)*unitcube, penC);
+draw(shift(2,5,5)*unitcube, penC);
+draw(shift(3,5,5)*unitcube, penC);
+draw(shift(4,5,5)*unitcube, penC);
+draw(shift(5,5,5)*unitcube, penC);
+
+pen meshpen = grey;
+int s = M;
+for (int i=1; i<=M-1; ++i) {
+draw( (s,i,0)--(s,i,M), meshpen);
+draw( (s,0,i)--(s,M,i), meshpen);
+draw( (i,s,0)--(i,s,M), meshpen);
+draw( (0,s,i)--(M,s,i), meshpen);
+draw( (i,0,s)--(i,M,s), meshpen);
+draw( (0,i,s)--(M,i,s), meshpen);
+}
+
+draw((M,M,M)--(0,M,M), finalpen);
+draw((M,M,M)--(M,0,M), finalpen);
+draw((M,M,M)--(M,M,0), finalpen);
+\end{asy}
+\quad
+\begin{asy}
+size(8cm);
+picture redface, greenface, blueface;
+
+void draw_grid(picture pic) {
+  for (int i=1; i<6; ++i) {
+    draw(pic, (i,0)--(i,6), grey);
+    draw(pic, (0,i)--(6,i), grey);
+  }
+  draw(pic, scale(6)*unitsquare, yellow+2);
+}
+
+fill(redface, shift(0,5)*unitsquare, red);
+fill(redface, shift(2,3)*unitsquare, red);
+fill(redface, shift(4,1)*unitsquare, red);
+draw_grid(redface);
+
+fill(greenface, shift(5,5)*unitsquare, green);
+fill(greenface, shift(3,3)*unitsquare, green);
+fill(greenface, shift(1,1)*unitsquare, green);
+draw_grid(greenface);
+
+fill(blueface, shift(0,4)*unitsquare, cyan);
+fill(blueface, shift(2,2)*unitsquare, cyan);
+fill(blueface, shift(4,0)*unitsquare, cyan);
+draw_grid(blueface);
+
+add(shift(0,8.5)*shift(3,3)*rotate(-45)*shift(-3,-3)*redface);
+add(shift(-4,0)*greenface);
+add(shift( 4,0)*blueface);
+label("Left face", (-1,0), dir(-90));
+label("Right face", (7,0), dir(-90));
+label("Top face", (3,16), dir(90));
+\end{asy}
+\end{center}
+To be explicit,
+impose coordinate axes such that one corner of the cube is the origin.
+We specify a beam by two opposite corners.
+The $3n/2$ beams come in three directions, $n/2$ in each direction:
+\begin{itemize}
+  \ii $(0,0,0) \to (1,1,n)$, $(2,2,0) \to (3,3,n)$, $(4,4,0) \to (5,5,n)$, and so on;
+  \ii $(1,0,0) \to (2,n,1)$, $(3,0,2) \to (4,n,3)$, $(5,0,4) \to (6,n,5)$, and so on;
+  \ii $(0,1,1) \to (n,2,2)$, $(0,3,3) \to (n,4,4)$, $(0,5,5) \to (n,6,6)$, and so on.
+\end{itemize}
+This gives the figure we drew earlier and shows $3030$ beams is possible.
+
+\bigskip
+
+\textbf{Necessity}:
+We now show at least $3n/2$ beams are necessary.
+Maintain coordinates,
+and call the beams $x$-beams, $y$-beams, $z$-beams
+according to which plane their long edges are perpendicular too.
+Let $N_x$, $N_y$, $N_z$ be the number of these.
+
+\begin{claim*}
+  If $\min(N_x, N_y, N_z) = 0$, then at least $n^2$ beams are needed.
+\end{claim*}
+\begin{proof}
+  Assume WLOG that $N_z = 0$.
+  Orient the cube so the $z$-plane touches the ground.
+  Then each of the $n$ layers of the cube (from top to bottom)
+  must be completely filled, and so at least $n^2$ beams are necessary,
+\end{proof}
+
+We henceforth assume $\min(N_x, N_y, N_z) > 0$.
+
+\begin{claim*}
+  If $N_z > 0$, then we have $N_x + N_y \ge n$.
+\end{claim*}
+\begin{proof}
+  Again orient the cube so the $z$-plane touches the ground.
+  We see that for each of the $n$ layers of the cube (from top to bottom),
+  there is at least one $x$-beam or $y$-beam.
+  (Pictorially, some of the $x$ and $y$ beams form a ``staircase''.)
+  This completes the proof.
+\end{proof}
+Proceeding in a similar fashion, we arrive at the three relations
+\begin{align*}
+  N_x + N_y &\ge n \\
+  N_y + N_z &\ge n \\
+  N_z + N_x &\ge n.
+\end{align*}
+Summing gives $N_x  + N_y + N_z \ge 3n/2$ too.
+
+\begin{remark*}
+  The problem condition has the following ``physics'' interpretation.
+  Imagine the cube is a metal box which is sturdy enough that
+  all beams must remain orthogonal to the faces of the box
+  (i.e.\ the beams cannot spin).
+  Then the condition of the problem is exactly what is needed so that,
+  if the box is shaken or rotated, the beams will not move.
+\end{remark*}
+
+\begin{remark*}
+  Walter Stromquist points out that the number of constructions
+  with $3030$ beams is actually enormous:
+  not dividing out by isometries,
+  the number is $(2 \cdot 1010!)^3$.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{JMO 2020/4, proposed by Milan Haiman}
+\textsl{Available online at \url{https://aops.com/community/p15952890}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCD$ be a convex quadrilateral inscribed in a circle and satisfying
+\[ DA < AB = BC < CD. \]
+Points $E$ and $F$ are chosen on sides $CD$ and $AB$
+such that $\ol{BE} \perp \ol{AC}$ and $\ol{EF} \parallel \ol{BC}$.
+Prove that $FB=FD$.
+\end{mdframed}
+We present three approaches.
+We note that in the second two approaches,
+the result remains valid even if $AB \neq BC$,
+as long $E$ is replaced by the point on $\ol{AC}$
+satisfying $EA = EC$.
+So the result is actually somewhat more general.
+
+\paragraph{First solution by inscribed angle theorem.}
+Since $\ol{EF} \parallel \ol{BC}$ we may
+set $\theta = \angle FEB = \angle CBE = \angle EBF$.
+This already implies $FE = FB$,
+so we will in fact prove that $F$ is the circumcenter of $\triangle BED$.
+\begin{center}
+\begin{asy}
+pair A = dir(175);
+pair B = dir(270);
+pair C = B*B/A;
+pair D = dir(135);
+pair E = extension(B, origin, C, D);
+pair F = circumcenter(B, D, E);
+filldraw(unitcircle, opacity(0.1)+lightcyan, blue);
+draw(D--F--B, lightred);
+draw(F--E, lightred);
+draw(B--D--C, blue);
+draw(F--A--C, blue);
+draw(E--B--C, blue);
+draw(A--D, blue);
+draw(CP(F, E), lightred);
+
+markangle(1,7.0,E,B,F,deepgreen);
+markangle(1,9.0,C,B,E,deepgreen);
+markangle(1,9.0,F,E,B,deepgreen);
+
+markangle(2,9.0,B,A,C,deepcyan);
+markangle(2,9.0,B,D,C,deepcyan);
+markangle(2,9.0,A,C,B,deepcyan);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(D));
+dot("$E$", E, dir(90));
+dot("$F$", F, dir(250));
+
+/* TSQ Source:
+
+A = dir 175
+B = dir 270
+C = B*B/A
+D = dir 135
+E = extension B origin C D R90
+F = circumcenter B D E R250
+unitcircle 0.1 lightcyan / blue
+D--F--B lightred
+F--E lightred
+B--D--C blue
+F--A--C blue
+E--B--C blue
+A--D blue
+CP F E lightred
+
+!markangle(1,7.0,E,B,F,deepgreen);
+!markangle(1,9.0,C,B,E,deepgreen);
+!markangle(1,9.0,F,E,B,deepgreen);
+
+!markangle(2,9.0,B,A,C,deepcyan);
+!markangle(2,9.0,B,D,C,deepcyan);
+!markangle(2,9.0,A,C,B,deepcyan);
+
+*/
+\end{asy}
+\end{center}
+Note that $\angle BDC = \angle BAC = 90\dg - \theta$.
+However, $\angle BFE = 180\dg - 2 \theta$.
+So by the inscribed angle theorem, $D$ lies on the circle
+centered at $F$ with radius $FE = FB$, as desired.
+
+\begin{remark*}
+  Another approach to the given problem is to show that $B$
+  is the $D$-excenter of $\triangle DAE$,
+  and $F$ is the arc midpoint of $\widehat{DAE}$
+  of the circumcircle of $\triangle DAE$.
+  In my opinion, this approach is much clumsier.
+\end{remark*}
+
+\paragraph{Second general solution by angle chasing.}
+By Reim's theorem, $AFED$ is cyclic.
+\begin{center}
+\begin{asy}
+pair A = dir(175);
+pair B = dir(255);
+pair C = dir(5);
+pair D = dir(135);
+pair E = extension(B, origin, C, D);
+pair F = extension(A, B, E, E+B-C);
+filldraw(unitcircle, opacity(0.1)+lightcyan, blue);
+draw(D--F, lightblue);
+draw(A--E, lightblue);
+draw(F--B--D--C, blue);
+draw(F--A--C, blue);
+draw(E--B--C, blue);
+draw(A--D, blue);
+draw(E--F, lightred);
+
+draw(circumcircle(E, A, D), lightred);
+
+markangle(2,13.0,C,A,E,deepgreen);
+markangle(2,13.0,E,C,A,deepgreen);
+markangle(2,13.0,D,B,F,deepgreen);
+markangle(2,13.0,F,D,B,deepgreen);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(D));
+dot("$E$", E, dir(70));
+dot("$F$", F, dir(F));
+
+/* TSQ Source:
+
+A = dir 175
+B = dir 255
+C = dir 5
+D = dir 135
+E = extension B origin C D R70
+F = extension A B E E+B-C
+unitcircle 0.1 lightcyan / blue
+D--F lightblue
+A--E lightblue
+F--B--D--C blue
+F--A--C blue
+E--B--C blue
+A--D blue
+E--F lightred
+
+circumcircle E A D lightred
+
+!markangle(2,13.0,C,A,E,deepgreen);
+!markangle(2,13.0,E,C,A,deepgreen);
+!markangle(2,13.0,D,B,F,deepgreen);
+!markangle(2,13.0,F,D,B,deepgreen);
+
+*/
+\end{asy}
+\end{center}
+Hence
+\begin{align*}
+  \dang FDB &= \dang FDC - \dang BDC = \dang FAE - \dang FAC \\
+  &= \dang CAE = \dang ECA = \dang DCA = \dang DBA = \dang DBF
+\end{align*}
+as desired.
+
+
+\paragraph{Third general solution by Pascal.}
+Extend rays $AE$ and $DF$ to meet the circumcircle again at $G$ and $H$.
+By Pascal's theorem on $HDCBAG$,
+it follows that $E$, $F$, and $GH \cap BC$ are collinear,
+which means that $\ol{EF} \parallel \ol{GH} \parallel \ol{BC}$.
+\begin{center}
+\begin{asy}
+pair A = dir(175);
+pair B = dir(255);
+pair C = dir(5);
+pair D = dir(135);
+filldraw(unitcircle, opacity(0.1)+lightcyan, blue);
+pair H = D*B/A;
+pair G = A*C/D;
+pair E = extension(A, G, D, C);
+pair F = extension(A, B, D, H);
+
+draw(A--B--C--D--cycle, blue);
+draw(A--G, deepgreen);
+draw(D--H, deepgreen);
+draw(E--F, red);
+draw(G--H, red);
+
+draw(arc(origin,C,G), orange+1.5);
+draw(arc(origin,D,A), orange+1.5);
+draw(arc(origin,H,B), orange+1.5);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$D$", D, dir(D));
+dot("$H$", H, dir(H));
+dot("$G$", G, dir(G));
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(F));
+
+/* TSQ Source:
+
+A = dir 175
+B = dir 255
+C = dir 5
+D = dir 135
+unitcircle 0.1 lightcyan / blue
+H = D*B/A
+G = A*C/D
+E = extension A G D C
+F = extension A B D H
+
+A--B--C--D--cycle blue
+A--G deepgreen
+D--H deepgreen
+E--F red
+G--H red
+
+!draw(arc(origin,C,G), orange+1.5);
+!draw(arc(origin,D,A), orange+1.5);
+!draw(arc(origin,H,B), orange+1.5);
+
+*/
+\end{asy}
+\end{center}
+Since $EA=EC$, it follows $DAGC$ in isosceles trapezoid.
+But also $GHBC$ is an isosceles trapezoid.
+Thus $\mathrm{m}\widehat{DA} = \mathrm{m}\widehat{GC}
+= \mathrm{m}\widehat{BH}$,
+so $DAHB$ is an isosceles trapezoid.
+Thus $FD = FB$.
+
+\begin{remark*}
+  Addicts of projective geometry can use Pascal
+  on $DBCAHG$ to finish rather than noting the equal arcs.
+\end{remark*}
+\pagebreak
+
+\subsection{JMO 2020/5, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p15952792}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Suppose that $(a_1, b_1)$, $(a_2, b_2)$, \dots, $(a_{100}, b_{100})$
+are distinct ordered pairs of nonnegative integers.
+Let $N$ denote the number of pairs of integers $(i,j)$ satisfying
+$1 \le i < j \le 100$ and $\left\lvert a_ib_j - a_jb_i \right\rvert = 1$.
+Determine the largest possible value of $N$
+over all possible choices of the $100$ ordered pairs.
+\end{mdframed}
+The answer is $197$.
+In general, if $100$ is replaced by $n \ge 2$ the answer is $2n-3$.
+
+The idea is that if we let $P_i = (a_i, b_i)$ be a point
+in the coordinate plane, and let $O = (0,0)$
+then we wish to maximize the number of triangles
+$\triangle O P_i P_j$ which have area $1/2$.
+Call such a triangle \emph{good}.
+
+\medskip
+
+\textbf{Construction of $197$ points}:
+It suffices to use the points
+$(1,0)$, $(1,1)$, $(2,1)$, $(3,1)$, \dots, $(99,1)$ as shown.
+Notice that:
+\begin{itemize}
+  \ii There are $98$ good triangles
+  with vertices $(0,0)$, $(k,1)$ and $(k+1,1)$ for $k=1, \dots, 98$.
+
+  \ii There are $99$ good triangles
+  with vertices $(0,0)$, $(1,0)$ and $(k,1)$ for $k=1, \dots, 99$.
+\end{itemize}
+This is a total of $98 + 99 = 197$ triangles.
+\begin{center}
+\begin{asy}
+  draw( (6,0)--(0,0)--(0,2), grey, Arrows );
+  dot("$O$", (0,0), dir(225), red );
+  dot("$(1,0)$", (1,0), dir(-90), blue);
+  dot("$(1,1)$", (1,1), dir(90), blue);
+  dot("$(2,1)$", (2,1), dir(90), blue);
+  dot("$(3,1)$", (3,1), dir(90), blue);
+  dot("$(4,1)$", (4,1), dir(90), blue);
+  label("$\dotsb$", (5,1), blue);
+\end{asy}
+\end{center}
+
+\medskip
+
+\textbf{Proof that $197$ points is optimal}:
+We proceed by induction on $n$ to show the bound of $2n-3$.
+The base case $n=2$ is evident.
+
+For the inductive step,
+suppose (without loss of generality) that the point $P = P_n = (a,b)$
+is the farthest away from the point $O$ among all points.
+\begin{claim*}
+  This farthest point $P = P_n$ is part of at most two good triangles.
+\end{claim*}
+\begin{proof}
+  We must have $\gcd(a,b) = 1$ for $P$ to be in any good triangles at all,
+  since otherwise any divisor of $\gcd(a,b)$ also divides $2[OPQ]$.
+  Now, we consider the locus of all points $Q$ for which $[OPQ] = 1/2$.
+  It consists of two parallel lines passing with slope $OP$, as shown.
+  \begin{center}
+  \begin{asy}
+    size(10cm);
+    int M = 6;
+    pair P = (3,2);
+    pair O = (0,0);
+    draw(O--P, blue);
+    draw(arc(O,abs(P),0,90), deepcyan);
+    for (int i=-M#2; i<=M; ++i) {
+      draw( (-M#2,i)--(M,i), grey);
+      draw( (i,-M#2)--(i,M), grey);
+    }
+    draw( (-M#2,0)--(M,0), black+1.4, Arrows(TeXHead) );
+    draw( (0,-M#2)--(0,M), black+1.4, Arrows(TeXHead) );
+
+    pair X = (1,1);
+    pair Y = O+P-X;
+    dot("$(u,v)$", X, dir(135), red);
+    dot("$(u',v')$", Y, dir(-45), red);
+
+    pair X1 = X+P;
+    pair X2 = X-P;
+    draw(X1--X2, red+dashed, Arrows);
+
+    pair Y1 = Y+P;
+    pair Y2 = Y-P;
+    draw(Y1--Y2, red+dashed, Arrows);
+
+    dot("$O$", O, dir(225), blue);
+    dot("$P=(a,b)$", P, dir(30), blue);
+  \end{asy}
+  \end{center}
+  Since $\gcd(a,b)=1$, see that only two lattice points on this locus
+  actually lie inside the quarter-circle centered at $O$ with radius $OP$.
+  Indeed if one of the points is $(u,v)$
+  then the others on the line are $(u \pm a, v \pm b)$ where the signs match.
+  This proves the claim.
+\end{proof}
+This claim allows us to complete the induction by simply deleting $P_n$.
+\pagebreak
+
+\subsection{JMO 2020/6, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p15952921}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n \ge 2$ be an integer.
+Let $P(x_1, x_2, \dots, x_n)$ be a nonconstant
+$n$-variable polynomial with real coefficients.
+Assuming that $P$ vanishes whenever two of its arguments are equal,
+prove that $P$ has at least $n!$ terms.
+\end{mdframed}
+We present two solutions.
+
+\paragraph{First solution using induction (by Ankan).}
+Begin with the following observation:
+\begin{claim*}
+  Let $1 \le i < j \le n$.
+  There is no term of $P$ which omits both $x_i$ and $x_j$.
+\end{claim*}
+\begin{proof}
+  Note that $P$ ought to become identically zero
+  if we set $x_i = x_j = 0$,
+  since it is zero for any choice of the remaining $n-2$ variables,
+  and the base field $\RR$ is infinite.
+\end{proof}
+\begin{remark*}
+  [Technical warning for experts]
+  The fact we used is not true if $\RR$ is replaced by a field
+  with finitely many elements, such as $\FF_p$,
+  even with one variable.
+  For example the one-variable polynomial $X^p-X$ vanishes
+  on every element of $\FF_p$,
+  by Fermat's little theorem.
+\end{remark*}
+
+We proceed by induction on $n \ge 2$ with the base case $n=2$ being clear.
+Assume WLOG $P$ is not divisible by any of $x_1$, \dots, $x_n$,
+since otherwise we may simply divide out this factor.
+Now for the inductive step, note that
+\begin{itemize}
+  \ii The polynomial $P(0, x_2, x_3, \dots, x_n)$
+  obviously satisfies the inductive hypothesis
+  and is not identically zero since $x_1 \nmid P$,
+  so it has at least $(n-1)!$ terms.
+  \ii Similarly, $P(x_1, 0, x_3, \dots, x_n)$
+  also has at least $(n-1)!$ terms.
+  \ii Similarly, $P(x_1, x_2, 0, \dots, x_n)$
+  also has at least $(n-1)!$ terms.
+  \ii \dots and so on.
+\end{itemize}
+By the claim, all the terms obtained in this way
+came from different terms of the original polynomial $P$.
+Therefore, $P$ itself has at least $n \cdot (n-1)! = n!$ terms.
+
+\begin{remark*}
+  Equality is achieved by the
+  Vandermonde polynomial
+  $P = \prod_{1 \le i < j \le n} (x_i-x_j)$.
+\end{remark*}
+
+\paragraph{Second solution using Vandermonde polynomial (by Yang Liu).}
+Since $x_i - x_j$ divides $P$ for any $i \neq j$, it follows that
+$P$ should be divisible by the Vandermonde polynomial
+\[ V = \prod_{i<j} (x_j-x_i)
+  = \sum_{\sigma} \opname{sgn}(\sigma) x_1^{\sigma(0)}
+  x_2^{\sigma(1)} \dots x_n^{\sigma(n-1)} \]
+where the sum runs over all permutations $\sigma$ on $\{0, \dots, n-1\}$.
+
+Consequently, we may write
+\[ P = \sum_{\sigma} \opname{sgn}(\sigma)
+  x_1^{\sigma(0)} x_2^{\sigma(1)} \dots x_n^{\sigma(n-1)} Q \]
+The main idea is that each of the $n!$ terms of the above
+sum has a monomial not appearing in any of the other terms.
+
+As an example, consider $x_1^{n-1} x_2^{n-2} \dots x_{n-1}^1 x_n^0$.
+Among all monomial in $Q$, consider the monomial
+$x_1^{e_1} x_2^{e_2} \dots x_n^{e_n}$
+with the largest $e_1$, then largest $e_2$, \dots.
+(In other words, take the lexicographically largest
+$(e_1, \dots, e_n)$.)
+This term
+\[ x_1^{e_1 + (n-1)} x_2^{e_2 + (n-2)} \dots x_n^{e_n} \]
+can't appear anywhere else because it is strictly lexicographically larger
+than any other term appearing in any other expansion.
+
+Repeating this argument with every $\sigma$ gives the conclusion.
+\pagebreak
+
+
+\end{document}

@@ -1,0 +1,468 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2004 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2004 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $ABCD$ be a quadrilateral circumscribed about a circle,
+whose interior and exterior angles are at least $60$ degrees.
+Prove that
+\[ \frac{1}{3}|AB^3 - AD^3|
+  \le |BC^3 - CD^3| \le 3|AB^3 - AD^3|.  \]
+When does equality hold?
+
+\item %% Problem 2
+Let $a_1$, $a_2$, \dots, $a_n$ be integers whose greatest common
+divisor is $1$.
+Let $S$ be a set of integers with the following properties:
+\begin{enumerate}
+  \ii[(a)] $a_i \in S$ for $i = 1, \dots, n$.
+  \ii[(b)] $a_i - a_j \in S$ for $i, j = 1, \dots, n$,
+  not necessarily distinct.
+  \ii[(c)] If $x, y \in S$ and $x+y \in S$,
+  then $x-y \in S$ too.
+\end{enumerate}
+Prove that $S = \ZZ$.
+
+\item %% Problem 3
+For what real values of $k > 0$ is it possible to
+dissect a $1 \times k$ rectangle
+into two similar but noncongruent polygons?
+
+\item %% Problem 4
+Alice and Bob play a game on a $6$ by $6$ grid.
+On his turn, a player chooses a rational number not yet appearing in the grid
+and writes it in an empty square of the grid.
+Alice goes first and then the players alternate.
+When all squares have numbers written in them, in each row,
+the square with the greatest number in that row is colored black.
+Alice wins if he can then draw a line from the top of the grid to the bottom of the grid
+that stays in black squares, and Bob wins if he can't.
+(If two squares share a vertex,
+Alice can draw a line from one to the other that stays in those two squares.)
+Find, with proof, a winning strategy for one of the players.
+
+\item %% Problem 5
+Let $a$, $b$, $c$ be positive reals.
+Prove that
+\[ ( a^5-a^2+3 )( b^5-b^2+3 )( c^5-c^2+3 )
+  \ge \left( a+b+c \right)^3. \]
+
+\item %% Problem 6
+A circle $\omega$ is inscribed in a quadrilateral $ABCD$.
+Let $I$ be the center of $\omega$.
+Suppose that \[ (AI + DI)^2 + (BI + CI)^2 = (AB + CD)^2.  \]
+Prove that $ABCD$ is an isosceles trapezoid.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2004/1, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p17439}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCD$ be a quadrilateral circumscribed about a circle,
+whose interior and exterior angles are at least $60$ degrees.
+Prove that
+\[ \frac{1}{3}|AB^3 - AD^3|
+  \le |BC^3 - CD^3| \le 3|AB^3 - AD^3|.  \]
+When does equality hold?
+\end{mdframed}
+Clearly it suffices to show the left inequality.
+Since $AB+CD = BC+AD \implies |AB-AD| = |BC-CD|$, it suffices to prove
+\[ \frac13(AB^2 + AB \cdot AD + AD^2)
+\le BC^2 + BC \cdot CD + CD^2. \]
+This follows by noting that
+\begin{align*}
+  BC^2 + BC \cdot CD + CD^2
+  &\ge BC^2 + CD^2 - 2(BC)(CD)\cos(\angle BCD) \\
+  &= BD^2 \\
+  &= AB^2 + AD^2 - 2(AB)(AD)\cos(\angle BAD) \\
+  &\ge AB^2 + AD^2 - AB \cdot AD \\
+  &\ge \tfrac13(AB^2 + AD^2 + AB \cdot AD)
+\end{align*}
+the last line following by AM-GM.
+
+The equality holds iff $ABCD$ is a kite with $AB=AD$, $CB=CD$.
+\pagebreak
+
+\subsection{USAMO 2004/2, proposed by Kiran Kedlaya}
+\textsl{Available online at \url{https://aops.com/community/p17440}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a_1$, $a_2$, \dots, $a_n$ be integers whose greatest common
+divisor is $1$.
+Let $S$ be a set of integers with the following properties:
+\begin{enumerate}
+  \ii[(a)] $a_i \in S$ for $i = 1, \dots, n$.
+  \ii[(b)] $a_i - a_j \in S$ for $i, j = 1, \dots, n$,
+  not necessarily distinct.
+  \ii[(c)] If $x, y \in S$ and $x+y \in S$,
+  then $x-y \in S$ too.
+\end{enumerate}
+Prove that $S = \ZZ$.
+\end{mdframed}
+The idea is to show any linear combination of the $a_i$ are in $S$,
+which implies (by Bezout) that $S = \ZZ$.
+This is pretty intuitive, but the details require some care
+(in particular there is a parity obstruction at the second lemma).
+
+First, we make the following simple observations:
+\begin{itemize}
+  \ii $0 \in S$, by putting $i=j=1$ in (b).
+  \ii $s \in S \iff -s \in S$, by putting $x=0$ in (c).
+\end{itemize}
+
+Now, we prove that:
+\begin{lemma*}
+  For any integers $c$, $d$, and indices $i$, $j$,
+  we have $ca_i + da_j \in S$.
+\end{lemma*}
+\begin{proof}
+  We will assume $c,d > 0$ since the other cases are analogous.
+  In that case it follows by induction on $c+d$
+  for example $ca_i + (d-1)a_j$, $a_j$, $ca_i + da_j$ in $S$
+  implies $ca_i + (d+1)a_j \in S$.
+\end{proof}
+
+\begin{lemma*}
+  For any nonzero integers $c_1$, $c_2$, \dots, $c_m$,
+  and any distinct indices $\{i_1 , i_2 , \dots , i_m\}$, we have
+  \[ \sum_k c_k a_{i_k} \in S. \]
+\end{lemma*}
+\begin{proof}
+  By induction on $m$, with base case $m \le 2$ already done.
+
+  For the inductive step,
+  we will assume that $i_1 = 1$, $i_2 = 2$, et cetera,
+  for notational convenience.
+  The proof is then split into two cases.
+
+
+  \emph{First Case}: some $c_i$ is even.
+  WLOG $c_1 \neq 0$ is even and note that
+  \begin{align*}
+    x &\coloneqq \half c_1 a_1 + \sum_{k \ge 3} c_k a_k \in S \\
+    y &\coloneqq -\half c_1 a_1 - c_2 a_2 \in S \\
+    x+y &= -c_2 a_2 + \sum_{k \ge 3} c_k a_k \in S \\
+    \implies x-y &= \sum_{k \ge 1} c_k a_k \in S.
+  \end{align*}
+
+
+  \emph{Second Case}: all $c_i$ are odd.
+  We reduce this to the first case as follows.
+  Let $u = \frac{a_1}{\gcd(a_1, a_2)}$ and $v = \frac{a_2}{\gcd(a_1, a_2)}$.
+  Then $\gcd(u,v) = 1$ and so WLOG $u$ is odd.
+  Then
+  \[
+    c_1 a_1 + c_2 a_2
+    = (c_1 + v)a_1 + (c_2 - u) a_2
+  \]
+  and so we can replace our given combination
+  by $(c_1+v)a_1 + (c_2-u)a_2 + c_3a_3 + \dots$
+  which now has an even coefficient for $a_2$.
+\end{proof}
+
+We then apply the lemma at $m = n$;
+this implies the result since Bezout's lemma
+implies that $\sum c_i a_i = 1$ for some choice of $c_i \in \ZZ$.
+\pagebreak
+
+\subsection{USAMO 2004/3, proposed by Ricky Liu}
+\textsl{Available online at \url{https://aops.com/community/p17441}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For what real values of $k > 0$ is it possible to
+dissect a $1 \times k$ rectangle
+into two similar but noncongruent polygons?
+\end{mdframed}
+Answer: the dissection is possible for every $k > 0$ except for $k = 1$.
+% Here a ``dissection'' does not need to be a single cut.
+
+\textbf{Construction}.
+By symmetry it suffices to give a construction for $k > 1$
+(since otherwise we replace $k$ by $k\inv$).
+For every integer $n \ge 2$ and real number $r > 1$,
+we define a shape $\mathcal R(n,r)$ as follows.
+\begin{itemize}
+  \ii We start with a rectangle of width $1$ and height $r$.
+  To its left, we glue a rectangle of height $r$ and width $r^2$ to its left.
+  \ii Then, we glue a rectangle of width $1+r^2$ and height $r^3$ below our figure,
+  followed by a rectangle of height $r+r^3$ and width $r^4$ to the left of our figure.
+  \ii Next, we glue a rectangle of width $1+r^2+r^4$ and height $r^5$ below our figure,
+  followed by a rectangle of height $r+r^3+r^5$ and width $r^6$ to the left of our figure.
+\end{itemize}
+\dots and so on, up until we have put $2n$ rectangles together.
+The picture $\mathcal R(3,r)$ is shown below as an example.
+\begin{center}
+\begin{asy}
+size(8cm);
+defaultpen(fontsize(10pt));
+
+real r = 1.6;
+
+pair A = (0,r^3+r);
+pair B = (r^4,r^3+r);
+pair C = (r^4+r^2,r^3+r);
+pair D = (r^4+r^2+1,r^3+r);
+pair E = (r^4,r^3);
+pair F = (r^4+r^2, r^3);
+pair G = (r^4+r^2+1, r^3);
+pair O = (0,0);
+pair H = (r^4,0);
+pair I = (r^4+r^2+1,0);
+pair W = (-r^6, A.y);
+pair X = (W.x,-r^5);
+pair Y = (0,-r^5);
+pair Z = (I.x,-r^5);
+
+pen p = black+1.3;
+pen q = red;
+fill(O--A--B--H--cycle, palecyan);
+fill(B--C--F--E--cycle, palecyan);
+fill(W--A--Y--X--cycle, palecyan);
+fill(C--D--G--F--cycle, palegreen);
+fill(E--G--I--H--cycle, palegreen);
+fill(O--Y--Z--I--cycle, palegreen);
+
+draw(O--A, q);
+draw(B--E, q);
+draw(F--G, q);
+draw(H--I, q);
+draw(W--D--Z--X--cycle, p);
+draw(C--F--E--H--O--Y, p);
+
+label("$1$", (C+D)/2, dir(90));
+label("$r^2$", (B+C)/2, dir(90));
+label("$r^4$", (A+B)/2, dir(90));
+label("$r^6$", (W+A)/2, dir(90));
+
+label("$r^1$", (D+G)/2, dir(0));
+label("$r^3$", (G+I)/2, dir(0));
+label("$r^5$", (I+Z)/2, dir(0));
+\end{asy}
+\end{center}
+Observe that by construction,
+the entire shape $\mathcal R(n,r)$ is a rectangle
+which consists of two similar ``staircase'' polygons
+(which are not congruent, since $r>1$).
+Note that $\mathcal R(n,r)$ is similar to a $1 \times f_n(r)$ rectangle
+where $f_n(r)$ is the aspect ratio of $\mathcal R(n,r)$, defined by
+\[ f_n(r) = \frac{1+r^2+\dots+r^{2n}}{r+r^3+\dots+r^{2n-1}}
+  = r + \frac{1}{r+r^3+\dots+r^{2n-1}}.  \]
+
+We claim that this is enough.
+Indeed for each fixed $n$, note that
+\[ \lim_{r \to 1^+} f_n(r) = 1 + \frac1n
+  \; \text{ and } \;
+  \lim_{r \to \infty} f_n(r) = \infty. \]
+Since $f_n$ is continuous, it achieves all values greater than $1+\frac1n$.
+Thus by taking sufficiently large $n$ (such that $k > 1+\frac1n$),
+we obtain a valid construction for any $k > 1$.
+
+\bigskip
+
+\textbf{Proof of impossibility for a square}.
+Now we show that $k = 1$ is impossible (the tricky part!).
+Suppose we have a squared dissected into
+two similar polygons $\mathcal P \sim \mathcal Q$.
+Let $\Gamma$ be their common boundary.
+By counting the number of sides of $\mathcal P$ and $\mathcal Q$
+we see $\Gamma$ must run from one side of the square to an opposite side
+(possibly ending at a corner of the square).
+We orient the figure so $\Gamma$ runs from north to south,
+with $\mathcal P$ to the west and $\mathcal Q$ to the east.
+\begin{center}
+\begin{asy}
+size(4cm);
+pair A = (0,0);
+pair B = (1,0);
+pair C = (1,1);
+pair D = (0,1);
+pair W = (0.4,0);
+pair X = (0.3,0.7);
+pair Y = (0.7,0.3);
+pair Z = (0.6,1);
+filldraw(A--W--X--Y--Z--D--cycle, palecyan, black);
+filldraw(B--W--X--Y--Z--C--cycle, palegreen, black);
+draw( W--X--Y--Z, black+1 );
+label("$\Gamma$", Y, dir(15));
+label("$\mathcal P$", (0.1,0.5), blue);
+label("$\mathcal Q$", (0.9,0.5), deepgreen);
+\end{asy}
+\end{center}
+
+Let $s$ be the longest length of a segment in $\Gamma$.
+\begin{claim*}
+  The longest side length of $\mathcal P$ is $\max(s,1)$.
+  Similarly, the longest side length of $\mathcal Q$ is $\max(s,1)$ as well.
+\end{claim*}
+\begin{proof}
+  The only edges of $\mathcal P$ not in $\Gamma$
+  are the west edge of our original square, which has length $1$,
+  and the north/south edges of $\mathcal P$ (if any),
+  which have length at most $1$.
+  An identical argument works for $\mathcal Q$.
+\end{proof}
+It follows the longest sides of $\mathcal P$ and $\mathcal Q$ have the same length!
+Hence the two polygons are in fact congruent, ending the proof.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2004/4, proposed by Melanie Wood}
+\textsl{Available online at \url{https://aops.com/community/p17438}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Alice and Bob play a game on a $6$ by $6$ grid.
+On his turn, a player chooses a rational number not yet appearing in the grid
+and writes it in an empty square of the grid.
+Alice goes first and then the players alternate.
+When all squares have numbers written in them, in each row,
+the square with the greatest number in that row is colored black.
+Alice wins if he can then draw a line from the top of the grid to the bottom of the grid
+that stays in black squares, and Bob wins if he can't.
+(If two squares share a vertex,
+Alice can draw a line from one to the other that stays in those two squares.)
+Find, with proof, a winning strategy for one of the players.
+\end{mdframed}
+Bob can win.
+Label the first two rows as follows:
+\[
+  \begin{bmatrix}
+    a & b & c & d & e & f \\
+    d' & e' & f' & a' & b' & c'
+  \end{bmatrix}
+\]
+These twelve boxes thus come in six \emph{pairs}, $(a, a')$, $(b, b')$ and so on.
+
+\begin{claim*}
+  Bob can ensure that the order relation
+  of the labels is the same between the two rows,
+  meaning that $a < b$ if and only if $a' < b'$, and so on.
+\end{claim*}
+\begin{proof}
+  If Alice plays $q$ in some box in the first two rows, then Bob can plays $q + \eps$
+  in the corresponding box in the same pair, for some sufficiently small $\eps$
+  (in terms of the existing numbers).
+
+  When Alice writes a number in any other row, Bob writes anywhere in rows $3$ to $6$.
+\end{proof}
+
+Under this strategy the black squares in the first two rows will be a pair
+and therefore will not touch, so Bob wins.
+\pagebreak
+
+\subsection{USAMO 2004/5, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p17397}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$, $b$, $c$ be positive reals.
+Prove that
+\[ ( a^5-a^2+3 )( b^5-b^2+3 )( c^5-c^2+3 )
+  \ge \left( a+b+c \right)^3. \]
+\end{mdframed}
+Observe that for all real numbers $a$, the inequality
+\[ a^5-a^2+3 \ge a^3+2 \]
+holds.
+Then the problem follows by H\"{o}lder in the form
+\[ (a^3+1+1)(1+b^3+1)(1+1+c^3) \ge (a+b+c)^3. \]
+\pagebreak
+
+\subsection{USAMO 2004/6, proposed by Zuming Feng}
+\textsl{Available online at \url{https://aops.com/community/p17437}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+A circle $\omega$ is inscribed in a quadrilateral $ABCD$.
+Let $I$ be the center of $\omega$.
+Suppose that \[ (AI + DI)^2 + (BI + CI)^2 = (AB + CD)^2.  \]
+Prove that $ABCD$ is an isosceles trapezoid.
+\end{mdframed}
+Here's a completely algebraic solution.
+WLOG $\omega$ has radius $1$, and let $a$, $b$, $c$, $d$ be the
+lengths of the tangents from $A$, $B$, $C$, $D$ to $\omega$.
+It is known that
+\[ a+b+c+d = abc+bcd+cda+dab \qquad (\star) \]
+which can be proved by, say $\tan$-addition formula.
+Then, the content of the problem is to show that
+\[
+  (\sqrt{a^2+1}+\sqrt{d^2+1})^2
+  + (\sqrt{b^2+1}+\sqrt{c^2+1})^2
+  \le (a+b+c+d)^2
+\]
+subject to $(\star)$,
+with equality only when $a=d=\tfrac1b=\tfrac1c$.
+
+Let $S = ab+bc+cd+da+ac+bd$. Then the inequality is
+\[ \sqrt{(a^2+1)(d^2+1)} + \sqrt{(b^2+1)(c^2+1)} \le S - 2. \]
+Now, by \textbf{USAMO 2014 Problem 1} and the condition $(\star)$,
+we have that $(a^2+1)(b^2+1)(c^2+1)(d^2+1) = (S - abcd - 1)^2$.
+So squaring both sides, the inequality becomes
+\[ (ad)^2+(bc)^2 + a^2+b^2+c^2+d^2 \le S^2 - 6S + 2abcd + 4. \]
+To simplify this, we use the identities
+\begin{align*}
+  S^2 &= 6abcd + \sum_{\text{sym}} a^2bc
+    + \frac14\sum_{\text{sym}} a^2b^2 \\
+  (a+b+c+d)^2 &= (abc+bcd+cda+dab)(a+b+c+d) \\
+  &= 4abcd + \frac12\sum_{\text{sym}} a^2bc
+\end{align*}
+So $S^2+2abcd = \frac14\textstyle\sum_{\text{sym}}
+  a^2b^2 + 2(a^2+b^2+c^2+d^2) + 4S$
+and the inequality we want to prove reduces to
+\[ 2S \le (ab)^2+(ac)^2+(bd)^2+(cd)^2 + 4 + a^2 + b^2 + c^2 + d^2. \]
+This follows by AM-GM since
+\begin{align*}
+  (ab)^2 + 1 &\ge 2ab \\
+  (ac)^2 + 1 &\ge 2ac \\
+  (bd)^2 + 1 &\ge 2bd \\
+  (cd)^2 + 1 &\ge 2cd \\
+  a^2 + d^2 &\ge 2ad \\
+  b^2 + c^2 &\ge 2bc.
+\end{align*}
+The equality case is when $ab=ac=bd=cd=1$, $a=d$, $b=c$,
+as needed to imply an isosceles trapezoid.
+
+\begin{remark*}
+Note that a priori one expects an inequality.
+Indeed,
+\begin{itemize}
+  \ii Quadrilaterals with incircles have four degrees of freedom.
+  \ii There is one condition imposed.
+  \ii Isosceles trapezoid with incircles have two degrees of freedom.
+\end{itemize}
+\end{remark*}
+\pagebreak
+
+
+\end{document}

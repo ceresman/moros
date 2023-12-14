@@ -1,0 +1,504 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 2014 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2014 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $a$, $b$, $c$, $d$ be real numbers
+such that $b-d \ge 5$ and all zeros
+$x_1$, $x_2$, $x_3$, and $x_4$ of the polynomial
+$P(x)=x^4+ax^3+bx^2+cx+d$ are real.
+Find the smallest value the product
+$(x_1^2+1)(x_2^2+1)(x_3^2+1)(x_4^2+1)$ can take.
+
+\item %% Problem 2
+Find all $f :\ZZ \to \ZZ$ such that
+\[
+  xf\left( 2f(y)-x \right) + y^2f\left( 2x-f(y) \right)
+  = \frac{f(x)^2}{x} + f\left( yf(y) \right)
+\]
+for all $x,y \in \ZZ$ such that $x \neq 0$.
+
+\item %% Problem 3
+Prove that there exists an infinite set of points
+\[ \dots, \; P_{-3}, \; P_{-2},\; P_{-1},\; P_0,\; P_1,\; P_2,\; P_3,\; \dots \]
+in the plane with the following property:
+For any three distinct integers $a$, $b$, and $c$,
+points $P_a$, $P_b$, and $P_c$ are collinear if and only if $a+b+c=2014$.
+
+\item %% Problem 4
+Let $k$ be a positive integer.
+Two players $A$ and $B$ play a game on an infinite grid of regular hexagons.
+Initially all the grid cells are empty.
+Then the players alternately take turns with $A$ moving first.
+In her move, $A$ may choose two adjacent hexagons in the grid
+which are empty and place a counter in both of them.
+In his move, $B$ may choose any counter on the board and remove it.
+If at any time there are $k$ consecutive grid cells
+in a line all of which contain a counter, $A$ wins.
+Find the minimum value of $k$ for which $A$ cannot
+win in a finite number of moves, or prove that no such minimum value exists.
+
+\item %% Problem 5
+Let $ABC$ be a triangle with orthocenter $H$ and
+let $P$ be the second intersection of the circumcircle of
+triangle $AHC$ with the internal bisector of $\angle BAC$.
+Let $X$ be the circumcenter of triangle $APB$
+and let $Y$ be the orthocenter of triangle $APC$.
+Prove that the length of segment $XY$ is equal to
+the circumradius of triangle $ABC$.
+
+\item %% Problem 6
+Prove that there is a constant $c>0$ with the following property:
+If $a$, $b$, $n$ are positive integers such that $\gcd(a+i, b+j)>1$
+for all $i, j \in \{0, 1, \dots, n\}$, then
+\[ \min\{a, b\}> (cn)^{n/2}. \]
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 2014/1, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p3477753}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $a$, $b$, $c$, $d$ be real numbers
+such that $b-d \ge 5$ and all zeros
+$x_1$, $x_2$, $x_3$, and $x_4$ of the polynomial
+$P(x)=x^4+ax^3+bx^2+cx+d$ are real.
+Find the smallest value the product
+$(x_1^2+1)(x_2^2+1)(x_3^2+1)(x_4^2+1)$ can take.
+\end{mdframed}
+The answer is $\boxed{16}$.
+This can be achieved by taking $x_1 = x_2 = x_3 = x_4 = 1$,
+whence the product is $2^4 = 16$, and $b-d = 5$.
+
+Now, we prove this is a lower bound.
+Let $i = \sqrt{-1}$.
+The key observation is that
+\[ \prod_{j=1}^4 \left( x_j^2 + 1 \right)
+  = \prod_{j=1}^4 (x_j - i)(x_j + i)
+  = P(i)P(-i). \]
+Consequently, we have
+\begin{align*}
+  \left( x_1^2 + 1 \right)
+  \left( x_2^2 + 1 \right)
+  \left( x_3^2 + 1 \right)
+  \left( x_1^2 + 1 \right)
+  &= (b-d-1)^2 + (a-c)^2 \\
+  &\ge (5-1)^2 + 0^2 = 16.
+\end{align*}
+This proves the lower bound.
+\pagebreak
+
+\subsection{USAMO 2014/2, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p3477690}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all $f :\ZZ \to \ZZ$ such that
+\[
+  xf\left( 2f(y)-x \right) + y^2f\left( 2x-f(y) \right)
+  = \frac{f(x)^2}{x} + f\left( yf(y) \right)
+\]
+for all $x,y \in \ZZ$ such that $x \neq 0$.
+\end{mdframed}
+The answer is $f(x) \equiv 0$ and $f(x) \equiv x^2$. Check that these work.
+
+Now let's prove these are the only solutions.
+Put $y=0$ to obtain
+\[ x f\left( 2f(0)-x \right) = \frac{f(x)^2}{x} + f(0).  \]
+
+The nicest part of the problem is the following step:
+\begin{claim*}
+  We have $f(0)=0$
+\end{claim*}
+\begin{proof}
+  If not, select a prime $p \nmid f(0)$ and put $x=p \neq 0$.
+  In the above, we find that $p \mid f(p)^2$,
+  so $p \mid f(p)$ and hence $p \mid \tfrac{f(p)^2}{p}$.
+  From here we derive $p \mid f(0)$, contradiction.
+  Hence \[ f(0) = 0. \]
+\end{proof}
+
+\begin{claim*}
+  We have $f(x) \in \{0,x^2\}$ for each individual $x$.
+\end{claim*}
+\begin{proof}
+  The above then implies that
+  \[ x^2f(-x) = f(x)^2 \]
+  holds for all nonzero $x$, but also for $x=0$.
+  Let us now check that $f$ is an even function.
+  In the above, we may also derive $f(-x)^2 = x^2f(x)$.
+  If $f(x) \neq f(-x)$ (and hence $x \neq 0$),
+  then subtracting the above and factoring implies that
+  $f(x) + f(-x) = -x^2$;
+  we can then obtain by substituting the relation
+  \[ \left[ f(x) + \frac 12x^2 \right]^2 = -\frac 34 x^4 < 0 \]
+  which is impossible.
+  This means $f(x)^2 = x^2f(x)$, thus
+  \[ f(x) \in \{0, x^2\} \qquad \forall x. \]
+\end{proof}
+
+Now suppose there exists a nonzero integer $t$ with $f(t) = 0$.
+We will prove that $f(x) \equiv 0$.
+Put $y=t$ in the given to obtain that
+\[ t^2 f(2x) = 0 \]
+for any integer $x \neq 0$, and hence conclude that $f(2 \ZZ) \equiv 0$.
+Then selecting $x = 2k \neq 0$ in the given implies that
+\[ y^2 f(4k-f(y)) = f(yf(y)). \]
+
+Assume for contradiction that $f(m) = m^2$ now for some odd $m \neq 0$.
+Evidently \[ m^2 f(4k-m^2) = f(m^3). \]
+If $f(m^3) \neq 0$ this forces $f(4k-m^2) \neq 0$,
+and hence $m^2(4k-m^2)^2 = m^6$ for arbitrary $k \neq 0$, which is clearly absurd.
+That means \[ f(4k-m^2) = f(m^2-4k) = f(m^3) = 0 \] for each $k \neq 0$.
+Since $m$ is odd, $m^2 \equiv 1 \pmod 4$,
+and so $f(n) = 0$ for all $n$ other than $\pm m^2$
+(since we cannot select $k=0$).
+
+Now $f(m) = m^2$ means that $m = \pm 1$.
+Hence either $f(x) \equiv 0$ or
+\[ f(x) = \begin{cases} 1 & x = \pm 1 \\ 0 & \text{otherwise}. \end{cases} \]
+To show that the latter fails,
+we simply take $x=5$ and $y=1$ in the given.
+
+Hence, the only solutions are $f(x) \equiv 0$ and $f(x) \equiv x^2$.
+\pagebreak
+
+\subsection{USAMO 2014/3, proposed by Sam Vandervelde}
+\textsl{Available online at \url{https://aops.com/community/p3477763}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that there exists an infinite set of points
+\[ \dots, \; P_{-3}, \; P_{-2},\; P_{-1},\; P_0,\; P_1,\; P_2,\; P_3,\; \dots \]
+in the plane with the following property:
+For any three distinct integers $a$, $b$, and $c$,
+points $P_a$, $P_b$, and $P_c$ are collinear if and only if $a+b+c=2014$.
+\end{mdframed}
+The construction
+\[ P_n = \left( n-\frac{2014}{3},
+  \left( n-\frac{2014}{3} \right)^3 \right) \]
+works fine, and follows from the following claim:
+\begin{claim*}
+  If $x$, $y$, $z$ are distinct real numbers
+  then the points $(x,x^3)$, $(y,y^3)$, $(z,z^3)$
+  are collinear if and only if $x+y+z=0$.
+\end{claim*}
+\begin{proof}
+  Note that by the ``shoelace formula'',
+  the collinearity is equivalent to
+  \[
+    0 =
+    \det \begin{bmatrix}
+      x & x^3 & 1 \\
+      y & y^3 & 1 \\
+      z & z^3 & 1 \\
+    \end{bmatrix}
+  \]
+  But the determinant equals
+  \[ \sum_{\text{cyc}} x(y^3-z^3)
+    = (x-y)(y-z)(z-x)(x+y+z). \qedhere  \]
+\end{proof}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 2014/4, proposed by Palmer Mebane}
+\textsl{Available online at \url{https://aops.com/community/p3478584}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $k$ be a positive integer.
+Two players $A$ and $B$ play a game on an infinite grid of regular hexagons.
+Initially all the grid cells are empty.
+Then the players alternately take turns with $A$ moving first.
+In her move, $A$ may choose two adjacent hexagons in the grid
+which are empty and place a counter in both of them.
+In his move, $B$ may choose any counter on the board and remove it.
+If at any time there are $k$ consecutive grid cells
+in a line all of which contain a counter, $A$ wins.
+Find the minimum value of $k$ for which $A$ cannot
+win in a finite number of moves, or prove that no such minimum value exists.
+\end{mdframed}
+The answer is $k = 6$.
+
+\medskip
+
+\textbf{Proof that $A$ cannot win if $k=6$}.
+We give a strategy for $B$ to prevent $A$'s victory.
+Shade in every third cell, as shown in the figure below.
+Then $A$ can never cover two shaded cells simultaneously on her turn.
+Now suppose $B$ always removes a counter on a shaded cell
+(and otherwise does whatever he wants).
+Then he can prevent $A$ from ever getting six consecutive counters,
+because any six consecutive cells contain two shaded cells.
+
+\begin{center}
+  \begin{asy}
+    path hexagon = scale(0.5)*(dir(30)--dir(90)--dir(150)--dir(210)--dir(270)--dir(330)--cycle);
+    unitsize(0.6cm);
+    void mark(int x, int y) {
+      pair P = dir(0)*x + dir(60)*y;
+      filldraw(shift(P)*hexagon, purple, black+1);
+    }
+    void spot(int x, int y) {
+      pair P = dir(0)*x + dir(60)*y;
+      draw(shift(P)*hexagon);
+    }
+    int N = 4;
+    for (int x=-N; x<=N; ++x) {
+      for (int y=-N; y<=N; ++y) {
+        if ( (abs(x+y)) > N ) continue;
+        if (
+          (x-y) % 3 == 0
+        ) mark(x,y);
+        else spot(x,y);
+      }
+    }
+  \end{asy}
+\end{center}
+
+\medskip
+
+\textbf{Example of a strategy for $A$ when $k=5$}.
+We describe a winning strategy for $A$ explicitly.
+Note that after $B$'s first turn there is one counter,
+so then $A$ may create an equilateral triangle,
+and hence after $B$'s second turn there are two consecutive counters.
+Then, on her third turn,
+$A$ places a pair of counters two spaces away on the same line.
+Label the two inner cells $x$ and $y$ as shown below.
+\begin{center}
+  \begin{asy}
+    path hexagon = scale(0.5)*(dir(30)--dir(90)--dir(150)--dir(210)--dir(270)--dir(330)--cycle);
+    unitsize(0.6cm);
+    void mark(int x, int y) {
+      pair P = dir(0)*x + dir(60)*y;
+      filldraw(shift(P)*hexagon, palecyan, black);
+      filldraw(CR(P, 0.3), paleblue, blue);
+    }
+    void spot(int x, int y) {
+      pair P = dir(0)*x + dir(60)*y;
+      draw(shift(P)*hexagon);
+    }
+    for (int x=-3; x<=4; ++x) {
+      for (int y=-2; y<=2; ++y) {
+        if ( x+y < -3 ) continue;
+        if ( x+y > 4 ) continue;
+        spot(x,y);
+      }
+    }
+    mark(-2, 0);
+    mark(-1, 0);
+    mark( 2, 0);
+    mark( 3, 0);
+    label("$x$", (-1)*dir(0), deepgreen);
+    label("$y$", (2)*dir(0), deepgreen);
+  \end{asy}
+\end{center}
+Now it is $B$'s turn to move;
+in order to avoid losing immediately,
+he must remove either $x$ or $y$.
+Then on any subsequent turn, $A$ can replace $x$ or $y$
+(whichever was removed)
+and add one more adjacent counter.
+This continues until either $x$ or $y$ has all its neighbors filled
+(we ask $A$ to do so in such a way that
+she avoids filling in the two central cells between $x$ and $y$
+as long as possible).
+
+So, let's say without loss of generality (by symmetry) that $x$
+is completely surrounded by tokens.
+Again, $B$ must choose to remove $x$ (or $A$ wins on her next turn).
+After $x$ is removed by $B$, consider the following figure.
+\begin{center}
+  \begin{asy}
+    path hexagon = scale(0.5)*(dir(30)--dir(90)--dir(150)--dir(210)--dir(270)--dir(330)--cycle);
+    unitsize(0.6cm);
+    void mark(int x, int y) {
+      pair P = dir(0)*x + dir(60)*y;
+      filldraw(shift(P)*hexagon, palecyan, black);
+      filldraw(CR(P, 0.3), paleblue, blue);
+    }
+    void spot(int x, int y) {
+      pair P = dir(0)*x + dir(60)*y;
+      draw(shift(P)*hexagon);
+    }
+    for (int x=-4; x<=5; ++x) {
+      for (int y=-3; y<=3; ++y) {
+        if ( x+y < -4 ) continue;
+        if ( x+y > 5 ) continue;
+        spot(x,y);
+      }
+    }
+    mark(-2, 0);
+    mark( 0, 0);
+    mark( 0, -1);
+    mark(-1, 1);
+    mark(-1, -1);
+    mark(-2, 1);
+
+    mark( 2, 0);
+    mark( 2, 1);
+    mark( 3, 0);
+    label("$x$", (-1)*dir(0), deepgreen);
+    label("$y$", (2)*dir(0), deepgreen);
+    void win(int x, int y, pen p1, pen p2) {
+      pair P = dir(0)*x + dir(60)*y;
+      filldraw(shift(P)*hexagon, p1, p2);
+    }
+    win(1,0, lightgreen, deepgreen);
+    win(0,1, lightgreen, deepgreen);
+    win(0,2, lightred, red);
+    win(0,3, lightred, red);
+    win(4,0, lightred, red);
+    win(5,0, lightred, red);
+  \end{asy}
+\end{center}
+We let $A$ play in the two marked green cells.
+Then, regardless of what move $B$ plays,
+one of the two choices of moves marked in red lets $A$ win.
+Thus, we have described a winning strategy when $k=5$ for $A$.
+\pagebreak
+
+\subsection{USAMO 2014/5, proposed by Titu Andreescu, Cosmin Pohoata}
+\textsl{Available online at \url{https://aops.com/community/p3478581}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle with orthocenter $H$ and
+let $P$ be the second intersection of the circumcircle of
+triangle $AHC$ with the internal bisector of $\angle BAC$.
+Let $X$ be the circumcenter of triangle $APB$
+and let $Y$ be the orthocenter of triangle $APC$.
+Prove that the length of segment $XY$ is equal to
+the circumradius of triangle $ABC$.
+\end{mdframed}
+\begin{center}
+\begin{asy}
+  size(8cm);
+  pair A = Drawing("A", dir(110), dir(110));
+  pair B = Drawing("B", dir(210), dir(210));
+  pair C = Drawing("C", dir(330), dir(330));
+  draw(A--B--C--cycle);
+  draw(unitcircle);
+  pair Q = dir(30); // 330 + 1/2 * (330-210) (mod 360)
+  Drawing("Q", Q, Q);
+  pair P = A+C-A*C*conj(Q);
+  P = Drawing("P", P, dir(Q-P));
+  pair X = Drawing("X", circumcenter(A,P,B), dir(225));
+  pair Y = Drawing("Y", orthocenter(A,P,C), dir(225));
+  pair X1 = Drawing("X'", A+C-A*C*conj(X), dir(45));
+  pair Y1 = Drawing("Y'", A+C-A*C*conj(Y), dir(45));
+  Drawing("H", A+B+C, dir(170));
+  draw(circumcircle(A,P,C));
+  pair B1 = Drawing("B'", A+C-A*C*conj(B), dir(45));
+  draw(A--Q--C--cycle);
+  draw(X--Y);
+  draw(X1--Y1);
+  Drawing("O", origin, dir(45));
+\end{asy}
+\end{center}
+
+We eliminate the floating orthocenter
+by reflecting $P$ across $\ol{AC}$ to $Q$.
+Then $Q$ lies on $(ABC)$ and moreover $\angle QAC = \tfrac 12 \angle BAC$.
+This motivates us to reflect $B$, $X$, $Y$
+to $B'$, $X'$, $Y'$ and complex bash with respect to $\triangle AQC$.
+Obviously \[ y' = a + q + c. \]
+Now we need to compute $x'$.
+You can get this using the formula
+\[ x' = a + \frac{(b'-a)(q-a)\left( \ol{q-a}-\ol{b'-a} \right)}{(b'-a)\ol{(q-a)}
+  - \ol{(b'-a)}(q-a)}. \]
+Using the angle condition we know
+$b = \frac{c^3}{q^2}$, and then that
+\[ b' = a+c - ac\ol b = a+c-\frac{aq^2}{c^2}. \]
+Therefore
+\begin{align*}
+  x' &= a + \frac{\left( c-\frac{aq^2}{c^2} \right)\left( q-a \right)\left( \frac 1q - \frac 1a - \frac 1c + \frac{c^2}{aq^2}  \right)}{\left( c-\frac{aq^2}{c^2} \right)\left( \frac 1q - \frac 1a \right) - \left( \frac 1c - \frac{c^2}{aq^2} \right)\left( q-a \right)} \\
+  &= a + \frac{\frac{c^3-aq^2}{c^2} \left( q-a \right)\left( \frac 1q - \frac 1a - \frac 1c + \frac{c^2}{aq^2} \right)}{-\frac{c^3-aq^2}{c^2}\frac{q-a}{qa} + \frac{c^3-aq^2}{aq^2c}(q-a)} \\
+  &= a + \frac{\frac 1q - \frac 1a - \frac 1c + \frac{c^2}{aq^2}}{-\frac{1}{qa} + \frac{c}{aq^2}} \\
+  &= a + \frac{c^2-q^2 + aq-\frac{aq^2}{c}}{c-q} \\
+  &= a + c + q + \frac{aq}{c}
+\end{align*}
+whence
+\[ \left\lvert x'-y' \right\rvert
+  = \left\lvert \frac{aq}{c} \right\rvert
+  = 1. \]
+\pagebreak
+
+\subsection{USAMO 2014/6, proposed by Gabriel Dospinescu}
+\textsl{Available online at \url{https://aops.com/community/p3478578}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that there is a constant $c>0$ with the following property:
+If $a$, $b$, $n$ are positive integers such that $\gcd(a+i, b+j)>1$
+for all $i, j \in \{0, 1, \dots, n\}$, then
+\[ \min\{a, b\}> (cn)^{n/2}. \]
+\end{mdframed}
+Let $N = n+1$ and assume $N$ is (very) large.
+We construct an $N \times N$ with cells $(i,j)$
+where $0 \le i, j \le n$ and in each cell
+place a prime $p$ dividing $\gcd (a+i, b+j)$.
+
+The central claim is at least $50\%$ of the primes
+in this table exceed $0.001n^2$.
+We count the maximum number of squares they could occupy:
+\[
+  \sum_p \left\lceil \frac{N}{p} \right\rceil^2
+  \le \sum_p \left( \frac Np + 1 \right)^2
+  = N^2 \sum_p \frac{1}{p^2} + 2N \sum_p \frac1p + \sum_p 1. \]
+Here the summation runs over primes $p \le 0.001n^2$.
+
+Let $r = \pi(0.001n^2)$ denote the number of such primes.
+Now we consider the following three estimates.
+First, \[ \sum_p \frac{1}{p^2} < \frac 12 \]
+which follows by adding all the primes directly with some computation.
+Moreover,
+\[ \sum_p \frac 1p < \sum_{k=1}^r \frac 1k = O(\log r) < o(N) \]
+using the harmonic series bound,
+and \[ \sum_p 1 < r \sim O \left( \frac{N^2}{\ln N} \right) < o(N^2) \]
+via Prime Number Theorem.
+Hence the sum in question is certainly less than $\half N^2$ for $N$ large
+enough, establishing the central claim.
+
+Hence some column $a+i$ has at least one
+half of its primes greater than $0.001n^2$.
+Because this is greater than $n$ for large $n$,
+these primes must all be distinct,
+so $a+i$ exceeds their product,
+which is larger than
+\[ \left( 0.001n^2 \right)^{N/2} > c^n \cdot n^n \]
+where $c$ is some constant (better than the requested bound).
+\pagebreak
+
+
+\end{document}

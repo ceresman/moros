@@ -1,0 +1,1089 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{JMO 2019 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2019 JMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+There are $a+b$ bowls arranged in a row,
+numbered $1$ through $a+b$,
+where $a$ and $b$ are given positive integers.
+Initially, each of the first $a$ bowls contains an apple,
+and each of the last $b$ bowls contains a pear.
+A legal move consists of moving an apple from bowl $i$ to bowl $i+1$
+and a pear from bowl $j$ to bowl $j-1$,
+provided that the difference $i-j$ is even.
+We permit multiple fruits in the same bowl at the same time.
+The goal is to end up with the first $b$ bowls each containing a pear
+and the last $a$ bowls each containing an apple.
+Show that this is possible if and only if the product $ab$ is even.
+
+\item %% Problem 2
+For which pairs of integers $(a, b)$ do there exist functions
+$f\colon \ZZ \to \ZZ$ and $g \colon \ZZ \to \ZZ$ obeying
+\[ f(g(x)) = x + a \quad \text{and} \quad g(f(x)) = x + b \]
+for all integers $x$?
+
+\item %% Problem 3
+Let $ABCD$ be a cyclic quadrilateral
+satisfying $AD^2 + BC^2 = AB^2$.
+The diagonals of $ABCD$ intersect at $E$.
+Let $P$ be a point on side $\ol{AB}$
+satisfying $\angle APD = \angle BPC$.
+Show that line $PE$ bisects $\ol{CD}$.
+
+\item %% Problem 4
+Let $ABC$ be a triangle with $\angle B > 90\dg$
+and let $E$ and $F$ be the feet of the altitudes from $B$ and $C$.
+Can line $EF$ be tangent to the $A$-excircle?
+
+\item %% Problem 5
+Let $n$ be a nonnegative integer.
+Determine the number of ways to choose sets
+$S_{ij} \subseteq \{1, 2, \dots, 2n\}$,
+for all $0 \le i \le n$ and $0 \le j \le n$
+(not necessarily distinct), such that
+\begin{itemize}
+  \ii $|S_{ij}| = i+j$, and
+  \ii $S_{ij} \subseteq S_{kl}$ if $0 \le i \le k \le n$
+  and $0 \le j \le l \le n$.
+\end{itemize}
+
+\item %% Problem 6
+Let $m$ and $n$ be relatively prime positive integers.
+The numbers $\frac mn$ and $\frac nm$ are written on a blackboard.
+At any point, Evan may pick two of the numbers $x$ and $y$
+written on the board and write either their arithmetic mean $\half(x+y)$
+or their harmonic mean $\frac{2xy}{x+y}$.
+For which $(m,n)$ can Evan write $1$ on the board in finitely many steps?
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{JMO 2019/1, proposed by Jim Propp}
+\textsl{Available online at \url{https://aops.com/community/p12189456}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+There are $a+b$ bowls arranged in a row,
+numbered $1$ through $a+b$,
+where $a$ and $b$ are given positive integers.
+Initially, each of the first $a$ bowls contains an apple,
+and each of the last $b$ bowls contains a pear.
+A legal move consists of moving an apple from bowl $i$ to bowl $i+1$
+and a pear from bowl $j$ to bowl $j-1$,
+provided that the difference $i-j$ is even.
+We permit multiple fruits in the same bowl at the same time.
+The goal is to end up with the first $b$ bowls each containing a pear
+and the last $a$ bowls each containing an apple.
+Show that this is possible if and only if the product $ab$ is even.
+\end{mdframed}
+First we show that if $ab$ is even then the goal is possible.
+We prove the result by induction on $a+b$.
+\begin{itemize}
+  \ii If $\min(a,b) = 0$ there is nothing to check.
+  \ii If $\min(a,b) = 1$, say $a=1$, then $b$ is even,
+  and we can swap the (only) leftmost apple
+  with the rightmost pear by working only with those fruits.
+  \ii Now assume $\min(a,b) \ge 2$ and $a+b$ is odd.
+  Then we can swap the leftmost apple with rightmost pear
+  by working only with those fruits,
+  reducing to the situation of $(a-1, b-1)$
+  which is possible by induction
+  (at least one of them is even).
+  \ii Finally assume $\min(a,b) \ge 2$ and $a+b$ is even
+  (i.e.\ $a$ and $b$ are both even).
+  Then we can swap the apple in position $1$
+  with the pear in position $a+b-1$,
+  and the apple in position $2$ with the pear in position $a+b$.
+  This reduces to the situation of $(a-2, b-2)$
+  which is also possible by induction.
+\end{itemize}
+
+Now we show that the result is impossible if $ab$ is odd.
+Define
+\begin{align*}
+  X &= \text{number apples in odd-numbered bowls} \\
+  Y &= \text{number pears in odd-numbered bowls}.
+\end{align*}
+Note that $X-Y$ does not change under this operation.
+However, if $a$ and $b$ are odd,
+then we initially have $X = \half(a+1)$ and $Y = \half(b-1)$,
+while the target position has $X = \half(a-1)$ and $Y = \half(b+1)$.
+So when $ab$ is odd this is not possible.
+
+\begin{remark*}
+Another proof that $ab$ must be even
+is as follows.
+
+First, note that apples only move right and pears only move left,
+a successful operation must take exactly $ab$ moves.
+So it is enough to prove that the \emph{number of moves}
+made must be even.
+
+However, the number of fruits in odd-numbered bowls
+either increases by $+2$ or $-2$ in each move
+(according to whether $i$ and $j$ are both even or both odd),
+and since it ends up being the same at the end,
+the number of moves must be even.
+
+Alternatively, as pointed out in the official solutions,
+one can consider the sums of squares of positions of fruits.
+The quantity changes by
+\[ \left[ (i+1)^2 + (j-1)^2 \right] - (i^2+j^2)
+  = 2(i-j) + 2 \equiv 2 \pmod 4 \]
+at each step,
+and eventually the sums of squares returns to zero, as needed.
+\end{remark*}
+\pagebreak
+
+\subsection{JMO 2019/2, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p12189493}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For which pairs of integers $(a, b)$ do there exist functions
+$f\colon \ZZ \to \ZZ$ and $g \colon \ZZ \to \ZZ$ obeying
+\[ f(g(x)) = x + a \quad \text{and} \quad g(f(x)) = x + b \]
+for all integers $x$?
+\end{mdframed}
+The answer is if $a=b$ or $a=-b$.
+In the former case, one can take $f(x) \equiv x+a$ and $g(x) \equiv x$.
+In the latter case, one can take $f(x) \equiv -x+a$ and $g(x) = -x$.
+
+Now we prove these are the only possibilities.
+First:
+\begin{claim*}
+  The functions $f$ and $g$ are bijections.
+\end{claim*}
+\begin{proof}
+  Surjectivity is obvious.
+  To see injective, note that if $f(u) = f(v)$
+  then $g(f(u)) = g(f(v)) \implies u+b = v+b \implies u=v$,
+  and similarly for $g$.
+\end{proof}
+
+Note also that for any $x$, we have
+\begin{align*}
+  f(x+b) &= f(g(f(x))) = f(x) + a \\
+  g(x+a) &= g(f(g(x))) = g(x) + b.
+\end{align*}
+If either $a$ is zero or $b$ is zero,
+we immediately get the other is zero, and hence done.
+So assume $ab \neq 0$.
+
+If $|b| > |a|$, then two of
+\[ \{ f(0), f(1), \dots, f(b-1) \} \pmod{|a|} \]
+coincide, which together with repeatedly applying the first equation
+above will then give a contradiction to injectivity of $f$.
+Similarly, if $|a| > |b|$ swapping the roles of $f$ and $g$
+(and $a$ and $b$) will give a contradiction to injectivity of $g$.
+This completes the proof.
+
+\begin{remark*}
+  Here is a way to visualize the argument,
+  so one can see pictorially what is going on.
+  We draw two parallel number lines indexed by $\ZZ$.
+  Starting from $0$, we draw red arrow from $0$ to $f(0)$,
+  and then a blue arrow from $f(0)$ to $g(f(0)) = b$,
+  and then a red arrow from $b$ to $g(b) = f(0)+a$, and so on.
+  These arrows can be extended both directions,
+  leading to an infinite ``squaretooth'' wave.
+  The following is a picture of an example with $a,b > 0$.
+  \begin{center}
+  \begin{asy}
+  size(11cm);
+  usepackage("amsmath");
+  usepackage("amssymb");
+  draw( (-3,2)--(13,2), Arrows(TeXHead) );
+  draw( (-3,-2)--(13,-2), Arrows(TeXHead) );
+  label("$\mathbb Z$", (13, 2), dir(0));
+  label("$\mathbb Z$", (13, -2), dir(0));
+
+  pair bm1 = (-5,2);
+  pair b0 = (0,2);
+  pair b1 = (5,2);
+  pair b2 = (10,2);
+  pair b3 = (15,2);
+  pair am1 = (-1,-2);
+  pair a0 = (2.5,-2);
+  pair a1 = (6,-2);
+  pair a2 = (9.5,-2);
+  pair a3 = (13,-2);
+
+  dot("$0$", b0, dir(90));
+  dot("$b$", b1, dir(90));
+  dot("$2b$", b2, dir(90));
+  dot("$f(0)-a$", am1, dir(-90));
+  dot("$f(0)$", a0, dir(-90));
+  dot("$f(0)+a$", a1, dir(-90));
+  dot("$f(0)+2a$", a2, dir(-90));
+
+  draw(midpoint(bm1--am1)--am1, red, EndArrow, Margins);
+  label("$f$", midpoint(bm1--am1)--am1, dir(50), red);
+  draw(b0--a0, red, EndArrow, Margins);
+  label("$f$", b0--a0, dir(50), red);
+  draw(b1--a1, red, EndArrow, Margins);
+  label("$f$", b1--a1, dir(50), red);
+  draw(b2--a2, red, EndArrow, Margins);
+  label("$f$", b2--a2, dir(50), red);
+
+  draw(am1--b0, blue, EndArrow, Margins);
+  label("$g$", midpoint(am1--b0)--b0, dir(-50), blue);
+  draw(a0--b1, blue, EndArrow, Margins);
+  label("$g$", a0--b1, dir(-50), blue);
+  draw(a1--b2, blue, EndArrow, Margins);
+  label("$g$", a1--b2, dir(-50), blue);
+  draw(a2--midpoint(a2--b3), blue, EndArrow, Margins);
+  label("$g$", a2--midpoint(a2--b3), dir(-50), blue);
+  \end{asy}
+  \end{center}
+  The problem is essentially trying to decompose
+  our two copies of $\ZZ$ into multiple squaretooth waves.
+  We expect for this to be possible, the ``width'' of the waves
+  on the top and bottom must be the same --- i.e., that $|a| = |b|$.
+\end{remark*}
+
+\begin{remark*}
+  This also suggests how to classify all functions $f$ and $g$
+  satisfying the condition.
+  If $a = b = 0$ then any pair of functions $f$ and $g$
+  which are inverses to each other is okay.
+  There are thus uncountably many pairs of functions $(f,g)$ here.
+
+  If $a = b > 0$, then one sets $f(0)$, $f(1)$, \dots, $f(a-1)$
+  as any values which are distinct modulo $b$,
+  at which point $f$ and $g$ are uniquely determined.
+  An example for $a = b = 3$ is
+  \[ f(x) = \begin{cases}
+      x + 42 & x \equiv 0 \pmod 3 \\
+      x + 13 & x \equiv 1 \pmod 3 \\
+      x - 37 & x \equiv 2 \pmod 3,
+    \end{cases}
+    \qquad
+    g(x) = \begin{cases}
+      x - 39 & x \equiv 0 \pmod 3 \\
+      x + 40 & x \equiv 1 \pmod 3 \\
+      x - 10 & x \equiv 2 \pmod 3.
+    \end{cases} \]
+  The analysis for $a = b < 0$ and $a = -b$ are similar,
+  but we don't include the details here.
+\end{remark*}
+\pagebreak
+
+\subsection{JMO 2019/3, proposed by Ankan Bhattacharya}
+\textsl{Available online at \url{https://aops.com/community/p12189455}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCD$ be a cyclic quadrilateral
+satisfying $AD^2 + BC^2 = AB^2$.
+The diagonals of $ABCD$ intersect at $E$.
+Let $P$ be a point on side $\ol{AB}$
+satisfying $\angle APD = \angle BPC$.
+Show that line $PE$ bisects $\ol{CD}$.
+\end{mdframed}
+Here are three solutions.
+The first two are similar although the first one makes use of symmedians.
+The last solution by inversion is more advanced.
+
+\paragraph{First solution using symmedians.}
+We define point $P$ to obey
+\[ \frac{AP}{BP} = \frac{AD^2}{BC^2} = \frac{AE^2}{BE^2} \]
+so that $\ol{PE}$ is the $E$-symmedian of $\triangle EAB$,
+therefore the $E$-median of $\triangle ECD$.
+
+Now, note that
+\[ AD^2 = AP \cdot AB \quad\text{and}\quad BC^2 = BP \cdot BA. \]
+This implies $\triangle APD \sim \triangle ADB$ and $\triangle BPC \sim \triangle BCA$.
+Thus
+\[ \dang DPA = \dang ADB = \dang ACB = \dang BCP \]
+and so $P$ satisfies the condition as in the statement
+(and is the unique point to do so), as needed.
+
+\paragraph{Second solution using only angle chasing (by proposer).}
+We again re-define $P$ to obey $AD^2 = AP \cdot AB$ and $BC^2 = BP \cdot BA$.
+As before, this gives $\triangle APD \sim \triangle ABD$
+and $\triangle BPC \sim \triangle BDP$ and so we let
+\[ \theta \coloneqq \dang DPA = \dang ADB = \dang ACB = \dang BCP. \]
+Our goal is to now show $\ol{PE}$ bisects $\ol{CD}$.
+
+Let $K = \ol{AC} \cap \ol{PD}$ and $L = \ol{AD} \cap \ol{PC}$.
+Since $\dang KPA = \theta = \dang ACB$, quadrilateral $BPKC$ is cyclic.
+Similarly, so is $APLD$.
+
+\begin{center}
+\begin{asy}
+size(8cm);
+
+pair A = dir(200);
+pair B = -conj(A);
+pair D = dir(140);
+pair O = origin;
+pair P = extension(D, foot(D, A, O), A, B);
+pair Z = 100*foot(P,O,B)-99*P;
+pair C = IP(P--Z, unitcircle);
+
+markangle(13.0, A, D, B, red);
+markangle(13.0, A, C, B, red);
+markangle(13.0, D, P, A, red);
+markangle(13.0, B, P, C, red);
+
+filldraw(unitcircle, opacity(0.1)+palecyan, deepcyan);
+draw(A--B--C--D--cycle, deepcyan);
+draw(A--C, deepgreen);
+draw(B--D, deepgreen);
+pair K = extension(D, P, A, C);
+pair L = extension(C, P, D, B);
+draw(D--P--C, blue);
+pair E = extension(A, C, B, D);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$D$", D, dir(D));
+dot("$P$", P, dir(270));
+dot("$C$", C, dir(C));
+dot("$K$", K, dir(K));
+dot("$L$", L, dir(20));
+dot("$E$", E, dir(90));
+
+/* TSQ Source:
+
+!size(8cm);
+
+A = dir 200
+B = -conj(A)
+D = dir 140
+O := origin
+P 270 = extension D foot D A O A B
+Z := 100*foot(P,O,B)-99*P
+C = IP P--Z unitcircle
+
+!markangle(13.0, A, D, B, red);
+!markangle(13.0, A, C, B, red);
+!markangle(13.0, D, P, A, red);
+!markangle(13.0, B, P, C, red);
+
+unitcircle 0.1 palecyan / deepcyan
+A--B--C--D--cycle deepcyan
+A--C deepgreen
+B--D deepgreen
+K = extension D P A C
+L 20 = extension C P D B
+D--P--C blue
+E = extension A C B D R90
+
+*/
+\end{asy}
+\end{center}
+
+Finally $AKLB$ is cyclic since
+\[ \dang BKA = \dang BKC = \dang BPC = \theta = \dang DPA = \dang DLA = \dang BLA. \]
+This implies $\dang CKL = \dang LBA = \dang DCK$, so $\ol{KL} \parallel \ol{BC}$.
+Then $PE$ bisects $\ol{BC}$ by Ceva's theorem on $\triangle PCD$.
+
+\paragraph{Third solution (using inversion).}
+By hypothesis, the circle $\omega_a$ centered at $A$ with radius $AD$
+is orthogonal to the circle $\omega_b$ centered at $B$ with radius $BC$.
+For brevity, we let $\mathbf{I}_a$ and $\mathbf{I}_b$
+denote inversion with respect to $\omega_a$ and $\omega_b$.
+
+We let $P$ denote the intersection of $\ol{AB}$ with the radical axis of $\omega_a$ and $\omega_b$;
+hence $P = \mathbf{I}_a(B) = \mathbf{I}_b(A)$.
+This already implies that
+\[ \dang DPA \overset{\mathbf{I}_a}{=} \dang ADB = \dang ACB \overset{\mathbf{I}_b}{=} \dang BPC \]
+so $P$ satisfies the angle condition.
+
+\begin{center}
+\begin{asy}
+size(10cm);
+
+pair A = dir(200);
+pair B = -conj(A);
+pair D = dir(140);
+pair O = origin;
+pair P = extension(D, foot(D, A, O), A, B);
+pair Z = 100*foot(P,O,B)-99*P;
+pair C = IP(P--Z, unitcircle);
+filldraw(unitcircle, opacity(0.1)+palecyan, deepcyan);
+draw(A--B--C--D--cycle, deepcyan);
+filldraw(CP(A, D), opacity(0.1)+lightred, red);
+filldraw(CP(B, C), opacity(0.1)+orange, orange);
+pair X = IP(CP(A, D), CP(B, C));
+pair Y = OP(CP(A, D), CP(B, C));
+draw(X--Y, yellow);
+draw(A--C, deepcyan+dotted);
+draw(B--D, deepcyan+dotted);
+pair K = extension(D, P, A, C);
+pair L = extension(C, P, D, B);
+draw(D--P, red+dashed);
+draw(C--P, orange+dashed);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$D$", D, dir(D));
+dot("$P$", P, dir(270));
+dot("$C$", C, dir(C));
+dot(X);
+dot(Y);
+dot("$K$", K, dir(K));
+dot("$L$", L, dir(20));
+
+/* TSQ Source:
+
+!size(12cm);
+
+A = dir 200
+B = -conj(A)
+D = dir 140
+O := origin
+P 270 = extension D foot D A O A B
+Z := 100*foot(P,O,B)-99*P
+C = IP P--Z unitcircle
+unitcircle 0.1 palecyan / deepcyan
+A--B--C--D--cycle deepcyan
+CP A D 0.1 lightred / red
+CP B C 0.1 orange / orange
+X .= IP CP A D CP B C
+Y .= OP CP A D CP B C
+X--Y yellow
+A--C deepcyan dotted
+B--D deepcyan dotted
+K = extension D P A C
+L 20 = extension C P D B
+D--P red dashed
+C--P orange dashed
+
+*/
+\end{asy}
+\end{center}
+
+\begin{claim*}
+  The point $K = \mathbf{I}_a(C)$ lies on $\omega_b$ and $\ol{DP}$.
+  Similarly $L = \mathbf{I}_b(D)$ lies on  $\omega_a$ and $\ol{CP}$.
+\end{claim*}
+\begin{proof}
+  The first assertion follows from the fact that $\omega_b$ is orthogonal to $\omega_a$.
+  For the other, since $(BCD)$ passes through $A$, it follows $P = \mathbf{I}_a(B)$, $K = \mathbf{I}_a(C)$,
+  and $D = \mathbf{I}_a(D)$ are collinear.
+\end{proof}
+
+Finally, since $C$, $L$, $P$ are collinear,
+we get $A$ is concyclic with $K = \mathbf{I}_a(C)$,
+$L = \mathbf{I}_a(L)$, $B = \mathbf{I}_a(B)$, i.e.\ that $AKLB$ is cyclic.
+So $\ol{KL} \parallel \ol{CD}$ by Reim's theorem,
+and hence $\ol{PE}$ bisects $\ol{CD}$ by Ceva's theorem.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{JMO 2019/4, proposed by Ankan Bhattacharya, Zack Chroman, Anant Mudgal}
+\textsl{Available online at \url{https://aops.com/community/p12195848}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle with $\angle B > 90\dg$
+and let $E$ and $F$ be the feet of the altitudes from $B$ and $C$.
+Can line $EF$ be tangent to the $A$-excircle?
+\end{mdframed}
+We show it is not possible, by contradiction
+(assuming $EF$ is indeed tangent).
+Thus $BECF$ is a convex cyclic quadrilateral
+inscribed in a circle with diameter $\ol{BC}$.
+Note also that the $A$-excircle lies on the opposite side
+from $A$ as line $EF$, since $A$, $E$, $C$ are collinear
+in that order.
+
+\paragraph{First solution by similarity.}
+Note that $\triangle AEF$ is similar to $\triangle ABC$
+(and oppositely oriented).
+However, since they have the same $A$-exradius,
+it follows they are congruent.
+
+\begin{center}
+\begin{asy}
+size(6cm);
+pair B = dir(213);
+pair C = dir(47);
+pair E = dir(115);
+pair F = dir(280);
+
+pair V = extension(F, E, B, C);
+pair W = incenter(F, V, C);
+pair J = 3.6*W-2.6*V;
+
+pair T = foot(J, B, C);
+pair A = extension(B, F, E, C);
+
+filldraw(CP(J, T), opacity(0.1)+deepgreen, deepgreen);
+
+pair U = OP(CP(J, T), CP(midpoint(B--J), J));
+pair V = IP(CP(J, T), CP(midpoint(E--J), J));
+fill(A--B--C--cycle, rgb(0.9,1,1));
+
+draw(B--E, lightblue);
+draw(C--F, lightblue);
+draw(U--B--A--V, blue);
+draw(B--C, blue);
+draw(F--E, red);
+draw(unitcircle, lightblue+dotted);
+
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(F));
+dot("$A$", A, dir(A));
+
+/* TSQ Source:
+
+!size(6cm);
+B = dir 213
+C = dir 47
+E = dir 115
+F = dir 280
+
+V := extension F E B C
+W := incenter F V C
+J := 3.6*W-2.6*V
+
+T := foot J B C
+A = extension B F E C
+
+CP J T 0.1 deepgreen / deepgreen
+
+U := OP CP J T CP midpoint B--J J
+V := IP CP J T CP midpoint E--J J
+!fill(A--B--C--cycle, rgb(0.9,1,1));
+
+B--E lightblue
+C--F lightblue
+U--B--A--V blue
+B--C blue
+F--E red
+unitcircle lightblue dotted
+
+*/
+\end{asy}
+\end{center}
+
+Consequently we get $EF = BC$.
+But this implies $BFCE$ is a rectangle, contradiction.
+
+\paragraph{Second length solution by tangent lengths.}
+By $t(\bullet)$ we mean the length of the tangent from $P$
+to the $A$-excircle.
+It is a classical fact for example that $t(A) = s$.
+The main idea is to use the fact that
+\[ a \cos A = EF = t(E) + t(F). \]
+Here $EF = a \cos A$ follows from the extended law of sines
+applied to the circle with diameter $\ol{BC}$,
+since there we have $EF = BC \sin \angle ECF = a \sin \angle ACF = a \cos A$.
+We may now compute
+\begin{align*}
+  t(E) &= t(A) - AE = s - c \cos A \\
+  t(F) &= t(A) - AF = s - b \cos A.
+\end{align*}
+Therefore,
+\begin{align*}
+  a \cos A = 2s - (b+c) \cos A \implies (a+b+c) \cos A &= 2s \\
+  \implies \cos A &= 1.
+\end{align*}
+This is an obvious contradiction.
+
+\begin{remark*}
+  On the other hand, there really is an \emph{equality case}
+  with $A$ being some point at infinity (meaning $\cos A = 1$).
+  So, this problem is ``sharper'' than one might expect;
+  the answer is not ``obviously no''.
+\end{remark*}
+
+\paragraph{Third solution by Pitot and trigonometry.}
+In fact, the $t(\bullet)$ notation from the previous
+solution gives us a classical theorem
+once we note the $A$-excircle is tangent to all four lines
+$EF$, $BC$, $BF$ and $CE$:
+\begin{claim*}
+  [Pitot theorem]
+  We have $BF + EF = BC + CE$.
+\end{claim*}
+\begin{proof}
+  Here is a proof for completeness.
+  By $t(B)$ we mean the length of the tangent from $B$ to
+  the $A$-excircle, and define $t(C)$, $t(E)$, $t(F)$ similarly.
+  Then
+  \begin{align*}
+    BF &= t(B) - t(F) & EF &= t(E) + t(F) \\
+    BC &= t(B) + t(C) & CE &= t(E) - t(C)
+  \end{align*}
+  and summing gives the result.
+\end{proof}
+\begin{center}
+\begin{asy}
+pair B = dir(180);
+pair C = -B;
+pair E = dir(40);
+pair F = -E;
+
+pair X = B+2*dir(F-B);
+pair Y = C+2*dir(C-E);
+pair J = extension(C, X, B, Y);
+
+filldraw(CP(J, foot(J, B, C)), opacity(0.1)+deepgreen, deepgreen);
+pair K1 = B+dir(E-C)*1.7;
+pair K2 = C+dir(E-C)*1.7;
+
+pair U = foot(J, B, F);
+pair V = foot(J, C, E);
+label("$A$", midpoint(K1--K2), dir(C-E));
+
+filldraw(K1--B--C--K2--cycle, opacity(0.1)+lightcyan, invisible);
+draw(K1--B--C--K2, blue);
+draw(F--E, red);
+draw(B--U, blue);
+draw(C--V, blue);
+draw(B--E, blue);
+draw(C--F, blue);
+
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(F));
+dot("$J$", J, dir(-90));
+
+/* TSQ Source:
+
+B = dir 180
+C = -B
+E = dir 40
+F = -E
+
+X := B+2*dir(F-B)
+Y := C+2*dir(C-E)
+J = extension C X B Y R-90
+
+CP J foot J B C 0.1 deepgreen / deepgreen
+K1 := B+dir(E-C)*1.7
+K2 := C+dir(E-C)*1.7
+
+U := foot J B F
+V := foot J C E
+!label("$A$", midpoint(K1--K2), dir(C-E));
+
+K1--B--C--K2--cycle 0.1 lightcyan / invisible
+K1--B--C--K2 blue
+F--E red
+B--U blue
+C--V blue
+B--E blue
+C--F blue
+
+*/
+\end{asy}
+\end{center}
+We now calculate all the lengths using trigonometry:
+\begin{align*}
+  BC &= a \\
+  BF &= a \cos(180\dg-B) = a \cos (A+C) \\
+  CE &= a \cos C \\
+  EF &= BC \sin \angle ECF = a \sin \angle ACF = a \cos A.
+\end{align*}
+Thus, we apparently have
+\[ \cos(A+C) + \cos A = 1 + \cos C \]
+but this is impossible since $\cos(A+C) < \cos C$
+(since $A+C = 180-B < 90\dg$) and $\cos A < 1$.
+
+\paragraph{Fourth solution by Pitot and Ptolemy (Evan Chen).}
+We give a trig-free way to finish from Pitot's theorem
+\[ BF+EF = BC+CE. \]
+Assume that $x = BF$, $y = CE$, and $BC = 1$;
+then the above relation becomes
+\[ 1 + y - x = BC + CE - BF = EF = EF \cdot 1 = xy + \sqrt{(1-x^2)(1-y^2)} \]
+with the last step by Ptolemy's theorem.
+This rearranges to give
+\[ (1+y)(1-x) = \sqrt{(1-x^2)(1-y^2)}
+  \implies \frac{1+y}{1-y} = \frac{1+x}{1-x}
+  \implies x = y \]
+but that means $BECF$ is a rectangle:
+contradicting the fact that lines $BE$ and $CF$ meet at a point $A$.
+
+\paragraph{Fifth solution, by angle chasing only!.}
+Let $J$ denote the $A$-excenter.
+Then $J$ should be the intersection
+of the internal bisectors of $\angle FEC$ and $\angle FBC$,
+so it is the midpoint of arc $\widehat{FC}$
+on the circle with diameter $\ol{BC}$.
+
+\begin{center}
+\begin{asy}
+pair B = dir(180);
+pair C = -B;
+pair E = dir(40);
+pair F = -E;
+
+pair X = B+2*dir(F-B);
+pair Y = C+2*dir(C-E);
+pair J = extension(C, X, B, Y);
+
+filldraw(CP(J, foot(J, B, C)), opacity(0.1)+deepgreen, deepgreen);
+pair K1 = B+dir(E-C)*1.7;
+pair K2 = C+dir(E-C)*1.7;
+
+pair U = foot(J, B, F);
+pair V = foot(J, C, E);
+label("$A$", midpoint(K1--K2), dir(C-E));
+
+filldraw(K1--B--C--K2--cycle, opacity(0.1)+lightcyan, invisible);
+draw(K1--B--C--K2, blue);
+draw(F--E, red);
+draw(B--U, blue);
+draw(C--V, blue);
+draw(B--E, blue);
+draw(C--F, blue);
+
+filldraw(circumcircle(B, C, J), opacity(0.1)+yellow, orange+dashed);
+draw(B--J--E, orange);
+
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(F));
+dot("$J$", J, dir(-90));
+
+/* TSQ Source:
+
+B = dir 180
+C = -B
+E = dir 40
+F = -E
+
+X := B+2*dir(F-B)
+Y := C+2*dir(C-E)
+J = extension C X B Y R-90
+
+CP J foot J B C 0.1 deepgreen / deepgreen
+K1 := B+dir(E-C)*1.7
+K2 := C+dir(E-C)*1.7
+
+U := foot J B F
+V := foot J C E
+!label("$A$", midpoint(K1--K2), dir(C-E));
+
+K1--B--C--K2--cycle 0.1 lightcyan / invisible
+K1--B--C--K2 blue
+F--E red
+B--U blue
+C--V blue
+B--E blue
+C--F blue
+
+circumcircle B C J 0.1 yellow / orange dashed
+B--J--E orange
+
+*/
+\end{asy}
+\end{center}
+
+But now we get $\angle BJC = 90\dg$ from $J$ lying on this circle.
+Yet $\angle BJC = 90\dg - \half \angle A$ in general,
+so $\angle A = 0\dg$ which is impossible.
+
+\paragraph{Sixth solution (Zuming Feng).}
+This is similar to the preceding solution,
+but phrased using contradiction and inequalities.
+We let $X$ and $Y$ denote the tangency points of the $A$-excircle
+on lines $AB$ and $AC$.
+Moreover, let $J$ denote the $A$-excenter.
+
+\begin{center}
+\begin{asy}
+size(8cm);
+pair B = dir(213);
+pair C = dir(47);
+pair E = dir(115);
+pair F = dir(280);
+
+pair V = extension(F, E, B, C);
+pair W = incenter(F, V, C);
+pair J = 3.6*W-2.6*V;
+
+pair T = foot(J, B, C);
+pair A = extension(B, F, E, C);
+
+filldraw(CP(J, T), opacity(0.1)+deepgreen, deepgreen);
+
+pair X = OP(CP(J, T), CP(midpoint(B--J), J));
+pair Y = IP(CP(J, T), CP(midpoint(E--J), J));
+fill(A--B--C--cycle, rgb(0.9,1,1));
+
+draw(B--E, lightblue);
+draw(C--F, lightblue);
+draw(X--B--A--Y, blue);
+draw(B--C, blue);
+draw(F--E, red);
+draw(unitcircle, lightblue+dotted);
+
+dot("$B$", B, dir(B));
+dot("$C$", C, dir(C));
+dot("$E$", E, dir(E));
+dot("$F$", F, dir(F));
+dot("$J$", J, dir(J));
+dot("$A$", A, dir(A));
+dot("$X$", X, dir(X));
+dot("$Y$", Y, dir(Y));
+
+/* TSQ Source:
+
+!size(6cm);
+B = dir 213
+C = dir 47
+E = dir 115
+F = dir 280
+
+V := extension F E B C
+W := incenter F V C
+J = 3.6*W-2.6*V
+
+T := foot J B C
+A = extension B F E C
+
+CP J T 0.1 deepgreen / deepgreen
+
+X = OP CP J T CP midpoint B--J J
+Y = IP CP J T CP midpoint E--J J
+!fill(A--B--C--cycle, rgb(0.9,1,1));
+
+B--E lightblue
+C--F lightblue
+X--B--A--Y blue
+B--C blue
+F--E red
+unitcircle lightblue dotted
+
+*/
+\end{asy}
+\end{center}
+
+Note that $AB > AE$ and $AX = AY$, therefore $BX < EY$.
+By considering the right triangles $XBJ$ and $YEJ$
+(which both have $JX = JY$),
+we conclude $\tan \angle XBJ > \tan \angle YEJ$, thus
+\[ \angle XBJ > \angle YEJ. \]
+However, if line $EF$ was actually tangent to the $A$-excircle,
+we would have
+\[ 2\angle XBJ = \angle XBC = \angle FBC = \angle FEC
+  = \angle FEY = 2 \angle JEY \]
+which is a contradiction.
+
+\paragraph{Seventh solution, by complex numbers, for comedic effect (Evan Chen).}
+Let us denote the tangency points of the $A$-excircle
+with sides $BC$, $CA$, $AB$ as $x$, $y$, $z$.
+Assume moreover that line $EF$ is tangent to the $A$-excircle
+at a point $P$.
+
+Also, for brevity let $s = xy+yz+zx$.
+Then, we have
+\begin{align*}
+  E = \frac{2py}{p+y} &= \half(b+y+y-y^2 \ol b)
+  = \frac{zx}{z+x} + y - \frac{y^2}{z+x} \\
+  \implies \frac{2}{\frac1p+\frac1y} &= \frac{xy+xz+zx-y^2}{z+x}
+  \implies \frac{\frac1p+\frac1y}{2} = \frac{x+z}{s-y^2}. \\
+  \intertext{Similarly by considering the point $F$,}
+  \frac{\frac1p+\frac1z}{2} &= \frac{x+y}{s-z^2}. \\
+  \intertext{Thus we can eliminate $P$ and obtain}
+  \implies \frac{\frac1y-\frac1z}{2} &= \frac{x+z}{s-y^2} - \frac{x+y}{s-z^2}
+  = \frac{-s(y-z) + x(y^2-z^2) + (y^3-z^3)}{(s-y^2)(s-z^2)} \\
+  \iff \frac{1}{2yz} &= \frac{s - x(y+z) - (y^2+yz+z^2)}{(s-y^2)(s-z^2)}
+    = \frac{-(y^2+z^2)}{(s-y^2)(s-z^2)} \\
+  \iff 0 &= (s-y^2)(s-z^2) + 2yz(y^2+z^2) \\
+  &= \left[ x(y+z) + y(z-y) \right]
+    \left[ x(y+z) + z(y-z) \right] + 2yz(y^2+z^2) \\
+  &= x^2(y+z)^2 - (y-z)^2 \cdot x(y+z) + yz(2y^2+2z^2 - (y-z)^2) \\
+  &= x^2(y+z)^2 - (y-z)^2 \cdot x(y+z) + yz(y+z)^2 \\
+  &= xyz(y+z) \left[ \frac xy + \frac xz
+    - \frac yz - \frac zy + 2
+    + \frac yx + \frac zx \right].
+\end{align*}
+However, $\triangle XYZ$ is obtuse with $\angle X > 90\dg$,
+we have $y+z \neq 0$.
+Note that
+\begin{align*}
+  \tfrac xy + \tfrac yx &= 2\opname{Re} \tfrac xy = 2 \cos(2 \angle XZY) \\
+  \tfrac xz + \tfrac zx &= 2\opname{Re} \tfrac xz = 2 \cos(2 \angle XYZ) \\
+  \tfrac yz + \tfrac zy &= 2\opname{Re} \tfrac yz < 2
+\end{align*}
+and since $\cos(2\angle XZY) + \cos(2\angle XYZ) > 0$
+(say by sum-to-product), we are done.
+\pagebreak
+
+\subsection{JMO 2019/5, proposed by Ricky Liu}
+\textsl{Available online at \url{https://aops.com/community/p12195861}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n$ be a nonnegative integer.
+Determine the number of ways to choose sets
+$S_{ij} \subseteq \{1, 2, \dots, 2n\}$,
+for all $0 \le i \le n$ and $0 \le j \le n$
+(not necessarily distinct), such that
+\begin{itemize}
+  \ii $|S_{ij}| = i+j$, and
+  \ii $S_{ij} \subseteq S_{kl}$ if $0 \le i \le k \le n$
+  and $0 \le j \le l \le n$.
+\end{itemize}
+\end{mdframed}
+The answer is $(2n)! \cdot 2^{n^2}$.
+First, we note that
+$\varnothing = S_{00} \subsetneq S_{01} \subsetneq \dots \subsetneq S_{nn}
+= \left\{ 1, \dots, 2n \right\}$
+and thus multiplying by $(2n)!$
+we may as well assume $S_{0i} = \left\{ 1, \dots, i \right\}$
+and $S_{in} = \left\{ 1, \dots, n+i \right\}$.
+We illustrate this situation by placing the sets in a grid,
+as below for $n = 4$;
+our goal is to fill in the rest of the grid.
+\[
+  \begin{bmatrix}
+    1234 & 12345 & 123456 & 1234567 & 12345678\\
+    123 \\
+    12 \\
+    1 \\
+    \varnothing
+  \end{bmatrix}
+\]
+We claim the number of ways to do so is $2^{n^2}$.
+In fact, more strongly even the partial fillings
+are given exactly by powers of $2$.
+\begin{claim*}
+  Fix a choice $T$ of cells we wish to fill in,
+  such that whenever a cell is in $T$,
+  so are all the cells above and left of it.
+  (In other words, $T$ is a Young tableau.)
+  The number of ways to fill in these cells with sets
+  satisfying the inclusion conditions is $2^{|T|}$.
+\end{claim*}
+An example is shown below, with an indeterminate set marked in red
+(and the rest of $T$ marked in blue).
+\[
+  \begin{bmatrix}
+    1234 & 12345 & 123456 & 1234567 & 12345678\\
+    123 & {\color{blue}1234} & {\color{blue}12346} & {\color{blue}123467} \\
+    12 & {\color{blue}124} & {\color{red}1234 \text{ or } 1246} \\
+    1 & {\color{blue}12} \\
+    \varnothing & {\color{blue}2}
+  \end{bmatrix}
+\]
+\begin{proof}
+  The proof is by induction on $|T|$,
+  with $|T| = 0$ being vacuous.
+
+  Now suppose we have a corner $\begin{bmatrix}
+  B & C \\ A & {\color{red}S} \end{bmatrix}$
+  where $A$, $B$, $C$ are fixed and $S$ is to be chosen.
+  Then we may write $B = A \cup \{x\}$ and $C = A \cup \{x,y\}$
+  for $x,y \notin A$.
+  Then the two choices of $S$ are $A \cup \{x\}$ (i.e.\ $B$)
+  and $A \cup \{y\}$, and both of them are seen to be valid.
+
+  In this way, we gain a factor of $2$
+  any time we add one cell as above to $T$.
+  Since we can achieve any Young tableau in this way,
+  the induction is complete.
+\end{proof}
+\pagebreak
+
+\subsection{JMO 2019/6, proposed by Yannick Yao}
+\textsl{Available online at \url{https://aops.com/community/p12195834}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $m$ and $n$ be relatively prime positive integers.
+The numbers $\frac mn$ and $\frac nm$ are written on a blackboard.
+At any point, Evan may pick two of the numbers $x$ and $y$
+written on the board and write either their arithmetic mean $\half(x+y)$
+or their harmonic mean $\frac{2xy}{x+y}$.
+For which $(m,n)$ can Evan write $1$ on the board in finitely many steps?
+\end{mdframed}
+We claim this is possible if and only $m+n$ is a power of $2$.
+Let $q = m/n$, so the numbers on the board
+are $q$ and $1/q$.
+
+\textbf{Impossibility}:
+The main idea is the following.
+\begin{claim*}
+  Suppose $p$ is an odd prime.
+  Then if the initial numbers on the board are $-1 \pmod p$,
+  then all numbers on the board are $-1 \pmod p$.
+\end{claim*}
+\begin{proof}
+  Let $a \equiv b \equiv -1 \pmod p$.
+  Note that $2 \not\equiv 0 \pmod p$
+  and $a+b \equiv -2 \not\equiv 0 \pmod p$.
+  Thus $\frac{a+b}{2}$ and $\frac{2ab}{a+b}$
+  both make sense modulo $p$ and are equal to $-1 \pmod p$.
+\end{proof}
+
+Thus if there exists \emph{any} odd prime divisor
+$p$ of $m+n$
+(implying $p \nmid mn$), then
+\[ q \equiv \frac1q \equiv -1 \pmod p. \]
+and hence all numbers will be $-1 \pmod p$ forever.
+This implies that it's impossible to write $1$,
+whenever $m+n$ is divisible by some odd prime.
+
+\bigskip
+
+\textbf{Construction}:
+Conversely, suppose $m+n$ is a power of $2$.
+We will actually construct $1$ without even using the harmonic mean.
+\begin{center}
+\begin{asy}
+  unitsize(1.2cm);
+  draw( (-4,0)--(4,0) );
+  dot("$q$", (-4,0), dir(-90), blue);
+  dot("$q^{-1}$", (4,0), dir(-90), blue);
+  dot("$\frac{q+q^{-1}}{2}$", (0,0), dir(-90), blue);
+  dot("$\frac{3q+q^{-1}}{4}$", (-2,0), dir(-90), red);
+  dot("$\frac{q+3q^{-1}}{4}$", (2,0), dir(-90), red);
+  dot("$\frac{7q+q^{-1}}{8}$", (-3,0), dir(90), deepgreen);
+  dot("$\frac{5q+3q^{-1}}{8}$", (-1,0), dir(90), deepgreen);
+  dot("$\frac{3q+5q^{-1}}{8}$", ( 1,0), dir(90), deepgreen);
+  dot("$\frac{q+7q^{-1}}{8}$", ( 3,0), dir(90), deepgreen);
+\end{asy}
+\end{center}
+Note that
+\[
+  \frac{n}{m+n} \cdot q
+  + \frac{m}{m+n} \cdot \frac{1}{q}
+  = 1
+\]
+and obviously by taking appropriate midpoints
+(in a binary fashion) we can achieve this using
+arithmetic mean alone.
+\pagebreak
+
+
+\end{document}

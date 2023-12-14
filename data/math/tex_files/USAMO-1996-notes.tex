@@ -1,0 +1,267 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{USAMO 1996 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 1996 USAMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Prove that the average of the numbers $n \sin n^{\circ}$ for
+$n = 2,4,6,\dots,180$ is $\cot 1^{\circ}$.
+
+\item %% Problem 2
+For any nonempty set $S$ of real numbers,
+let $\sigma(S)$ denote the sum of the elements of $S$.
+Given a set $A$ of $n$ positive integers,
+consider the collection of all distinct sums $\sigma(S)$ as $S$ ranges
+over the nonempty subsets of $A$.
+Prove that this collection of sums can be
+partitioned into $n$ classes so that in each class,
+the ratio of the largest sum to the smallest sum does not exceed $2$.
+
+\item %% Problem 3
+Let $ABC$ be a triangle. Prove that there is a line $\ell$ (in the plane
+of triangle $ABC$) such that the intersection of the interior of
+triangle $ABC$ and the interior of its reflection $A'B'C'$ in $\ell$ has
+area more than $\frac23$ the area of triangle $ABC$.
+
+\item %% Problem 4
+An $n$-term sequence $(x_1, x_2, \dots, x_n)$
+in which each term is either $0$ or $1$ is called a binary sequence of length $n$.
+Let $a_n$ be the number of binary sequences of length $n$ containing
+no three consecutive terms equal to $0$, $1$, $0$ in that order.
+Let $b_n$ be the number of binary sequences of length $n$ that
+contain no four consecutive terms equal to 0, 0, 1, 1 or 1, 1, 0, 0 in that order.
+Prove that $b_{n+1} = 2a_n$ for all positive integers $n$.
+
+\item %% Problem 5
+Let $ABC$ be a triangle,
+and $M$ an interior point such that
+$\angle MAB=10^\circ$, $\angle MBA=20^\circ$,
+$\angle MAC=40^\circ$ and $\angle MCA=30^\circ$.
+Prove that the triangle is isosceles.
+
+\item %% Problem 6
+Determine with proof whether there is a subset $X \subseteq \ZZ$
+with the following property: for any $n \in \ZZ$,
+there is exactly one solution to $a+2b = n$, with $a,b \in X$.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USAMO 1996/1}
+\textsl{Available online at \url{https://aops.com/community/p353049}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Prove that the average of the numbers $n \sin n^{\circ}$ for
+$n = 2,4,6,\dots,180$ is $\cot 1^{\circ}$.
+\end{mdframed}
+Because
+\[ n \sin n\dg + (180-n) \sin(180\dg-n\dg) = 180 \sin n\dg \]
+So enough to show that
+\[ \sum_{n=0}^{89} \sin (2n)\dg = \cot1\dg \]
+Let $\zeta = \cos2\dg + i \sin 2 \dg$ be a primitive root.
+Then
+\begin{align*}
+  \sum_{n=0}^{89} \frac{\zeta^n - \zeta^{-n}}{2i}
+  &= \frac{1}{2i}
+  \left[ \frac{\zeta^{90}-1}{\zeta-1} - \frac{\zeta^{-90} - 1}{\zeta^{-1}-1} \right] \\
+  &= \frac{1}{2i}
+  \left[ \frac{-2}{\zeta-1} - \frac{-2}{\zeta^{-1}-1} \right] \\
+  &= \frac{1}{-i} \frac{\zeta\inv-\zeta}{(\zeta-1)(\zeta\inv-1)}
+  = i \cdot \frac{\zeta+1}{\zeta-1}.
+\end{align*}
+Also,
+\begin{align*}
+  \cot 1\dg &= \frac{\cos 1\dg}{\sin 1\dg}
+  = \frac{(\cos1\dg)^2}{\cos1\dg\sin1\dg} \\
+  &= \frac{\frac{\cos2\dg+1}{2}}{\frac{\sin2\dg}{2}}
+  = \frac{\half(\zeta+\zeta\inv)+1}{\frac{1}{2i}(\zeta-\zeta\inv)} \\
+  &= i \cdot \frac{(\zeta+1)^2}{\zeta^2-1} = i \cdot \frac{\zeta+1}{\zeta-1}.
+\end{align*}
+So we're done.
+\pagebreak
+
+\subsection{USAMO 1996/2}
+\textsl{Available online at \url{https://aops.com/community/p353051}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For any nonempty set $S$ of real numbers,
+let $\sigma(S)$ denote the sum of the elements of $S$.
+Given a set $A$ of $n$ positive integers,
+consider the collection of all distinct sums $\sigma(S)$ as $S$ ranges
+over the nonempty subsets of $A$.
+Prove that this collection of sums can be
+partitioned into $n$ classes so that in each class,
+the ratio of the largest sum to the smallest sum does not exceed $2$.
+\end{mdframed}
+By induction on $n$ with $n=1$ being easy.
+
+For the inductive step, assume
+\[ A = \left\{ a_1 > a_2 > \dots > a_n \right\}. \]
+Fix any index $k$ with the property that
+\[ a_k > \frac{\sigma(A)}{2^k} \]
+(which must exist since $\half+\frac14+\dots+\frac{1}{2^k} < 1$).
+Then
+\begin{itemize}
+  \ii We make $k$ classes for the sums between $\frac{\sigma(A)}{2^k}$
+  and $\sigma(A)$; this handles every set
+  which has any element in $\{a_1, \dots, a_k\}$.
+  \ii We make $n-k$ classes via induction hypothesis
+  on $\{a_{k+1}, \dots, a_n\}$.
+\end{itemize}
+This solves the problem.
+\pagebreak
+
+\subsection{USAMO 1996/3}
+\textsl{Available online at \url{https://aops.com/community/p353052}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle. Prove that there is a line $\ell$ (in the plane
+of triangle $ABC$) such that the intersection of the interior of
+triangle $ABC$ and the interior of its reflection $A'B'C'$ in $\ell$ has
+area more than $\frac23$ the area of triangle $ABC$.
+\end{mdframed}
+All that's needed is:
+\begin{claim*}
+  If $ABC$ is a triangle where $\half < \frac{AB}{AC} < 1$, then
+  the $\angle A$ bisector works.
+\end{claim*}
+\begin{proof}
+  Let the $\angle A$-bisector meet $BC$ at $D$.
+  The overlapped area is $2[ABD]$ and
+  \[ \frac{[ABD]}{[ABC]} = \frac{BD}{BC} = \frac{AB}{AB+AC} \]
+  by angle bisector theorem.
+\end{proof}
+
+In general, suppose $x < y < z$ are sides of a triangle.
+Then $\half < \frac yz < 1$ by triangle inequality as needed.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USAMO 1996/4}
+\textsl{Available online at \url{https://aops.com/community/p353058}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+An $n$-term sequence $(x_1, x_2, \dots, x_n)$
+in which each term is either $0$ or $1$ is called a binary sequence of length $n$.
+Let $a_n$ be the number of binary sequences of length $n$ containing
+no three consecutive terms equal to $0$, $1$, $0$ in that order.
+Let $b_n$ be the number of binary sequences of length $n$ that
+contain no four consecutive terms equal to 0, 0, 1, 1 or 1, 1, 0, 0 in that order.
+Prove that $b_{n+1} = 2a_n$ for all positive integers $n$.
+\end{mdframed}
+Consider the map from
+sequences of the latter form to sequences of the first form by
+\[ (y_1, \dots, y_{n+1}) \mapsto (y_1 + y_2, y_2 + y_3, \dots, y_n + y_{n+1}). \]
+It is $2$-to-$1$. The end.
+\pagebreak
+
+\subsection{USAMO 1996/5}
+\textsl{Available online at \url{https://aops.com/community/p2}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABC$ be a triangle,
+and $M$ an interior point such that
+$\angle MAB=10^\circ$, $\angle MBA=20^\circ$,
+$\angle MAC=40^\circ$ and $\angle MCA=30^\circ$.
+Prove that the triangle is isosceles.
+\end{mdframed}
+Let $\theta = \angle MBC < 80\dg$.
+By trig Ceva, we get
+\[
+  \frac{\sin 10\dg}{\sin 40\dg}
+  \cdot
+  \frac{\sin \theta}{\sin 20\dg}
+  \cdot
+  \frac{\sin 30\dg}{\sin (80\dg-\theta)}
+  =
+  1.
+\]
+This simplifies to
+\[ \sin \theta = 4 \sin(80\dg- \theta) \sin 40\dg \cos 10\dg.\]
+\begin{claim*}
+  We have $\theta=60\dg$.
+\end{claim*}
+\begin{proof}
+  The left-hand side is increasing in $\theta$ and the right-hand
+  side is decreasing in $\theta$,
+  so at most one value of $\theta$ works.
+  But we also have
+  \begin{align*}
+    4\sin20\dg \sin40\dg \cos10\dg
+    &= 2\left( \cos20\dg-\cos60\dg \right) \cos 10\dg \\
+    &= 2\cos20\dg \cos 10\dg + \sin 80\dg \\
+    &= (\cos 30\dg - \cos 10\dg) + \sin 80\dg = \cos 30\dg
+  \end{align*}
+  as desired.
+\end{proof}
+\pagebreak
+
+\subsection{USAMO 1996/6}
+\textsl{Available online at \url{https://aops.com/community/p353061}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Determine with proof whether there is a subset $X \subseteq \ZZ$
+with the following property: for any $n \in \ZZ$,
+there is exactly one solution to $a+2b = n$, with $a,b \in X$.
+\end{mdframed}
+The idea is generating functions,
+but extra care is required since exponents will be in $\ZZ$
+rather than in $\ZZ_{\ge 0}$.
+
+However, consider formally the limit
+\[ f(x) = \prod_{k \ge 0} \left( 1 + x^{(-4)^k} \right). \]
+For size reasons, this indeed converges formally to a power series,
+in the sense that the coefficient of any $x^k$
+is eventually zero or one for all partial sums.
+
+We claim $X = \{ n : [x^n] f(x) = 1 \}$ works.
+
+For a given $n$, we can truncate the sum at some large $N$
+again for size reasons.
+For convenience assume $N$ is even.
+Now set
+\[ f_N(x) = \prod_{k = 0}^N \left( 1 + x^{(-4)^k}  \right). \]
+Next, we compute
+\[
+  f_N(x) f_N(x^2)
+  = \frac{(1+x)(1+x^2) \dots ( 1+x^{2^{2N+1}} )}%
+  {x^{2+8+\dots+2^{2N-1}}}
+  = \dots + x^{-2} + x^{-1} + 1 + x + x^2 + \dots
+\]
+as desired.
+\pagebreak
+
+
+\end{document}

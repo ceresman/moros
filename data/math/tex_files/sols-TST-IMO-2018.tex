@@ -1,0 +1,1056 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\theauthor}
+\begin{document}
+
+\title{USA IMO TST 2018 Solutions}
+\subtitle{United States of America --- IMO Team Selection Tests}
+\date{59\ts{th} IMO 2018 Romania}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Let $n \ge 2$ be a positive integer,
+and let $\sigma(n)$ denote the sum of the positive divisors of $n$.
+Prove that the $n$\textsuperscript{th} smallest positive integer
+relatively prime to $n$ is at least $\sigma(n)$,
+and determine for which $n$ equality holds.
+
+\item %% Problem 2
+Find all functions $f \colon \ZZ^2 \to [0,1]$
+such that for any integers $x$ and $y$,
+\[ f(x, y) = \frac{f(x-1, y) + f(x, y-1)}{2}. \]
+
+\item %% Problem 3
+At a university dinner,
+there are $2017$ mathematicians who each order two distinct entr\'ees,
+with no two mathematicians ordering the same pair of entr\'{e}es.
+The cost of each entr\'ee is equal
+to the number of mathematicians who ordered it,
+and the university pays for each mathematician's
+less expensive entr\'ee (ties broken arbitrarily).
+Over all possible sets of orders,
+what is the maximum total amount the university could have paid?
+
+\item %% Problem 4
+Let $n$ be a positive integer and let $S \subseteq \{0,1\}^n$
+be a set of binary strings of length $n$.
+Given an odd number $x_1, \dots, x_{2k+1} \in S$ of binary strings
+(not necessarily distinct), their \emph{majority} is defined as
+the binary string $y \in \{0,1\}^n$ for which
+the $i$\textsuperscript{th} bit of $y$ is the most common bit
+among the $i$\textsuperscript{th} bits of $x_1$, \dots, $x_{2k+1}$.
+(For example, if $n=4$ the majority of
+$0000$, $0000$, $1101$, $1100$, $0101$ is $0100$.)
+
+Suppose that for some positive integer $k$,
+$S$ has the property $P_k$ that the majority of any $2k+1$
+binary strings in $S$ (possibly with repetition) is also in $S$.
+Prove that $S$ has the same property $P_k$ for all
+positive integers $k$.
+
+\item %% Problem 5
+Let $ABCD$ be a convex cyclic quadrilateral which is not a kite,
+but whose diagonals are perpendicular and meet at $H$.
+Denote by $M$ and $N$ the midpoints of $\ol{BC}$ and $\ol{CD}$.
+Rays $MH$ and $NH$ meet $\ol{AD}$ and $\ol{AB}$ at $S$ and $T$, respectively.
+Prove there exists a point $E$, lying outside quadrilateral $ABCD$,
+such that
+\begin{itemize}
+  \ii ray $EH$ bisects both angles $\angle BES$, $\angle TED$, and
+  \ii $\angle BEN = \angle MED$.
+\end{itemize}
+
+\item %% Problem 6
+Alice and Bob play a game.
+First, Alice secretly picks a finite set $S$
+of lattice points in the Cartesian plane.
+Then, for every line $\ell$ in the plane
+which is horizontal, vertical, or has slope $+1$ or $-1$,
+she tells Bob the number of points of $S$ that lie on $\ell$.
+Bob wins if he can then determine the set $S$.
+
+Prove that if Alice picks $S$ to be of the form
+\[ S = \left\{ (x,y) \in \ZZ^2 \mid m \le x^2+y^2 \le n \right\} \]
+for some positive integers $m$ and $n$, then Bob can win.
+(Bob does not know in advance that $S$ is of this form.)
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{USA TST 2018/1, proposed by Ashwin Sah}
+\textsl{Available online at \url{https://aops.com/community/p9513094}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n \ge 2$ be a positive integer,
+and let $\sigma(n)$ denote the sum of the positive divisors of $n$.
+Prove that the $n$\textsuperscript{th} smallest positive integer
+relatively prime to $n$ is at least $\sigma(n)$,
+and determine for which $n$ equality holds.
+\end{mdframed}
+The equality case is $n = p^e$ for
+$p$ prime and a positive integer $e$.
+It is easy to check that this works.
+
+\bigskip
+
+\paragraph{First solution.}
+In what follows, by $[a,b]$ we mean $\{a,a+1,\dots,b\}$.
+First, we make the following easy observation.
+\begin{claim*}
+  If $a$ and $d$ are positive integers,
+  then precisely $\varphi(d)$ elements
+  of $[a, a + d - 1]$ are relatively prime to $d$.
+\end{claim*}
+
+Let $d_1$, $d_2$, \dots, $d_k$ denote
+denote the divisors of $n$ in some order.
+Consider the intervals
+\begin{align*}
+  I_1 &= [1, d_1], \\
+  I_2 &= [d_1+1, d_1+d_2] \\
+  &\vdotswithin= \\
+  I_k &= [d_1+\dots+d_{k-1}+1, d_1+\dots+d_k].
+\end{align*}
+of length $d_1, \dots, d_k$ respectively.
+The $j$th interval will have exactly $\varphi(d_j)$ elements
+which are relatively prime $d_j$,
+hence at most $\varphi(d_j)$ which are relatively prime to $n$.
+Consequently, in $I = \bigcup_{j=1}^k I_k$
+there are at most
+\[ \sum_{j=1}^k \varphi(d_j) = \sum_{d \mid n} \varphi(d) = n \]
+integers relatively prime to $n$.
+On the other hand $I = [1,\sigma(n)]$ so this implies the inequality.
+
+We see that the equality holds for $n = p^e$.
+Assume now $p < q$ are distinct primes dividing $n$.
+Reorder the divisors $d_i$ so that $d_1 = q$.
+Then $p,q \in I_1$, and so $I_1$ should contain
+strictly fewer than $\varphi(d_1)=q-1$ elements
+relatively prime to $n$, hence the inequality is strict.
+
+\paragraph{Second solution (Ivan Borsenco and Evan Chen).}
+Let $n = p_1^{e_1} \dots p_k^{e_k}$,
+where $p_1 < p_2 < \dots$.
+We are going to assume $k \ge 2$,
+since the $k=1$ case was resolved in the very beginning,
+and prove the strict inequality.
+
+For a general $N$, the number of relatively prime integers in $[1,N]$ is
+given exactly by
+\[ f(N) = N - \sum_i \left\lfloor \frac{N}{p_i} \right\rfloor
+  + \sum_{i<j} \left\lfloor \frac{N}{p_i p_j} \right\rfloor - \dots \]
+according to the inclusion-exclusion principle.
+So, we wish to show that $f(\sigma(n)) < n$ (as $k \ge 2$).
+Discarding the error terms from the floors
+(noting that we get at most $1$ from the negative floors)
+gives
+\begin{align*}
+  f(N) &< 2^{k-1} + N - \sum_i \frac{N}{p_i}
+    + \sum_{i<j} \frac{N}{p_i p_j} - \dots \\
+  &= 2^{k-1} + N \prod_i \left( 1 - p_i\inv \right) \\
+  &= 2^{k-1} + \prod_i \left( 1 - p_i\inv \right)
+    \left( 1 + p_i + p_i^2 + \dots + p_i^{e_i} \right) \\
+  &= 2^{k-1} + \prod_i \left( p_i^{e_i} - p_i\inv \right).
+\end{align*}
+The proof is now divided into two cases.
+If $k=2$ we have
+\begin{align*}
+  f(N) &< 2 + \left( p_1^{e_1} - p_1\inv \right)\left( p_2^{e_2} -
+  p_2\inv \right) \\
+  &= 2 + n - \frac{p_2^{e_2}}{p_1} - \frac{p_1^{e_1}}{p_2}
+    + \frac{1}{p_1p_2} \\
+  &\le 2 + n - \frac{p_2}{p_1} - \frac{p_1}{p_2}
+    + \frac{1}{p_1p_2} \\
+  &= n + \frac{1-(p_1-p_2)^2}{p_1p_2} \le n.
+\end{align*}
+On the other hand if $k \ge 3$ we may now write
+\begin{align*}
+  f(N) &< 2^{k-1} + \left[ \prod_{i=2}^{k-1} \left( p_i^{e_i} \right)
+    \right] \left( p_1^{e_1} - p_1\inv \right) \\
+  &= 2^{k-1} + n - \frac{p_2^{e_2} \dots p_k^{e_k}}{p_1} \\
+  &\le 2^{k-1} + n - \frac{p_2 p_3 \dots p_k}{p_1}.
+\end{align*}
+If $p_1 = 2$, then one can show
+by induction that $p_2 p_3 \dots p_k \ge 2^{k+1}-1$,
+which implies the result.
+If $p_1 > 2$, then one can again show by induction
+$p_3 \dots p_k \ge 2^k-1$ (since $p_3 \ge 7$),
+which also implies the result.
+\pagebreak
+
+\subsection{USA TST 2018/2, proposed by Michael Kural, Yang Liu}
+\textsl{Available online at \url{https://aops.com/community/p9513099}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all functions $f \colon \ZZ^2 \to [0,1]$
+such that for any integers $x$ and $y$,
+\[ f(x, y) = \frac{f(x-1, y) + f(x, y-1)}{2}. \]
+\end{mdframed}
+We claim that the only functions $f$ are constant functions.
+(It is easy to see that they work.)
+
+\paragraph{First solution (hands-on).}
+First, iterating the functional equation
+relation to the $n$th level shows that
+\[ f(x, y) = \frac{1}{2^n} \sum_{i=0}^n \binom{n}{i} f(x-i, y-(n-i)). \]
+In particular,
+\begin{align*}
+  |f(x, y) - f(x-1, y+1)|
+  &= \frac{1}{2^n} \left\lvert \sum_{i=0}^{n+1} f(x-i, y-(n-i)) \cdot
+  \left(\binom{n}{i} - \binom{n}{i-1} \right) \right\rvert \\
+  &\le \frac{1}{2^n} \sum_{i=0}^{n+1} \left\lvert
+    \binom{n}{i} - \binom{n}{i-1} \right\rvert \\
+  &= \frac{1}{2^n} \cdot 2\binom{n}{\lfloor n/2 \rfloor}
+\end{align*}
+where we define $\binom{n}{n+1} = \binom{n}{-1} = 0$ for convenience.
+Since \[ \binom{n}{\lfloor n/2 \rfloor} = o(2^n) \]
+it follows that $f$ must be constant.
+
+\begin{remark*}
+A very similar proof extends to $d$ dimensions.
+\end{remark*}
+
+\paragraph{Second solution (random walks, Mark Sellke).}
+We show that if $x+y=x'+y'$ then $f(x,y)=f(x',y')$.
+Let $Z_n$, $Z'_n$ be random walks starting at $(x,y)$
+and $(x',y')$ and moving down/left.
+Then $f(Z_n)$ is a martingale so we have
+\[\mathbb E[f(Z_n)]=f(x,y), \qquad
+  \mathbb E[f(Z'_n)]=f(x',y') .\]
+We'll take $Z_n$, $Z'_n$ to be independent until they hit each other,
+after which they will stay together.  Then
+\[|\mathbb E[f(Z_n)-f(Z'_n)]| \leq \mathbb E[|f(Z_n)-f(Z'_n)|]
+  \leq p_n\]
+where $p_n$ is the probability that $Z_n$, $Z'_n$ never collide.
+But the distance between $Z_n$, $Z'_n$
+is essentially a $1$-dimensional random walk,
+so they will collide with probability $1$, meaning $\lim_{n\to\infty} p_n=0$.
+Hence
+\[ |f(x,y)-f(x',y')| = |\mathbb E[f(Z_n)-f(Z'_n)]| = o(1)\]
+as desired.
+
+\begin{remark*}
+If the problem were in $\ZZ^d$ for large $d$,
+this solution wouldn't work as written
+because the independent random walks wouldn't hit each other.
+However, this isn't a serious problem
+because $Z_n$, $Z'_n$ don't have to be independent
+before hitting each other.
+Indeed, if every time $Z_n,Z'_n$ agree on a new coordinate
+we force them to agree on that coordinate forever,
+we can make the two walks individually have the distribution
+of a coordinate-decreasing random walk but make them intersect
+eventually with probability $1$.
+The difference in each coordinate will be a $1$-dimensional
+random walk which gets stuck at $0$.
+\end{remark*}
+
+
+\paragraph{Third solution (martingales).}
+Imagine starting at $(x, y)$
+and taking a random walk down and to the left.
+This is a martingale.
+As $f$ is bounded, this martingale converges with probability $1$.
+Let $X_1, X_2, \dots$ each be random variables
+that represent either down moves or left moves with equal probability.
+Note that by the Hewitt-Savage 0-1 law,
+we have that for any real numbers $a < b$,
+\[ \Pr\left[ \lim_{n \to \infty} f((x, y)+X_1+X_2+\dots + X_n)
+  \in [a, b] \right] \in \{0,1\}. \]
+Hence, there exists a single value $v$ such that with probability $1$,
+\[ \Pr\left[\lim_{n \to \infty} f((x, y)+X_1+X_2+\dots + X_n)
+  = v\right] = 1. \]
+Obviously, this value $v$ must equal $f(x, y)$.
+Now, we show this value $v$ is the same for all $(x, y)$.
+Note that any two starting points have a positive chance of meeting.
+Therefore, we are done.
+\pagebreak
+
+\subsection{USA TST 2018/3, proposed by Evan Chen}
+\textsl{Available online at \url{https://aops.com/community/p9513105}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+At a university dinner,
+there are $2017$ mathematicians who each order two distinct entr\'ees,
+with no two mathematicians ordering the same pair of entr\'{e}es.
+The cost of each entr\'ee is equal
+to the number of mathematicians who ordered it,
+and the university pays for each mathematician's
+less expensive entr\'ee (ties broken arbitrarily).
+Over all possible sets of orders,
+what is the maximum total amount the university could have paid?
+\end{mdframed}
+In graph theoretic terms:
+we wish to determine the maximum possible value of
+\[ S(G) \coloneqq \sum_{e = vw} \min \left( \deg v, \deg w \right) \]
+across all graphs $G$ with $2017$ edges.
+We claim the answer is $63 \cdot \binom{64}{2} + 1 = 127009$.
+
+\paragraph{First solution (combinatorial, Evan Chen).}
+First define $L_k$ to consist of a clique on $k$ vertices,
+plus a single vertex connected to exactly one vertex of the clique.
+Hence $L_k$ has $k+1$ vertices, $\binom k2+1$ edges,
+and $S(L_k) = (k-1) \binom k2 + 1$.
+In particular, $L_{64}$ achieves the claimed maximum,
+so it suffices to prove the upper bound.
+
+\begin{lemma*}
+  Let $G$ be a graph such that either
+  \begin{itemize}
+    \ii $G$ has $\binom k2$ edges for some $k \ge 3$ or
+    \ii $G$ has $\binom k2 + 1$ edges for some $k \ge 4$.
+  \end{itemize}
+  Then there exists a graph $G^\ast$ with the same number of edges
+  such that $S(G^\ast) \ge S(G)$,
+  and moreover $G^\ast$ has a universal vertex
+  (i.e.\ a vertex adjacent to every other vertex).
+\end{lemma*}
+
+\begin{proof}
+  Fix $k$ and the number $m$ of edges.
+  We prove the result by induction on the number $n$ of vertices in $G$.
+  Since the lemma has two parts,
+  we will need two different base cases:
+  \begin{enumerate}
+    \item Suppose $n = k$ and $m = \binom k2$.
+    Then $G$ must be a clique so pick $G^\ast = G$.
+
+    \item Suppose $n = k+1$ and $m = \binom k2 + 1$.
+    If $G$ has no universal vertex,
+    we claim we may take $G^\ast = L_k$.
+    Indeed each vertex of $G$ has degree at most $k-1$,
+    and the average degree is
+    \[ \frac{2m}{n} = \frac{k^2-k+1}{k+1} < k-1 \]
+    using here $k \ge 4$.
+    Thus there exists a vertex $w$ of degree $1 \le d \le k-2$.
+    The edges touching $w$ will have label at most $d$ and hence
+    \begin{align*}
+       S(G) &\le (k-1)(m-d) + d^2 = (k-1)m - d(k-1-d) \\
+       &\le (k-1)m - (k-2) = (k-1) \binom k2 + 1 = S(G^\ast).
+    \end{align*}
+  \end{enumerate}
+  Now we settle the inductive step.
+  Let $w$ be a vertex with minimal degree $0 \le d < k-1$,
+  with neighbors $w_1, \dots, w_d$.
+  By our assumption, for each $w_i$ there exists a vertex $v_i$
+  for which $v_i w_i \notin E$.
+  Now, we may delete all edges $ww_i$ and in their place put $v_i w_i$,
+  and then delete the vertex $w$.
+  This gives a graph $G'$, possibly with multiple edges
+  (if $v_i = w_j$ and $w_j = v_i$), and with one fewer vertex.
+
+  \begin{center}
+  \begin{asy}
+    defaultpen(fontsize(11pt));
+    unitsize(1cm);
+
+    dotfactor *= 1.5;
+    pair A = (-1,1);
+    pair B = (0,1);
+    pair X = (-1,0);
+    pair Y = (0,0);
+    pair Z = (1,0);
+    pair W = (0,-1);
+
+    picture[] Gs = new picture[3];
+    Gs[0] = new picture;
+    Gs[1] = new picture;
+    Gs[2] = new picture;
+
+
+    draw(Gs[0], W--X, red);
+    draw(Gs[0], W--Y, red);
+    draw(Gs[0], W--Z, red);
+
+    draw(Gs[1], X--B, red);
+    draw(Gs[1], Y..(0.5, 0.2)..Z, red);
+    draw(Gs[1], Y..(0.5,-0.2)..Z, red);
+
+    draw(Gs[2], X--B, red);
+    draw(Gs[2], Y..(0.5,-0.2)..Z, red);
+    draw(Gs[2], A--Y, blue);
+
+    for (int i=0; i<3; ++i) {
+      dot(Gs[i], A);
+      dot(Gs[i], B);
+      dot(Gs[i], X);
+      dot(Gs[i], Y);
+      dot(Gs[i], Z);
+      draw(Gs[i], A--B--Z--A--X--Y--B);
+    }
+    dot(Gs[0], "$w$", W, dir(-90));
+
+    label(Gs[0], "$G$", B, 2*dir(90));
+    label(Gs[1], "$G'$", B, 2*dir(90));
+    label(Gs[2], "$G''$", B, 2*dir(90));
+
+    add(shift(-3,0) * Gs[0]);
+    add(shift(0,0) * Gs[1]);
+    add(shift(3,0) * Gs[2]);
+  \end{asy}
+  \end{center}
+
+  We then construct a graph $G''$ by taking any pair of double edges,
+  deleting one of them, and adding any missing edge of $G''$ in its place.
+  (This is always possible, since when $m = \binom k2$ we have $n-1 \ge k$
+  and when $m = \binom k2 +1$ we have $n-1 \ge k+1$.)
+
+  Thus we have arrived at a simple graph $G''$
+  with one fewer vertex.
+  We also observe that we have $S(G'') \ge S(G)$;
+  after all every vertex in $G''$ has degree
+  at least as large as it did in $G$,
+  and the $d$ edges we deleted have been replaced with
+  new edges which will have labels at least $d$.
+  Hence we may apply the inductive hypothesis to the graph $G''$
+  to obtain $G^\ast$ with $S(G^\ast) \ge S(G'') \ge S(G)$.
+\end{proof}
+
+The problem then is completed once we prove the following:
+\begin{claim*}
+  For any graph $G$,
+  \begin{itemize}
+    \ii If $G$ has $\binom k2$ edges for $k \ge 3$,
+    then $S(G) \le \binom k2 \cdot (k-1)$.
+    \ii If $G$ has $\binom k2 + 1$ edges for $k \ge 4$,
+    then $S(G) \le \binom k2 \cdot (k-1) + 1$.
+  \end{itemize}
+\end{claim*}
+
+\begin{proof}
+We prove both parts at once by induction on $k$,
+with the base case $k = 3$ being plain
+(there is nothing to prove in the second part for $k=3$).
+Thus assume $k \ge 4$.
+By the earlier lemma, we may assume $G$ has a universal vertex $v$.
+For notational convenience,
+we say $G$ has $\binom k2 + \eps$ edges for $\eps \in \{0,1\}$,
+and $G$ has $p+1$ vertices, where $p \ge k-1 + \eps$.
+
+Let $H$ be the subgraph obtained when $v$ is deleted.
+Then $m = \binom k2 + \eps - p$ is the number of edges in $H$;
+from $p \ge k-1+\eps$ we have $m \le \binom{k-1}{2}$
+and so we may apply the inductive hypothesis to $H$ to deduce
+$S(H) \le \binom{k-1}{2} \cdot (k-2)$.
+
+\begin{center}
+\begin{asy}
+defaultpen(fontsize(11pt));
+size(4.5cm);
+
+dotfactor *= 1.5;
+pair V = (0,2);
+
+pair A = (-1.5,0);
+pair B = (-1.0,0);
+pair C = (+1.5,0);
+
+for (real x=-1.5; x<=1.5; x+=0.5) {
+  draw(V--(x,0));
+}
+label("$\dots$", midpoint(B--C));
+dot("$w_1$", A, dir(-90));
+dot("$w_2$", B, dir(-90));
+dot("$w_p$", C, dir(-90));
+dot("$v$", V, dir(90), red);
+
+
+real EX = 2;
+real EY = 0.8;
+draw(ellipse((0,0), EX, EY), dashed);
+label("$H$", (EX, -EY));
+\end{asy}
+\end{center}
+Now the labels of edges $vw_i$ have sum
+\[
+  \sum_{i=1}^p \min \left( \deg_G v, \deg_G w_i \right)
+  = \sum_{i=1}^p \deg_G w_i
+  = \sum_{i=1}^p (\deg_H w_i + 1) =  2m + p.
+\]
+For each of the edges contained in $H$,
+the label on that edge has increased by exactly $1$,
+so those edges contribute $S(H)+m$.
+In total,
+\begin{align*}
+  S(G) &= 2m + p + \left( S(H)+m \right) = (m+p) + 2m + S(H) \\
+  &\le \binom k2 + \eps + 2\binom{k-1}{2} + \binom{k-1}{2}(k-2)
+  = \binom k2 (k-1) + \eps. \qedhere
+\end{align*}
+\end{proof}
+
+\paragraph{Second solution (algebraic, submitted by contestant James Lin).}
+We give a different proof of $S(G) \le 127009$.
+The proof proceeds using the following two claims,
+which will show that $S(G) \le 127010$ for all graphs $G$.
+Then a careful analysis of the equality cases will show
+that this bound is not achieved for any graph $G$.
+Since the example $L_{64}$ earlier has $S(L_{64}) = 127009$,
+this will solve the problem.
+
+\begin{lemma*}
+  [Combinatorial bound]
+  Let $G$ be a graph with $2017$ edges and let
+  $d_1 \ge d_2 \ge \dots \ge d_n$ be the degree sequence of the graph
+  (thus $n \ge 65$).
+  Then \[ S(G) \le d_2 + 2d_3 + 3d_4 + \dots + 63d_{64} + d_{65}. \]
+\end{lemma*}
+\begin{proof}
+  Let $v_1$, \dots, $v_n$ be the corresponding vertices.
+  For any edge $e = \{v_i, v_j\}$ with $i < j$,
+  we consider associating each edge $e$ with $v_j$,
+  and computing the sum $S(G)$ indexing over associated vertices.
+  To be precise, if we let $a_i$ denote the number of edges
+  associated to $v_i$, we now have $a_i \le i-1$, $\sum a_i = 2017$, and
+  \[ S(G) = \sum_{i=1}^n a_i d_i. \]
+  The inequality
+  $\sum a_i d_i \le d_2 + 2d_3 + 3d_4 + \dots + 63d_{64} + d_{65}$
+  then follows for smoothing reasons
+  (by ``smoothing'' the $a_i$), since the $d_i$ are monotone.
+  This proves the given inequality.
+\end{proof}
+
+Once we have this property, we handle the bounding completely algebraically.
+\begin{lemma*}
+  [Algebraic bound]
+  Let $x_1 \ge x_2 \ge \dots \ge x_{65}$ be any nonnegative integers
+  such that $\sum_{i=1}^{65} x_i \le 4034$.
+  Then \[ x_2 + 2x_3 + \dots + 63x_{64} + x_{65} \le 127010. \]
+  Moreover, equality occurs if and only if
+  $x_1 = x_2 = x_3 = \dots = x_{64} = 63$ and $x_{65} = 2$.
+\end{lemma*}
+\begin{proof}
+  Let $A$ denote the left-hand side of the inequality.
+  We begin with a smoothing argument.
+  \begin{itemize}
+    \ii Suppose there are indices $1 \le i < j \le 64$
+    such that $x_i > x_{i+1} \ge x_{j-1} > x_j$.
+    Then replacing $(x_i, x_j)$ by $(x_i-1, x_j+1)$
+    strictly increases $A$ preserving all conditions.
+    Thus we may assume all numbers in $\{x_1, \dots, x_{64}\}$
+    differ by at most $1$.
+    \ii Suppose $x_{65} \ge 4$.
+    Then we can replace $(x_1, x_2, x_3, x_4, x_{65})$
+    by $(x_1+1, x_2+1, x_3+1, x_4+1, x_{65}-4)$
+    and strictly increase $A$.
+    Hence we may assume $x_{65} \le 3$.
+  \end{itemize}
+  We will also tacitly assume $\sum x_i = 4034$,
+  since otherwise we can increase $x_1$.
+  These two properties leave only four sequences to examine:
+  \begin{itemize}
+    \ii $x_1 = x_2 = x_3 = \dots = x_{63} = 63$, $x_{64} = 62$,
+    and $x_{65} = 3$, which gives $A = 126948$.
+    \ii $x_1 = x_2 = x_3 = \dots = x_{63} = x_{64} = 63$ and $x_{65} = 2$,
+    which gives $A = 127010$.
+    \ii $x_1 = 64$, $x_2 = x_3 = \dots = x_{63} = x_{64} = 63$ and $x_{65} = 1$,
+    which gives $A = 127009$.
+    \ii $x_1 = x_2 = 64$, $x_3 = \dots = x_{63} = x_{64} = 63$ and $x_{65} = 0$,
+    which gives $A = 127009$.
+  \end{itemize}
+  This proves that $A \le 127010$.
+  To see that equality occurs only in the second case above,
+  note that all the smoothing operations other than incrementing $x_1$ were strict,
+  and that $x_1$ could not have been incremented in this way
+  as $x_1 = x_2 = 63$.
+\end{proof}
+
+This shows that $S(G) \le 127010$ for all graphs $G$,
+so it remains to show equality never occurs.
+Retain the notation $d_i$ and $a_i$ of the combinatorial bound now;
+we would need to have $d_1 = \dots = d_{64} = 63$ and $d_{65} = 2$
+(in particular, deleting isolated vertices from $G$, we may assume $n=65$).
+In that case, we have $a_i \le i-1$ but also $a_{65} = 2$ by definition
+(the last vertex gets all edges associated to it).
+Finally,
+\begin{align*}
+  S(G) &= \sum_{i=1}^n a_i d_i = 63(a_1 + \dots + a_{64}) + a_{65} \\
+  &= 63(2017-a_{65}) + a_{65} \le 63 \cdot 2015 + 2 = 126947
+\end{align*}
+completing the proof.
+
+\begin{remark*}
+  Another way to finish once $S(G) \le 127010$
+  is note there is a unique graph
+  (up to isomorphism and deletion of universal vertices)
+  with degree sequence
+  $(d_1, \dots, d_{65}) = (63, \dots, 63, 2)$.
+  Indeed, the complement of the graph
+  has degree sequence $(1, \dots, 1, 63)$,
+  and so it must be a $63$-star plus a single edge.
+  One can then compute $S(G)$ explicitly for this graph.
+\end{remark*}
+
+\paragraph{Some further remarks.}
+
+\begin{remark*}
+  Interestingly, the graph $C_4$ has $\binom 32+1 = 4$ edges
+  and $S(C_4) = 8$, while $S(L_3) = 7$.
+  This boundary case is visible in the combinatorial solution
+  in the base case of the first claim.
+  It also explains why we end up with the bound $S(G) \le 127010$
+  in the second algebraic solution,
+  and why it is necessary to analyze the equality cases so carefully;
+  observe in $k=3$ the situation $d_1 = d_2 = d_3 = d_4 = 2$.
+\end{remark*}
+
+\begin{remark*}
+  Some comments about further context for this problem:
+  \begin{itemize}
+  \ii The obvious generalization of $2017$ to any constant
+  was resolved in September 2018 by Mehtaab Sawhney and Ashwin Sah.
+  The relevant paper is
+  \emph{On the discrepancy between two Zagreb indices},
+  published in Discrete Mathematics, Volume 341, Issue 9, pages 2575-2589.
+  The arXiv link is \url{https://arxiv.org/pdf/1801.02532.pdf}.
+
+  \ii The quantity
+  \[ S(G) = \sum_{e = vw} \min \left( \deg v, \deg w \right) \]
+  in the problem has an interpretation:
+  it can be used to provide a bound on the
+  number of triangles in a graph $G$.
+  To be precise, $\# E(G) \le \frac 13 S(G)$,
+  since an edge $e = vw$ is part of at most $\min(\deg v, \deg w)$ triangles.
+
+  \ii For \emph{planar} graphs it is known $S(G) \le 18n-36$
+  and it is conjectured that for $n$ large enough, $S(G) \le 18n-72$.
+  See \url{https://mathoverflow.net/a/273694/70654}.
+  \end{itemize}
+\end{remark*}
+
+\paragraph{Authorship comments.}
+I came up with the quantity $S(G)$
+in a failed attempt to provide a bound on the number of triangles in a graph,
+since this is natural to consider when you do a standard
+double-counting via the edges of the triangle.
+I think the problem was actually APMO 1989,
+and I ended up not solving the problem (the solution is much simpler),
+but the quantity $S(G)$ stuck in my head for a while after that.
+
+Later on that month I was keeping Danielle company while
+she was working on art project (flower necklace),
+and with not much to do except doodle on tables
+I began thinking about $S(G)$ again.
+I did have the sense that $S(G)$ should be maximized
+at a graph close to a complete graph.
+But to my frustration I could not prove it for a long time.
+Finally after many hours of trying various approaches
+I was able to at least show that $S(G)$ was maximized
+for complete graphs if the number of edges was a triangular number.
+
+I had come up with this in March 2016,
+which would have been perfect since $2016$ is a triangular number,
+but it was too late to submit it to any contest
+(the USAMO and IMO deadlines were long past).
+So on December 31, 2016 I finally sat down and solved it for the case $2017$,
+which took another few hours of thought, then submitted it to that year's IMO.
+To my dismay it was rejected, but I passed it along to the USA TST after that,
+thus making it just in time for the close of the calendar year.
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{USA TST 2018/4, proposed by Josh Brakensiek}
+\textsl{Available online at \url{https://aops.com/community/p9735607}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $n$ be a positive integer and let $S \subseteq \{0,1\}^n$
+be a set of binary strings of length $n$.
+Given an odd number $x_1, \dots, x_{2k+1} \in S$ of binary strings
+(not necessarily distinct), their \emph{majority} is defined as
+the binary string $y \in \{0,1\}^n$ for which
+the $i$\textsuperscript{th} bit of $y$ is the most common bit
+among the $i$\textsuperscript{th} bits of $x_1$, \dots, $x_{2k+1}$.
+(For example, if $n=4$ the majority of
+$0000$, $0000$, $1101$, $1100$, $0101$ is $0100$.)
+
+Suppose that for some positive integer $k$,
+$S$ has the property $P_k$ that the majority of any $2k+1$
+binary strings in $S$ (possibly with repetition) is also in $S$.
+Prove that $S$ has the same property $P_k$ for all
+positive integers $k$.
+\end{mdframed}
+Let $M$ denote the majority function (of any length).
+
+\paragraph{First solution (induction).}
+We prove all $P_k$ are equivalent by induction on $n \ge 2$,
+with the base case $n = 2$ being easy to check by hand.
+(The case $n=1$ is also vacuous; however,
+the inductive step is not able to go from $n=1$ to $n=2$.)
+
+For the inductive step, we proceed by contradiction;
+assume $S$ satisfies $P_{\ell}$, but not $P_{k}$,
+so there exist $x_1, \dots, x_{2k+1} \in S$
+whose majority $y = M(x_1, \dots, x_k)$ is not in $S$.
+We contend that:
+\begin{claim*}
+  Let $y_i$ be the string which differs from $y$
+  only in the $i$\ts{th} bit.
+  Then $y_i \in S$.
+\end{claim*}
+\begin{proof}
+  For a string $s \in S$
+  we let $\hat s$ denote the string $s$ with the $i$\ts{th} bit deleted
+  (hence with $n-1$ bits).
+  Now let \[ T = \left\{ \hat s \mid s \in S \right\}. \]
+  Since $S$ satisfies $P_\ell$, so does $T$;
+  thus by the induction hypothesis on $n$, $T$ satisfies $P_{k}$.
+
+  Consequently, $T \ni M(\hat{x}_1, \dots, \hat{x}_{2k+1}) = \hat y$.
+  Thus there exists $s \in S$ such that $\hat s = \hat y$.
+  This implies $s = y$ or $s = y_i$.
+  But since we assumed $y \notin S$ it follows $y_i \in S$ instead.
+\end{proof}
+
+Now take any $2\ell+1$ copies of the $y_i$, about equally often
+(i.e.\ the number of times
+any two $y_i$ are taken differs by at most $1$).
+We see the majority of these is $y$ itself, contradiction.
+
+\paragraph{Second solution (circuit construction).}
+Note that $P_k \implies P_1$ for any $k$, since
+\[ M( \underbrace{a,\dots,a}_k, \underbrace{b,\dots,b}_k, c )
+  = M(a,b,c) \]
+for any $a$, $b$, $c$.
+
+We will now prove $P_1 + P_k \implies P_{k+1}$ for any $k$,
+which will prove the result.
+Actually, we will show that the majority
+of any $2k+3$ strings $x_1$, \dots, $x_{2k+3}$
+can be expressed by $3$ and $(2k+1)$-majorities.
+WLOG assume that $M(x_1, \dots, x_{2k+3}) = 0\dots0$,
+and let $\odot$ denote binary AND.
+\begin{claim*}
+  We have $M(x_1, x_2, M(x_3, \dots, x_{2k+3})) = x_1 \odot x_2$.
+\end{claim*}
+\begin{proof}
+  Consider any particular bit.
+  The result is clear if the bits are equal.
+  Otherwise, if they differ,
+  the result follows from the original hypothesis that
+  $M(x_1, \dots, x_{2k+3}) = 0\dots0$
+  (removing two differing bits does not change the majority).
+\end{proof}
+By analogy we can construct any $x_i \odot x_j$.
+Finally, note that
+\[ M(x_1 \odot x_2, x_2 \odot x_3, \dots,
+  x_{2k+1} \odot x_{2k+2}) = 0\dots0, \]
+as desired. (Indeed, if we look at any index,
+there were at most $k+1$ $1$'s in the $x_i$ strings,
+and hence there will be at most $k$ $1$'s among
+$x_i \odot x_{i+1}$ for $i=1,\dots,2k+1$.)
+
+\begin{remark*}
+  The second solution can be interpreted in circuit language
+  as showing that all ``$2k+1$-majority gates'' are equivalent.
+  See also \url{https://cstheory.stackexchange.com/a/21399/48303},
+  in which Valiant gives a probabilistic construction to prove
+  that one can construct $(2k+1)$-majority gates from a
+  \emph{polynomial} number of $3$-majority gates.
+  No explicit construction is known for this.
+\end{remark*}
+\pagebreak
+
+\subsection{USA TST 2018/5, proposed by Evan Chen}
+\textsl{Available online at \url{https://aops.com/community/p9735608}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $ABCD$ be a convex cyclic quadrilateral which is not a kite,
+but whose diagonals are perpendicular and meet at $H$.
+Denote by $M$ and $N$ the midpoints of $\ol{BC}$ and $\ol{CD}$.
+Rays $MH$ and $NH$ meet $\ol{AD}$ and $\ol{AB}$ at $S$ and $T$, respectively.
+Prove there exists a point $E$, lying outside quadrilateral $ABCD$,
+such that
+\begin{itemize}
+  \ii ray $EH$ bisects both angles $\angle BES$, $\angle TED$, and
+  \ii $\angle BEN = \angle MED$.
+\end{itemize}
+\end{mdframed}
+The main claim is that $E$ is the
+intersection of $(ABCD)$ with the circle with diameter $\ol{AH}$.
+\begin{center}
+\begin{asy}
+size(10cm);
+pair A = dir(100);
+pair B = dir(190);
+pair D = dir(-10);
+pair F = -A;
+pair H = foot(A, B, D);
+pair E = foot(A, F, H);
+pair C = -A+2*foot(origin, A, H);
+
+filldraw(unitcircle, opacity(0.1)+lightcyan, lightblue);
+draw(A--B--C--D--cycle, lightblue);
+draw(A--B--F--D--cycle, lightblue);
+draw(A--C, lightblue);
+draw(B--D, lightblue);
+pair M = midpoint(B--C);
+pair N = midpoint(D--C);
+pair S = foot(H, A, D);
+pair T = foot(H, A, B);
+draw(M--S, lightblue);
+draw(N--T, lightblue);
+
+filldraw(circumcircle(B, T, S), opacity(0.1)+yellow, orange);
+// pair Q = midpoint(A--H);
+draw(H--F, lightblue);
+pair P = midpoint(H--F);
+filldraw(B--T--S--D--cycle, opacity(0.1)+yellow, orange+1);
+// draw(P--Q, blue);
+draw(A--F, blue);
+draw(circumcircle(E, B, M), lightgreen);
+draw(circumcircle(E, D, N), lightgreen);
+draw(H--E--A, orange);
+draw(circumcircle(A, T, S), lightgreen);
+
+dot("$A$", A, dir(A));
+dot("$B$", B, dir(B));
+dot("$D$", D, dir(D));
+dot("$F$", F, dir(F));
+dot("$H$", H, dir(H));
+dot("$E$", E, dir(E));
+dot("$C$", C, dir(C));
+dot("$M$", M, dir(M));
+dot("$N$", N, dir(N));
+dot("$S$", S, dir(S));
+dot("$T$", T, dir(T));
+// dot("$Q$", Q, dir(200));
+dot("$P$", P, dir(P));
+
+/* TSQ Source:
+
+!size(10cm);
+A = dir 100
+B = dir 190
+D = dir -10
+F = -A
+H = foot A B D
+E = foot A F H
+C = -A+2*foot origin A H
+
+unitcircle 0.1 lightcyan / lightblue
+A--B--C--D--cycle lightblue
+A--B--F--D--cycle lightblue
+A--C lightblue
+B--D lightblue
+M = midpoint B--C
+N = midpoint D--C
+S = foot H A D
+T = foot H A B
+M--S lightblue
+N--T lightblue
+
+circumcircle B T S 0.1 yellow / orange
+Q = midpoint A--H R200
+H--F lightblue
+P = midpoint H--F
+B--T--S--D--cycle 0.1 yellow / orange+1
+P--Q blue
+A--F blue
+circumcircle E B M lightgreen
+circumcircle E D N lightgreen
+H--E--A orange
+circumcircle A T S lightgreen
+
+*/
+\end{asy}
+\end{center}
+
+The following observation can be quickly made
+without reference to $E$.
+\begin{lemma*}
+  We have $\angle HSA = \angle HTA = 90\dg$.
+  Consequently, quadrilateral $BTSD$ is cyclic.
+\end{lemma*}
+\begin{proof}
+  This is direct angle chasing.
+  In fact, $\ol{HM}$ passes through the circumcenter of $\triangle BHC$
+  and $\triangle HAD \sim \triangle HCB$,
+  so $\ol{HS}$ ought to be the altitude of $\triangle HAD$.
+\end{proof}
+
+From here it follows that $E$ is the Miquel point of
+cyclic quadrilateral $BTSD$.
+Define $F$ to be the point diametrically opposite $A$,
+so that $E$, $H$, $F$ are collinear, $\ol{CF} \parallel \ol{BD}$.
+By now we already have
+\[ \dang BEH = \dang BEF = \dang BAF = \dang CAD = \dang HAS = \dang HES \]
+so $\ol{EH}$ bisects $\angle BES$, and $\angle TED$.
+Hence it only remains to show $\angle BEM = \angle NED$;
+we present several proofs below.
+
+\paragraph{First proof (original solution).}
+Let $P$ be the circumcenter of $BTSD$.
+The properties of the Miquel point imply $P$ lies on
+the common bisector $\ol{EH}$ already,
+and it also lies on the perpendicular bisector of $\ol{BD}$,
+hence it must be the midpoint of $\ol{HF}$.
+
+We now contend quadrilaterals $BMPS$ and $DNPT$ are cyclic.
+Obviously $\ol{MP}$ is the external angle bisector of $\angle BMS$,
+and $PB = PS$, so $P$ is the arc midpoint of $(BMS)$.
+The proof for $DNPT$ is analogous.
+
+It remains to show $\angle BEN = \angle MED$,
+or equivalently $\angle BEM = \angle NED$.
+By properties of Miquel point we have $E \in (BMPS) \cap (TPND)$, so
+\[ \dang BEM = \dang BPM = \dang PBD = \dang BDP = \dang NPD = \dang NED \]
+as desired.
+
+\paragraph{Second proof (2011 G4).}
+By 2011 G4, the circumcircle of $\triangle EMN$
+is tangent to the circumcircle of $ABCD$.
+Hence if we extend $\ol{EM}$ and $\ol{EN}$ to meet $(ABCD)$
+again at $X$ and $Y$, we get $\ol{XY} \parallel \ol{MN} \parallel \ol{BD}$.
+Thus $\dang BEM = \dang BEX = \dang YED = \dang NED$.
+
+\paragraph{Third proof (involutions, submitted by Daniel Liu).}
+Let $G = \ol{BN} \cap \ol{MD}$ denote the centroid of $\triangle BCD$,
+and note that it lies on $\ol{EHF}$.
+
+Now consider the dual of Desargues involution theorem on complete
+quadrilateral $BMDNCG$ at point $E$.
+We get
+\[ (EB,ED), \quad (EM,EN), \quad (EC,EG) \]
+form an involutive pairing.
+
+However, the bisector of $\angle BED$, say $\ell$,
+is also the angle bisector of $\angle CEF$ (since $\ol{CF} \parallel \ol{BD}$).
+So the involution we found must coincide with reflection across $\ell$.
+This means $\angle MEN$ is bisected by $\ell$ as well, as desired.
+
+\paragraph{Authorship comments.}
+This diagram actually comes from the inverted
+picture in IMO 2014/3 (which I attended).
+I had heard for many years that one could
+solve this problem quickly by inversion at $H$ afterwards.
+But when I actually tried to do it during an OTIS class
+years later, I ended up with the picture in the TST problem,
+and couldn't see why it was true!
+In the process of trying to reconstruct this rumored solution,
+I ended up finding most of the properties
+that ended up in the January TST problem
+(but were overkill for the original IMO problem).
+
+Let us make the equivalence explicit
+by deducing the IMO problem from our work.
+
+Let rays $EM$ and $EN$ meet the circumcircles of $\triangle BHC$
+and $\triangle BNC$ again at $X$ and $Y$, with $EM < EX$ and $EN < EY$.
+As above we concluded $EM/EX = EN/EY$
+and so $\ol{MN} \parallel \ol{XY} \implies \ol{XY} \perp \ol{AHC}$.
+
+Now consider an inversion at $H$ which swaps
+$B \leftrightarrow D$ and $A \leftrightarrow C$.
+The point $E$ goes to $E^\ast$ diametrically opposite $A$.
+Points $X$ and $Y$ go to points on $X^\ast \in \ol{AD}$ and $Y^\ast \in \ol{AB}$.
+Since the reflection of $E$ across $\ol{PX}$ is supposed to lie on $(BAE)$,
+it follows that the circumcenter of $\triangle HX^\ast E^\ast$
+lies on $\ol{AD}$.
+Consequently $X^\ast$ plays the role of point ``$T$'' in the IMO problem.
+Then $Y^\ast$ plays the role of point ``$S$'' in the IMO problem.
+
+Now the fact that $(HX^\ast Y^\ast)$ is tangent to $\ol{BD}$
+is equivalent to $\ol{XY} \perp \ol{AHC}$ which we already knew.
+\pagebreak
+
+\subsection{USA TST 2018/6, proposed by Mark Sellke}
+\textsl{Available online at \url{https://aops.com/community/p9735613}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Alice and Bob play a game.
+First, Alice secretly picks a finite set $S$
+of lattice points in the Cartesian plane.
+Then, for every line $\ell$ in the plane
+which is horizontal, vertical, or has slope $+1$ or $-1$,
+she tells Bob the number of points of $S$ that lie on $\ell$.
+Bob wins if he can then determine the set $S$.
+
+Prove that if Alice picks $S$ to be of the form
+\[ S = \left\{ (x,y) \in \ZZ^2 \mid m \le x^2+y^2 \le n \right\} \]
+for some positive integers $m$ and $n$, then Bob can win.
+(Bob does not know in advance that $S$ is of this form.)
+\end{mdframed}
+Clearly Bob can compute the number $N$ of points.
+
+The main claim is that:
+\begin{claim*}
+  Fix $m$ and $n$ as in the problem statement.
+  Among all sets $T \subseteq \ZZ^2$ with $N$ points,
+  the set $S$ is the \emph{unique} one which maximizes the value of
+  \[ F(T):=\sum_{(x,y)\in T} (x^2+y^2)(m+n-(x^2+y^2)).  \]
+\end{claim*}
+\begin{proof}
+  Indeed, the different points in $T$ do not interact in this sum,
+  so we simply want the points $(x,y)$ with $x^2+y^2$
+  as close as possible to $\frac{m+n}{2}$ which is exactly what $S$ does.
+\end{proof}
+As a result of this observation,
+it suffices to show that Bob has enough information to
+compute $F(S)$ from the data given.
+(There is no issue with fixing $m$ and $n$,
+since Bob can find an upper bound on the magnitude
+of the points and then check all pairs $(m,n)$ smaller than that.)
+The idea is that he knows the full distribution of each of
+$X$, $Y$, $X+Y$, $X-Y$ and hence can compute sums
+over $T$ of any power of a single one of those linear functions.
+By taking linear combinations we can hence compute $F(S)$.
+
+Let us make the relations explicit.
+For ease of exposition we take $Z=(X,Y)$ to be a
+uniformly random point from the set $S$.
+The information is precisely the individual distributions
+of $X$, $Y$, $X+Y$, and $X-Y$.
+Now compute
+\begin{align*}
+  \frac{F(S)}{N} &= \mathbb E\left[ (m+n)(X^2+Y^2) - (X^2+Y^2)^2 \right] \\
+  &= (m+n) \left( \mathbb E[X^2] + \mathbb E[Y^2] \right)
+  - \mathbb E[X^4] - \mathbb E[Y^4] - 2 \mathbb E[X^2 Y^2].
+\end{align*}
+On the other hand,
+\[ \mathbb E[X^2Y^2]
+  = \frac{\mathbb E[(X+Y)^4] + \mathbb E[(X-Y)^4]
+  - 2\mathbb E[X^4] - 2\mathbb E[Y^4]}{12}. \]
+Thus we have written $F(S)$ in terms of the distributions
+of $X$, $Y$, $X-Y$, $X+Y$ which completes the proof.
+
+\begin{remark*}[Mark Sellke]
+  \begin{itemize}
+  \ii This proof would have worked just as well if we
+  allowed arbitrary $[0,1]$-valued weights on points
+  with finitely many weights non-zero.
+  There is an obvious continuum generalization one
+  can make concerning the indicator function for an annulus.
+  It's a simpler but fun problem to characterize
+  when just the vertical/horizontal directions determine the distribution.
+  \ii An obstruction to purely combinatorial arguments
+  is that if you take an octagon with points $(\pm a,\pm b)$
+  and $(\pm b,\pm a)$ then the two ways to pick every other point
+  (going around clockwise) are indistinguishable by Bob.
+  This at least shows that Bob's task is far from possible in general,
+  and hints at proving an inequality.
+  \ii A related and more standard fact
+  (among a certain type of person)
+  is that given a probability distribution $\mu$ on $\RR^n$,
+  if I tell you the distribution of \emph{all} $1$-dimensional
+  projections of $\mu$, that determines $\mu$ uniquely.
+  This works because this information gives me the Fourier transform $\hat{\mu}$,
+  and Fourier transforms are injective.
+
+  For the continuum version of this problem,
+  this connection gives a much larger family of counterexamples
+  to any proposed extension to arbitrary non-annular shapes.
+  Indeed, take a fast-decaying smooth function
+  $f \colon \RR^2 \to \RR$ which vanishes on the four lines
+  \[ x=0, \; y=0, \; x+y=0, \; x-y=0.\]
+  Then the Fourier transform $\hat f$ will have mean $0$
+  on each line $\ell$ as in the problem statement.
+  Hence the positive and negative parts of $\hat f$
+  will not be distinguishable by Bob.
+  \end{itemize}
+\end{remark*}
+\pagebreak
+
+
+\end{document}

@@ -1,0 +1,471 @@
+% © Evan Chen
+% Downloaded from https://web.evanchen.cc/
+
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\ihead{\footnotesize\textbf{\thetitle}}
+\ohead{\footnotesize\href{http://web.evanchen.cc}{\ttfamily web.evanchen.cc},
+    updated \today}
+\title{JMO 2012 Solution Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a compilation of solutions
+for the 2012 JMO.
+Some of the solutions are my own work,
+but many are from the official solutions provided by the organizers
+(for which they hold any copyrights),
+and others were found by users on the Art of Problem Solving forums.
+
+These notes will tend to be a bit more advanced and terse than the ``official''
+solutions from the organizers.
+In particular, if a theorem or technique is not known to beginners
+but is still considered ``standard'', then I often prefer to
+use this theory anyways, rather than try to work around or conceal it.
+For example, in geometry problems I typically use directed angles
+without further comment, rather than awkwardly work around configuration issues.
+Similarly, sentences like ``let $\mathbb{R}$ denote the set of real numbers''
+are typically omitted entirely.
+
+Corrections and comments are welcome!
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\addtocounter{section}{-1}
+\section{Problems}
+\begin{enumerate}[\bfseries 1.]
+\item %% Problem 1
+Given a triangle $ABC$, let $P$ and $Q$ be points
+on segments $\ol{AB}$ and $\ol{AC}$, respectively, such that $AP=AQ$.
+Let $S$ and $R$ be distinct points on segment $\ol{BC}$
+such that $S$ lies between $B$ and $R$,
+$\angle BPS=\angle PRS$, and $\angle CQR=\angle QSR$.
+Prove that $P$, $Q$, $R$, $S$ are concyclic.
+
+\item %% Problem 2
+Find all integers $n \ge 3$ such that
+among any $n$ positive real numbers
+$a_1$, $a_2$, \dots, $a_n$ with
+\[ \max(a_1,a_2,\dots,a_n)
+  \le n \cdot \min(a_1,a_2,\dots,a_n), \]
+there exist three that are the side lengths
+of an acute triangle.
+
+\item %% Problem 3
+For $a,b,c > 0$ prove that
+\[ \frac{a^3+3b^3}{5a+b}
+  + \frac{b^3+3c^3}{5b+c}
+  + \frac{c^3+3a^3}{5c+a}
+  \ge \frac23(a^2+b^2+c^2).  \]
+
+\item %% Problem 4
+Let $\alpha$ be an irrational number with $0 < \alpha < 1$,
+and draw a circle in the plane whose
+circumference has length $1$.
+Given any integer $n\ge 3$,
+define a sequence of points $P_1, P_2, \dots, P_n$ as follows.
+First select any point $P_1$ on the circle,
+and for $2\le k\le n$ define $P_k$
+as the point on the circle for which the length
+of arc $P_{k-1}P_k$ is $\alpha$,
+when travelling counterclockwise around the circle
+from $P_{k-1}$ to $P_k$. Suppose that $P_a$ and $P_b$
+are the nearest adjacent points on either side of $P_n$.
+Prove that $a+b\le n$.
+
+\item %% Problem 5
+For distinct positive integers $a, b<2012$,
+define $f(a, b)$ to be the number of integers $k$ with $1\le k<2012$
+such that the remainder when $ak$ divided by $2012$ is
+greater than that of $bk$ divided by $2012$.
+Let $S$ be the minimum value of $f(a, b)$, where $a$ and $b$ range
+over all pairs of distinct positive integers less than $2012$.
+Determine $S$.
+
+\item %% Problem 6
+Let $P$ be a point in the plane of $\triangle ABC$,
+and $\gamma$ a line through $P$.
+Let $A'$, $B'$, $C'$ be the points where the
+reflections of lines $PA$, $PB$, $PC$ with respect to $\gamma$
+intersect lines $BC$, $CA$, $AB$ respectively.
+Prove that $A'$, $B'$, $C'$ are collinear.
+
+\end{enumerate}
+\pagebreak
+
+\section{Solutions to Day 1}
+\subsection{JMO 2012/1, proposed by Sungyoon Kim, Inseok Seo}
+\textsl{Available online at \url{https://aops.com/community/p2669111}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Given a triangle $ABC$, let $P$ and $Q$ be points
+on segments $\ol{AB}$ and $\ol{AC}$, respectively, such that $AP=AQ$.
+Let $S$ and $R$ be distinct points on segment $\ol{BC}$
+such that $S$ lies between $B$ and $R$,
+$\angle BPS=\angle PRS$, and $\angle CQR=\angle QSR$.
+Prove that $P$, $Q$, $R$, $S$ are concyclic.
+\end{mdframed}
+Assume for contradiction that $(PRS)$ and $(QRS)$ are distinct.
+Then $\ol{RS}$ is the radical axis of these two circles.
+However, $\ol{AP}$ is tangent to $(PRS)$
+and $\ol{AQ}$ is tangent to $(QRS)$,
+so point $A$ has equal power to both circles,
+which is impossible since $A$ does not lie on line $BC$.
+\pagebreak
+
+\subsection{JMO 2012/2, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p2669112}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Find all integers $n \ge 3$ such that
+among any $n$ positive real numbers
+$a_1$, $a_2$, \dots, $a_n$ with
+\[ \max(a_1,a_2,\dots,a_n)
+  \le n \cdot \min(a_1,a_2,\dots,a_n), \]
+there exist three that are the side lengths
+of an acute triangle.
+\end{mdframed}
+The answer is all $n \ge 13$.
+
+Define $(F_n)$ as the sequence of Fibonacci numbers,
+by $F_1 = F_2 = 1$ and $F_{n+1} = F_n + F_{n-1}$.
+We will find that Fibonacci numbers show up naturally
+when we work through the main proof,
+so we will isolate the following calculation now
+to make the subsequent solution easier to read.
+\begin{claim*}
+  For positive integers $m$, we have $F_m \le m^2$ if and only if $m \le 12$.
+\end{claim*}
+\begin{proof}
+  A table of the first $14$ Fibonacci numbers is given below.
+  \[
+    \begin{array}{rrrrr rrrrr rrrr}
+      F_1 & F_2 & F_3 & F_4 & F_5 & F_6 & F_7 & F_8 & F_9
+        & F_{10} & F_{11} & F_{12} & F_{13} & F_{14} \\ \hline
+      1 & 1 & 2 & 3 & 5 & 8 & 13 & 21 & 34 & 55 & 89 & 144 & 233 & 377
+    \end{array}
+  \]
+  By examining the table, we see that $F_m \le m^2$ is true for $m = 1, 2, \dots 12$,
+  and in fact $F_{12} = 12^2 = 144$.
+  However, $F_m > m^2$ for $m = 13$ and $m = 14$.
+
+  Now it remains to prove that $F_m > m^2$ for $m \ge 15$.
+  The proof is by induction with base cases
+  $m = 13$ and $m = 14$ being checked already.
+  For the inductive step, if $m \ge 15$ then we have
+  \begin{align*}
+    F_m &= F_{m-1} + F_{m-2} > (m-1)^2 + (m-2)^2 \\
+    &= 2m^2 - 6m + 5 = m^2 + (m-1)(m-5) > m^2
+  \end{align*}
+  as desired.
+\end{proof}
+
+We now proceed to the main problem.
+The hypothesis $\max(a_1,a_2,\dots,a_n)
+\le n \cdot \min(a_1,a_2,\dots,a_n)$
+will be denoted by $(\dagger)$.
+
+\medskip
+
+\textbf{Proof that all $n \ge 13$ have the property.}
+We first show now that every $n \ge 13$ has the desired property.
+Suppose for contradiction that no three numbers are the sides of an acute triangle.
+Assume without loss of generality (by sorting the numbers)
+that $a_1 \le a_2 \le \dots \le a_n$.
+Then since $a_{i-1}$, $a_i$, $a_{i+1}$ are not the sides of an acute triangle
+for each $i \ge 2$, we have that $a_{i+1}^2 \ge a_i^2 + a_{i-1}^2$;
+writing this out gives
+\begin{align*}
+  a_3^2 &\ge a_2^2 + a_1^2 \ge 2a_1^2 \\
+  a_4^2 &\ge a_3^2 + a_2^2 \ge 2a_1^2 + a_1^2 = 3a_1^2 \\
+  a_5^2 &\ge a_4^2 + a_3^2 \ge 3a_1^2 + 2a_1^2 = 5a_1^2 \\
+  a_6^2 &\ge a_5^2 + a_4^2 \ge 5a_1^2 + 3a_1^2 = 8a_1^2
+\end{align*}
+and so on.
+The Fibonacci numbers appear naturally and by induction,
+we conclude that $a_i^2 \ge F_i a_1^2$.
+In particular, $a_n^2 \ge F_n a_1^2$.
+
+However, we know $\max(a_1, \dots, a_n) = a_n$
+and $\min(a_1, \dots, a_n) = a_1$,
+so $(\dagger)$ reads $a_n \le n \cdot a_1$.
+Therefore we have $F_n \le n^2$, and so $n \le 12$, contradiction!
+
+\medskip
+
+\textbf{Proof that no $n \le 12$ have the property.}
+Assume that $n \le 12$.
+The above calculation also suggests a way to pick the counterexample:
+we choose $a_i = \sqrt{F_i}$ for every $i$.
+Then $\min(a_1, \dots, a_n) = a_1 = 1$
+and $\max(a_1, \dots, a_n) = \sqrt{F_n}$,
+so $(\dagger)$ is true as long as $n \le 12$.
+And indeed no three numbers form the sides of an acute triangle:
+if $i < j < k$,
+then $a_k^2 = F_k = F_{k-1} + F_{k-2} \ge F_j + F_i = a_j^2 + a_i^2$.
+\pagebreak
+
+\subsection{JMO 2012/3, proposed by Titu Andreescu}
+\textsl{Available online at \url{https://aops.com/community/p2669114}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For $a,b,c > 0$ prove that
+\[ \frac{a^3+3b^3}{5a+b}
+  + \frac{b^3+3c^3}{5b+c}
+  + \frac{c^3+3a^3}{5c+a}
+  \ge \frac23(a^2+b^2+c^2).  \]
+\end{mdframed}
+Here are two possible approaches.
+
+\paragraph{Cauchy-Schwarz approach.}
+Apply Titu lemma to get
+\[ \sum_{\text{cyc}} \frac{a^3}{5a+b}
+  = \sum_{\text{cyc}} \frac{a^4}{5a^2+ab}
+  \ge \frac{(a^2+b^2+c^2)^2}{\sum_{\text{cyc}} (5a^2+ab)}
+  \ge \frac{a^2+b^2+c^2}{6} \]
+where the last step follows
+from the identity $\sum_{\text{cyc}} (5a^2+ab) \le 6(a^2+b^2+c^2)$.
+
+Similarly,
+\[ \sum_{\text{cyc}} \frac{b^3}{5a+b}
+  = \sum_{\text{cyc}} \frac{b^4}{5ab+b^2}
+  \ge \frac{(a^2+b^2+c^2)^2}{\sum_{\text{cyc}} (5ab+b^2)}
+  \ge \frac{a^2+b^2+c^2}{6} \]
+using the fact that $\sum_{\text{cyc}} 5ab+b^2 \le 6(a^2+b^2+c^2)$.
+
+Therefore, adding the first display to
+three times the second display implies the result.
+
+\paragraph{Cauchy-Schwarz approach.}
+The main magical claim is:
+\begin{claim*}
+  We have
+  \[ \frac{a^3+3b^3}{5a+b} \geq \frac{25}{36}b^2 - \frac{1}{36}a^2. \]
+\end{claim*}
+\begin{proof}
+  Let $x=a/b > 0$. The desired inequality is equivalent to
+  \[ \frac{x^3+3}{5x+1} \ge \frac{25-x^2}{36}. \]
+  However,
+  \begin{align*}
+    36(x^3+3) - (5x+1)(25-x^2)
+    &= 41x^3 + x^2 - 125x + 83 \\
+    &= (x-1)^2(41x+83) \ge 0. \qedhere
+  \end{align*}
+\end{proof}
+Sum the claim cyclically to finish.
+\begin{remark*}
+  [Derivation of the main claim]
+  The overall strategy is to hope for a constant $k$ such that
+  \[ \frac{a^3+3b^3}{5a+b} \geq ka^2 + \left(\frac{2}{3}-k\right)b^2. \]
+  is true.
+  Letting $x=a/b$ as above and expanding,
+  we need a value $k$ such that the cubic polynomial
+  \[ P(x)
+    \coloneqq (x^3+3)-(5x+1)\left( kx^2 + \left( \frac 23 - k \right) \right)
+    = (1-5k)x^3 - kx^2 + \left( 5k-\frac{10}{3} \right)x
+    + \left( k + \frac{7}{3} \right) \]
+  is nonnegative everywhere.
+  Since $P(1) = 0$ necessarily, in order for $P(1-\eps)$ and $P(1+\eps)$
+  to both be nonnegative (for small $\eps$),
+  the polynomial $P$ must have a double root at $1$, meaning
+  the first derivative $P'(1) = 0$ needs to vanish.
+  In other words, we need
+  \[ 3(1-5k) - 2k + \left( 5k - \frac{10}{3} \right) = 0. \]
+  Solving gives $k = -1/36$.
+  One then factors out the repeated root $(x-1)^2$ from the resulting $P$.
+\end{remark*}
+\pagebreak
+
+\section{Solutions to Day 2}
+\subsection{JMO 2012/4, proposed by Sam Vandervelde}
+\textsl{Available online at \url{https://aops.com/community/p2669956}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $\alpha$ be an irrational number with $0 < \alpha < 1$,
+and draw a circle in the plane whose
+circumference has length $1$.
+Given any integer $n\ge 3$,
+define a sequence of points $P_1, P_2, \dots, P_n$ as follows.
+First select any point $P_1$ on the circle,
+and for $2\le k\le n$ define $P_k$
+as the point on the circle for which the length
+of arc $P_{k-1}P_k$ is $\alpha$,
+when travelling counterclockwise around the circle
+from $P_{k-1}$ to $P_k$. Suppose that $P_a$ and $P_b$
+are the nearest adjacent points on either side of $P_n$.
+Prove that $a+b\le n$.
+\end{mdframed}
+No points coincide since $\alpha$ is irrational.
+
+Assume for contradiction that $n < a+b < 2n$.
+Then \[ \ol{P_n P_{a+b-n}} \parallel \ol{P_a P_b}. \]
+This is an obvious contradiction
+since then $P_{a+b-n}$ is contained in the arc
+$\widehat{P_a P_b}$ of the circle through $P_n$.
+\pagebreak
+
+\subsection{JMO 2012/5, proposed by Warut Suksompong}
+\textsl{Available online at \url{https://aops.com/community/p2669967}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+For distinct positive integers $a, b<2012$,
+define $f(a, b)$ to be the number of integers $k$ with $1\le k<2012$
+such that the remainder when $ak$ divided by $2012$ is
+greater than that of $bk$ divided by $2012$.
+Let $S$ be the minimum value of $f(a, b)$, where $a$ and $b$ range
+over all pairs of distinct positive integers less than $2012$.
+Determine $S$.
+\end{mdframed}
+The answer is $S = 502$ (not $503$!).
+
+\begin{claim*}
+  If $\gcd(k, 2012) = 1$,
+  then necessarily either $k$ or $2012-k$ will counts towards $S$.
+\end{claim*}
+\begin{proof}
+  First note that both $ak$, $bk$ are nonzero modulo $2012$.
+  Note also that $ak \not\equiv bk \pmod{2012}$.
+
+  So if $r_a$ is the remainder of $ak \pmod{2012}$,
+  then $2012-r_a$ is the remainder of $a(2012-k) \pmod{2012}$
+  Similarly we can consider $r_b$ and $2012-r_b$.
+  As mentioned already, we have $r_a \neq r_b$.
+  So either $r_a > r_b$ or $2012-r_a > 2012-r_b$.
+\end{proof}
+
+This implies $S \ge \half \varphi(2012) = 502$.
+
+But this can actually be achieved by taking $a = 4$ and $b = 1010$, since
+\begin{itemize}
+  \ii If $k$ is even, then $ak \equiv bk \pmod{2012}$
+  so no even $k$ counts towards $S$; and
+  \ii If $k \equiv 0 \pmod{503}$, then $ak \equiv 0 \pmod{2012}$
+  so no such $k$ counts towards $S$.
+\end{itemize}
+This gives the final answer $S \ge 502$.
+
+\begin{remark*}
+  A similar proof works with $2012$ replaced by any $n$
+  and will give an answer of $\half\varphi(n)$.
+  For composite $n$,
+  one uses the Chinese remainder theorem to pick distinct
+  $a$ and $b$ not divisible by $n$
+  such that $\operatorname{lcm}(a-b, a) = n$.
+\end{remark*}
+\pagebreak
+
+\subsection{JMO 2012/6, proposed by Titu Andreescu, Cosmin Pohoata}
+\textsl{Available online at \url{https://aops.com/community/p2669960}.}
+\begin{mdframed}[style=mdpurplebox,frametitle={Problem statement}]
+Let $P$ be a point in the plane of $\triangle ABC$,
+and $\gamma$ a line through $P$.
+Let $A'$, $B'$, $C'$ be the points where the
+reflections of lines $PA$, $PB$, $PC$ with respect to $\gamma$
+intersect lines $BC$, $CA$, $AB$ respectively.
+Prove that $A'$, $B'$, $C'$ are collinear.
+\end{mdframed}
+We present three solutions.
+
+\paragraph{First solution (complex numbers).}
+Let $p=0$ and set $\gamma$ as the real line.
+Then $A'$ is the intersection of $bc$ and $p\ol a$.
+So, we get
+\[ a' = \frac{\ol a(\ol b c - b \ol c)}{(\ol b - \ol c)\ol a-(b-c) a}. \]
+
+\begin{center}
+  \begin{asy}
+    size(4cm);
+    pair A = dir(110), B = dir(210), C = dir(330);
+    Drawing("A", A, A);
+    Drawing("B", B, dir(-90));
+    Drawing("C", C, dir(-90));
+    draw(A--B--C--cycle);
+    pair P = Drawing("P", 0.1*dir(40), dir(-35));
+    pair X1 = P + .5 * dir(10);
+    pair X2 = P - .5 * dir(10);
+    Drawing(Line(X1,X2), dashed, Arrows);
+    pair T = 2*foot(A,X1,X2)-A;
+    pair A1 = Drawing("A'", extension(P,T,B,C), dir(-40));
+    draw(A--P--A1);
+  \end{asy}
+\end{center}
+
+Note that
+\[ \ol a' = \frac{a (b \ol c - \ol b c)}{(b-c) a - (\ol b - \ol c)\ol a}. \]
+Thus it suffices to prove
+\[ 0 = \det
+\begin{bmatrix}
+  \frac{\ol a(\ol b c-b \ol c)}{(\ol b - \ol c)\ol a - (b-c) a} & \frac{a (b \ol c - \ol b c)}{(b-c) a - (\ol b - \ol c) \ol a} & 1 \\
+  \frac{\ol b(\ol c a-c \ol a)}{(\ol c - \ol a)\ol b - (c-a) b} & \frac{b (c \ol a - \ol c a)}{(c-a) b - (\ol c - \ol a) \ol b} & 1 \\
+  \frac{\ol c(\ol a b-a \ol b)}{(\ol a - \ol b)\ol c - (a-b) c} & \frac{c (a \ol b - \ol a b)}{(a-b) c - (\ol a - \ol b)\ol c} & 1
+\end{bmatrix}.
+\]
+This is equivalent to
+\[ 0 = \det
+\begin{bmatrix}
+  \ol a(\ol b c -b \ol c) & a (\ol b c - b \ol c) & (\ol b - \ol c) \ol a - (b-c) a \\
+  \ol b(\ol c a -c \ol a) & b (\ol c a - c \ol a) & (\ol c - \ol a) \ol b - (c-a) b \\
+  \ol c(\ol a b -a \ol b) & c (\ol a b - a \ol b) & (\ol a - \ol b) \ol c - (a-b) c \\
+\end{bmatrix}. \]
+This determinant has the property that the rows sum to zero, and we're done.
+\begin{remark*}
+  Alternatively, if you don't notice that you could just blindly expand:
+  \begin{align*}
+    &\phantom{=} \sum_{\text{cyc}} ((\ol b - \ol c) \ol a - (b-c) a) \cdot
+    - \det
+    \begin{bmatrix}
+      b & \ol b \\
+      c & \ol c
+    \end{bmatrix}
+    \left( \ol c a - c \ol a \right)\left( \ol a b - a \ol b \right) \\
+    &= (\ol b c - c \ol b)(\ol c a - c \ol a)(\ol a b - a \ol b)
+    \sum_{\text{cyc}} \left( ab - ac + \ol c \ol a - \ol b \ol a \right) = 0.
+  \end{align*}
+\end{remark*}
+
+\paragraph{Second solution (Desargues involution).}
+We let $C'' = \ol{A'B'} \cap \ol{AB}$.
+Consider complete quadrilateral $ABCA'B'C''C$.
+We see that there is an involutive pairing $\tau$ at $P$
+swapping $(PA,PA')$, $(PB,PB')$, $(PC,PC'')$.
+From the first two, we see $\tau$ coincides with reflection
+about $\ell$, hence conclude $C'' = C$.
+
+\paragraph{Third solution (barycentric), by Catherine Xu.}
+We will perform barycentric coordinates on the triangle $PCC'$,
+with $P=(1,0,0)$, $C'=(0,1,0)$, and $C=(0,0,1)$.
+Set $a = CC'$, $b = CP$, $c = C'P$ as usual.
+Since $A$, $B$, $C'$ are collinear,
+we will define $A = (p : k : q)$ and $B = (p : \ell : q)$.
+
+\begin{claim*}
+  Line $\gamma$ is the angle bisector of
+  $\angle APA' $, $\angle BPB'$, and $\angle CPC'$.
+\end{claim*}
+\begin{proof}
+  Since $A'P$ is the reflection of $AP$ across $\gamma$, etc.
+\end{proof}
+
+Thus $B'$ is the intersection of the isogonal of $B$ with respect to $\angle P$
+with the line $CA$; that is,
+\[ B' = \left( \frac pk \frac{b^2}{\ell}
+  : \frac{b^2}{\ell} : \frac{c^2}{q} \right). \]
+Analogously, $A'$ is the intersection of the isogonal of $A$ with respect to $\angle P$
+with the line $CB$; that is,
+\[ A' = \left( \frac{p}{\ell} \frac{b^2}{k}
+    : \frac{b^2}{k} : \frac{c^2}{q} \right). \]
+The ratio of the first to third coordinate in these two points
+is both $b^2pq : c^2k\ell$, so it follows $A'$, $B'$, and $C'$ are collinear.
+
+\begin{remark*}
+  [Problem reference]
+  The converse of this problem appears as problem 1052
+  attributed S.\ V.\ Markelov in the book
+  \emph{Geometriya: 9--11 Klassy: Ot Uchebnoy Zadachi k Tvorcheskoy, 1996},
+  by I.\ F.\ Sharygin.
+\end{remark*}
+\pagebreak
+
+
+\end{document}
